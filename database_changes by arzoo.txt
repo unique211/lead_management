@@ -1,0 +1,19 @@
+CREATE TABLE `notification_subscription` (
+ `subscription_id` int(11) NOT NULL AUTO_INCREMENT,
+ `user_id` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+ `valid_from` int(12) NOT NULL,
+ `valid_till` int(12) NOT NULL,
+ `channel_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+ `add_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ PRIMARY KEY (`subscription_id`)
+)
+
+
+CREATE TABLE `sync_details` (
+ `sync_id` int(11) NOT NULL AUTO_INCREMENT,
+ `user_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+ `next_token` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+ `add_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ `modified_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ PRIMARY KEY (`sync_id`)
+) 

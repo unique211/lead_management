@@ -1,0 +1,488 @@
+
+	@import url('https://fonts.googleapis.com/css?family=Roboto');
+a:hover,
+a:focus {
+    text-decoration: none;
+    outline: none;
+}
+body{font-family: 'Roboto', sans-serif;}
+.custom-modal .modal-dialog{
+  width: 200px !important;
+}
+/*
+1.1 Header Area
+***************************************************/
+/*Bootstrap Reset*/
+.navbar-nav > li > a {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.mainmenu {
+    background-color: transparent;
+    border-color: transparent;
+    margin-bottom: 0;
+	border: 0px !important;
+}
+.navbar-nav > li:last-child > a {
+    padding-right: 0px;
+    margin-right: 0px;
+}
+.dropdown-menu {
+    padding: 0px 0; 
+    margin: 0 0 0; 
+    border: 0px solid transition !important;
+	border: 0px solid rgba(0,0,0,.15);	
+	border-radius: 0px;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+
+}
+/*=-====Main Menu=====*/
+.navbar-nav .open .dropdown-menu > li > a {padding: 16px 15px 16px 25px;
+}
+.header_bottom { background: #0071ba }
+.header_area .header_bottom .mainmenu a , .navbar-default .navbar-nav > li > a {
+    color: #fff;
+    font-size: 16px;
+    text-transform: capitalize;
+    padding: 16px 15px;
+	font-family: 'Roboto', sans-serif;
+}
+.header_area .mainmenu .active a,
+.header_area .mainmenu .active a:focus,
+.header_area .mainmenu .active a:hover,
+.header_area .mainmenu li a:hover,
+.header_area .mainmenu li a:focus ,
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover{
+    color: #0071ba;
+    background: #54c6d4;
+    outline: 0;
+}
+/*-----./ Main Menu-----*/
+
+.navbar-default .navbar-toggle { border-color: #fff } /*Toggle Button*/
+.navbar-default .navbar-toggle .icon-bar { background-color: #fff } /*Toggle Button*/
+
+/*==========Sub Menu=v==========*/
+.mainmenu .collapse ul > li:hover > a{background: #54c6d4;}
+.mainmenu .collapse ul ul > li:hover > a, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus, .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover{background: #CBEAF0;}
+.mainmenu .collapse ul ul ul > li:hover > a{background: #CBEAF0;}
+
+.mainmenu .collapse ul ul, .mainmenu .collapse ul ul.dropdown-menu{background:#98D7E1;}
+.mainmenu .collapse ul ul ul, .mainmenu .collapse ul ul ul.dropdown-menu{background:#0a1464}
+.mainmenu .collapse ul ul ul ul, .mainmenu .collapse ul ul ul ul.dropdown-menu{background:#e4eeb8}
+
+/******************************Drop-down menu work on hover**********************************/
+.mainmenu{background: none;border: 0 solid;margin: 0;padding: 0;min-height:20px}
+@media only screen and (min-width: 767px) {
+.mainmenu .collapse ul li{position:relative;}
+.mainmenu .collapse ul li:hover> ul{display:block}
+.mainmenu .collapse ul ul{position:absolute;top:100%;left:0;min-width:250px;display:none}
+/*******/
+.mainmenu .collapse ul ul li{position:relative}
+.mainmenu .collapse ul ul li:hover> ul{display:block}
+.mainmenu .collapse ul ul ul{position:absolute;top:0;left:100%;min-width:250px;display:none}
+/*******/
+.mainmenu .collapse ul ul ul li{position:relative}
+.mainmenu .collapse ul ul ul li:hover ul{display:block}
+.mainmenu .collapse ul ul ul ul{position:absolute;top:0;left:-100%;min-width:250px;display:none;z-index:1}
+
+}
+.view_event{
+   
+    z-index: 1;
+}
+.modal-backdrop
+{
+  z-index: unset;
+}
+.navbar-nav {
+    
+  
+     flex-direction: unset; 
+   
+}
+
+body {
+  font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 700;
+}
+
+header.masthead {
+  position: relative;
+  background-color: #343a40;
+  background: url("../img/bg-masthead.jpg") no-repeat center center;
+  background-size: cover;
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+}
+
+header.masthead .overlay {
+  position: absolute;
+  background-color: #212529;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0.3;
+}
+.header-bg-dark{
+    background-color: #273E4A!important;
+}
+.showcase .container {
+  min-height: 350px;
+  background-color: #F9F9F9;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.call-to-action {
+  position: relative;
+  background-color: #343a40;
+  background: url("../img/bg-masthead.jpg") no-repeat center center;
+  background-size: cover;
+  padding-top: 7rem;
+  padding-bottom: 7rem;
+}
+
+.call-to-action .overlay {
+  position: absolute;
+  background-color: #212529;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0.3;
+}
+
+.padall {
+  padding: 3px;
+}
+footer.footer {  
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color: white;
+  text-align: center;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.footer-bg-dark {
+    background-color: #263E4A!important;
+}
+.list-inline {
+ list-style-type: none;
+}
+
+.list-inline-item a {
+    color:#FFFFFF;
+}
+padding-bottom: 1rem;
+}
+
+
+
+#my-calendar table {
+    width: 100%;
+  }
+  
+  #my-calendar table tr th {
+      border: 1px solid #ddd;
+      width: 80px;
+      height: 30px;
+      text-align: center;
+      color: gray;
+      font-size: 14px;
+      font-weight: 400;
+  }
+#my-calendar table tr td {
+    border: 1px solid #ddd;
+    width: 80px;
+    text-align: center;
+}
+#my-calendar .calendar tr td:last-child>a {
+    color: #C4C4C4;
+}
+#my-calendar .calendar td>a {
+    position: relative;
+    z-index: 2;
+    font-size: 20px;
+    font-weight: 300;
+}
+#my-calendar .calendar td div.highlight {
+    background-color: #EEEEEE;
+    color: red!important;
+    width: 100%;
+    left: 0;
+    right: 1px;
+    position: absolute;
+    top: 0;
+    bottom: 1px;
+    z-index: -1;
+}
+#my-calendar .calendar td {
+    position: relative;
+}
+#my-calendar table tr td {
+    height: 90px;
+}
+
+
+#event-calendar table {
+    width: 100%;
+  }
+  
+  #event-calendar table tr th {
+      border: 1px solid #ddd;
+      width: 80px;
+      height: 30px;
+      text-align: center;
+      color: gray;
+      font-size: 14px;
+      font-weight: 400;
+  }
+#event-calendar table tr td {
+    border: 1px solid #ddd;
+    width: 80px;
+    text-align: center;
+}
+#event-calendar .calendar tr td:last-child>a {
+    color: #C4C4C4;
+}
+#event-calendar .calendar td>a {
+    position: relative;
+    z-index: 2;
+    font-size: 20px;
+    font-weight: 300;
+}
+#event-calendar .calendar td div.highlight {
+    background-color: #EEEEEE;
+    color: red;
+    width: 100%;
+    left: 0;
+    right: 1px;
+    position: absolute;
+    top: 0;
+    bottom: 1px;
+    z-index: 0;
+}
+#event-calendar .calendar td {
+    position: relative;
+}
+#event-calendar table tr td {
+    height: 90px;
+}
+}
+.small-input {
+  -moz-appearance: textfield;
+}
+.small-input::-webkit-inner-spin-button {
+  display: none;
+}
+.small-input::-webkit-outer-spin-button,
+.small-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+  .edit_icon_style{
+
+  }
+  .del_icon_style{
+   margin-left:-4.2em 
+  }
+/* mobile view*/
+@media (max-width: 550px) { 
+  .sec_css{
+    margin-top: 8em;
+       height:20em; 
+    background: -webkit-linear-gradient(-180deg, rgb(251, 176, 10), rgb(229, 2, 18));
+  }
+  .tag_css h2{
+    color: white;
+   /* margin-left: 2em;
+    margin-top: 3.5em;*/
+    text-align: center;
+    margin-top: 3.5em;
+  }
+  .ex_css{
+     color: #fff;
+  
+  margin-left:6em;
+  width: 52%;
+  margin-top: 5em;
+  }
+  .set_btn{
+    margin-left: -16em;
+  }
+    .set_btn1{
+    margin-left: -16em;
+  }
+   .edit_icon_style{
+
+  }
+  .del_icon_style{
+    margin-left:-2em 
+  }
+  .del_icon_style_app{
+margin-left:-2em
+  }
+  .edit_icon_style_app{
+
+  }
+  .del_icon_user{
+    margin-left:-2.5em;
+  }
+  .del_icon_dealer{
+    margin-left:-2.5em
+  }
+  .del_icon_lead_type{
+  margin-left:-3.5em
+  }
+  .edit_icon_lead_type{
+
+  }
+  .calendar .col-md-2{
+    width: 60%;
+  }
+  .calendar_style{
+
+  }
+  .app_css .col-md-2{
+   width: 91%;
+   margin-top: 15px;
+   margin-left: 17px;
+  }
+  .sec_cal{
+     width: 88%;
+      margin-left: 17px;
+  }
+  .del_icon_relation{
+    margin-left:-73px;
+  }
+.lead_filter_btn{
+  /*margin-top: 10px;*/
+}
+/*.ex_css{
+        color: #fff;  
+        margin-left:eem;
+        margin-top: -60.1px;
+      padding: 0.7em;
+      width: 52%;
+      margin-left: 6em;
+ }
+ .sec_css{
+        margin-top: -5em;
+ }
+h2{
+      margin: 2.1em;
+    margin-left: 2em;
+    margin-top: 2em;
+    color: white;
+ }*/
+
+}
+/* desktop view*/
+@media (min-width: 992px) {
+   .sec_css{
+    margin-top: 18em;
+    height:20em; 
+    background: -webkit-linear-gradient(-180deg, rgb(251, 176, 10), rgb(229, 2, 18));
+  }
+  .tag_css h2{
+    color: white;
+    margin-left: 2.7em;
+    margin-top: 3.5em;
+  }
+  .set_btn{
+    margin-left: -52em;
+  }
+   .set_btn1{
+    margin-left: -73em;
+  }
+  .ex_css{
+     color: #fff;
+  
+  margin-left:11em;
+  width: 77%;
+  margin-top: 1em;
+  }
+  .edit_icon_style{
+
+  }
+  .del_icon_style{
+   margin-left:-79px; 
+  }
+  .del_icon_style_app{
+margin-left:-2.5em
+  }
+  .edit_icon_style_app{
+
+  }
+  .del_icon_user{
+    margin-left:-7.5em;
+  }
+  .del_icon_dealer{
+    margin-left:-9em;
+  }
+    .del_icon_lead_type{
+    margin-left:-16em;
+  }
+  .edit_icon_lead_type{
+
+  }
+  
+   .calendar_style{
+    margin-left:-81em;
+  }
+  .lead_filter_btn{
+  margin-top: 23px;
+}
+ .del_icon_relation{
+    margin-left:-250px;
+  }
+ /*.leads_style{
+  border-top-right-radius: 5px; border-bottom-right-radius: 5px;
+ }*/
+ /* .ex_css{
+  color: #fff;
+  margin-top:-3em;
+  margin-left:12em;
+  width: 131%;
+ }
+ h2{
+  margin: 3em;
+  margin-top: 4em;
+  color: #fff;
+ }*/
+ }
+/*.view_event{
+   
+    z-index: 1;
+}
+.modal-backdrop
+{
+  z-index: unset;
+}
+.navbar-nav {
+    
+  
+     flex-direction: unset; 
+   
+}*/
+/*.container,
+  .container-fluid {
+    align-items: unset;
+    }
+    .navbar
+    {
+      float: left;
+    }*/

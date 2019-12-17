@@ -1,0 +1,102 @@
+[13-Sep-2019 13:14:15 UTC] {
+ "error": {
+  "errors": [
+   {
+    "domain": "global",
+    "reason": "push.webhookUrlNotHttps",
+    "message": "WebHook callback must be HTTPS: http://localhost//lead_management/googlecalendar/update_google_events"
+   }
+  ],
+  "code": 400,
+  "message": "WebHook callback must be HTTPS: http://localhost//lead_management/googlecalendar/update_google_events"
+ }
+}
+
+[13-Sep-2019 13:24:57 UTC] 
+[13-Sep-2019 15:13:58 UTC] Not Found
+[14-Sep-2019 05:31:36 UTC] {
+ "kind": "api#channel",
+ "id": "5d7c7b3694f00",
+ "resourceId": "H37zyFpT8pPK_XdLb7Ie1aKJfrA",
+ "resourceUri": "https://www.googleapis.com/calendar/v3/calendars/indutestmail123@gmail.com/events?maxResults=250&alt=json",
+ "expiration": "1569043894000"
+}
+
+[14-Sep-2019 05:31:37 UTC] Not Found
+[14-Sep-2019 05:34:44 UTC] 
+[14-Sep-2019 09:08:45 UTC] Not Found
+[14-Sep-2019 09:59:26 UTC] Not Found
+[14-Sep-2019 10:06:01 UTC] Not Found
+[15-Sep-2019 11:49:24 UTC] 
+[17-Sep-2019 17:46:14 Asia/Kolkata] {
+ "kind": "api#channel",
+ "id": "5d80ce8c066bc",
+ "resourceId": "H37zyFpT8pPK_XdLb7Ie1aKJfrA",
+ "resourceUri": "https://www.googleapis.com/calendar/v3/calendars/indutestmail123@gmail.com/events?maxResults=250&alt=json",
+ "expiration": "1569327372000"
+}
+
+[17-Sep-2019 12:33:01 UTC] {
+ "kind": "api#channel",
+ "id": "5d80d278eb3a8",
+ "resourceId": "H37zyFpT8pPK_XdLb7Ie1aKJfrA",
+ "resourceUri": "https://www.googleapis.com/calendar/v3/calendars/indutestmail123@gmail.com/events?maxResults=250&alt=json",
+ "expiration": "1569328377000"
+}
+
+[17-Sep-2019 12:34:58 UTC] {
+ "kind": "api#channel",
+ "id": "5d80d2eff010e",
+ "resourceId": "H37zyFpT8pPK_XdLb7Ie1aKJfrA",
+ "resourceUri": "https://www.googleapis.com/calendar/v3/calendars/indutestmail123@gmail.com/events?maxResults=250&alt=json",
+ "expiration": "1569328496000"
+}
+
+[17-Sep-2019 12:59:24 UTC] {
+ "kind": "api#channel",
+ "id": "5d80d8a968a56",
+ "resourceId": "H37zyFpT8pPK_XdLb7Ie1aKJfrA",
+ "resourceUri": "https://www.googleapis.com/calendar/v3/calendars/indutestmail123@gmail.com/events?maxResults=250&alt=json",
+ "expiration": "1569329961000"
+}
+
+[17-Sep-2019 13:02:49 UTC] {
+ "kind": "api#channel",
+ "id": "5d80d97556b25",
+ "resourceId": "H37zyFpT8pPK_XdLb7Ie1aKJfrA",
+ "resourceUri": "https://www.googleapis.com/calendar/v3/calendars/indutestmail123@gmail.com/events?maxResults=250&alt=json",
+ "expiration": "1569330165000"
+}
+
+[17-Sep-2019 13:12:10 UTC] {
+ "kind": "api#channel",
+ "id": "5d80dba6b6e82",
+ "resourceId": "H37zyFpT8pPK_XdLb7Ie1aKJfrA",
+ "resourceUri": "https://www.googleapis.com/calendar/v3/calendars/indutestmail123@gmail.com/events?maxResults=250&alt=json",
+ "expiration": "1569330726000"
+}
+
+[18-Sep-2019 13:40:42 UTC] {
+ "kind": "api#channel",
+ "id": "5d8233d730f86",
+ "resourceId": "H37zyFpT8pPK_XdLb7Ie1aKJfrA",
+ "resourceUri": "https://www.googleapis.com/calendar/v3/calendars/indutestmail123@gmail.com/events?maxResults=250&alt=json",
+ "expiration": "1569418839000"
+}
+
+[18-Sep-2019 13:44:01 UTC] {
+ "kind": "api#channel",
+ "id": "5d82349d8eec0",
+ "resourceId": "H37zyFpT8pPK_XdLb7Ie1aKJfrA",
+ "resourceUri": "https://www.googleapis.com/calendar/v3/calendars/indutestmail123@gmail.com/events?maxResults=250&alt=json",
+ "expiration": "1569419037000"
+}
+
+[20-Sep-2019 12:41:34 UTC] {
+ "kind": "api#channel",
+ "id": "5d84c8fa58ffa",
+ "resourceId": "H37zyFpT8pPK_XdLb7Ie1aKJfrA",
+ "resourceUri": "https://www.googleapis.com/calendar/v3/calendars/indutestmail123@gmail.com/events?maxResults=250&alt=json",
+ "expiration": "1569588090000"
+}
+
