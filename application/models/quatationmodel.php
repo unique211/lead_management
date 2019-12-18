@@ -275,6 +275,15 @@ function getquationversionwise($id,$version){
     $hasil=$this->db->get();
     return $hasil->result();
 }
+function getcustomerdetalis($id){
+    $this->db->select('*');    
+    $this->db->from('quotation_master');
+    $this->db->where('status',1);
+    $this->db->where('id',$id);
+    $hasil=$this->db->get();
+    return $hasil->result();
+}
+
 
 }
 

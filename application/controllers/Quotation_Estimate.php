@@ -152,6 +152,21 @@ class Quotation_Estimate extends CI_Controller {
         $data = $this->quatationmodel->getquationversionwise($id,$version);
 		echo json_encode($data);
     }
+    public function print_pdf(){
+        $this->load->library('codecanyon/invoicr/invoicr');
+      
+         $where=$this->input->post('btnprint');
+         
+        // $where=92;
+        $data['customerinfo']=$this->quatationmodel->getcustomerdetalis($where);
+
+      
+        $data['product_detalis']=$this->quatationmodel->getquatation_details($where);
+ // echo json_encode($data);
+           
+      $this->load->view('static/user/quotationpdf',$data);
+       
+    }
 
 }
 	

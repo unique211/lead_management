@@ -374,9 +374,10 @@
                <td><input type="submit" class="btn btn-primary" name="submit" value="Save">
                   <input type="hidden" id="save_update" name="save_update" value="">
                   <input type="reset" id="reset" class="btn btn-danger" name="reset" value="Reset">
+               	<button type="submit" form="pdf" id="btnprint" name="btnprint" value="" class="btn btn-sm btn-info pull-right" style="display:none;">Print</button>
                </td>
                <td>
-
+              
 
             </tr>
 
@@ -389,6 +390,7 @@
 
             </fieldset>
             </form>
+            <form name="pdf" id="pdf" method="POST" action="<?php echo base_url('Quotation_Estimate/print_pdf'); ?>" target="_blank"></form>
             </td>
             </tr>
          </tbody>

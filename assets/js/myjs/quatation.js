@@ -782,7 +782,7 @@ $(document).ready(function() {
         $('#P_Tax_Val_1').val('');
         $('#Margin_1').val('');
         $('#searchversion').hide();
-
+        $('#btnprint').hide();
     }
 
     $(document).on('click', '.btnhide', function(e) {
@@ -887,9 +887,15 @@ $(document).ready(function() {
 
         var id1 = $(this).attr('id');
 
+
+
         $('.btnhideshow').show();
         $('.tablehideshow').hide();
         $('#searchversion').show();
+
+        $('#btnprint').val(id1);
+        $('#btnprint').show();
+
         var customer_name = $('#customer_name_' + id1).html();
         var quotaion_no = $('#quotaion_no_' + id1).html();
         var ref_number = $('#ref_number_' + id1).html();
