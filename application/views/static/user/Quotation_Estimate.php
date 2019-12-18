@@ -1,86 +1,83 @@
+<div class="container">
+   <button class="btn btn-primary pull-right btnhide"><i class="fa fa-plus"></i>Add</button>
+   <h3>Quatation / Estimate</h3><br>
 
 
+   <div class="btnhideshow" style="display:none;">
+      <table class="table table-striped">
+         <tbody>
+            <tr>
+               <td colspan="1">
+                  <form class="form-horizontal" id="quotation_form" name="quotation_form" method="POST">
+                     <fieldset>
 
- <div class="container">
- <button class="btn btn-primary pull-right btnhide"><i class="fa fa-plus"></i>Add</button>
-      <h3>Quatation / Estimate</h3><br>
-        
+                        <div class="row">
+                           <div class="col-md-6">
 
-      <div class="btnhideshow" style="display:none;">
-       <table class="table table-striped">
-          <tbody>
-             <tr>
-                <td colspan="1">
-                   <form   class="form-horizontal" id="quotation_form" name="quotation_form" method="POST" >
-                      <fieldset>
+                              <div class="form-group">
+                                 <label class="col-md-4 control-label">Customer Name</label>
+                                 <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input id="cus_name" name="cus_name" placeholder="Customer Name" class="form-control " required="true" maxlength="20" type="text">
 
-                         <div class="row">
-                          <div class="col-md-6">
+                                    </div><span class="lname1"></span>
+                                 </div>
+                              </div>
 
-                          <div class="form-group">
-                            <label class="col-md-4 control-label">Customer Name</label>
-                            <div class="col-md-8 inputGroupContainer">
-                               <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input id="cus_name" name="cus_name" placeholder="Customer Name" class="form-control " required="true" maxlength="20" type="text">
-                                
-                               </div><span class="lname1"></span>
-                            </div>
-                         </div>
+                              <div class="form-group">
+                                 <label class="col-md-4 control-label">Contact Person</label>
+                                 <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input id="cotactperson" name="cotactperson" placeholder="Contact Person" class="form-control " maxlength="20" type="text">
 
-                         <div class="form-group">
-                            <label class="col-md-4 control-label">Contact Person</label>
-                            <div class="col-md-8 inputGroupContainer">
-                            <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input id="cotactperson" name="cotactperson" placeholder="Contact Person" class="form-control " maxlength="20" type="text">
-                                
-                                </div><span class="s_lname1"></span>
-                            </div>
-                         </div>
+                                    </div><span class="s_lname1"></span>
+                                 </div>
+                              </div>
 
-                           <div class="form-group">
-                            <label class="col-md-4 control-label">Mobile No</label>
-                            <div class="col-md-8 inputGroupContainer">
-                               <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span><input id="phn" name="phn" placeholder="Phone Number" class="form-control phn small-input" required pattern="[0-9]{10}" type="number" onkeypress="preventNonNumericalInput(event)"></div><span class="phn1"></span>
-                            </div>
-                         </div>
+                              <div class="form-group">
+                                 <label class="col-md-4 control-label">Mobile No</label>
+                                 <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span><input id="phn" name="phn" placeholder="Phone Number" class="form-control phn small-input" required pattern="[0-9]{10}" type="number" onkeypress="preventNonNumericalInput(event)"></div><span class="phn1"></span>
+                                 </div>
+                              </div>
 
-                         <div class="form-group">
-                            <label class="col-md-4 control-label">Email</label>
+                              <div class="form-group">
+                                 <label class="col-md-4 control-label">Email</label>
 
-                            <div class="col-md-8 inputGroupContainer">
-                               <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span><input id="s_email" name="s_email" placeholder="Email" class="form-control s_email"  value="" type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"></div><span class="email1"></span>
-                            </div>
-                            </div>
+                                 <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span><input id="s_email" name="s_email" placeholder="Email" class="form-control s_email" value="" type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"></div><span class="email1"></span>
+                                 </div>
+                              </div>
 
-                             </div>
+                           </div>
 
-                         <div class="col-md-6">
-                     
-                     <div class="form-group">
+                           <div class="col-md-6">
 
-                       <label class="col-md-4 control-label">Quatation Number</label>
-                       <div class="col-md-8 inputGroupContainer">
-                               <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input id="bill_no" name="bill_no" placeholder="Quatation Number" class="form-control " required="true" maxlength="20" type="text">
-                                
-                               </div><span class="Bill_No"></span>
-                            </div>
-                    </div>
+                              <div class="form-group">
 
-                    <div class="form-group">
-                       <label class="col-md-4 control-label"> Ref Number</label>
-                       <div class="col-md-8 inputGroupContainer">
-                               <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input id="refno" name="refno" placeholder="Ref Number" class="form-control " required="true" maxlength="20" type="text">
-                                
-                               </div><span class="BillRefNo"></span>
-                            </div>
-                    </div>
+                                 <label class="col-md-4 control-label">Quatation Number</label>
+                                 <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input id="bill_no" name="bill_no" placeholder="Quatation Number" class="form-control " required="true" maxlength="20" type="text">
 
-                    <div class="form-group">
-                            <label class="col-md-4 control-label">Order Date</label>
-                            <div class="col-md-8 inputGroupContainer">
-                               <div class="input-group"><span class="adj_size input-group-addon"><i class="fa fa-calendar" style="font-size:14px;"></i></span>
-                                 <input type="date"  id="o_date"name="o_date" class="form-control o_date"></div><span class="o_date"></span>
-                            </div>
-                         </div>
-<!-- 
+                                    </div><span class="Bill_No"></span>
+                                 </div>
+                              </div>
+
+                              <div class="form-group">
+                                 <label class="col-md-4 control-label"> Ref Number</label>
+                                 <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input id="refno" name="refno" placeholder="Ref Number" class="form-control " required="true" maxlength="20" type="text">
+
+                                    </div><span class="BillRefNo"></span>
+                                 </div>
+                              </div>
+
+                              <div class="form-group">
+                                 <label class="col-md-4 control-label">Order Date</label>
+                                 <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group"><span class="adj_size input-group-addon"><i class="fa fa-calendar" style="font-size:14px;"></i></span>
+                                       <input type="date" id="o_date" name="o_date" class="form-control o_date"></div><span class="o_date"></span>
+                                 </div>
+                              </div>
+                              <!-- 
                     <div class="form-group">
                     <label class="col-md-4 control-label">Discount</label>
                        <div class="col-md-8 inputGroupContainer">
@@ -92,64 +89,74 @@
                        </div>
                     </div> -->
 
-                    <div class="form-group">
-                            <label class="col-md-4 control-label">Order Due Date</label>
-                            <div class="col-md-8 inputGroupContainer">
-                               <div class="input-group"><span class="adj_size input-group-addon"><i class="fa fa-calendar" style="font-size:14px;"></i></span>
-                                 <input type="date"  id="o_due_date"name="o_due_date" class="form-control o_date"></div><span class="o_date"></span>
-                            </div>
-                         </div>
+                              <div class="form-group">
+                                 <label class="col-md-4 control-label">Order Due Date</label>
+                                 <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group"><span class="adj_size input-group-addon"><i class="fa fa-calendar" style="font-size:14px;"></i></span>
+                                       <input type="date" id="o_due_date" name="o_due_date" class="form-control o_date"></div><span class="o_date"></span>
+                                 </div>
+                              </div>
 
 
-                         <div class="form-group">
-                            <label class="col-md-4 control-label">Description</label>
+                              <div class="form-group">
+                                 <label class="col-md-4 control-label">Description</label>
 
-                            <div class="col-md-8 inputGroupContainer">
-                               <div class="input-group"><span class="adj_size input-group-addon"><i class="fa fa-calendar" style="font-size:14px;"></i></span>
-                                <textarea class="form-control" rows="5" id="description" name="description"></textarea>
-                                </div><span class="o_due_date"></span>
-                             </div>
-                            </div>
+                                 <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group"><span class="adj_size input-group-addon"><i class="fa fa-calendar" style="font-size:14px;"></i></span>
+                                       <textarea class="form-control" rows="5" id="description" name="description"></textarea>
+                                    </div><span class="o_due_date"></span>
+                                 </div>
+                              </div>
 
-                    </div>
-                     </div>
+                           </div>
+                        </div>
 
-                    <div class="row">
-                     <div class="col-md-12">
-                    <table class="table table-bordered table-hover" id="product_table"> 
+                        <div class="row">
+                           <div class="col-md-12">
 
-                    <thead>
-                    <tr>
+                              <table class="table table-bordered table-hover" id="product_table">
+                               
+                                 <thead>
+                                    <tr style="display:none;" id="searchversion">
 
-                    <th>Description</th>
-                    <th>Qty</th>
-                    <th>UnitTransfer Price</th>
-                    <th>Total Transfer Price</th>
-                 
-                   
-                    <th>Tax (%) </th>
-                    <th>Tax (Rs) </th>
+                                       <th>Version</th>
+                                       <th colspan="12"> <div class="input-group"><span class="input-group-addon"><i class="fa fa-life-ring"></i></span><select name="search_version" id="search_version" class="form-control">
+                                             <option value="">Select</option>
+                                            
+                                          </select></div></th>
 
-                    <th>Total Transfer Price With Inc Tax  </th>
+                                    </tr>
+                                    <tr>
 
-
-                    <th>Unit Ord Value</th>
-                    <th>Total Ord Value</th>
-                    <th> Tax % </th>
-                    <th> Tax (Value) </th>
-
-                    <th>Total Ord Val With Tax</th>
-                    <th>Margin</th>
-                    <th>
-
-                    <button type="button" id="add_row" class="btn btn-default" style="font-size: 12px; color:green"><i class="fa fa-plus"></i></button>
-                    </th>
+                                       <th>Description</th>
+                                       <th>Qty</th>
+                                       <th>UnitTransfer Price</th>
+                                       <th>Total Transfer Price</th>
 
 
-                    </tr>
-                    </thead>
-                    <tbody >
-<!-- 
+                                       <th>Tax (%) </th>
+                                       <th>Tax (Rs) </th>
+
+                                       <th>Total Transfer Price With Inc Tax </th>
+
+
+                                       <th>Unit Ord Value</th>
+                                       <th>Total Ord Value</th>
+                                       <th> Tax % </th>
+                                       <th> Tax (Value) </th>
+
+                                       <th>Total Ord Val With Tax</th>
+                                       <th>Margin</th>
+                                       <th>
+
+                                          <button type="button" id="add_row" class="btn btn-default" style="font-size: 12px; color:green"><i class="fa fa-plus"></i></button>
+                                       </th>
+
+
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    <!-- 
                     <tr id="row_1" class="producttbrow"> 
                     <td>
                     <input type="text" value="" class="form-control" name="P_Id[]" id="P_Id_1" placeholder="Product Name">
@@ -221,175 +228,174 @@
                     </tr> -->
 
 
-                    </tbody>
-                    <tfoot>
-                    <tr > 
-                    <td>
-                  
-                    </td>
+                                 </tbody>
+                                 <tfoot>
+                                    <tr>
+                                       <td>
 
-                    <td> 
-                  
-                    </td>
+                                       </td>
 
-           
+                                       <td>
 
-                    <td colspan="2">
-                    <input  type="number"  style="text-align:right;"  value="" class="form-control" name="totaltrasnforprice" id="totaltrasnforprice" placeholder="Total Transfer Price">
-                    </td>
-
-                   
+                                       </td>
 
 
 
-                    <td colspan="2"> 
-                    <input type="text"  style="text-align:right;" value="" class="form-control" name="totaltaxprice" id="totaltaxprice" placeholder="Tax Rs" readonly>
-                    </td>
-
-                    <td colspan="2"> 
-                    <input type="text"  style="text-align:right;" value="" class="form-control" name="totaltranforpricewithtax" id="totaltranforpricewithtax" placeholder=" Total Transfer Price With Inc Tax" readonly>
-                    </td>
-
-                   
-                   
-
-                   
+                                       <td colspan="2">
+                                          <input type="number" style="text-align:right;" value="" class="form-control" name="totaltrasnforprice" id="totaltrasnforprice" placeholder="Total Transfer Price">
+                                       </td>
 
 
 
-                    <td colspan="2"> 
-                    <input type="text"  style="text-align:right;" class="form-control" name="P_TotalAmt[]" id="P_TotalAmt_1" placeholder="P Value" >
-                    </td>
 
-                    <td colspan="2" > 
-                    <input type="text"  style="text-align:right;" class="form-control" name="P_Tax_Rs[]" id="P_Tax_Val_1" placeholder="Total  Order Val With Tax" >
-                    </td>
 
-                    <td colspan="2"> 
-                    <input type="text" style="text-align:right;" class="form-control" name="Margin[]" id="Margin_1" placeholder="Margiin" >
-                    </td>
+                                       <td colspan="2">
+                                          <input type="text" style="text-align:right;" value="" class="form-control" name="totaltaxprice" id="totaltaxprice" placeholder="Tax Rs" readonly>
+                                       </td>
+
+                                       <td colspan="2">
+                                          <input type="text" style="text-align:right;" value="" class="form-control" name="totaltranforpricewithtax" id="totaltranforpricewithtax" placeholder=" Total Transfer Price With Inc Tax" readonly>
+                                       </td>
 
 
 
-                   
-
-                     </tr>
-
-                    </tfoot>
-                    </table>
-                    <input type="hidden" id="product_tbody" name="product_tbody" value="0">
-
-                    <div class="content" style="">		
-	   
-   
-     <div class="col-sm-5 col-md-7">
-		
-    </div>
-	
-	
-	
-	<div class="col-sm-5 col-sm-offset-2 col-md-5 col-md-offset-0">
 
 
-	
-		<!-- <div class="form-inline">
+
+
+
+                                       <td colspan="2">
+                                          <input type="text" style="text-align:right;" class="form-control" name="P_TotalAmt[]" id="P_TotalAmt_1" placeholder="P Value">
+                                       </td>
+
+                                       <td colspan="2">
+                                          <input type="text" style="text-align:right;" class="form-control" name="P_Tax_Rs[]" id="P_Tax_Val_1" placeholder="Total  Order Val With Tax">
+                                       </td>
+
+                                       <td colspan="2">
+                                          <input type="text" style="text-align:right;" class="form-control" name="Margin[]" id="Margin_1" placeholder="Margiin">
+                                       </td>
+
+
+
+
+
+                                    </tr>
+
+                                 </tfoot>
+                              </table>
+                              <input type="hidden" id="product_tbody" name="product_tbody" value="0">
+
+                              <div class="content" style="">
+
+
+                                 <div class="col-sm-5 col-md-7">
+
+                                 </div>
+
+
+
+                                 <div class="col-sm-5 col-sm-offset-2 col-md-5 col-md-offset-0">
+
+
+
+                                    <!-- <div class="form-inline">
 		<label class="col-sm-5"><b>Total Tax : </b></label>
 		<div class="form-check-inline col-sm-5">
 		<input type="text" class="form-control" id="subTotal" name="subTotal" readonly>
         </div></br></br> -->
 
-        <div class="form-group">
-        <label class="col-sm-4"><b>Total Order Value (without Tax) </b></label>
-                            <div class="col-md-8 inputGroupContainer">
-                            <input type="number"   style="text-align:right;" class="form-control getmargindata" id="finalordvalue" name="finalordvalue" >
-                            </div>
-                         </div>
-       
-                         <div class="form-group">
-        <label class="col-sm-4"><b>Total Transfer Price (without Tax) </b></label>
-                            <div class="col-md-8 inputGroupContainer">
-                            <input type="text" style="text-align:right;" class="form-control getmargindata" id="finaltrasforprice" name="finaltrasforprice" >
-                            </div>
-                         </div>
+                                    <div class="form-group">
+                                       <label class="col-sm-4"><b>Total Order Value (without Tax) </b></label>
+                                       <div class="col-md-8 inputGroupContainer">
+                                          <input type="number" style="text-align:right;" class="form-control getmargindata" id="finalordvalue" name="finalordvalue">
+                                       </div>
+                                    </div>
 
-                         <div class="form-group">
-        <label class="col-sm-4"><b>Less Input Tax if CST </b></label>
-                            <div class="col-md-8 inputGroupContainer">
-                            <input type="number" style="text-align:right;" class="form-control getmargindata" id="lesstaxcst" name="lesstaxcst" >
-                            </div>
-                         </div>
+                                    <div class="form-group">
+                                       <label class="col-sm-4"><b>Total Transfer Price (without Tax) </b></label>
+                                       <div class="col-md-8 inputGroupContainer">
+                                          <input type="text" style="text-align:right;" class="form-control getmargindata" id="finaltrasforprice" name="finaltrasforprice">
+                                       </div>
+                                    </div>
 
-                         <div class="form-group">
-        <label class="col-sm-4"><b>Less Transporation </b></label>
-                            <div class="col-md-8 inputGroupContainer">
-                            <input type="number" style="text-align:right;" class="form-control getmargindata" id="lesstrasporation" name="lesstrasporation" >
-                            </div>
-                         </div>
+                                    <div class="form-group">
+                                       <label class="col-sm-4"><b>Less Input Tax if CST </b></label>
+                                       <div class="col-md-8 inputGroupContainer">
+                                          <input type="number" style="text-align:right;" class="form-control getmargindata" id="lesstaxcst" name="lesstaxcst">
+                                       </div>
+                                    </div>
 
-      
-                         <div class="form-group">
-        <label class="col-sm-4"><b> Less BG/Insurance Cost </b></label>
-                            <div class="col-md-8 inputGroupContainer">
-                            <input type="number"  style="text-align:right;" class="form-control getmargindata" id="lessbg" name="lessbg" >
-                            </div>
-                         </div>
+                                    <div class="form-group">
+                                       <label class="col-sm-4"><b>Less Transporation </b></label>
+                                       <div class="col-md-8 inputGroupContainer">
+                                          <input type="number" style="text-align:right;" class="form-control getmargindata" id="lesstrasporation" name="lesstrasporation">
+                                       </div>
+                                    </div>
 
-                         <div class="form-group">
-        <label class="col-sm-4"><b>Less others (if any) </b></label>
-                            <div class="col-md-8 inputGroupContainer">
-                            <input type="number" style="text-align:right;"  class="form-control getmargindata" id="lessother" name="lessother" >
-                            </div>
-                         </div>
 
-                         <div class="form-group">
-        <label class="col-sm-4"><b>MARGIN </b></label>
-                            <div class="col-md-8 inputGroupContainer">
-                            <input type="number" style="text-align:right;"  class="form-control " id="finalmargin" name="finalmargin" >
-                            </div>
-                         </div>
+                                    <div class="form-group">
+                                       <label class="col-sm-4"><b> Less BG/Insurance Cost </b></label>
+                                       <div class="col-md-8 inputGroupContainer">
+                                          <input type="number" style="text-align:right;" class="form-control getmargindata" id="lessbg" name="lessbg">
+                                       </div>
+                                    </div>
 
-  
-    
-    
-    
-                        
-  
-		
-	    
-	
-		    
-	    </div>
-      </div>
-    </div> 
-   
+                                    <div class="form-group">
+                                       <label class="col-sm-4"><b>Less others (if any) </b></label>
+                                       <div class="col-md-8 inputGroupContainer">
+                                          <input type="number" style="text-align:right;" class="form-control getmargindata" id="lessother" name="lessother">
+                                       </div>
+                                    </div>
 
-            <tr><td><input type="submit" class="btn btn-primary" 
-            name="submit" value="Save" >
-            <input type="hidden" id="save_update" name="save_update" value="">
-            <input type="reset" id="reset" class="btn btn-danger" 
-            name="reset" value="Reset" >
-        </td>
-            <td>
-         
-            
+                                    <div class="form-group">
+                                       <label class="col-sm-4"><b>MARGIN </b></label>
+                                       <div class="col-md-8 inputGroupContainer">
+                                          <input type="number" style="text-align:right;" class="form-control " id="finalmargin" name="finalmargin">
+                                       </div>
+                                    </div>
+
+
+
+
+
+
+
+
+
+
+
+                                 </div>
+                              </div>
+                           </div>
+
+
+            <tr>
+               <td><input type="submit" class="btn btn-primary" name="submit" value="Save">
+                  <input type="hidden" id="save_update" name="save_update" value="">
+                  <input type="reset" id="reset" class="btn btn-danger" name="reset" value="Reset">
+               </td>
+               <td>
+
+
             </tr>
 
 
 
-                  
-                 
-   
-                    
-                      
-                      </fieldset>
-                   </form>
-                </td>            
-             </tr>
-          </tbody>
-       </table>
-    </div>
- </div>
- <div class="container">
+
+
+
+
+
+            </fieldset>
+            </form>
+            </td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+</div>
+<div class="container">
 
    <input type="hidden" name="alert_msg" id='alert_msg' value="<?php echo $this->session->flashdata('msglp'); ?>">
    <div class="row tablehideshow" id="show_master">
@@ -399,66 +405,65 @@
    <!-- Delete Modal -->
    <div id="myModal1" class=" modal fade " role="dialog">
 
-     <div class="modal-dialog ">
+      <div class="modal-dialog ">
 
-       <div class="modal-content">
-         <!--   <div class="modal-header">
+         <div class="modal-content">
+            <!--   <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Delete</h4>
       </div> -->
-         <span id='cal_error'></span>
+            <span id='cal_error'></span>
 
-         <input type="hidden" name="del_id" id='del_id'>
+            <input type="hidden" name="del_id" id='del_id'>
 
-         <div class="modal-body">
+            <div class="modal-body">
 
-           <h5>Are You Sure You Want To Delete</h5>
-           <button type="button" class="close" style="margin-top: -1.5em;" data-dismiss="modal" aria-label="Close">
-             <span aria-hidden="true">&times;</span>
+               <h5>Are You Sure You Want To Delete</h5>
+               <button type="button" class="close" style="margin-top: -1.5em;" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+            </div>
+            <div class="modal-footer">
+               <button class="btn btn-primary" id="delete">OK</button>
+
+               <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
          </div>
-         <div class="modal-footer">
-           <button class="btn btn-primary" id="delete">OK</button>
 
-           <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-         </div>
-       </div>
-
-     </div>
+      </div>
    </div>
- </div>
-   
+</div>
+
 <!-- Delete Modal -->
 
 
 
 
-   <!--  
+<!--  
     <script src='assets/src/tagcomplete.js'></script> -->
-   
-  <script src="<?php echo base_url(); ?>assets/js/myjs/quatation.js"></script>
 
-  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+<script src="<?php echo base_url(); ?>assets/js/myjs/quatation.js"></script>
+
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 <!-- jQuery UI library -->
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 <script src="assets/js/bootstrap-notify.js"></script>
-  <script src="assets/js/bootstrap-notify.min.js"></script>
- 
-  
+<script src="assets/js/bootstrap-notify.min.js"></script>
+
+
 
 <script type="text/javascript">
-    // Table Append 
+   // Table Append 
 
 
-  var base_url = "<?php echo base_url(); ?>";
+   var base_url = "<?php echo base_url(); ?>";
 
-  $(document).ready(function() {
+   $(document).ready(function() {
 
-  
- 
-    });
 
+
+   });
 </script>
 
 

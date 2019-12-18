@@ -255,6 +255,26 @@ function getquatation_details($id){
     }
  
 }
+function getquotationversion($id){
+    $this->db->select('*');    
+    $this->db->from('quotation_detalis');
+    $this->db->where('status',1);
+    $this->db->where('quatation_id',$id);
+    $this->db->group_by('version');
+    $hasil=$this->db->get();
+    return $hasil->result();
+}
+function getquationversionwise($id,$version){
+
+    //echo $id."".$version;
+    $this->db->select('*');    
+    $this->db->from('quotation_detalis');
+    $this->db->where('status',1);
+    $this->db->where('quatation_id',$id);
+    $this->db->where('version',$version);
+    $hasil=$this->db->get();
+    return $hasil->result();
+}
 
 }
 
