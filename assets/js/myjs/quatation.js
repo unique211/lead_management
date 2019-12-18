@@ -1101,7 +1101,7 @@ $(document).ready(function() {
             },
             success: function(data) {
                 $("#product_table tbody").html('');
-                alert(data);
+
                 if (data.length > 0) {
                     var row_id = 0;
                     for (var i = 0; i < data.length; i++) {
