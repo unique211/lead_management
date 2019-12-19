@@ -3,8 +3,8 @@
    <h3>Quatation / Estimate</h3><br>
 
 
-   <div class="btnhideshow" style="display:none;">
-      <table class="table table-striped">
+   <div class="btnhideshow"  style="display:none;">
+      <table id="btntable" class="table table-striped">
          <tbody>
             <tr>
                <td colspan="1">
@@ -315,7 +315,7 @@
                                     <div class="form-group">
                                        <label class="col-sm-4"><b>Total Transfer Price (without Tax) </b></label>
                                        <div class="col-md-8 inputGroupContainer">
-                                          <input type="text" style="text-align:right;" class="form-control getmargindata" id="finaltrasforprice" name="finaltrasforprice">
+                                          <input type="number" style="text-align:right;" class="form-control getmargindata" id="finaltrasforprice" name="finaltrasforprice">
                                        </div>
                                     </div>
 
@@ -372,8 +372,10 @@
 
             <tr>
                <td><input type="submit" class="btn btn-primary" name="submit" value="Save">
+              
                   <input type="hidden" id="save_update" name="save_update" value="">
                   <input type="reset" id="reset" class="btn btn-danger" name="reset" value="Reset">
+                  <button type="button"  id="btnExport" name="btnExport"  class="btn btn-sm btn-info pull-right" style="display:none;">Excle</button>
                	<button type="submit" form="pdf" id="btnprint" name="btnprint" value="" class="btn btn-sm btn-info pull-right" style="display:none;">Print</button>
                </td>
                <td>
@@ -403,6 +405,17 @@
    <div class="row tablehideshow" id="show_master">
 
    </div>
+
+   <div class="row" id="show_master1" style="display:none;">
+   <table id="tblexport">
+      <thead>
+         <tr><th colspan="4">Customer Info</th>
+         <th colspan="4">Quatation Info</th></tr>
+      </thead>
+      <tbody id="tblexporttbl"></tbody>
+   </table>
+
+</div>
 
    <!-- Delete Modal -->
    <div id="myModal1" class=" modal fade " role="dialog">
@@ -449,7 +462,7 @@
 <!-- jQuery UI library -->
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
+<script src="https://rawgit.com/unconditional/jquery-table2excel/master/src/jquery.table2excel.js"></script>
 <script src="assets/js/bootstrap-notify.js"></script>
 <script src="assets/js/bootstrap-notify.min.js"></script>
 

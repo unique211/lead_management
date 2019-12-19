@@ -261,6 +261,8 @@ function getquotationversion($id){
     $this->db->where('status',1);
     $this->db->where('quatation_id',$id);
     $this->db->group_by('version');
+    $this->db->order_by('version','ASC');
+    
     $hasil=$this->db->get();
     return $hasil->result();
 }

@@ -17,6 +17,7 @@ $ref_number='';
 $contact_person='';
 $symbol="$";
 $margin=0;
+$description="";
 foreach($customerinfo as $value)
 {
    
@@ -118,9 +119,9 @@ $invoice->addTotal("Total Order Value (without Tax)", $total_order_value);
 
 
 //Add title
-// $invoice->addTitle("Extra notes");
+ $invoice->addTitle("Remarks");
 // //Add paragraph
-// $invoice->addParagraph("Thanks for your interest in our products!<br>Send me an email if you have any questions about this quotation.<br><br>Kind regards,<br>Jane Doe<br>jane@soundcloud.com");
+ $invoice->addParagraph($description);
 // //Set footernote
 // $invoice->setFooternote("http://www.soundcloud.com");
 //Render
