@@ -397,6 +397,11 @@ class invoicr extends FPDF_rotation
 					$this->SetXY($resetX,$resetY);	
 				}
 				$this->SetTextColor(50,50,50);
+				if($item['colored']) 
+				{
+					$this->SetTextColor(255,255,255);
+					
+				}
 				$this->SetFont($this->font,'',8);
 				$this->Cell($this->columnSpacing,$cHeight,'',0,0,'L',0);
 				$this->Cell($width_other,$cHeight,$item['quantity'],0,0,'C',1);
