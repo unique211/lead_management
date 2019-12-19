@@ -13,8 +13,8 @@ $l['total'] 						= 'Total';
 $l['page'] 							= 'Page';
 $l['page_of'] 						= 'of';
 $l['qty'] 						= 'qty';
-$l['unitprice'] 						= 'unit order value';
-$l['ordervalue'] 						= 'total order value';
+$l['unitprice'] 						= 'unit  value';
+$l['ordervalue'] 						= 'total  value';
 $l['taxvalue'] 						= 'Tax Value';
-$l['totalval'] 						= 'total order value incl tax';
+$l['totalval'] 						= 'total  value incl tax';
 ?>

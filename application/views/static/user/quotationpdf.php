@@ -101,15 +101,15 @@ foreach($product_detalis as $value1)
 $invoice->addItem($productname,false,$qty,$unit_order_value,$totalprice,$order_tax."%",$taxrs,$totalpricewithtax);
 //Add totals
 }
-$invoice->addItem("Total",false,"-",$totalorderunit,$totaltotalprice,"-",$totaltaxrs,$totalorderpricewithtax);
+$invoice->addItem("Total",false,"-",$totalorderunit,$totaltotalprice,"-",$totaltaxrs,$totalorderpricewithtax,true);
 
 $invoice->addTotal("Total Order Value (without Tax)", $total_order_value);
-$invoice->addTotal("Total Transfer Price (without Tax)", $total_trasfor_price);
-$invoice->addTotal("Less Input Tax if CST ", $less_input_tax);
-$invoice->addTotal("Less Transporation", $less_trasportion);
-$invoice->addTotal("Less BG/Insurance Cost ",$less_bg);
-$invoice->addTotal("Less others (if any) ", $less_others);
-$invoice->addTotal("MARGIN", $margin);
+// $invoice->addTotal("Total Transfer Price (without Tax)", $total_trasfor_price);
+// $invoice->addTotal("Less Input Tax if CST ", $less_input_tax);
+// $invoice->addTotal("Less Transporation", $less_trasportion);
+// $invoice->addTotal("Less BG/Insurance Cost ",$less_bg);
+// $invoice->addTotal("Less others (if any) ", $less_others);
+// $invoice->addTotal("MARGIN", $margin);
 //Add badge
 //$invoice->addBadge("Copy");
 

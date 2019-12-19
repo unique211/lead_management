@@ -112,7 +112,7 @@ class invoicr extends FPDF_rotation
 		$this->flipflop = true;
 	}
 	
-	function addItem($item,$description,$quantity,$vat,$price,$discount=0,$total,$tax)
+	function addItem($item,$description,$quantity,$vat,$price,$discount=0,$total,$tax,$colored=0)
 	{
 		$p['item'] 			= $item;
 		$p['description'] 	= $this->br2nl($description);
@@ -124,6 +124,7 @@ class invoicr extends FPDF_rotation
 		$p['price']			= $price;
 		$p['total']			= $total;
 		$p['tax']			= $tax;	
+		$p['colored']		= $colored;
 		//$p['totaltax']			= $totaltax;
 		
 		if($discount!==false) {
@@ -370,6 +371,11 @@ class invoicr extends FPDF_rotation
 				$this->SetFillColor($bgcolor,$bgcolor,$bgcolor);
 				$this->Cell(1,$cHeight,'',0,0,'L',1);
 				$x = $this->GetX();
+				if($item['colored']) 
+				{
+					$this->SetTextColor(255,255,255);
+					$this->SetFillColor($this->color[0],$this->color[1],$this->color[2]);
+				}
 				$this->Cell($this->firstColumnWidth,$cHeight,iconv("UTF-8", "ISO-8859-1",$item['item']),0,0,'L',1);
 				if($item['description'])
 				{
