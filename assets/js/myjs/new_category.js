@@ -72,7 +72,7 @@ $(document).ready(function() {
             success: function(data) {
 
                 var html = '';
-                html += '<table class="table table-striped">' +
+                html += '<table id="myTable" class="table table-striped">' +
                     '<thead>' +
                     '<tr>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Sr No</th>' +

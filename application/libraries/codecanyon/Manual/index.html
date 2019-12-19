@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Invoicr · Simple PHP class for beautiful invoices</title>
+	<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<div id="logo"><img src="assets/images/logo.png"></div>
+
+
+<a id="intro"></a>
+<div class="white">
+	<div class="padding">
+		<div class="iconsect"><div class="icon-bolt"></div></div>		
+		<h2>Introduction</h2>
+		<p>Invoicr is a simple PHP class to generate beautifully designed invoices, quotes or orders with just a few lines of code. Brand it with your own logo and theme color, add unlimited items and total rows with automatic paging. You can deliver the PDF ouput in the user's browser, save on the server or force a file download.
+		</p>
+		<h3>Multi-languages & currencies</h3>
+		<p>Invoicr has built in translations in English, Dutch, French, German, Spanish and Italian (you can easily add your own if needed) and you can set the currency needed per document.</p>
+		<h3>Additional titles, paragraphs and badges</h3>
+		<p>We made it easy to add extra content (titles and multi-line paragraphs) to the bottom of the document. You might use it for payment or shipping information or any other content needed.</p>
+		<div class="spacer"></div>
+	</div>
+	
+	<hr>
+	<a id="start"></a>
+	<div class="padding">
+		<div class="iconsect"><div class="icon-code"></div></div>		
+		<h2>Getting Started</h2>
+		
+		
+		<h3>Installation</h3>
+		<p>Upload the invoicr folder and all content to your webserver.</p>
+
+		<h3>Examples</h3>
+		<p>There are 3 examples included in the class that work out of the box.<br>Surf to http://[yourwebsite]/invoicer/examples/<b>filename</b>.php to view them.<br>
+		- invato.php<br>
+		- apple.php<br>
+		- soundcloud.php
+		</p><br>
+		
+		<h3>Create a new invoice</h3>
+		<p>Create a new php file in the root of your webserver and include the class to get started.<br>Please make sure that the default php date timezone is set before including the class.<br><a href="http://php.net/manual/en/function.date-default-timezone-set.php" target="_blank">Click here for more information.</a><br><br>In this simple example we are generating an invoice with custom logo and theme color. <br>It will contain 2 products and a box on the bottom with VAT and total price. Then we add a "Paid" badge right before the output.
+		</p>
+		
+		<pre class="php">
+&lt;?php
+//Set default date timezone
+date_default_timezone_set('America/Los_Angeles');
+//Include Invoicr class
+include('invoicr/invoicr.php');
+//Create a new instance
+$invoice = new invoicr("A4","$","en");
+//Set number formatting
+$invoice->setNumberFormat('.',',');
+//Set your logo
+$invoice->setLogo("invoicr/examples/images/envato.png");
+//Set theme color
+$invoice->setColor("#82b541");
+//Set type
+$invoice->setType("Invoice");
+//Set reference
+$invoice->setReference("20140904001");
+//Set date
+$invoice->setDate("01.01.2014");
+//Set due date
+$invoice->setDue("03.01.2014");
+//Set from
+$invoice->setFrom(array("Envato Inc","4146 Golden Hickory Woods","Glass Hill, Sydney","Australia","VAT 377 855 846"));
+//Set to
+$invoice->setTo(array("EpicBrands Studios","1516 Holt Street","West Palm Beach","FL 33401 - USA","VAT 148 366 032"));
+//Add items
+$invoice->addItem("Wordpress theme",false,2,"21%",9.99,false,19.98);
+$invoice->addItem("Php invoicr class","Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nDuis sodales, lorem quis aliquam sollicitudin, metus risus dignissim lorem.",1,"21%",4.95,false,4.95);
+//Add totals
+$invoice->addTotal("Total",24.93);
+$invoice->addTotal("VAT 21%",5.23);
+$invoice->addTotal("Total due",30.16,true);
+//Add Badge
+$invoice->addBadge("paid");
+//Add Title
+$invoice->addTitle("Payment information");
+//Add Paragraph
+$invoice->addParagraph("Make all cheques payable to Envato Inc.\nIf you have any questions concerning this invoice, contact our sales department at sales@envato.com.\n\nThank you for your business.");
+//Set footer note
+$invoice->setFooternote("http://www.envato.com");
+//Render the PDF
+$invoice->render('Envato.pdf','I');
+?&gt;
+		</pre>
+	
+	</div>
+	<hr>
+	<a id="docs"></a>
+	<div class="padding">
+		<div class="iconsect"><div class="icon-zoom-in"></div></div>	
+		<h2>Documentation</h2>
+		<p>See and learn how every Invoicr method works in detail<br></p>
+		<div class="item">
+			<h3>Create instance</h3>
+			<p>Start a new instance of the Invoicr class.</p>
+			<pre class="php">$invoice = new invoicr(size,currency,language);</pre>
+			<ul class="parameters">
+				<li>
+					size {string}
+					<span>Set your document size.</span>
+					<ul>
+						<li>
+							<span>A4<small>Default</small></span>
+						</li>
+						<li>
+							<span>Letter</span>
+						</li>
+						<li>
+							<span>Legal</span>
+						</li>
+					</ul>
+				</li>
+				<li>
+					currency {string}
+					<span>Set the currency that you want to use by simply passing the currency symbol as a string. (e.g. "$")</span>
+				</li>
+				<li>
+					language {string}
+					<span>Select a language that exists in the /languages folder. Create your own translation file or use the included:</span>
+					<ul>
+						<li>
+							<span>EN (English)<small>Default</small></span>
+						</li>
+						<li>
+							<span>NL (Dutch)</span>
+						</li>
+						<li>
+							<span>FR (French)</span>
+						</li>
+						<li>
+							<span>DE (German)</span>
+						</li>
+						<li>
+							<span>ES (Spanish)</span>
+						</li>
+						<li>
+							<span>IT (Italian)</span>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		
+		<div class="item">
+			<h3>Number formatting</h3>
+			<p>How do you want to show your numbers?</p>
+			<pre class="php">$invoice->setNumberFormat(decimalpoint,seperator);</pre>
+			
+			<ul class="parameters">
+				<li>
+					decimalpoint {string}
+					<span>Specifies what string to use for decimal point. Commonly used is '.' or ','</span>
+				</li>
+				<li>
+					seperator {string}
+					<span>Specifies what string to use for thousands separator. Commonly used is '.' or ','</span>
+				</li>
+			</ul>
+		</div>
+		
+		<div class="item">
+			<h3>Theme color</h3>
+			<p>Set a custom color to personalize your invoices.</p>
+			<pre class="php">$invoice->setColor(color);</pre>
+			
+			<ul class="parameters">
+				<li>
+					color {string}
+					<span>Hexadecimal color code. Example for red: '#FF0000'</span>
+				</li>
+			</ul>
+		</div>
+		
+		<div class="item">
+			<h3>Logo</h3>
+			<p>Add your company logo to the invoice.</p>
+			<pre class="php">$invoice->setLogo(image,maxwidth,maxheight);</pre>
+			
+			<ul class="parameters">
+				<li>
+					image {string}
+					<span>Local path or remote url of the image file to be used, preferably a good quality transparant png image.</span>
+				</li>
+				<li>
+					maxwidth {int}<small>Optional</small>
+					<span>Set the width (in mm) of the bounding box where the image will be fitted in. Maxheight parameter is required.</span>
+				</li>
+				<li>
+					maxheight {int}<small>Optional</small>
+					<span>Set the height (in mm) of the bounding box where the image will be fitted in. Maxwidth parameter is required.</span>
+				</li>
+			</ul>
+		</div>
+		
+		<div class="item">
+			<h3>Document type</h3>
+			<p>Set the type of document you are creating.</p>
+			<pre class="php">$invoice->setType(type);</pre>
+			
+			<ul class="parameters">
+				<li>
+					type {string}
+					<span>A string with the document type. that will be used for the title in the right top corner of the document (e.g. 'invoice' or 'quote')</span>
+				</li>
+			</ul>
+		</div>
+		
+		<div class="item">
+			<h3>Reference</h3>
+			<p>Add your document reference or number</p>
+			<pre class="php">$invoice->setReference(reference);</pre>
+			<ul class="parameters">
+				<li>
+					reference {string}
+					<span>Document reference that will be displayed in the right top corner of the document (e.g. 'INV29782')</span>
+				</li>
+			</ul>
+		</div>
+		
+		<div class="item">
+			<h3>Date</h3>
+			<p>Set your document date.</p>
+			<pre class="php">$invoice->setDate(date);</pre>
+			<ul class="parameters">
+				<li>
+					date {string}
+					<span>A string with the document's date (e.g. '<?=date('m.d.Y',time())?>').</span>
+				</li>
+			</ul>
+		</div>
+		
+		<div class="item">
+			<h3>Due Date<small>Optional</small></h3>
+			<p>Set your invoice due date.</p>
+			<pre class="php">$invoice->setDue(duedate);</pre>
+			<ul class="parameters">
+				<li>
+					duedate {string}
+					<span>A string with the document's due date (e.g. '<?=date('m.d.Y',strtotime('+3 months'))?>')</span>
+				</li>
+			</ul>
+		</div>
+		
+		<div class="item">
+			<h3>Company information</h3>
+			<p>Set your company details.</p>
+			<pre class="php">$invoice->setFrom(company);</pre>
+			<ul class="parameters">
+				<li>
+					company {array}
+					<span>
+						An array with your company details. The first value of the array will be bold on the document so we suggest you to use your company's name. You can add as many lines as you need.<br><br>Example:<br>
+						array('My Company','Address line 1','Address line 2','City and zip','Country','VAT number');
+					</span>
+				</li>
+			</ul>
+		</div>
+		
+		<div class="item">
+			<h3>Client information</h3>
+			<p>Set your client details.</p>
+			<pre class="php">$invoice->setTo(client);</pre>
+			<ul class="parameters">
+				<li>
+					client {array}
+					<span>
+						An array with your clients' details. The first value of the array will be bold on the document so we suggest you to use your company's name. You can add as many lines as you need.<br><br>Example:<br>
+						array('My Client','Address line 1','Address line 2','City and zip','Country','VAT number');
+					</span>
+				</li>
+			</ul>
+		</div>
+		
+		<div class="item">
+			<h3>FlipFlop<small>Optional</small></h3>
+			<p>Switch the horizontal positions of your company information and the client information. By default, your company details are on the left.</p>
+			<pre class="php">$invoice->flipflop();</pre>
+		</div>
+		
+		<div class="item">
+			<h3>Add item</h3>
+			<p>Add a new product or service row to your document below the company and client information. Invoicr has automatic paging so there is absolutely no limit.</p>
+			<pre class="php">$invoice->addItem(name,description,amount,vat,price,discount,total);</pre>
+			<ul class="parameters">
+				<li>
+					 name {string}
+					<span>
+						A string with the product or service name.
+					</span>
+					
+				</li>
+				<li>
+					description {string}
+					<span>
+						A string with the description with multi-line support. Use either &lt;br&gt; or \n to add a line-break.
+					</span>
+				</li>
+				<li>
+					amount {decimal}
+					<span>
+						An integer with the amount of this item.
+					</span>
+				</li>
+				<li>
+					vat {string} or {decimal}
+					<span>
+						Pass a string (e.g. "21%", or any other text you may like) or a decimal if you want to show an amount instead (e.g. 124.30)
+					</span>
+				</li>
+				<li>
+					price {decimal}
+					<span>
+						A decimal for the unit price.
+					</span>
+				</li>
+				<li>
+					discount {string}, {decimal} or {boolean}<small>Optional</small>
+					<span>
+						Pass a string (e.g. "10%", or any other text you may like) or a decimal if you want to show an amount instead (e.g. 50.00)
+						If you do not want to give discount just enter the boolean false in this field. Note: the final output will not show a discount column when all of the products haven't set a discount.
+					</span>
+				</li>
+				<li>
+					total {decimal}
+					<span>
+						A decimal for the total product or service price.
+					</span>
+				</li>
+			</ul>
+		</div>
+		
+		<div class="item">
+			<h3>Add Total</h3>
+			<p>Add a row below the products and services for calculations and totals. You can add unlimited rows.</p>
+			<pre class="php">$invoice->addTotal(name,value,background);</pre>
+			<ul class="parameters">
+				<li>
+					name {string}
+					<span>
+						A string for the display name of the total field.
+					</span>
+					
+				</li>
+				<li>
+					value {decimal}
+					<span>
+						A decimal for the value.
+					</span>
+				</li>
+				<li>
+					background {boolean}<small>Optional</small>
+					<span>
+						Set to true to set the theme color as background color of the row.								
+					</span>
+				</li>
+			</ul>
+		</div>
+		
+		<div class="item">
+			<h3>Add badge<small>Optional</small></h3>
+			<p>Adds a badge to your invoice below the products and services. You can use this for example to display that the invoice has been payed.</p>
+			<pre class="php">$invoice->addBadge(badge);</pre>
+			<ul class="parameters">
+				<li>
+					badge {string}
+					<span>
+						A string with the text of the badge.
+					</span>
+				</li>
+			</ul>
+		</div>
+		
+		<div class="item">
+			<h3>Add title</h3>
+			<p>You can add titles and paragraphs to display information on the bottom part of your document such as payment details or shipping information.</p>
+			<pre class="php">$invoice->addTitle(title);</pre>
+			<ul class="parameters">
+				<li>
+					title {string}
+					<span>
+						A string with the title to display in the badge.
+					</span>
+				</li>
+			</ul>
+		</div>
+		
+		<div class="item">
+			<h3>Add paragraph</h3>
+			<p>You can add titles and paragraphs to display information on the bottom part of your document such as payment details or shipping information.</p>
+			<pre class="php">$invoice->addParagraph(paragraph);</pre>
+			
+			<ul class="parameters">
+				<li>
+					Paragraph {string}
+					<span>
+						A string with the paragraph text with multi-line support. Use either &lt;br&gt; or \n to add a line-break.
+					</span>
+				</li>
+			</ul>
+		</div>
+		
+		<div class="item">
+			<h3>Footer</h3>
+			<p>A small text you want to display on the bottom left corner of the document.</p>
+			<pre class="php">$invoice->setFooternote(note);</pre>
+			<ul class="parameters">
+				<li>
+					note {string}
+					<span>
+						A string with the information you want to display in the footer.
+					</span>
+				</li>
+			</ul>
+		</div>
+		
+		<div class="item">
+			<h3>Render</h3>
+			<p>Render the invoice.</p>
+			<pre class="php">$invoice->render(name,output);</pre>
+			<ul class="parameters">
+				<li>
+					name {string}
+					<span>
+						A string with the name of your invoice.<br>Example: 'invoice.pdf'
+					</span>
+				</li>
+				<li>
+					output {string}
+					<span>
+						Choose how you want the invoice to be delivered to the user. The following options are available:
+					</span>
+					<ul>
+						<li>
+							<span>I (Send the file inline to the browser)</span>
+						</li>
+						<li>
+							<span>D (Send to the browser and force a file download with the name given by name)</small></span>
+						</li>
+						<li>
+							<span>F (Save to a local file. Make sure to set pass the path in the name parameter)</small></span>
+						</li>
+						<li>
+							<span>S (Return the document as a string)</span>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<hr>
+	<div class="padding">
+		<div class="iconsect"><div class="icon-comment"></div></div>		
+		<h2>Credits</h2>
+		
+		<p>We would like to thank the creators of FPDF to create such an amazing PHP library that makes our work a lot easier.<br><a href="http://www.fpdf.org/" target="_blank">http://www.fpdf.org/</a></p>
+		
+	</div>
+</div>
