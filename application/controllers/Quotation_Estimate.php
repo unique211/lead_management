@@ -203,6 +203,66 @@ class Quotation_Estimate extends CI_Controller {
         $data=$this->quatationmodel->getqutationversioninfo($id);
         echo json_encode($data);
     }
+    public function SendEmailforgetpassword(){
+		
+        $to_email = $this->input->post('email'); 
+        $id = $this->input->post('id'); 
+        //$to_email ='smorvadiya931@rku.ac.in';
+        $res='';
+        /*$to_email='morvadiyasagar99@gmail.com';
+        $vendorname ='Sagar';
+        $mobile ='9913829299';*/
+        $this->load->library('phpmailer_lib');
+        
+         if($to_email !='') { 
+        
+        $mail = $this->phpmailer_lib->load();
+        
+        // SMTP configuration
+        $mail->isSMTP();
+        $mail->Host = 'tls://smtp.gmail.com:587';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'morvadiyasagar99@gmail.com';
+        $mail->Password = 'rvmn prql amti illl';
+    //	$mail->SMTPSecure = 'tls';
+        //$mail->Port     = 587;
+        //$mail->SMTPDebug = 2;
+                      
+        //$mail->SMTPDebug = 2;
+        $mail->setFrom('morvadiyasagar99@gmail.com', 'Contiloe');
+        //$mail->addReplyTo('morvadiyasagar99@gmail.com', 'Wadhwa Group');
+        
+        // Add a recipient
+    
+        $mail->addAddress($to_email);
+        
+        // Add cc or bcc 
+        $mail->addCC('morvadiyasagar99@gmail.com');
+    
+        
+        
+        $mail->Subject = 'Forgot Password link';
+        
+        
+        $mail->isHTML(true);
+        
+        $baseurl=base_url();
+            $mailContent ="Dear Sir/Madam,<br/><br/> Please access following link to Reset Your Password: <br/>";
+            $mail->Body = $mailContent;
+        
+        // Send email
+        if(!$mail->send()){
+            $res=false;
+            
+    
+        }else{
+            $res=true;
+            
+            
+        }
+            echo $res;
+         }
+        }
 
 }
 	
