@@ -104,7 +104,7 @@ $invoice->addItem($productname,false,$qty,$unit_order_value,$totalprice,$order_t
 }
 $invoice->addItem("Total",false,"-",$totalorderunit,$totaltotalprice,"-",$totaltaxrs,$totalorderpricewithtax,true);
 
-$invoice->addTotal("Total Order Value (without Tax)", $total_order_value);
+$invoice->addTotal("Total Order Value (without Tax)", $totaltotalprice);
 // $invoice->addTotal("Total Transfer Price (without Tax)", $total_trasfor_price);
 // $invoice->addTotal("Less Input Tax if CST ", $less_input_tax);
 // $invoice->addTotal("Less Transporation", $less_trasportion);
