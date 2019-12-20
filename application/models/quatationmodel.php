@@ -7,6 +7,38 @@ class Quatationmodel extends CI_Model{
             $result = $this->db->insert($table,$data);
             $id=$this->db->insert_id();
 
+          
+            $this->db->select('*');    
+            $this->db->from('new_account');
+            $this->db->where('customer_name',$this->input->post('cus_name'));
+            $hasil5=$this->db->get(); 
+             $num2 = $hasil5->num_rows();
+             if($num2 > 0){
+
+             }else{
+
+                $data3=array(
+                    'customer_name'=>$this->input->post('cus_name'),
+                );
+                $result = $this->db->insert('new_account',$data3);
+                $id1=$this->db->insert_id();
+                $data2 = array(
+                    'account_id' =>$id1,
+                    'contact_name' =>$this->input->post('cotactperson') ,
+                    'designation' => '',
+                    'email_id' =>$this->input->post('s_email'),
+                    'mobile_no' =>$this->input->post('phn'),
+                    'lead_line' =>'',
+        
+                );
+                $this->db->insert('contact_information',$data2);
+             }
+         
+
+          
+                
+            
+
             $data	= $this->input->post('studejsonObj');
 
             foreach($data as $studentinfo){
@@ -50,7 +82,7 @@ class Quatationmodel extends CI_Model{
 
 
             }
-            return $result;
+            return $id;
         
         
     }
@@ -261,8 +293,7 @@ function getquotationversion($id){
     $this->db->where('status',1);
     $this->db->where('quatation_id',$id);
     $this->db->group_by('version');
-    $this->db->order_by('version','ASC');
-    
+    $this->db->order_by('version','DESC');
     $hasil=$this->db->get();
     return $hasil->result();
 }
@@ -279,6 +310,28 @@ function getquationversionwise($id,$version){
 }
 function getcustomerdetalis($id){
     $this->db->select('*');    
+    $this->db->from('quotation_master');
+    $this->db->where('status',1);
+    $this->db->where('id',$id);
+    $hasil=$this->db->get();
+    return $hasil->result();
+}
+function getquatation_details_withversion($id,$version){
+          $this->db->select('*');    
+        $this->db->from('quotation_detalis');
+        $this->db->where('status',1);
+        $this->db->where('quatation_id',$id);
+        $this->db->where('version',$version);
+        $hasil=$this->db->get();
+        return $hasil->result();
+}
+function updatequotestatus($id,$data){
+    $this->db->where('id',$id);
+    $result = $this->db->update('quotation_master',$data);
+    return $result;
+}
+function getqutationversioninfo($id){
+    $this->db->select('quote_lock_version');    
     $this->db->from('quotation_master');
     $this->db->where('status',1);
     $this->db->where('id',$id);

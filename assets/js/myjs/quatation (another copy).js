@@ -289,7 +289,6 @@ $(document).ready(function() {
             }
         });
         getamt();
-        get_all_margin();
 
     });
 
@@ -668,16 +667,10 @@ $(document).ready(function() {
                                 type: 'success'
                             });
                             if (id == "") {
-                                $('#save_update').val(data);
-                                $('#btnprint').val(data + "_" + 1);
+                                $('#pdf').val(data + "_" + 1);
                                 $('#btnExport').val(data + "_" + 1);
-                                $('#btnprint').show();
+                                $('#pdf').show();
                                 $('#btnExport').show();
-                            } else {
-                                $('.btnhideshow').hide();
-                                $('.tablehideshow').show();
-
-                                form_clear();
                             }
 
                             //$('.btnhideshow').hide();
@@ -887,19 +880,17 @@ $(document).ready(function() {
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">MARGIN</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Order Date</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Order Due Date</th>' +
-                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Status</th>' +
-                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Action</th>' +
-                    '</tr>' +
-                    '</thead>' +
-                    '<tbody>';
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Status</th>'
+                '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Action</th>' +
+                '</tr>' +
+                '</thead>' +
+                '<tbody>';
 
                 for (i = 0; i < data.length; i++) {
                     var sr = i + 1;
                     var status = "";
                     var date = "";
                     var odate = "";
-
-
 
                     var tdateAr = data[i].order_date.split('-');
                     date = tdateAr[2] + '/' + tdateAr[1] + '/' + tdateAr[0];
@@ -910,7 +901,6 @@ $(document).ready(function() {
                         '<td id="customer_name_' + data[i].id + '">' + data[i].customer_name + '</td>' +
                         '<td id="quotaion_no_' + data[i].id + '">' + data[i].quotaion_no + '</td>' +
                         '<td id="ref_number_' + data[i].id + '">' + data[i].ref_number + '</td>' +
-                        '<td> <select name="latestversion_' + data[i].id + '" id="latestversion_' + data[i].id + '" class="form-control latestversion"></select></td>' +
                         '<td  id="date_' + data[i].id + '">' + date + '</td>' +
                         '<td id="odate_' + data[i].id + '">' + odate + '</td>' +
                         '<td style="display:none;" id="contact_person_' + data[i].id + '">' + data[i].contact_person + '</td>' +
@@ -925,32 +915,13 @@ $(document).ready(function() {
                         '<td style="display:none;" id="less_trasportion_' + data[i].id + '">' + data[i].less_trasportion + '</td>' +
                         '<td style="display:none;" id="less_bg_' + data[i].id + '">' + data[i].less_bg + '</td>' +
                         '<td style="display:none;" id="less_others_' + data[i].id + '">' + data[i].less_others + '</td>' +
-                        '<td style="display:none;" id="margin_' + data[i].id + '">' + data[i].margin + '</td>';
-
-                    if (data[i].quote_status == 1) {
-                        html += '<td> <select name="quotestatus_' + data[i].id + '" id="quotestatus_' + data[i].id + '" class="form-control quotestatus"><option disabled>select</option><option value="1" selected>Pending</option><option value="2">Conform</option><option value="3">Cancle</option></select</td>';
-                    } else if (data[i].quote_status == 2) {
-                        html += '<td> <select disabled name="quotestatus_' + data[i].id + '" id="quotestatus_' + data[i].id + '" class="form-control quotestatus"><option disabled>select</option><option value="1">Pending</option><option value="2" selected>Conform</option><option value="3">Cancle</option></select</td>';
-                    } else {
-                        html += '<td> <select disabled name="quotestatus_' + data[i].id + '" id="quotestatus_' + data[i].id + '" class="form-control quotestatus"><option disabled>select</option><option value="1">Pending</option><option value="2">Conform</option><option value="3" selected>Cancle</option></select</td>';
-                    }
+                        '<td style="display:none;" id="margin_' + data[i].id + '">' + data[i].margin + '</td>' +
 
 
-                    html += '< /td>';
-
-                    if (data[i].quote_status == 1) {
-                        html += ' <td><button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="' + data[i].id + '"  ><i class="fa fa-edit"></i></button>&nbsp;<button name="delete" value="Delete" class="delete_data btn btn-xs btn-danger" id=' +
-                            data[i].id + '><i class="fa fa-trash"></i></button></td>';
-                    } else if (data[i].quote_status == 2) {
-
-                        html += '<td><button  class="getorder btn btn-sm  btn-xs  btn-primary" id="' + data[i].id + '"  ><i class="fa fa-shopping-cart"></i></button></td>';
-                    } else {
-                        html += "-";
-                    }
-
-                    html += '</tr>';
-
-
+                        //'<td><button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="' + data[i].id + '" value="' + data[i].id + '" ><i class="fa fa-edit"></i></button></td>' +
+                        '<td><button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="' + data[i].id + '"  ><i class="fa fa-edit"></i></button>&nbsp;<button name="delete" value="Delete" class="delete_data btn btn-xs btn-danger" id=' +
+                        data[i].id + '><i class="fa fa-trash"></i></button></td>' +
+                        '</tr>';
                 }
 
                 html += '</tbody></table>';
@@ -958,7 +929,6 @@ $(document).ready(function() {
                 // $('#mytable').DataTable({});
             }
         });
-        getallversion();
     }
 
     $(document).on('click', '.edit_data', function(e) {
@@ -1550,111 +1520,5 @@ $(document).ready(function() {
 
 
     }
-    //function for getting all version 
-
-    function getallversion() {
-        $(".latestversion").each(function() {
-            var id = $(this).attr('id');
-            var getid = id;
-            var id = id.split("_");
-
-
-            $.ajax({
-                type: "POST",
-                url: baseurl + "Quotation_Estimate/getquotationversion",
-                data: {
-                    id: id[1],
-                },
-                dataType: "JSON",
-                async: false,
-                success: function(data) {
-                    console.log(data);
-
-                    var html = '';
-                    var name = '';
-                    //					if(table_name=="victim_age"){
-                    //					html += '<option selected  value="" >Select Victim Age</option>';
-                    //						}else{
-                    html += '<option  disabled value="" >Select</option>';
-                    //						}
-                    for (i = 0; i < data.length; i++) {
-                        var id = '';
-
-                        name = data[i].version;
-                        id = data[i].version;
-
-                        if (i == 0) {
-                            html += '<option selected value="' + id + '" >' + name + '</option>';
-                        } else {
-                            html += '<option value="' + id + '" >' + name + '</option>';
-                        }
-
-
-
-                    }
-                    $('#' + getid).html(html);
-                }
-            });
-            $.ajax({
-                type: "POST",
-                url: baseurl + "Quotation_Estimate/getquotationselect",
-                data: {
-                    id: id[1],
-                },
-                dataType: "JSON",
-                async: false,
-                success: function(data) {
-                    if (data[0].quote_lock_version > 0) {
-                        $('#' + getid).val(data[0].quote_lock_version).trigger('change');
-                        $("#" + getid).attr("disabled", "disabled");
-                    }
-
-                }
-            });
-        });
-    }
-
-
-    //for changeing quote status
-    $(document).on('change', '.quotestatus', function(e) {
-        e.preventDefault();
-        var id = $(this).attr('id');
-        var status = $(this).val();
-        id = id.split("_");
-
-        var lversion = $('#latestversion_' + id[1]).val();
-
-        $.ajax({
-            type: "POST",
-            url: baseurl + "Quotation_Estimate/updatequotestatus",
-            data: {
-                id: id[1],
-                lversion: lversion,
-                status: status,
-            },
-            dataType: "JSON",
-            async: false,
-            success: function(data) {
-
-                if (data == true) {
-                    $.notify({
-                        title: '',
-                        message: '<strong>Change Status Success Fully  !!</strong>'
-                    }, {
-                        type: 'success'
-                    });
-                    displayqutation();
-                }
-
-
-
-            }
-        });
-
-
-
-
-    });
-
 
 });

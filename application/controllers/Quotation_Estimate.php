@@ -156,16 +156,52 @@ class Quotation_Estimate extends CI_Controller {
         $this->load->library('codecanyon/invoicr/invoicr');
       
          $where=$this->input->post('btnprint');
+
+         $where = explode('_', $where); 
+         $id=$where[0];
+         $version=$where[1];
+
          
         // $where=92;
-        $data['customerinfo']=$this->quatationmodel->getcustomerdetalis($where);
+        $data['customerinfo']=$this->quatationmodel->getcustomerdetalis($id);
 
       
-        $data['product_detalis']=$this->quatationmodel->getquatation_details($where);
+        $data['product_detalis']=$this->quatationmodel->getquatation_details_withversion($id,$version);
  // echo json_encode($data);
            
       $this->load->view('static/user/quotationpdf',$data);
        
+    }
+    public function getcustomerinfo(){
+        $id	= $this->input->post('id');
+        $data=$this->quatationmodel->getcustomerdetalis($id);
+        echo json_encode($data);
+    }
+    public function getproductdetalis(){
+        $id	= $this->input->post('id');
+        $version	= $this->input->post('version');
+        $data=$this->quatationmodel->getquatation_details_withversion($id,$version);
+        echo json_encode($data);
+    }
+    public function updatequotestatus(){
+        $id	= $this->input->post('id');
+      
+     
+
+        $data = array(
+            'quote_status' =>  $this->input->post('status'),
+            'quote_lock_version' => $this->input->post('lversion')
+        );
+
+
+        $data=$this->quatationmodel->updatequotestatus($id,$data);
+        echo json_encode($data);
+    }
+    public function getquotationselect(){
+        $id	= $this->input->post('id');
+     
+        $data=$this->quatationmodel->getqutationversioninfo($id);
+        echo json_encode($data);
     }
 
 }

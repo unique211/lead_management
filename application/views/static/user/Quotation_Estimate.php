@@ -1,9 +1,11 @@
 <div class="container">
-   <button class="btn btn-primary pull-right btnhide"><i class="fa fa-plus"></i>Add</button>
+<button class="btn btn-primary pull-right btnhide"><i class="fa fa-plus"></i>Add</button>
+<button class="btn btn-primary pull-right closehide" style="display:none">Close</button>
    <h3>Quatation / Estimate</h3><br>
-
+   
 
    <div class="btnhideshow"  style="display:none;">
+  
       <table id="btntable" class="table table-striped">
          <tbody>
             <tr>
@@ -462,8 +464,8 @@
 <!-- jQuery UI library -->
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script src="https://rawgit.com/unconditional/jquery-table2excel/master/src/jquery.table2excel.js"></script>
-<script src="assets/js/bootstrap-notify.js"></script>
+<!-- <script src="https://rawgit.com/unconditional/jquery-table2excel/master/src/jquery.table2excel.js"></script> -->
+<script src="assets/js/tabletoexcle.js"></script>
 <script src="assets/js/bootstrap-notify.min.js"></script>
 
 
