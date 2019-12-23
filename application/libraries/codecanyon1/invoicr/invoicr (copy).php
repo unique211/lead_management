@@ -34,7 +34,6 @@ class invoicr extends FPDF_rotation
 	var $footernote;
 	var $dimensions;
 	
-	var $title1;
 	/*******************************************************************************
 	*                                                                              *
 	*                               Public methods                                 *
@@ -62,7 +61,6 @@ class invoicr extends FPDF_rotation
 	function setType($title)
 	{
 		$this->title = $title;
-	
 	}
 	
 	function setColor($rgbcolor)
@@ -96,10 +94,7 @@ class invoicr extends FPDF_rotation
 	
 	function setTo($data)
 	{
-		
-				$this->to = $data;
-			
-	
+		$this->to = $data;
 	}
 	
 	function setReference($reference)
@@ -117,7 +112,7 @@ class invoicr extends FPDF_rotation
 		$this->flipflop = true;
 	}
 	
-	function addItem($item,$description,$quantity,$vat,$price,$discount=0,$total,$tax,$colored=0)
+	function addItem($item,$description,$quantity,$vat,$price,$discount=0,$total,$tax)
 	{
 		$p['item'] 			= $item;
 		$p['description'] 	= $this->br2nl($description);
@@ -129,7 +124,6 @@ class invoicr extends FPDF_rotation
 		$p['price']			= $price;
 		$p['total']			= $total;
 		$p['tax']			= $tax;	
-		$p['colored']		= $colored;
 		//$p['totaltax']			= $totaltax;
 		
 		if($discount!==false) {
@@ -303,40 +297,20 @@ class invoicr extends FPDF_rotation
 			$this->Cell(1,10,'',0,0,'L',0);
 			$this->Cell($this->firstColumnWidth,10,iconv("UTF-8", "ISO-8859-1",strtoupper($this->l['product'])),0,0,'L',0);
 			$this->Cell($this->columnSpacing,10,'',0,0,'L',0);
-			$this->Cell($width_other,10,iconv("UTF-8", "ISO-8859-1",strtoupper($this->l['qty'])),0,0,'C',0);
+			$this->MultiCell($width_other,10,iconv("UTF-8", "ISO-8859-1",strtoupper($this->l['qty'])),0,0,'C',0);
+			$this->Cell($this->columnSpacing,10,'',0,0,'L',0);
+			$this->Cell(10,10,iconv("UTF-8", "ISO-8859-1",strtoupper($this->l['unitprice'])),0,0,'C',0);
 			$this->Cell($this->columnSpacing,10,'',0,0,'L',0);
 
-			//change by sagar start
-			$x=$this->GetX(); 
-			$y=$this->GetY(); 
-			$bgcolor = (1-$this->columnOpacity)*255;
-			$this->SetFillColor(255,255,255);
-			$this->MultiCell($width_other,3,iconv("UTF-8", "ISO-8859-1",strtoupper($this->l['unitprice'])),0,0,'C',0);
-			$this->MultiCell($this->columnSpacing,10,'',0,0,'L',0);
-			$this->SetXY($x+$width_other,$y);
-
-			$x=$this->GetX(); 
-			$y=$this->GetY(); 
-			$this->MultiCell($width_other,3,iconv("UTF-8", "ISO-8859-1",strtoupper($this->l['ordervalue'])),0,0,'C',0);
-			$this->MultiCell($this->columnSpacing,10,'',0,0,'L',0);
-			$this->SetXY($x+$width_other,$y);
-
-		
-			$this->Cell($width_other,3,iconv("UTF-8", "ISO-8859-1",strtoupper('tax')),0,0,'C',0);
+			$this->Cell($width_other,10,iconv("UTF-8", "ISO-8859-1",strtoupper($this->l['ordervalue'])),0,0,'C',0);
+			$this->Cell($this->columnSpacing,10,'',0,0,'L',0);
+			$this->Cell($width_other,10,iconv("UTF-8", "ISO-8859-1",strtoupper('tax')),0,0,'C',0);
 			
 			$this->Cell($this->columnSpacing,10,'',0,0,'L',0);
-		
-		
-			$x=$this->GetX(); 
-			$y=$this->GetY();
-			$this->MultiCell($width_other,3,iconv("UTF-8", "ISO-8859-1",strtoupper($this->l['taxvalue'])),0,0,'C',0);
-			$this->MultiCell($this->columnSpacing,10,'',0,0,'L',0);
-			$this->SetXY($x+$width_other,$y);
-			$this->MultiCell($width_other,3,iconv("UTF-8", "ISO-8859-1",strtoupper($this->l['totalval'])),0,0,'C',0);
-			
+			$this->Cell($width_other,10,iconv("UTF-8", "ISO-8859-1",strtoupper($this->l['taxvalue'])),0,0,'C',0);
+			$this->Cell($this->columnSpacing,10,'',0,0,'L',0);
+			$this->Cell($width_other,10,iconv("UTF-8", "ISO-8859-1",strtoupper($this->l['totalval'])),0,0,'C',0);
 			$this->Ln();
-
-			//change by sagar end
 			$this->SetLineWidth(0.3);
 			$this->SetDrawColor($this->color[0],$this->color[1],$this->color[2]);
 			$this->Line($this->margins['l'], $this->GetY(),$this->document['w']-$this->margins['r'], $this->GetY());
@@ -376,11 +350,6 @@ class invoicr extends FPDF_rotation
 				$this->SetFillColor($bgcolor,$bgcolor,$bgcolor);
 				$this->Cell(1,$cHeight,'',0,0,'L',1);
 				$x = $this->GetX();
-				if($item['colored']) 
-				{
-					$this->SetTextColor(255,255,255);
-					$this->SetFillColor($this->color[0],$this->color[1],$this->color[2]);
-				}
 				$this->Cell($this->firstColumnWidth,$cHeight,iconv("UTF-8", "ISO-8859-1",$item['item']),0,0,'L',1);
 				if($item['description'])
 				{
@@ -402,11 +371,6 @@ class invoicr extends FPDF_rotation
 					$this->SetXY($resetX,$resetY);	
 				}
 				$this->SetTextColor(50,50,50);
-				if($item['colored']) 
-				{
-					$this->SetTextColor(255,255,255);
-					
-				}
 				$this->SetFont($this->font,'',8);
 				$this->Cell($this->columnSpacing,$cHeight,'',0,0,'L',0);
 				$this->Cell($width_other,$cHeight,$item['quantity'],0,0,'C',1);

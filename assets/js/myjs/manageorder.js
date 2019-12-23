@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    var table_name = "quotation_master";
+    var table_name = "order_master";
     $(document).on('click', '#add_row', function(e) {
         e.preventDefault();
         addproduct();
@@ -526,19 +526,21 @@ $(document).ready(function() {
 
 
     /*---------insert data into area_master start-----------------*/
-    $(document).on("submit", "#quotation_form", function(e) {
+    $(document).on("submit", "#order_form", function(e) {
         e.preventDefault();
 
         var cus_name = $('#cus_name').val();
         var cotactperson = $('#cotactperson').val();
         var phn = $('#phn').val();
         var s_email = $('#s_email').val();
-        var bill_no = $('#bill_no').val();
+        var orderno = $('#orderno').val();
         var refno = $('#refno').val();
         var Tax = $('#Tax').val();
         var o_date = $('#o_date').val();
         var o_due_date = $('#o_due_date').val();
         var description = $('#description').val();
+
+
 
         var finalordervalue = $('#finalordvalue').val();
         var finaltrasforprice = $('#finaltrasforprice').val();
@@ -547,7 +549,8 @@ $(document).ready(function() {
         var lessbg = $('#lessbg').val();
         var lessother = $('#lessother').val();
         var finalmargin = $('#finalmargin').val();
-
+        var search_version = $('#search_version').val();
+        var quatationidno = $('#quatationid').val();
         var flag = 0;
 
 
@@ -633,7 +636,7 @@ $(document).ready(function() {
             if (flag == 0) {
                 $.ajax({
                     type: "POST",
-                    url: baseurl + "Quotation_Estimate/save_settings",
+                    url: baseurl + "Quotation_order/save_settings",
                     dataType: "JSON",
                     async: false,
                     data: {
@@ -642,13 +645,13 @@ $(document).ready(function() {
                         cotactperson: cotactperson,
                         phn: phn,
                         s_email: s_email,
-                        bill_no: bill_no,
+                        bill_no: orderno,
                         refno: refno,
                         o_date: o_date,
                         o_due_date: o_due_date,
                         description: description,
                         studejsonObj: studejsonObj,
-
+                        search_version: search_version,
                         finalordervalue: finalordervalue,
                         finaltrasforprice: finaltrasforprice,
                         lesstaxcst: lesstaxcst,
@@ -657,28 +660,28 @@ $(document).ready(function() {
                         lessother: lessother,
                         finalmargin: finalmargin,
                         table_name: table_name,
+                        quatationidno: quatationidno,
                     },
                     success: function(data) {
                         console.log(data);
+
                         if (data > 0) {
+
+
+
+
+                            // $('#save_update').val(data);
+                            // $('#btnprint').val(data);
+                            // $('#btnExport').val(data);
+                            // $('#btnprint').show();
+                            // $('#btnExport').show();
+
                             $.notify({
                                 title: '',
                                 message: '<strong>Data saved successfully</strong>'
                             }, {
                                 type: 'success'
                             });
-                            if (id == "") {
-                                $('#save_update').val(data);
-                                $('#btnprint').val(data + "_" + 1);
-                                $('#btnExport').val(data + "_" + 1);
-                                $('#btnprint').show();
-                                $('#btnExport').show();
-                            } else {
-                                $('.btnhideshow').hide();
-                                $('.tablehideshow').show();
-
-                                form_clear();
-                            }
 
                             //$('.btnhideshow').hide();
                             //$('.tablehideshow').show();
@@ -842,6 +845,7 @@ $(document).ready(function() {
         $('.btnhide').show();
         $('.tablehideshow').show();
         $('.closehide').hide();
+        location.href = baseurl + "manageorder";
         form_clear();
 
     });
@@ -856,7 +860,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'POST',
-            url: baseurl + "Quotation_Estimate/getallquatatyion",
+            url: baseurl + "Quotation_order/getallorder",
             async: false,
             data: {
 
@@ -864,12 +868,13 @@ $(document).ready(function() {
             },
             dataType: 'json',
             success: function(data) {
+
                 var html = '';
                 html += '<table id="mytable" class="table table-striped">' +
                     '<thead>' +
                     '<tr>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Customer Name</th>' +
-                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Quatation Number</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Order No Number</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Ref Number</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Version</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Order Date </th>' +
@@ -887,7 +892,8 @@ $(document).ready(function() {
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">MARGIN</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Order Date</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Order Due Date</th>' +
-                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Status</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Quoteno</th>' +
+
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Action</th>' +
                     '</tr>' +
                     '</thead>' +
@@ -908,9 +914,9 @@ $(document).ready(function() {
                     odate = tdateAr[2] + '/' + tdateAr[1] + '/' + tdateAr[0];
                     html += '<tr>' +
                         '<td id="customer_name_' + data[i].id + '">' + data[i].customer_name + '</td>' +
-                        '<td id="quotaion_no_' + data[i].id + '">' + data[i].quotaion_no + '</td>' +
+                        '<td id="order_no_' + data[i].id + '">' + data[i].order_no + '</td>' +
                         '<td id="ref_number_' + data[i].id + '">' + data[i].ref_number + '</td>' +
-                        '<td> <select name="latestversion_' + data[i].id + '" id="latestversion_' + data[i].id + '" class="form-control latestversion"></select></td>' +
+                        '<td  id="version_' + data[i].id + '">' + data[i].quote_lock_version + '</td>' +
                         '<td  id="date_' + data[i].id + '">' + date + '</td>' +
                         '<td id="odate_' + data[i].id + '">' + odate + '</td>' +
                         '<td style="display:none;" id="contact_person_' + data[i].id + '">' + data[i].contact_person + '</td>' +
@@ -925,28 +931,17 @@ $(document).ready(function() {
                         '<td style="display:none;" id="less_trasportion_' + data[i].id + '">' + data[i].less_trasportion + '</td>' +
                         '<td style="display:none;" id="less_bg_' + data[i].id + '">' + data[i].less_bg + '</td>' +
                         '<td style="display:none;" id="less_others_' + data[i].id + '">' + data[i].less_others + '</td>' +
-                        '<td style="display:none;" id="margin_' + data[i].id + '">' + data[i].margin + '</td>';
-
-                    if (data[i].quote_status == 1) {
-                        html += '<td> <select name="quotestatus_' + data[i].id + '" id="quotestatus_' + data[i].id + '" class="form-control quotestatus"><option disabled>select</option><option value="1" selected>Pending</option><option value="2">Confirm</option><option value="3">Cancel</option></select</td>';
-                    } else if (data[i].quote_status == 2) {
-                        html += '<td> <select disabled name="quotestatus_' + data[i].id + '" id="quotestatus_' + data[i].id + '" class="form-control quotestatus"><option disabled>select</option><option value="1">Pending</option><option value="2" selected>Confirm</option><option value="3">Cancel</option></select</td>';
-                    } else {
-                        html += '<td> <select disabled name="quotestatus_' + data[i].id + '" id="quotestatus_' + data[i].id + '" class="form-control quotestatus"><option disabled>select</option><option value="1">Pending</option><option value="2">Confirm</option><option value="3" selected>Cancel</option></select</td>';
-                    }
+                        '<td style="display:none;" id="margin_' + data[i].id + '">' + data[i].margin + '</td>' +
+                        '<td style="display:none;" id="qutone_no_' + data[i].id + '">' + data[i].qutone_no + '</td>' +
 
 
-                    html += '< /td>';
+                        ' <td><button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="edit_' + data[i].id + '"  ><i class="fa fa-edit"></i></button>&nbsp;<button name="delete" value="Delete" class="delete_data btn btn-xs btn-danger" id=' +
+                        data[i].id + '><i class="fa fa-trash"></i></button></td>';
 
-                    if (data[i].quote_status == 1) {
-                        html += ' <td><button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="' + data[i].id + '"  ><i class="fa fa-edit"></i></button>&nbsp;<button name="delete" value="Delete" class="delete_data btn btn-xs btn-danger" id=' +
-                            data[i].id + '><i class="fa fa-trash"></i></button></td>';
-                    } else if (data[i].quote_status == 2) {
 
-                        html += '<td><button  class="getorder btn btn-sm  btn-xs  btn-primary" id="' + data[i].id + '"  ><i class="fa fa-shopping-cart"></i></button></td>';
-                    } else {
-                        html += "-";
-                    }
+
+
+
 
                     html += '</tr>';
 
@@ -965,6 +960,7 @@ $(document).ready(function() {
         e.preventDefault();
 
         var id1 = $(this).attr('id');
+        id1 = id1.split("_");
         var html1 = '';
 
 
@@ -980,28 +976,33 @@ $(document).ready(function() {
         $('#btnprint').show();
         $('#btnExport').show();
 
-        var customer_name = $('#customer_name_' + id1).html();
-        var quotaion_no = $('#quotaion_no_' + id1).html();
-        var ref_number = $('#ref_number_' + id1).html();
-        var contact_person_ = $('#contact_person_' + id1).html();
-        var mobile_no_ = $('#mobile_no_' + id1).html();
-        var email_id_ = $('#email_id_' + id1).html();
-        var order_date_ = $('#order_date_' + id1).html();
-        var order_due_date_ = $('#order_due_date_' + id1).html();
-        var description_ = $('#description_' + id1).html();
-        var total_order_value_ = $('#total_order_value_' + id1).html();
-        var total_trasfor_price_ = $('#total_trasfor_price_' + id1).html();
-        var less_input_tax_ = $('#less_input_tax_' + id1).html();
-        var less_trasportion_ = $('#less_trasportion_' + id1).html();
-        var less_bg_ = $('#less_bg_' + id1).html();
-        var less_others_ = $('#less_others_' + id1).html();
-        var margin_ = $('#margin_' + id1).html();
+        var customer_name = $('#customer_name_' + id1[1]).html();
+        var order_no_ = $('#order_no_' + id1[1]).html();
+        var ref_number = $('#ref_number_' + id1[1]).html();
+        var contact_person_ = $('#contact_person_' + id1[1]).html();
+        var mobile_no_ = $('#mobile_no_' + id1[1]).html();
+        var email_id_ = $('#email_id_' + id1[1]).html();
+        var order_date_ = $('#order_date_' + id1[1]).html();
+        var order_due_date_ = $('#order_due_date_' + id1[1]).html();
+        var description_ = $('#description_' + id1[1]).html();
+        var total_order_value_ = $('#total_order_value_' + id1[1]).html();
+        var total_trasfor_price_ = $('#total_trasfor_price_' + id1[1]).html();
+        var less_input_tax_ = $('#less_input_tax_' + id1[1]).html();
+        var less_trasportion_ = $('#less_trasportion_' + id1[1]).html();
+        var less_bg_ = $('#less_bg_' + id1[1]).html();
+        var less_others_ = $('#less_others_' + id1[1]).html();
+        var margin_ = $('#margin_' + id1[1]).html();
+        var version_ = $('#version_' + id1[1]).html();
+        var qutone_no = $('#qutone_no_' + id1[1]).html();
+
+
+        $('#quatationid').val(qutone_no);
 
         $('#cus_name').val(customer_name);
         $('#cotactperson').val(contact_person_);
         $('#phn').val(mobile_no_);
         $('#s_email').val(email_id_);
-        $('#bill_no').val(quotaion_no);
+        $('#orderno').val(order_no_);
         $('#refno').val(ref_number);
 
         $('#o_date').val(order_date_);
@@ -1017,18 +1018,19 @@ $(document).ready(function() {
         $('#lessbg').val(less_bg_);
         $('#lessother').val(less_others_);
         $('#finalmargin').val(margin_);
-        $('#save_update').val(id1);
+        $('#save_update').val(id1[1]);
 
-
+        var html1 = '<option selected value="' + version_ + '" >' + version_ + '</option>';
+        $('#search_version').html(html1);
 
 
 
         $.ajax({
             type: "POST",
-            url: baseurl + "Quotation_Estimate/getquatationdetalis",
+            url: baseurl + "Quotation_order/getproductdetalis",
             dataType: "JSON",
             data: {
-                id: id1,
+                id: id1[1],
 
             },
             success: function(data) {
@@ -1090,6 +1092,7 @@ $(document).ready(function() {
 
 
                         $("#product_table tbody").append(html);
+                        $('#product_tbody').val(row_id);
 
 
                     }
@@ -1141,8 +1144,8 @@ $(document).ready(function() {
 
 
 
-        $('#btnprint').val(id1 + "_" + vesion);
-        $('#btnExport').val(id1 + "_" + vesion);
+        $('#btnprint').val(id1[1]);
+        $('#btnExport').val(id1[1]);
 
 
 
@@ -1173,7 +1176,7 @@ $(document).ready(function() {
             dataType: "JSON",
             data: {
                 id: id1,
-                table_name: 'quotation_master',
+                table_name: 'order_master',
             },
             success: function(data) {
                 if (data == true) {
@@ -1293,9 +1296,9 @@ $(document).ready(function() {
         $("#tblexporttbl").html('');
 
         if (id != "") {
-            id = id.split("_");
 
-            getexclefile(id[0], id[1]);
+
+            getexclefile(id);
 
 
         }
@@ -1304,7 +1307,7 @@ $(document).ready(function() {
 
     });
 
-    function getexclefile(id, version) {
+    function getexclefile(vid) {
 
 
         var total_order_value = 0;
@@ -1318,11 +1321,11 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: baseurl + "Quotation_Estimate/getcustomerinfo",
+            url: baseurl + "Quotation_order/getcustomerinfo",
             dataType: "JSON",
             data: {
-                version: version,
-                id: id,
+
+                id: vid,
 
             },
             success: function(data) {
@@ -1344,8 +1347,8 @@ $(document).ready(function() {
                 var exhtml = '<tr>' +
                     '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;">Customer Name:</td>' +
                     '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[0].customer_name + '</td>' +
-                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Quatation Number:</td>' +
-                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[0].quotaion_no + '</td>' +
+                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Order Number :</td>' +
+                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[0].order_no + '</td>' +
 
 
                     '</tr>' +
@@ -1396,11 +1399,11 @@ $(document).ready(function() {
 
                 $.ajax({
                     type: "POST",
-                    url: baseurl + "Quotation_Estimate/getproductdetalis",
+                    url: baseurl + "Quotation_order/getproductdetalis",
                     dataType: "JSON",
                     data: {
-                        version: version,
-                        id: id,
+
+                        id: vid,
 
                     },
                     success: function(data) {
@@ -1679,6 +1682,12 @@ $(document).ready(function() {
         //     }
         // });
     });
+
+    if (quatationid1 > 0) {
+        $('#edit_' + quatationid1).trigger('click');
+
+    }
+
 
 
 });

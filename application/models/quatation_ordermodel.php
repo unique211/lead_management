@@ -1,60 +1,29 @@
 <?php 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class Quatationmodel extends CI_Model{
+class Quatation_ordermodel extends CI_Model{
     function data_insert($data,$table){
       
       
             $result = $this->db->insert($table,$data);
             $id=$this->db->insert_id();
 
-          
-            $this->db->select('*');    
-            $this->db->from('new_account');
-            $this->db->where('customer_name',$this->input->post('cus_name'));
-            $hasil5=$this->db->get(); 
-             $num2 = $hasil5->num_rows();
-             if($num2 > 0){
-
-             }else{
-
-                $data3=array(
-                    'customer_name'=>$this->input->post('cus_name'),
-                );
-                $result = $this->db->insert('new_account',$data3);
-                $id1=$this->db->insert_id();
-                $data2 = array(
-                    'account_id' =>$id1,
-                    'contact_name' =>$this->input->post('cotactperson') ,
-                    'designation' => '',
-                    'email_id' =>$this->input->post('s_email'),
-                    'mobile_no' =>$this->input->post('phn'),
-                    'lead_line' =>'',
         
-                );
-                $this->db->insert('contact_information',$data2);
-             }
-         
-
-          
-                
-            
-
             $data	= $this->input->post('studejsonObj');
 
             foreach($data as $studentinfo){
                 $data1 = array(
-                    'quatation_id' =>$id,
+                    'order_id' =>$id,
                     'product_name' =>$studentinfo['productname'] ,
                     'qty' => $studentinfo['qty'],
                     'unit_transfor_price' =>$studentinfo['unitprice'],
                     'transfor_tax' =>$studentinfo['unittaxper'],
                     'unit_order_value' =>$studentinfo['orderunitvalue'],
                     'order_tax' =>$studentinfo['ordertax'],
-                    'version' =>'1',
+                    'version' =>$this->input->post('search_version'),
                    
         
                 );
-                $this->db->insert('quotation_detalis',$data1);
+                $this->db->insert('order_detalis',$data1);
 
                 //for new product insert
                 $data2 = array(
@@ -90,38 +59,36 @@ class Quatationmodel extends CI_Model{
         $this->db->where($colum,$id);
         $result = $this->db->update($table,$data);
         
-        $version1="";
+       
       
-        $this->db->select('version');    
-        $this->db->from('quotation_detalis');
-        $this->db->where('quatation_id',$id);
-        $this->db->order_by("id", "desc");
-        $this->db->limit(1);
-        $hasil=$this->db->get();
-    
-        if($hasil->num_rows()>0){
-            foreach($hasil->result_array() as $quatationinfo){
-                $version=$quatationinfo['version'];
-                $version1=$version+1;
-            }
+
+        $this->db->select('*');    
+        $this->db->from('order_detalis');
+        $this->db->where('order_id',$id);
+        $hasil4=$this->db->get(); 
+        $num = $hasil4->num_rows();
+        if($num >0){
+            $this->db->where('order_id',$id);
+           $this->db->delete("order_detalis");
         }
+       
 
         $data	= $this->input->post('studejsonObj');
 
             foreach($data as $studentinfo){
                 $data1 = array(
-                    'quatation_id' =>$id,
+                    'order_id' =>$id,
                     'product_name' =>$studentinfo['productname'] ,
                     'qty' => $studentinfo['qty'],
                     'unit_transfor_price' =>$studentinfo['unitprice'],
                     'transfor_tax' =>$studentinfo['unittaxper'],
                     'unit_order_value' =>$studentinfo['orderunitvalue'],
                     'order_tax' =>$studentinfo['ordertax'],
-                    'version' => $version1,
+                    'version' => $this->input->post('search_version'),
                    
         
                 );
-                $this->db->insert('quotation_detalis',$data1);
+                $this->db->insert('order_detalis',$data1);
 
                 //for new product insert
                 $data2 = array(
@@ -258,9 +225,9 @@ function get_customer_detalis($customer){
     }
    
 }
-function getall_quotation(){
+function getall_order(){
     $this->db->select('*');    
-    $this->db->from('quotation_master');
+    $this->db->from('order_master');
     $this->db->where('status',1);
     $hasil=$this->db->get();
     return $hasil->result();
@@ -309,19 +276,21 @@ function getquationversionwise($id,$version){
     return $hasil->result();
 }
 function getcustomerdetalis($id){
+
+  
     $this->db->select('*');    
-    $this->db->from('quotation_master');
+    $this->db->from('order_master');
     $this->db->where('status',1);
     $this->db->where('id',$id);
     $hasil=$this->db->get();
     return $hasil->result();
 }
-function getquatation_details_withversion($id,$version){
+function getquatation_details_withversion($id){
           $this->db->select('*');    
-        $this->db->from('quotation_detalis');
+        $this->db->from('order_detalis');
         $this->db->where('status',1);
-        $this->db->where('quatation_id',$id);
-        $this->db->where('version',$version);
+        $this->db->where('order_id',$id);
+      //  $this->db->where('version',$version);
         $hasil=$this->db->get();
         return $hasil->result();
 }
@@ -345,23 +314,6 @@ function getquatationalldata($id){
     $this->db->where('id',$id);
     $hasil=$this->db->get();
     return $hasil->result();
-}
-function getcount($id){
-    $this->db->select('*');  
-    $this->db->from('order_master');
-    $this->db->where('status',1);
-    $this->db->where('qutone_no',$id);
-    $hasil1=$this->db->get();
-    if ($hasil1->num_rows() > 0)
-    {
-        $orderid="";
-            foreach($hasil1->result_array() as $data){
-                $orderid=$data['id'];
-            }
-            return $orderid;
-    }else{
-        return 0;
-    }
 }
 
 

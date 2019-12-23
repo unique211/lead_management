@@ -8,7 +8,7 @@ require_once('req/autoload.php');
 * Author:  EpicBrands BVBA                                    				   *
 * http://www.epicbrands.be                                                     *
 *******************************************************************************/
-class invoicr extends FPDF_rotation 
+class invoicr1 extends FPDF_rotation 
 {
 
 	var $font = 'helvetica';
@@ -34,7 +34,6 @@ class invoicr extends FPDF_rotation
 	var $footernote;
 	var $dimensions;
 	
-	var $title1;
 	/*******************************************************************************
 	*                                                                              *
 	*                               Public methods                                 *
@@ -62,7 +61,6 @@ class invoicr extends FPDF_rotation
 	function setType($title)
 	{
 		$this->title = $title;
-	
 	}
 	
 	function setColor($rgbcolor)
@@ -96,10 +94,7 @@ class invoicr extends FPDF_rotation
 	
 	function setTo($data)
 	{
-		
-				$this->to = $data;
-			
-	
+		$this->to1 = $data;
 	}
 	
 	function setReference($reference)
