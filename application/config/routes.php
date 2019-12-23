@@ -123,7 +123,7 @@ $route['account_create']="welcome/user_info";
 
 
 $route['quotation']="Quotation_Estimate/index";
-
+$route['manageorder']="Quotation_order/index";
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

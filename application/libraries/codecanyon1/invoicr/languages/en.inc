@@ -2,7 +2,7 @@
 $l['number'] 						= 'Reference';
 $l['date'] 							= 'Billing date';
 $l['due'] 							= 'Due date';
-$l['to'] 							= 'Quote to';
+$l['to'] 							= 'INVOICE to';
 $l['to1'] 							= 'INVOICE to';
 
 $l['from'] 							= 'Our information';

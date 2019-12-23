@@ -62,6 +62,7 @@
      <ul class="dropdown-menu">
              
           <li><a href="quotation">Quotation</a></li>
+          <li><a href="manageorder">Manage Order</a></li>
        
           
             <!-- <li><a href="manage_appointment">Manage Appointment</a></li>  -->

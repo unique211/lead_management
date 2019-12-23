@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    var table_name = "quotation_master";
+    var table_name = "order_master";
     $(document).on('click', '#add_row', function(e) {
         e.preventDefault();
         addproduct();
@@ -526,19 +526,21 @@ $(document).ready(function() {
 
 
     /*---------insert data into area_master start-----------------*/
-    $(document).on("submit", "#quotation_form", function(e) {
+    $(document).on("submit", "#order_form", function(e) {
         e.preventDefault();
 
         var cus_name = $('#cus_name').val();
         var cotactperson = $('#cotactperson').val();
         var phn = $('#phn').val();
         var s_email = $('#s_email').val();
-        var bill_no = $('#bill_no').val();
+        var orderno = $('#orderno').val();
         var refno = $('#refno').val();
         var Tax = $('#Tax').val();
         var o_date = $('#o_date').val();
         var o_due_date = $('#o_due_date').val();
         var description = $('#description').val();
+        var quatationidno = $('#quatationid').val();
+
 
         var finalordervalue = $('#finalordvalue').val();
         var finaltrasforprice = $('#finaltrasforprice').val();
@@ -547,6 +549,7 @@ $(document).ready(function() {
         var lessbg = $('#lessbg').val();
         var lessother = $('#lessother').val();
         var finalmargin = $('#finalmargin').val();
+        var search_version = $('#search_version').val();
 
         var flag = 0;
 
@@ -633,7 +636,7 @@ $(document).ready(function() {
             if (flag == 0) {
                 $.ajax({
                     type: "POST",
-                    url: baseurl + "Quotation_Estimate/save_settings",
+                    url: baseurl + "Quotation_order/save_settings",
                     dataType: "JSON",
                     async: false,
                     data: {
@@ -642,13 +645,14 @@ $(document).ready(function() {
                         cotactperson: cotactperson,
                         phn: phn,
                         s_email: s_email,
-                        bill_no: bill_no,
+                        bill_no: orderno,
                         refno: refno,
                         o_date: o_date,
                         o_due_date: o_due_date,
                         description: description,
                         studejsonObj: studejsonObj,
-
+                        quatationidno: quatationidno,
+                        search_version: search_version,
                         finalordervalue: finalordervalue,
                         finaltrasforprice: finaltrasforprice,
                         lesstaxcst: lesstaxcst,
@@ -660,25 +664,23 @@ $(document).ready(function() {
                     },
                     success: function(data) {
                         console.log(data);
+
                         if (data > 0) {
+
+
+
+                            $('#save_update').val(data);
+                            $('#btnprint').val(data);
+                            $('#btnExport').val(data);
+                            $('#btnprint').show();
+                            $('#btnExport').show();
+
                             $.notify({
                                 title: '',
                                 message: '<strong>Data saved successfully</strong>'
                             }, {
                                 type: 'success'
                             });
-                            if (id == "") {
-                                $('#save_update').val(data);
-                                $('#btnprint').val(data + "_" + 1);
-                                $('#btnExport').val(data + "_" + 1);
-                                $('#btnprint').show();
-                                $('#btnExport').show();
-                            } else {
-                                $('.btnhideshow').hide();
-                                $('.tablehideshow').show();
-
-                                form_clear();
-                            }
 
                             //$('.btnhideshow').hide();
                             //$('.tablehideshow').show();
@@ -842,6 +844,8 @@ $(document).ready(function() {
         $('.btnhide').show();
         $('.tablehideshow').show();
         $('.closehide').hide();
+
+        location.href = baseurl + "quotation";
         form_clear();
 
     });
@@ -1293,9 +1297,9 @@ $(document).ready(function() {
         $("#tblexporttbl").html('');
 
         if (id != "") {
-            id = id.split("_");
 
-            getexclefile(id[0], id[1]);
+
+            getexclefile(id);
 
 
         }
@@ -1304,7 +1308,7 @@ $(document).ready(function() {
 
     });
 
-    function getexclefile(id, version) {
+    function getexclefile(vid) {
 
 
         var total_order_value = 0;
@@ -1318,11 +1322,11 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: baseurl + "Quotation_Estimate/getcustomerinfo",
+            url: baseurl + "Quotation_order/getcustomerinfo",
             dataType: "JSON",
             data: {
-                version: version,
-                id: id,
+
+                id: vid,
 
             },
             success: function(data) {
@@ -1344,8 +1348,8 @@ $(document).ready(function() {
                 var exhtml = '<tr>' +
                     '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;">Customer Name:</td>' +
                     '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[0].customer_name + '</td>' +
-                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Quatation Number:</td>' +
-                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[0].quotaion_no + '</td>' +
+                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Order Number :</td>' +
+                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[0].order_no + '</td>' +
 
 
                     '</tr>' +
@@ -1396,11 +1400,11 @@ $(document).ready(function() {
 
                 $.ajax({
                     type: "POST",
-                    url: baseurl + "Quotation_Estimate/getproductdetalis",
+                    url: baseurl + "Quotation_order/getproductdetalis",
                     dataType: "JSON",
                     data: {
-                        version: version,
-                        id: id,
+
+                        id: vid,
 
                     },
                     success: function(data) {
@@ -1679,6 +1683,181 @@ $(document).ready(function() {
         //     }
         // });
     });
+
+    if (quatationid > 0) {
+        $('#quatationid').val(quatationid);
+        $('.btnhideshow').show();
+        $('.closehide').show();
+        $('.btnhide').hide();
+        $('.tablehideshow').hide();
+
+        var versiondata = '';
+
+        $.ajax({
+            type: "POST",
+            url: baseurl + "Quotation_order/get_insertid",
+            data: {
+
+
+            },
+            dataType: "JSON",
+            async: false,
+            success: function(data) {
+
+                if (data > 0) {
+                    $('#orderno').val(parseInt(data));
+                } else {
+
+                    $('#orderno').val('1');
+                }
+            }
+        });
+        $.ajax({
+            type: "POST",
+            url: baseurl + "Quotation_Estimate/getquatationinfo",
+            data: {
+                quatationid: quatationid,
+
+            },
+            dataType: "JSON",
+            async: false,
+            success: function(data) {
+
+
+                $('#cus_name').val(data[0].customer_name);
+                $('#cotactperson').val(data[0].contact_person);
+                $('#refno').val(data[0].ref_number);
+                $('#phn').val(data[0].mobile_no);
+                $('#s_email').val(data[0].email_id);
+                var today = new Date();
+                var dd = today.getDate();
+
+                var mm = today.getMonth() + 1;
+                var yyyy = today.getFullYear();
+                if (dd < 10) {
+                    dd = '0' + dd;
+                }
+
+                if (mm < 10) {
+                    mm = '0' + mm;
+                }
+                today = yyyy + '-' + mm + '-' + dd;
+
+
+                //var tdateAr = data[0].order_due_date.split('-');
+                //var date1 = tdateAr[2] + '/' + tdateAr[1] + '/' + tdateAr[0];
+
+                $('#o_date').val(today);
+                $('#o_due_date').val(data[0].order_due_date);
+                $('#description').val(data[0].description);
+                $('#finalordvalue').val(data[0].total_order_value);
+                $('#finaltrasforprice').val(data[0].total_trasfor_price);
+
+                $('#lesstaxcst').val(data[0].less_input_tax);
+                $('#lesstrasporation').val(data[0].less_trasportion);
+                $('#lessbg').val(data[0].less_bg);
+                $('#lessother').val(data[0].less_others);
+                $('#finalmargin').val(data[0].margin);
+                // $('#cus_name').val(data[0].quote_lock_version);
+
+
+
+                var html = '<option selected value="' + data[0].quote_lock_version + '" >' + data[0].quote_lock_version + '</option>';
+                $('#search_version').html(html);
+                $('#searchversion').show();
+
+                if (data[0].quote_lock_version > 0) {
+                    $.ajax({
+                        type: "POST",
+                        url: baseurl + "Quotation_Estimate/getquationversionwise",
+                        dataType: "JSON",
+                        data: {
+
+                            version: data[0].quote_lock_version,
+                            id: quatationid,
+                        },
+                        success: function(data) {
+
+                            $("#product_table tbody").html('');
+
+                            if (data.length > 0) {
+                                var row_id = 0;
+                                for (var i = 0; i < data.length; i++) {
+                                    row_id = row_id + 1;
+
+                                    var totaluniprice = parseFloat(data[i].qty) * parseFloat(data[i].unit_transfor_price);
+                                    var unittaxamt = parseFloat(data[i].transfor_tax) * parseFloat(totaluniprice) / 100;
+                                    var transforwithtax = parseFloat(unittaxamt) + parseFloat(totaluniprice);
+
+                                    var totalord = parseFloat(data[i].qty) * parseFloat(data[i].unit_order_value);
+                                    var ordtaxvalue = parseFloat(data[i].order_tax) * parseFloat(totalord) / 100;
+                                    var ordwithtax = parseFloat(totalord) + parseFloat(ordtaxvalue);
+
+                                    var margin = parseFloat(totalord) - parseFloat(totaluniprice);
+
+                                    var html = '<tr id="row_' + row_id + '"  class="producttbrow">' +
+
+
+                                        '<td><input type="text" placeholder="Product Name" name="P_Id[]" id="pid_' + row_id + '"  value="' + data[i].product_name + '" class="form-control product_name"></td>' +
+
+
+                                        '<td><input type="text" placeholder="Qty" name="P_Id[]" id="qty_' + row_id + '" value="' + data[i].qty + '"  class="form-control totalprice"></td>' +
+
+                                        '<td><input type="text" placeholder="UnitTransfer Price" name="P_Id[]" value="' + data[i].unit_transfor_price + '" id="unitprice_' + row_id + '" class="form-control totalprice"></td>' +
+
+                                        '<td><input type="text" placeholder="Total Transfer Price" name="P_Id[]" value="' + totaluniprice + '"  id="totaltransforprice_' + row_id + '" class="form-control"></td>' +
+
+                                        '<td><input type="text" placeholder="Tax (%)" name="P_Id[]" id="taxper_' + row_id + '"  value="' + data[i].transfor_tax + '" class="form-control gettaxamt"></td>' +
+
+
+                                        '<td><input type="text" placeholder="Tax (Rs)" name="P_Id[]" id="taxprice_' + row_id + '" value="' + unittaxamt + '" class="form-control"></td>' +
+
+                                        '<td><input type="text" placeholder="Total Transfer Price With Inc Tax" name="P_Qty[]" value="' + transforwithtax + '"  id="totalpricewithtax_' + row_id + '" class="form-control"></td>' +
+
+                                        '<td><input type="text" placeholder="Unit Ord Value" name="P_Rate[]" id="unitordvalue_' + row_id + '" value="' + data[i].unit_order_value + '"  class="form-control gettotalordvalue"></td>' +
+
+                                        '<td><input type="text" placeholder="Total Ord Value" name="P_Rate[]" id="totalordvalue_' + row_id + '" value="' + totalord + '"  class="form-control "></td>' +
+
+                                        '<td><input type="text" placeholder="Tax %" name="P_Tax[]" id="ptax_' + row_id + '" value="' + data[i].order_tax + '"  class="form-control getordtaxprice"></td>' +
+
+
+                                        '<td><input type="text" placeholder="Tax Rs" name="P_Tax_Rs[]" id="ptaxrs_' + row_id + '" value="' + ordtaxvalue + '" class="form-control" readonly></td>' +
+
+
+
+
+
+                                        '<td><input type="text" placeholder="Total Ord Val With Tax" name="P_Discount[]" id="totalodval_' + row_id + '" value="' + ordwithtax + '" class="form-control"></td>' +
+
+                                        '<td><input type="text" placeholder="Amount" name="P_TotalAmt[]" id="margin_' + row_id + '" value="' + margin + '" class="form-control"></td>' +
+
+                                        '<td><button type="button" id="row_' + row_id + '" class="btn btn-default deleterow" style="font-size: 12px; color:red" ><i class="fa fa-close"></i></button></td></tr>';
+
+
+
+                                    $("#product_table tbody").append(html);
+                                    $('#product_tbody').val(row_id);
+
+
+                                }
+                                getamt();
+                                getallproduct();
+                                get_all_margin();
+                            }
+
+                        }
+                    });
+                }
+            }
+        });
+
+
+
+
+
+    }
+
+
 
 
 });
