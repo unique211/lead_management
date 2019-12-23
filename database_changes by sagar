@@ -1,0 +1,49 @@
+tablename-----order_master---
+
+CREATE TABLE `order_master` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `customer_name` varchar(100) NOT NULL,
+ `order_no` varchar(30) NOT NULL,
+ `contact_person` varchar(50) NOT NULL,
+ `ref_number` varchar(30) NOT NULL,
+ `mobile_no` decimal(10,0) NOT NULL,
+ `order_date` date NOT NULL,
+ `email_id` varchar(50) NOT NULL,
+ `order_due_date` date NOT NULL,
+ `description` varchar(255) NOT NULL,
+ `total_order_value` decimal(10,2) NOT NULL,
+ `total_trasfor_price` decimal(10,2) NOT NULL,
+ `less_input_tax` decimal(10,2) NOT NULL,
+ `less_trasportion` decimal(10,2) NOT NULL,
+ `less_bg` decimal(10,2) NOT NULL,
+ `status` int(1) NOT NULL DEFAULT '1',
+ `user_id` int(11) NOT NULL,
+ `less_others` decimal(10,2) NOT NULL,
+ `margin` decimal(10,2) NOT NULL,
+ `quote_lock_version` decimal(10,0) NOT NULL,
+ `qutone_no` int(11) NOT NULL,
+ `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4
+
+
+tablename-----order_master---
+CREATE TABLE `order_detalis` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `order_id` int(11) NOT NULL,
+ `product_name` varchar(100) NOT NULL,
+ `qty` int(11) NOT NULL,
+ `unit_transfor_price` decimal(10,2) NOT NULL,
+ `transfor_tax` decimal(10,2) NOT NULL,
+ `unit_order_value` decimal(10,2) NOT NULL,
+ `order_tax` decimal(10,2) NOT NULL,
+ `status` int(1) NOT NULL DEFAULT '1',
+ `version` decimal(10,0) NOT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4
+
+
+
+
+
+

@@ -484,6 +484,6 @@
   
    var quatationid1 = "<?php echo  $quotatopnid; ?>";
    var quatationid="";
-   alert(quatationid1);
+   
   
 </script>
