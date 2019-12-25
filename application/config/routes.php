@@ -125,5 +125,9 @@ $route['account_create']="welcome/user_info";
 $route['quotation']="Quotation_Estimate/index";
 $route['manageorder']="Quotation_order/index";
 
+
+$route['getorderinfo/(:any)'] = "Quotation_Estimate/getorderinfo/$1";
+
+
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

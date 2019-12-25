@@ -1662,9 +1662,8 @@ $(document).ready(function() {
 
         var id = $(this).attr('id');
 
-        location.href = "getorderinfo/" + id;
 
-        //location.href = baseurl + "Quotation_Estimate/getorderinfo/?quotation_id=" + id;
+        location.href = baseurl + "Quotation_Estimate/getorderinfo/?quotation_id=" + id;
 
         // $.ajax({
         //     type: "POST",

@@ -107,6 +107,7 @@ class Quotation_order extends CI_Controller {
             'margin' =>  $this->input->post('finalmargin'),
             'quote_lock_version' =>  $this->input->post('search_version'),
             'qutone_no' =>  $this->input->post('quatationidno'),
+            'quotation_no' =>  $this->input->post('quatation_no'),
             'user_id'=> $user_id,
             
        
