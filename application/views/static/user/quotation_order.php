@@ -120,12 +120,14 @@
                                
                                  <thead>
                                     <tr style="display:none;" id="searchversion">
-
-                                       <th>Version</th>
-                                       <th colspan="12"> <div class="input-group"><span class="input-group-addon"><i class="fa fa-life-ring"></i></span><select name="search_version" id="search_version" class="form-control">
-                                             <option value="">Select</option>
+                                    <th colspan="2"><label>Quotation Number:</label></th>
+                                       <th colspan="3" ><br><br><label name="quatation_no" id="quatation_no">
+                                       <th colspan="4"></th>
+                                       <th><label>Version:</label></th>
+                                       <th colspan="3" ><br><br><label name="search_version" id="search_version">
+                                           
                                             
-                                          </select></div></th>
+                                          </label></th>
 
                                     </tr>
                                     <tr>

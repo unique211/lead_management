@@ -264,7 +264,7 @@ class Quotation_Estimate extends CI_Controller {
          }
         }
 
-        public function getorderinfo($id){
+        public function getorderinfo(){
         //     $id	= $this->input->get('quotation_id');
         //     $email=$this->session->userdata('email'); 
         //     $user_id=$this->user_model->user_id($email);	    
@@ -288,7 +288,7 @@ class Quotation_Estimate extends CI_Controller {
 
         //  $view=  $this->load->view('welcome_message',$data);
 
-       // $id	= $this->input->get('quotation_id');
+        $id	= $this->input->get('quotation_id');
         $data1 = $this->quatationmodel->getcount($id);
 
             if($data1==0){
@@ -307,7 +307,7 @@ class Quotation_Estimate extends CI_Controller {
          $rec=$this->user_model->add_new_lead($user_id,$l_type,$l_source,$l_dealer,$sublead);
          $this->session->set_flashdata('msglp', 'data saved');
          }
-         //$id	= $this->input->get('quotation_id');
+         $id	= $this->input->get('quotation_id');
          $email=$this->session->userdata('email');     
          $u_type=$this->user_model->get_usertype($email);
          $u=$u_type[0]['user_type'];

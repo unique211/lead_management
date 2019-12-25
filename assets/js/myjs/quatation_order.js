@@ -549,7 +549,8 @@ $(document).ready(function() {
         var lessbg = $('#lessbg').val();
         var lessother = $('#lessother').val();
         var finalmargin = $('#finalmargin').val();
-        var search_version = $('#search_version').val();
+        var quatation_no = $('#quatation_no').text();
+        var search_version = $('#search_version').text();
 
         var flag = 0;
 
@@ -660,7 +661,9 @@ $(document).ready(function() {
                         lessbg: lessbg,
                         lessother: lessother,
                         finalmargin: finalmargin,
+                        quatation_no: quatation_no,
                         table_name: table_name,
+
                     },
                     success: function(data) {
                         console.log(data);
@@ -1763,7 +1766,8 @@ $(document).ready(function() {
 
 
                 var html = '<option selected value="' + data[0].quote_lock_version + '" >' + data[0].quote_lock_version + '</option>';
-                $('#search_version').html(html);
+                $('#search_version').text(data[0].quote_lock_version);
+                $('#quatation_no').text(data[0].quotaion_no);
                 $('#searchversion').show();
 
                 if (data[0].quote_lock_version > 0) {

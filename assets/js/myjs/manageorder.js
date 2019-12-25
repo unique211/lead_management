@@ -549,7 +549,8 @@ $(document).ready(function() {
         var lessbg = $('#lessbg').val();
         var lessother = $('#lessother').val();
         var finalmargin = $('#finalmargin').val();
-        var search_version = $('#search_version').val();
+        var search_version = $('#search_version').text();
+        var quatation_no = $('#quatation_no').text();
         var quatationidno = $('#quatationid').val();
         var flag = 0;
 
@@ -661,6 +662,7 @@ $(document).ready(function() {
                         finalmargin: finalmargin,
                         table_name: table_name,
                         quatationidno: quatationidno,
+                        quatation_no: quatation_no,
                     },
                     success: function(data) {
                         console.log(data);
@@ -874,9 +876,11 @@ $(document).ready(function() {
                     '<thead>' +
                     '<tr>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Customer Name</th>' +
-                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Order No Number</th>' +
-                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Ref Number</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Quotation No</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Version</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Order No</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Ref. Number</th>' +
+
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Order Date </th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Order Due Date</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Description</th>' +
@@ -914,9 +918,11 @@ $(document).ready(function() {
                     odate = tdateAr[2] + '/' + tdateAr[1] + '/' + tdateAr[0];
                     html += '<tr>' +
                         '<td id="customer_name_' + data[i].id + '">' + data[i].customer_name + '</td>' +
+                        '<td id="quotation_no_' + data[i].id + '">' + data[i].quotation_no + '</td>' +
+                        '<td  id="version_' + data[i].id + '">' + data[i].quote_lock_version + '</td>' +
                         '<td id="order_no_' + data[i].id + '">' + data[i].order_no + '</td>' +
                         '<td id="ref_number_' + data[i].id + '">' + data[i].ref_number + '</td>' +
-                        '<td  id="version_' + data[i].id + '">' + data[i].quote_lock_version + '</td>' +
+
                         '<td  id="date_' + data[i].id + '">' + date + '</td>' +
                         '<td id="odate_' + data[i].id + '">' + odate + '</td>' +
                         '<td style="display:none;" id="contact_person_' + data[i].id + '">' + data[i].contact_person + '</td>' +
@@ -933,6 +939,7 @@ $(document).ready(function() {
                         '<td style="display:none;" id="less_others_' + data[i].id + '">' + data[i].less_others + '</td>' +
                         '<td style="display:none;" id="margin_' + data[i].id + '">' + data[i].margin + '</td>' +
                         '<td style="display:none;" id="qutone_no_' + data[i].id + '">' + data[i].qutone_no + '</td>' +
+
 
 
                         ' <td><button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="edit_' + data[i].id + '"  ><i class="fa fa-edit"></i></button>&nbsp;<button name="delete" value="Delete" class="delete_data btn btn-xs btn-danger" id=' +
@@ -994,6 +1001,7 @@ $(document).ready(function() {
         var margin_ = $('#margin_' + id1[1]).html();
         var version_ = $('#version_' + id1[1]).html();
         var qutone_no = $('#qutone_no_' + id1[1]).html();
+        var quotation_no = $('#quotation_no_' + id1[1]).html();
 
 
         $('#quatationid').val(qutone_no);
@@ -1020,8 +1028,9 @@ $(document).ready(function() {
         $('#finalmargin').val(margin_);
         $('#save_update').val(id1[1]);
 
-        var html1 = '<option selected value="' + version_ + '" >' + version_ + '</option>';
-        $('#search_version').html(html1);
+        // var html1 = '<option selected value="' + version_ + '" >' + version_ + '</option>';
+        $('#search_version').text(version_);
+        $('#quatation_no').text(quotation_no);
 
 
 
