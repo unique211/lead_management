@@ -1,0 +1,4 @@
+
+table name:order_master
+
+ALTER TABLE order_master ADD quotation_no VARCHAR(30) NOT NULL AFTER create_at;
