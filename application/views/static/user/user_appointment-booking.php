@@ -156,7 +156,35 @@
  <div class="container">
 
    <input type="hidden" name="alert_msg" id='alert_msg' value="<?php echo $this->session->flashdata('msglp'); ?>">
-   <div class="row tablehideshow" id="show_master">
+   
+   <div class="row tablehideshow">
+   <form id="search_form" name="search_form">
+   <div class="form-group">
+   <div class="col-md-4">
+   <label class="control-label">From Date</label>
+  
+               <div class="input-group"><span class="adj_size input-group-addon"><i class="fa fa-calendar" style="font-size:14px;"></i></span>
+                 <input type="date" id="frmdate" name="frmdate" class="form-control ldate" required></div><span class="l_date1"></span>
+            
+   </div>
+   <div class="col-md-4">
+   <label class="control-label">To Date</label>
+  
+               <div class="input-group"><span class="adj_size input-group-addon"><i class="fa fa-calendar" style="font-size:14px;"></i></span>
+                 <input type="date" id="todate" name="todate" class="form-control ldate" required></div><span class="l_date1"></span>
+            
+   </div>
+   <div class="col-md-2">
+  <br>
+  
+  
+  <input type="submit" class="btn btn-primary" value="Search" name="lead_submit">
+            
+   </div>
+   </div>
+   </form>
+   <br>
+   <div class="row" id="show_master"></div>
 
    </div>
 
@@ -192,7 +220,22 @@
  </div>
  <script src="assets/js/bootstrap-notify.js"></script>
  <script src="assets/js/bootstrap-notify.min.js"></script>
+ 
  <script src="<?php echo base_url(); ?>assets/js/myjs/user_appointment.js"></script>
+
+ <link type="text/css" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" rel="stylesheet">
+<link type="text/css" href="https://cdn.datatables.net/buttons/1.1.2/css/buttons.dataTables.min.css" rel="stylesheet">
+<script type="text/javascript" src="https://cdn.datatables.net/tabletools/2.2.4/js/dataTables.tableTools.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/tabletools/2.2.2/swf/copy_csv_xls_pdf.swf"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.1.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.flash.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.print.min.js"></script>
+ 
  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClQAfOY3OpWLwnkhhLlfhOPFVil7Br5PQ&amp;libraries=places"></script>
 
 

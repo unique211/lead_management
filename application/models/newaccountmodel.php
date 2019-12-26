@@ -79,11 +79,16 @@ function checkcategoryexist($id,$catetype){
     }
 
 }
-function data_get($table){
+function data_get($table,$fromdate,$todate){
     $this->db->select('new_account.*,category_type.category_type as categorytype,customer_type.customer_type as customertype');    
     $this->db->from('new_account');
     $this->db->join('category_type', 'category_type.id = new_account.category_id');
     $this->db->join('customer_type', 'customer_type.id = new_account.customer_type');
+    if($fromdate !="" && $todate !=""){
+        $this->db->where('date >=',$fromdate);
+        $this->db->where('date <=',$todate);
+       
+    }
     $this->db->where('new_account.status',1);
     $hasil=$this->db->get();
     return $hasil->result();

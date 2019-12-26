@@ -165,7 +165,7 @@ class Quotation_Estimate extends CI_Controller {
         // $where=92;
         $data['customerinfo']=$this->quatationmodel->getcustomerdetalis($id);
 
-      
+        $data['quatationdate']=$this->quatationmodel->getquatationdate($id,$version);
         $data['product_detalis']=$this->quatationmodel->getquatation_details_withversion($id,$version);
  // echo json_encode($data);
            
@@ -388,6 +388,12 @@ class Quotation_Estimate extends CI_Controller {
          
             $hasil=$this->db->query($query);
             return $hasil->row()->Auto_increment;
+        }
+        public function getquatationdate(){
+            $id	= $this->input->post('id');
+            $version	= $this->input->post('version');
+            $data=$this->quatationmodel->getquatationdate($id,$version);
+            echo json_encode($data);
         }
        
 

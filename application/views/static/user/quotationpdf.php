@@ -18,6 +18,7 @@ $contact_person='';
 $symbol="$";
 $margin=0;
 $description="";
+$prderdate="";
 foreach($customerinfo as $value)
 {
    
@@ -44,6 +45,15 @@ $order_date = $old_date[2].'/'.$old_date[1].'/'.$old_date[0];
 
    
 }
+foreach($quatationdate as $value1)
+{
+    $order_date=$value1->quotation_date;
+    if($order_date !="0000-00-00" || $order_date !=""){
+        $old_date = explode('-', $order_date); 
+        $order_date = $old_date[2].'/'.$old_date[1].'/'.$old_date[0];
+    }
+   
+}
 date_default_timezone_set('America/Los_Angeles');
 //Include Invoicr class
 //include('../invoicr.php');
@@ -52,7 +62,7 @@ $invoice = new invoicr("A4",$symbol,"en");
 //Set number format
 $invoice->setNumberFormat(',','.');
 //Set your logo
-$invoice->setLogo("images/soundcloud.png",180,100);
+$invoice->setLogo("images/logo.png",180,100);
 //Set theme color
 $invoice->setColor("#f7540e");
 //Set type
@@ -62,7 +72,7 @@ $invoice->setReference($quotaion_no);
 //Set date
 $invoice->setDate($order_date);
 //Set from
-$invoice->setFrom(array("SoundCloud Ltd.","4146 Golden Hickory Woods","11000 Berlin","Germany","VAT 377 855 846"));
+$invoice->setFrom(array("DCDR Infra Private Limited","23, West Road","West CIT Nagar","Chennai - 600 035",""));
 //Set to
 $invoice->setTo(array("Customer Name:".$customer,"Contact Person:".$contact_person, "Mobile No:".$mobile_no,"Email Id:".$email_id,""));
 //Add items

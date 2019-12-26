@@ -1,6 +1,8 @@
 $(document).ready(function() {
     var table_name = "new_account";
     var validate = 0;
+    var fromdate = '';
+    var todate = '';
 
     /*---------insert data into area_master start-----------------*/
     $(document).on("submit", "#newaccountform", function(e) {
@@ -116,7 +118,7 @@ $(document).ready(function() {
                             });
 
                             form_clear();
-                            show_master();
+                            show_master(fromdate, todate);
                             $('.btnhideshow').hide();
                             $('.tablehideshow').show();
 
@@ -149,11 +151,11 @@ $(document).ready(function() {
 
     /*---------get data into area_master start-----------------*/
 
-    show_master(); //call function show data table
+    show_master(fromdate, todate); //call function show data table
 
 
     //	function show data table
-    function show_master() {
+    function show_master(fromdate, todate) {
 
         $.ajax({
             type: 'POST',
@@ -161,12 +163,14 @@ $(document).ready(function() {
             async: false,
             data: {
                 table_name: table_name,
+                fromdate: fromdate,
+                todate: todate,
             },
             dataType: 'json',
             success: function(data) {
 
                 var html = '';
-                html += '<table class="table table-striped">' +
+                html += '<table id="myTable" class="table table-striped" style="width:100%;">' +
                     '<thead>' +
                     '<tr>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Date</th>' +
@@ -212,7 +216,28 @@ $(document).ready(function() {
 
                 html += '</tbody></table>';
                 $('#show_master').html(html);
-                $('#myTable').DataTable({});
+                $('#myTable').DataTable({
+
+                    dom: 'Bfrtip',
+                    //"dom": '<"top"iflp<"clear">>rt<"bottom"iflp<"clear">>',
+                    buttons: [{
+                            extend: 'pdfHtml5',
+                            title: 'Account',
+                            orientation: 'landscape',
+                            pageSize: 'A4',
+                            exportOptions: {
+                                columns: [0, 2, 4, 5, 6]
+                            },
+                        },
+                        {
+                            title: 'Account',
+                            extend: 'excelHtml5',
+                            exportOptions: {
+                                columns: [0, 2, 4, 5, 6]
+                            }
+                        }
+                    ]
+                });
             }
 
         });
@@ -349,6 +374,7 @@ $(document).ready(function() {
         var id1 = $('#del_id').val();
 
         //  alert('from here' + id1);
+
         $.ajax({
             type: "POST",
             url: baseurl + "NewAccountcontroller/delete_master",
@@ -366,7 +392,7 @@ $(document).ready(function() {
                     }, {
                         type: 'success'
                     });
-                    show_master(); //call function show all product					
+                    show_master(where); //call function show all product					
                 }
 
 
@@ -524,5 +550,14 @@ $(document).ready(function() {
         });
 
     }
+    $(document).on("submit", "#search_form", function(e) {
+        e.preventDefault();
+        var fromdate = $('#frmdate').val();
+        var todate = $('#todate').val();
+
+        // where = 'date >=' + fromdate + ' And date <=' + todate;
+
+        show_master(fromdate, todate);
+    });
 
 });

@@ -51,6 +51,7 @@ class Quatationmodel extends CI_Model{
                     'unit_order_value' =>$studentinfo['orderunitvalue'],
                     'order_tax' =>$studentinfo['ordertax'],
                     'version' =>'1',
+                    'quotation_date' =>$this->input->post('o_date'),
                    
         
                 );
@@ -118,7 +119,7 @@ class Quatationmodel extends CI_Model{
                     'unit_order_value' =>$studentinfo['orderunitvalue'],
                     'order_tax' =>$studentinfo['ordertax'],
                     'version' => $version1,
-                   
+                    'quotation_date' =>$this->input->post('o_date'),
         
                 );
                 $this->db->insert('quotation_detalis',$data1);
@@ -363,7 +364,16 @@ function getcount($id){
         return 0;
     }
 }
-
+function getquatationdate($id,$version){
+    $this->db->select('*');  
+    $this->db->from('quotation_detalis');
+    $this->db->where('status',1);
+    $this->db->where('quatation_id',$id);
+    $this->db->where('version',$version);
+    $this->db->limit(1);
+    $hasil1=$this->db->get();
+    return $hasil1->result();
+}
 
 }
 

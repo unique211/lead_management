@@ -73,10 +73,10 @@
                               </div>
 
                               <div class="form-group">
-                                 <label class="col-md-4 control-label">Order Date</label>
+                                 <label class="col-md-4 control-label">Quotation Date</label>
                                  <div class="col-md-8 inputGroupContainer">
                                     <div class="input-group"><span class="adj_size input-group-addon"><i class="fa fa-calendar" style="font-size:14px;"></i></span>
-                                       <input type="date" id="o_date" name="o_date" class="form-control o_date"></div><span class="o_date"></span>
+                                       <input type="date" id="o_date" name="o_date" class="form-control o_date" disabled></div><span class="o_date"></span>
                                  </div>
                               </div>
                               <!-- 
@@ -377,7 +377,7 @@
               
                   <input type="hidden" id="save_update" name="save_update" value="">
                   <input type="reset" id="reset" class="btn btn-danger" name="reset" value="Reset">
-                  <button type="button"  id="btnExport" name="btnExport"  class="btn btn-sm btn-info pull-right" style="display:none;">Excle</button>
+                  <button type="button"  id="btnExport" name="btnExport"  class="btn btn-sm btn-info pull-right" style="display:none;">Excel</button>
                	<button type="submit" form="pdf" id="btnprint" name="btnprint" value="" class="btn btn-sm btn-info pull-right" style="display:none;">Print</button>
                </td>
                <td>
@@ -475,6 +475,8 @@
 
 
    var base_url = "<?php echo base_url(); ?>";
+  
+            
 
    $(document).ready(function() {
 
