@@ -1540,8 +1540,8 @@ $(document).ready(function() {
 
                         $("#tblexport").table2excel({
                             name: "Table2Excel",
-                            filename: "quotation",
-                            fileext: ".xls"
+                            filename: "quotation.xls",
+                            // fileext: ".xls"
                         });
 
                     }
