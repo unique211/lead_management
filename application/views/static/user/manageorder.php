@@ -381,7 +381,7 @@
                   <input type="hidden" id="save_update" name="save_update" value="">
                   <input type="hidden" id="quatationid" name="quatationid" value="">
                   <input type="reset" id="reset" class="btn btn-danger" name="reset" value="Reset">
-                  <button type="button"  id="btnExport" name="btnExport"  class="btn btn-sm btn-info pull-right" style="display:none;">Excle</button>
+                  <button type="button"  id="btnExport" name="btnExport"  class="btn btn-sm btn-info pull-right" style="display:none;">Excel</button>
                	<button type="submit" form="pdf" id="btnprint" name="btnprint" value="" class="btn btn-sm btn-info pull-right" style="display:none;">Print</button>
                </td>
                <td>

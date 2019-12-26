@@ -67,8 +67,10 @@ class NewAccountcontroller extends CI_Controller
     public function get_master()
 	{
 		//$table_name="project_master";
-		$table_name	= $this->input->post('table_name');
-		$data = $this->newaccountmodel->data_get($table_name);
+        $table_name	= $this->input->post('table_name');
+        $fromdate	= $this->input->post('fromdate');
+        $todate	= $this->input->post('todate');
+		$data = $this->newaccountmodel->data_get($table_name,$fromdate,$todate);
 		echo json_encode($data);
     }
     public function delete_master(){

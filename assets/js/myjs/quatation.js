@@ -550,6 +550,20 @@ $(document).ready(function() {
 
         var flag = 0;
 
+        var today = new Date();
+        var dd = today.getDate();
+
+        var mm = today.getMonth() + 1;
+        var yyyy = today.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+        o_date = yyyy + '-' + mm + '-' + dd;
+
 
 
         var id = $('#save_update').val();
@@ -797,7 +811,7 @@ $(document).ready(function() {
         $('#bill_no').val('');
         $('#refno').val('');
         $('#Tax').val('');
-        $('#o_date').val('');
+        // $('#o_date').val('');
         $('#o_due_date').val('');
         $('#description').val('');
 
@@ -822,6 +836,23 @@ $(document).ready(function() {
         $('#btnprint').hide();
         $('#btnExport').hide();
         $("#tblexporttbl").html('');
+
+        var today = new Date();
+        var dd = today.getDate();
+
+        var mm = today.getMonth() + 1;
+        var yyyy = today.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+        today = yyyy + '-' + mm + '-' + dd;
+
+
+        $("#o_date").val(today);
 
     }
 
@@ -1004,7 +1035,7 @@ $(document).ready(function() {
         $('#bill_no').val(quotaion_no);
         $('#refno').val(ref_number);
 
-        $('#o_date').val(order_date_);
+        //$('#o_date').val(order_date_);
         $('#o_due_date').val(order_due_date_);
         $('#description').val(description_);
 
@@ -1019,7 +1050,22 @@ $(document).ready(function() {
         $('#finalmargin').val(margin_);
         $('#save_update').val(id1);
 
+        var today = new Date();
+        var dd = today.getDate();
 
+        var mm = today.getMonth() + 1;
+        var yyyy = today.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+        today = yyyy + '-' + mm + '-' + dd;
+
+
+        $("#o_date").val(today);
 
 
 
@@ -1219,6 +1265,7 @@ $(document).ready(function() {
                     var row_id = 0;
                     for (var i = 0; i < data.length; i++) {
                         row_id = row_id + 1;
+                        $('#order_date').val(data[0].quotation_date);
 
                         var totaluniprice = parseFloat(data[i].qty) * parseFloat(data[i].unit_transfor_price);
                         var unittaxamt = parseFloat(data[i].transfor_tax) * parseFloat(totaluniprice) / 100;
@@ -1314,7 +1361,7 @@ $(document).ready(function() {
         var less_bg = 0;
         var less_others = 0;
         var fmargin = 0;
-
+        var quedate = "";
 
         $.ajax({
             type: "POST",
@@ -1327,221 +1374,240 @@ $(document).ready(function() {
             },
             success: function(data) {
 
-
-                total_order_value = data[0].total_order_value;
-                total_trasfor_price = data[0].total_trasfor_price;
-                less_input_tax = data[0].less_input_tax;
-                less_trasportion = data[0].less_trasportion;
-                less_bg = data[0].less_bg;
-                less_others = data[0].less_others;
-                fmargin = data[0].margin;
-
-                var tdateAr = data[0].order_date.split('-');
-                var date = tdateAr[2] + '/' + tdateAr[1] + '/' + tdateAr[0];
-
-                var tdateAr = data[0].order_due_date.split('-');
-                var odate = tdateAr[2] + '/' + tdateAr[1] + '/' + tdateAr[0];
-                var exhtml = '<tr>' +
-                    '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;">Customer Name:</td>' +
-                    '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[0].customer_name + '</td>' +
-                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Quatation Number:</td>' +
-                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[0].quotaion_no + '</td>' +
-
-
-                    '</tr>' +
-                    '<tr>' +
-                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Contact Person:</td>' +
-                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[0].contact_person + '</td>' +
-                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Ref Number:</td>' +
-                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[0].ref_number + '</td>' +
-
-
-                    '</tr>' +
-                    '<tr>' +
-                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Mobile No:</td>' +
-                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[0].mobile_no + '</td>' +
-                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Order Date:</td>' +
-                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + date + '</td>' +
-
-
-                    '</tr>' +
-                    '<tr>' +
-                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Email:</td>' +
-                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[0].email_id + '</td>' +
-                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Order Due Date:</td>' +
-                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + odate + '</td>' +
-
-
-                    '</tr>' +
-                    '<tr>' +
-                    '<td colspan="3"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Description</td>' +
-                    '<td colspan="1"   style="white-space:nowrap;text-align:left;padding:10px 10px;">Qty</td>' +
-                    '<td  colspan="1" style="white-space:nowrap;text-align:left;padding:10px 10px;">UnitTransfer Price</td>' +
-                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Total Transfer Price</td>' +
-                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Tax (%)</td>' +
-                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Tax (Rs)</td>' +
-                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Total Transfer Price With Inc Tax</td>' +
-
-                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Unit Order Value</td>' +
-                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Total Ord Value</td>' +
-                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Tax %</td>' +
-                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Tax (Value)</td>' +
-                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Total Ord Val With Tax</td>' +
-                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Margin</td>' +
-
-
-                    '</tr>';
-
-                $("#tblexporttbl").append(exhtml);
-
                 $.ajax({
                     type: "POST",
-                    url: baseurl + "Quotation_Estimate/getproductdetalis",
+                    url: baseurl + "Quotation_Estimate/getquatationdate",
                     dataType: "JSON",
                     data: {
                         version: version,
                         id: id,
 
                     },
-                    success: function(data) {
-
-                        var finaltotaluniprice = 0;
-                        var finalunittaxamt = 0;
-                        var finaltransforwithtax = 0;
-                        var finaltotalord = 0;
-                        var finalordtaxvalue = 0;
-                        var finalordwithtax = 0;
-                        var finalordmargin = 0;
-
-                        for (var i = 0; i < data.length; i++) {
-
-                            var totaluniprice = parseFloat(data[i].qty) * parseFloat(data[i].unit_transfor_price);
-                            var unittaxamt = parseFloat(data[i].transfor_tax) * parseFloat(totaluniprice) / 100;
-                            var transforwithtax = parseFloat(unittaxamt) + parseFloat(totaluniprice);
-
-                            var totalord = parseFloat(data[i].qty) * parseFloat(data[i].unit_order_value);
-                            var ordtaxvalue = parseFloat(data[i].order_tax) * parseFloat(totalord) / 100;
-                            var ordwithtax = parseFloat(totalord) + parseFloat(ordtaxvalue);
-
-                            var margin = parseFloat(totalord) - parseFloat(totaluniprice);
-
-                            finaltotaluniprice = parseFloat(finaltotaluniprice) + parseFloat(totaluniprice);
-                            finalunittaxamt = parseFloat(finalunittaxamt) + parseFloat(unittaxamt);
-                            finaltransforwithtax = parseFloat(finaltransforwithtax) + parseFloat(transforwithtax);
-                            finaltotalord = parseFloat(totalord) + parseFloat(finaltotalord);
-                            finalordtaxvalue = parseFloat(ordtaxvalue) + parseFloat(finalordtaxvalue);
-                            finalordwithtax = parseFloat(ordwithtax) + parseFloat(finalordwithtax);
-                            finalordmargin = parseFloat(finalordmargin) + parseFloat(margin);
-
-                            var html1 = '<tr>' +
-                                '<td colspan="3"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].product_name + '</td>' +
-                                '<td colspan="1"   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].qty + '</td>' +
-                                '<td  colspan="1" style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].unit_transfor_price + '</td>' +
-                                '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + totaluniprice + '</td>' +
-                                '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].transfor_tax + '</td>' +
-                                '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + unittaxamt + '</td>' +
-                                '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + transforwithtax + '</td>' +
-                                '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].unit_order_value + '</td>' +
-
-                                '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + totalord + '</td>' +
-                                '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].order_tax + '</td>' +
-                                '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + ordtaxvalue + '</td>' +
-                                '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + ordwithtax + '</td>' +
-                                '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + margin + '</td>' +
+                    success: function(result) {
+                        quedate = result[0].quotation_date;
 
 
-                                '</tr>';
-                            $("#tblexporttbl").append(html1);
+                        total_order_value = data[0].total_order_value;
+                        total_trasfor_price = data[0].total_trasfor_price;
+                        less_input_tax = data[0].less_input_tax;
+                        less_trasportion = data[0].less_trasportion;
+                        less_bg = data[0].less_bg;
+                        less_others = data[0].less_others;
+                        fmargin = data[0].margin;
+
+                        // var tdateAr = data[0].order_date.split('-');
+                        // var date = tdateAr[2] + '/' + tdateAr[1] + '/' + tdateAr[0];
+
+                        var tdateAr = data[0].order_due_date.split('-');
+                        var odate = tdateAr[2] + '/' + tdateAr[1] + '/' + tdateAr[0];
+                        if (quedate != "") {
+                            var tdateAr = quedate.split('-');
+                            quedate = tdateAr[2] + '/' + tdateAr[1] + '/' + tdateAr[0];
                         }
+                        var exhtml = '<tr>' +
+                            '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;">Customer Name:</td>' +
+                            '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[0].customer_name + '</td>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Quatation Number:</td>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[0].quotaion_no + '</td>' +
 
-                        var html3 = '<tr>' +
-                            '<td colspan="3"  style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="1"   style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td  colspan="1" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + finaltotaluniprice + '</td>' +
-                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + finalunittaxamt + '</td>' +
-                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + finaltransforwithtax + '</td>' +
-                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
 
-                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + finaltotalord + '</td>' +
-                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + finalordtaxvalue + '</td>' +
-                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + finalordwithtax + '</td>' +
-                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + finalordmargin + '</td>' +
+                            '</tr>' +
+                            '<tr>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Contact Person:</td>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[0].contact_person + '</td>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Ref Number:</td>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[0].ref_number + '</td>' +
+
+
+                            '</tr>' +
+                            '<tr>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Mobile No:</td>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[0].mobile_no + '</td>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Quotation Date:</td>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + quedate + '</td>' +
+
+
+                            '</tr>' +
+                            '<tr>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Email:</td>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[0].email_id + '</td>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Order Due Date:</td>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + odate + '</td>' +
+
+
+                            '</tr>' +
+                            '<tr>' +
+                            '<td colspan="3"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Description</td>' +
+                            '<td colspan="1"   style="white-space:nowrap;text-align:left;padding:10px 10px;">Qty</td>' +
+                            '<td  colspan="1" style="white-space:nowrap;text-align:left;padding:10px 10px;">UnitTransfer Price</td>' +
+                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Total Transfer Price</td>' +
+                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Tax (%)</td>' +
+                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Tax (Rs)</td>' +
+                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Total Transfer Price With Inc Tax</td>' +
+
+                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Unit Order Value</td>' +
+                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Total Ord Value</td>' +
+                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Tax %</td>' +
+                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Tax (Value)</td>' +
+                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Total Ord Val With Tax</td>' +
+                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Margin</td>' +
 
 
                             '</tr>';
-                        $("#tblexporttbl").append(html3);
-                        var html2 = '<tr>' +
-                            '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Total Order Value (without Tax):</td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + total_order_value + '</td>' +
+
+                        $("#tblexporttbl").append(exhtml);
+
+                        $.ajax({
+                            type: "POST",
+                            url: baseurl + "Quotation_Estimate/getproductdetalis",
+                            dataType: "JSON",
+                            data: {
+                                version: version,
+                                id: id,
+
+                            },
+                            success: function(data) {
+
+                                var finaltotaluniprice = 0;
+                                var finalunittaxamt = 0;
+                                var finaltransforwithtax = 0;
+                                var finaltotalord = 0;
+                                var finalordtaxvalue = 0;
+                                var finalordwithtax = 0;
+                                var finalordmargin = 0;
+
+                                for (var i = 0; i < data.length; i++) {
+
+                                    var totaluniprice = parseFloat(data[i].qty) * parseFloat(data[i].unit_transfor_price);
+                                    var unittaxamt = parseFloat(data[i].transfor_tax) * parseFloat(totaluniprice) / 100;
+                                    var transforwithtax = parseFloat(unittaxamt) + parseFloat(totaluniprice);
+
+                                    var totalord = parseFloat(data[i].qty) * parseFloat(data[i].unit_order_value);
+                                    var ordtaxvalue = parseFloat(data[i].order_tax) * parseFloat(totalord) / 100;
+                                    var ordwithtax = parseFloat(totalord) + parseFloat(ordtaxvalue);
+
+                                    var margin = parseFloat(totalord) - parseFloat(totaluniprice);
+
+                                    finaltotaluniprice = parseFloat(finaltotaluniprice) + parseFloat(totaluniprice);
+                                    finalunittaxamt = parseFloat(finalunittaxamt) + parseFloat(unittaxamt);
+                                    finaltransforwithtax = parseFloat(finaltransforwithtax) + parseFloat(transforwithtax);
+                                    finaltotalord = parseFloat(totalord) + parseFloat(finaltotalord);
+                                    finalordtaxvalue = parseFloat(ordtaxvalue) + parseFloat(finalordtaxvalue);
+                                    finalordwithtax = parseFloat(ordwithtax) + parseFloat(finalordwithtax);
+                                    finalordmargin = parseFloat(finalordmargin) + parseFloat(margin);
+
+                                    var html1 = '<tr>' +
+                                        '<td colspan="3"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].product_name + '</td>' +
+                                        '<td colspan="1"   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].qty + '</td>' +
+                                        '<td  colspan="1" style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].unit_transfor_price + '</td>' +
+                                        '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + totaluniprice + '</td>' +
+                                        '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].transfor_tax + '</td>' +
+                                        '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + unittaxamt + '</td>' +
+                                        '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + transforwithtax + '</td>' +
+                                        '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].unit_order_value + '</td>' +
+
+                                        '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + totalord + '</td>' +
+                                        '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].order_tax + '</td>' +
+                                        '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + ordtaxvalue + '</td>' +
+                                        '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + ordwithtax + '</td>' +
+                                        '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + margin + '</td>' +
 
 
-                            '</tr>' +
-                            '<tr>' +
-                            '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Total Transfer Price (without Tax):</td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + total_trasfor_price + '</td>' +
+                                        '</tr>';
+                                    $("#tblexporttbl").append(html1);
+                                }
+
+                                var html3 = '<tr>' +
+                                    '<td colspan="3"  style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="1"   style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td  colspan="1" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + finaltotaluniprice + '</td>' +
+                                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + finalunittaxamt + '</td>' +
+                                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + finaltransforwithtax + '</td>' +
+                                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+
+                                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + finaltotalord + '</td>' +
+                                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + finalordtaxvalue + '</td>' +
+                                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + finalordwithtax + '</td>' +
+                                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + finalordmargin + '</td>' +
 
 
-                            '</tr>' +
-                            '<tr>' +
-                            '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Less Input Tax if CST:</td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + less_input_tax + '</td>' +
+                                    '</tr>';
+                                $("#tblexporttbl").append(html3);
+                                var html2 = '<tr>' +
+                                    '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Total Order Value (without Tax):</td>' +
+                                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + total_order_value + '</td>' +
 
 
-                            '</tr>' +
-                            '<tr>' +
-                            '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Less Transporation:</td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + less_trasportion + '</td>' +
+                                    '</tr>' +
+                                    '<tr>' +
+                                    '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Total Transfer Price (without Tax):</td>' +
+                                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + total_trasfor_price + '</td>' +
 
 
-                            '</tr>' +
-                            '<tr>' +
-                            '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Less BG/Insurance Cost:</td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + less_bg + '</td>' +
+                                    '</tr>' +
+                                    '<tr>' +
+                                    '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Less Input Tax if CST:</td>' +
+                                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + less_input_tax + '</td>' +
 
 
-                            '</tr>' +
-                            '<tr>' +
-                            '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Less others (if any):</td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + less_others + '</td>' +
+                                    '</tr>' +
+                                    '<tr>' +
+                                    '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Less Transporation:</td>' +
+                                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + less_trasportion + '</td>' +
 
 
-                            '</tr>' +
-                            '<tr>' +
-                            '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">MARGIN:</td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + fmargin + '</td>' +
+                                    '</tr>' +
+                                    '<tr>' +
+                                    '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Less BG/Insurance Cost:</td>' +
+                                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + less_bg + '</td>' +
 
 
-                            '</tr>';
-                        $("#tblexporttbl").append(html2);
+                                    '</tr>' +
+                                    '<tr>' +
+                                    '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Less others (if any):</td>' +
+                                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + less_others + '</td>' +
 
-                        $("#tblexport").table2excel({
-                            name: "Table2Excel",
-                            filename: "quotation",
-                            fileext: ".xls"
+
+                                    '</tr>' +
+                                    '<tr>' +
+                                    '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">MARGIN:</td>' +
+                                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + fmargin + '</td>' +
+
+
+                                    '</tr>';
+                                $("#tblexporttbl").append(html2);
+
+                                $("#tblexport").table2excel({
+                                    name: "Table2Excel",
+                                    filename: "quotation.xls"
+                                        // fileext: ".xls"
+                                });
+
+                            }
                         });
-
                     }
                 });
 
-
             }
+
+
 
         });
 

@@ -52,7 +52,8 @@ $invoice = new invoicr("A4",$symbol,"en");
 //Set number format
 $invoice->setNumberFormat(',','.');
 //Set your logo
-$invoice->setLogo("images/soundcloud.png",180,100);
+//$invoice->setLogo("images/soundcloud.png",180,100);
+$invoice->setLogo("images/logo.png",180,100);
 //Set theme color
 $invoice->setColor("#f7540e");
 //Set type
@@ -62,8 +63,9 @@ $invoice->setReference($quotaion_no);
 //Set date
 $invoice->setDate($order_date);
 //Set from
-$invoice->setFrom(array("SoundCloud Ltd.","4146 Golden Hickory Woods","11000 Berlin","Germany","VAT 377 855 846"));
+//$invoice->setFrom(array("SoundCloud Ltd.","4146 Golden Hickory Woods","11000 Berlin","Germany","VAT 377 855 846"));
 //Set to
+$invoice->setFrom(array("DCDR Infra Private Limited","23, West Road","West CIT Nagar","Chennai - 600 035",""));
 
 $invoice->setTo(array("Customer Name:".$customer,"Contact Person:".$contact_person, "Mobile No:".$mobile_no,"Email Id:".$email_id,""));
 //Add items
