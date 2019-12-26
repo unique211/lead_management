@@ -32,6 +32,13 @@
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
+<div class="login-logo"  align="center">
+   
+    <a href="#" >
+                <span  ><img  src="<?php echo base_url(); ?>images/logo.png" alt="" height="50%" width="50%" style="margin-top:20px;"  /></span>
+                <span class="text-toggle"> </span>
+              </a><!-- /brand -->
+    </div>
   <div class="login-logo">
     <a href=""><b>Login</b></a>
   </div>
