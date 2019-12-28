@@ -49,6 +49,25 @@
                                  </div>
                               </div>
 
+                              <div class="form-group">
+                                 <label class="col-md-4 control-label">Sales Representative</label>
+
+
+                                 <div class="col-md-8 inputGroupContainer">
+                                    <?php if(($this->session->userdata('user_type')=="SalesRepresentative") && ($this->session->userdata('userrole')=="Sales") ){ ?>
+                                       <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input id="salesrepresentive" name="salesrepresentive" placeholder="Contact Person" class="form-control " maxlength="20" type="text">
+
+                                    </div><span class="s_lname1"></span>
+                                    <?php }else {?>
+                                 <div class="input-group"><span class="input-group-addon"><i class="fa fa-life-ring"></i></span><select name="salesrepresentive" id="salesrepresentive" class="form-control">
+                                             <option value="">Select</option>
+                                            
+                                          </select></div>
+                                    <?php } ?>
+
+                                 </div>
+                              </div>
+
                            </div>
 
                            <div class="col-md-6">
@@ -476,7 +495,11 @@
 
    var base_url = "<?php echo base_url(); ?>";
   
-            
+  var usertype="<?php echo $this->session->userdata('user_type') ?>";    
+  var userrole="<?php echo $this->session->userdata('userrole') ?>";    
+  var useruniqueid="<?php echo $this->session->userdata('useruniqueid') ?>"; 
+  
+
 
    $(document).ready(function() {
 

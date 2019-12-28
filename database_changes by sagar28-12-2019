@@ -1,0 +1,2 @@
+
+ALTER TABLE quotation_detalis ADD salserepresentative INT(11) NOT NULL AFTER quotation_date;

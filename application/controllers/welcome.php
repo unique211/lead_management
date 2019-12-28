@@ -239,7 +239,9 @@ function logincode()
        
 			//session declare
 			   $usersession = array(
-                    'email' =>$x[0]['email'],
+					'email' =>$x[0]['email'],
+					'useruniqueid' =>$x[0]['id'],
+					'userrole' =>$x[0]['user_role'],
 					 'calendar_id'=>$x[0]['google_calendar_id'],
                     #'emp_id' =>$x[0]->emp_id
                     'user_type'=>$x[0]['user_type']

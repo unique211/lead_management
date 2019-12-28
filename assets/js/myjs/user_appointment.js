@@ -499,10 +499,20 @@ $(document).ready(function() {
         e.preventDefault();
         $('.btnhideshow').show();
         $('.tablehideshow').hide();
+        $('.btnhide').hide();
+        $('.closehide').show();
     });
     $(document).on('click', '#reset', function(e) {
         e.preventDefault();
         form_clear();
+    });
+    $(document).on('click', '.closehide', function(e) {
+        e.preventDefault();
+        form_clear();
+        $('.btnhideshow').hide();
+        $('.tablehideshow').show();
+        $('.btnhide').show();
+        $('.closehide').hide();
     });
 
 
