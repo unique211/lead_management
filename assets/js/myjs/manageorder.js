@@ -554,7 +554,13 @@ $(document).ready(function() {
         var quatationidno = $('#quatationid').val();
         var flag = 0;
 
+        var salesrepresentive = $('#salesrepresentive').val();
 
+
+
+        if (usertype == "SalesRepresentative" && userrole == "Sales") {
+            salesrepresentive = useruniqueid;
+        }
 
         var id = $('#save_update').val();
 
@@ -663,6 +669,7 @@ $(document).ready(function() {
                         table_name: table_name,
                         quatationidno: quatationidno,
                         quatation_no: quatation_no,
+                        salesrepresentive: salesrepresentive,
                     },
                     success: function(data) {
                         console.log(data);
@@ -877,6 +884,7 @@ $(document).ready(function() {
                     '<tr>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Customer Name</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Quotation No</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Sales Representative	</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Version</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Order No</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Ref. Number</th>' +
@@ -897,6 +905,7 @@ $(document).ready(function() {
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Order Date</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Order Due Date</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Quoteno</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Sales Representative ID</th>' +
 
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Action</th>' +
                     '</tr>' +
@@ -919,6 +928,7 @@ $(document).ready(function() {
                     html += '<tr>' +
                         '<td id="customer_name_' + data[i].id + '">' + data[i].customer_name + '</td>' +
                         '<td id="quotation_no_' + data[i].id + '">' + data[i].quotation_no + '</td>' +
+                        '<td id="salesrepresentivename_' + data[i].id + '">' + data[i].firstname + "" + data[i].last_name + '</td>' +
                         '<td  id="version_' + data[i].id + '">' + data[i].quote_lock_version + '</td>' +
                         '<td id="order_no_' + data[i].id + '">' + data[i].order_no + '</td>' +
                         '<td id="ref_number_' + data[i].id + '">' + data[i].ref_number + '</td>' +
@@ -939,6 +949,7 @@ $(document).ready(function() {
                         '<td style="display:none;" id="less_others_' + data[i].id + '">' + data[i].less_others + '</td>' +
                         '<td style="display:none;" id="margin_' + data[i].id + '">' + data[i].margin + '</td>' +
                         '<td style="display:none;" id="qutone_no_' + data[i].id + '">' + data[i].qutone_no + '</td>' +
+                        '<td style="display:none;" id="salesrepresentative_' + data[i].id + '">' + data[i].salesrepresentative + '</td>' +
 
 
 
@@ -1002,6 +1013,18 @@ $(document).ready(function() {
         var version_ = $('#version_' + id1[1]).html();
         var qutone_no = $('#qutone_no_' + id1[1]).html();
         var quotation_no = $('#quotation_no_' + id1[1]).html();
+        var salesrepresentative_ = $('#salesrepresentative_' + id1[1]).html();
+        var salesrepresentivename = $('#salesrepresentivename_' + id1[1]).html();
+
+        if (usertype == "SalesRepresentative" && userrole == "Sales") {
+
+            $("#salesrepresentive1").val(salesrepresentivename);
+        } else {
+            if (salesrepresentative_ > 0) {
+                $('#salesrepresentive').val(salesrepresentative_).trigger('change');
+            }
+
+        }
 
 
         $('#quatationid').val(qutone_no);
@@ -1694,6 +1717,55 @@ $(document).ready(function() {
 
     if (quatationid1 > 0) {
         $('#edit_' + quatationid1).trigger('click');
+
+    }
+    getMasterSelect('user_creation', '#salesrepresentive');
+
+    function getMasterSelect(table_name, selecter) {
+
+        $.ajax({
+            type: "POST",
+            url: base_url + "Quotation_Estimate/getdropdown",
+            data: {
+                table_name: table_name,
+            },
+            dataType: "JSON",
+            async: false,
+            success: function(data) {
+                console.log(data);
+                html = '';
+                var name = '';
+                //					
+                html += '<option selected disabled value="" >Select</option>';
+                //						}
+                for (i = 0; i < data.length; i++) {
+                    var id = '';
+
+                    name = data[i].first_name + " " + data[i].last_name;
+                    id = data[i].id;
+
+
+
+
+
+                    //alert(name);
+
+                    if (usertype == "SalesRepresentative") {
+                        if (id == useruniqueid) {
+                            html += '<option selected value="' + id + '" >' + name + '</option>';
+                        } else {
+                            html += '<option value="' + id + '" >' + name + '</option>';
+                        }
+                    } else {
+                        html += '<option value="' + id + '" >' + name + '</option>'; //last changes here
+                    }
+
+
+
+                }
+                $(selecter).html(html);
+            }
+        });
 
     }
 

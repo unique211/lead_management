@@ -173,6 +173,12 @@
                                <div class="input-group"><span class="input-group-addon"><i class="fa fa-map-marker"></i></span><textarea rows="4" cols="40" class="form-control" name="d_address"> </textarea></div>
                             </div>
                          </div>
+                         <div class="form-group">
+                            <label id="currentfcyear" class="col-md-4 control-label"></label>
+                            <div class="col-md-6 inputGroupContainer">
+                            <div class="input-group"><span class="input-group-addon"><i class="fa fa-dollar"></i></span><input type="number" min="0" id="currentfcyearamt" name="currentfcyearamt"  class="form-control" required="true" value="" type="text" maxlength="20"></div>
+                            </div>
+                         </div>
 
                       </div>
                     </div>           
@@ -461,4 +467,35 @@ function validate_data()
   if (!charStr.match(/^[0-9]+$/))
     e.preventDefault();
 }
+function getCurrentFinancialYear() {
+  var fiscalyear = "";
+  var today = new Date();
+  var fyear= today.getFullYear().toString().substr(-2);
+  if ((today.getMonth() + 1) <= 3) {
+
+
+  
+    fiscalyear = (parseInt(fyear) -parseInt(1)) + "-" + fyear;
+   
+  } else {
+    fiscalyear =parseInt(fyear) + "-" + (parseInt(fyear) + parseInt(1));
+    //fiscalyear=  fiscalyear.toString().substr(-2);
+  }
+  return fiscalyear
+}
+var currentfbyear=getCurrentFinancialYear();
+$('#currentfcyear').text("Target for FY"+currentfbyear+"(in Lakhs)");
+
+$("#currentfcyearamt").keypress(function (e) {
+			
+     //if the letter is not digit then display error and don't type anything
+     if (e.which != 8 && e.which != 0 && e.which !=='-' && (e.which < 48 || e.which > 57)) {
+
+        //$("#errmsg").html("Digits Only");
+               return false;
+    }else{
+		$("#errmsg").hide();
+	}
+   });
+$("#currentfcyearamt").attr("placeholder", "Target for FY"+currentfbyear+"(in Lakhs)").placeholder();
 </script>

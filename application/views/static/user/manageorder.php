@@ -48,7 +48,25 @@
                                     <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span><input id="s_email" name="s_email" placeholder="Email" class="form-control s_email" value="" type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"></div><span class="email1"></span>
                                  </div>
                               </div>
+                              <div class="form-group">
+                                 <label class="col-md-4 control-label">Sales Representative</label>
 
+
+                                 <div class="col-md-8 inputGroupContainer">
+                                    <?php if(($this->session->userdata('user_type')=="SalesRepresentative") && ($this->session->userdata('userrole')=="Sales") ){ ?>
+                                       <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input id="salesrepresentive1" name="salesrepresentive1" placeholder="Contact Person" class="form-control " maxlength="20" type="text">
+
+                                    </div><span class="s_lname1"></span>
+                                    <?php }else {?>
+                                 <div class="input-group"><span class="input-group-addon"><i class="fa fa-life-ring"></i></span><select name="salesrepresentive" id="salesrepresentive" class="form-control">
+                                             <option value="">Select</option>
+                                            
+                                          </select></div>
+                                    <?php } ?>
+
+                                 </div>
+
+                           </div>
                            </div>
 
                            <div class="col-md-6">
@@ -485,8 +503,12 @@
   
   
   
-   var quatationid1 = "<?php echo  $quotatopnid; ?>";
+   var quatationid1 = "<?php if(isset($quotatopnid))  echo $quotatopnid;?>";
    var quatationid="";
-   
+
+    var usertype="<?php echo $this->session->userdata('user_type') ?>";    
+  var userrole="<?php echo $this->session->userdata('userrole') ?>";    
+  var useruniqueid="<?php echo $this->session->userdata('useruniqueid') ?>"; 
+                                       
   
 </script>

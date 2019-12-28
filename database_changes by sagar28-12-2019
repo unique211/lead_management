@@ -1,2 +1,13 @@
 
+table name:quotation_detalis
+
 ALTER TABLE quotation_detalis ADD salserepresentative INT(11) NOT NULL AFTER quotation_date;
+
+
+table name:order_master
+
+ALTER TABLE order_master ADD salesrepresentative INT(11) NOT NULL AFTER quotation_no;
+
+
+table name:user_creation
+ALTER TABLE user_creation ADD finicialyear_amt DECIMAL(10,2) NOT NULL AFTER status;
