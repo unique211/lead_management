@@ -23,7 +23,8 @@
 |
 */
 // $config['base_url'] = 'https://acmesoftware.net/lm/UAT1/';
-$config['base_url'] = 'https://erp-leadmanagement.herokuapp.com/';
+//$config['base_url'] = 'https://erp-leadmanagement.herokuapp.com/';
+$config['base_url'] = 'http://localhost/lead_management/';
 
 /*
 |--------------------------------------------------------------------------
