@@ -226,11 +226,90 @@ function get_customer_detalis($customer){
    
 }
 function getall_order(){
+    $result=array();
     $this->db->select('*');    
     $this->db->from('order_master');
-    $this->db->where('status',1);
+    $this->db->where('order_master.status',1);
+    if(($this->session->userdata('user_type')=="SalesRepresentative") && ($this->session->userdata('userrole')=="Sales") ){
+        $this->db->where('user_id',$this->session->userdata('useruniqueid'));
+    }
     $hasil=$this->db->get();
-    return $hasil->result();
+    if($hasil->num_rows() >0){
+        foreach($hasil->result_array() as $quatationdata){
+            $id= $quatationdata['id'];
+            $customer_name= $quatationdata['customer_name'];
+            $order_no= $quatationdata['order_no'];
+            $contact_person= $quatationdata['contact_person'];
+            $ref_number= $quatationdata['ref_number'];
+            $mobile_no= $quatationdata['mobile_no'];
+            $order_date= $quatationdata['order_date'];
+            $email_id= $quatationdata['email_id'];
+            $order_due_date= $quatationdata['order_due_date'];
+            $description= $quatationdata['description'];
+            $total_order_value= $quatationdata['total_order_value'];
+            $total_trasfor_price= $quatationdata['total_trasfor_price'];
+            $less_input_tax= $quatationdata['less_input_tax'];
+            $less_trasportion= $quatationdata['less_trasportion'];
+            $less_bg= $quatationdata['less_bg'];
+            $user_id= $quatationdata['user_id'];
+            $less_others= $quatationdata['less_others'];
+            $margin= $quatationdata['margin'];
+            //$quote_status= $quatationdata['quote_status'];
+            $quote_lock_version= $quatationdata['quote_lock_version'];
+            $qutone_no= $quatationdata['qutone_no'];
+            $quotation_no= $quatationdata['quotation_no'];
+            $salesrepresentative= $quatationdata['salesrepresentative'];
+            $firstname='';
+            $last_name='';
+            $salesperson='';
+
+            if($salesrepresentative >0){
+                $this->db->select('*');    
+                $this->db->from('user_creation');
+                $this->db->where('user_creation.id',$salesrepresentative);
+                $hasil1=$this->db->get();
+                foreach($hasil1->result_array() as $userdata){
+                    $firstname= $userdata['first_name'];
+                    $last_name= $userdata['last_name'];
+                   
+                }
+            }
+
+            $result[]=array(
+                'id'=>$id,
+                'customer_name'=>$customer_name,
+                'order_no'=>$order_no,
+                'contact_person'=>$contact_person,
+                'ref_number'=>$ref_number,
+                'mobile_no'=>$mobile_no,
+                'order_date'=>$order_date,
+                'email_id'=>$email_id,
+                'order_due_date'=>$order_due_date,
+                'description'=>$description,
+                'total_order_value'=>$total_order_value,
+                'total_trasfor_price'=>$total_trasfor_price,
+                'less_input_tax'=>$less_input_tax,
+                'less_trasportion'=>$less_trasportion,
+                'less_bg'=>$less_bg,
+                'user_id'=>$user_id,
+                'less_others'=>$less_others,
+                'margin'=>$margin,
+              
+                'quote_lock_version'=>$quote_lock_version,
+              
+                'firstname'=>$firstname,
+                'last_name'=>$last_name,
+                'salesrepresentative'=>$salesrepresentative,
+                'qutone_no'=>$qutone_no,
+                'quotation_no'=>$quotation_no,
+
+
+
+            );
+        }
+    }
+    return $result;
+   
 }
 function getquatation_details($id){
     $this->db->select_max('version');  

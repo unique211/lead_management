@@ -9,6 +9,12 @@ $(document).ready(function() {
     });
     addproduct();
 
+    if (usertype == "SalesRepresentative" && userrole == "Sales") {
+        $("#salesrepresentive").attr("required", false);
+    } else {
+        $("#salesrepresentive").attr("required", true);
+    }
+
     // for add product
     function addproduct() {
         var table = $("#product_table");
@@ -553,7 +559,13 @@ $(document).ready(function() {
         var search_version = $('#search_version').text();
 
         var flag = 0;
+        var salesrepresentive = $('#salesrepresentive').val();
 
+
+
+        if (usertype == "SalesRepresentative" && userrole == "Sales") {
+            salesrepresentive = useruniqueid;
+        }
 
 
         var id = $('#save_update').val();
@@ -663,6 +675,7 @@ $(document).ready(function() {
                         finalmargin: finalmargin,
                         quatation_no: quatation_no,
                         table_name: table_name,
+                        salesrepresentive: salesrepresentive,
 
                     },
                     success: function(data) {
@@ -1789,6 +1802,27 @@ $(document).ready(function() {
                                 for (var i = 0; i < data.length; i++) {
                                     row_id = row_id + 1;
 
+                                    if (data[0].salserepresentative > 0) {
+                                        if (usertype == "SalesRepresentative" && userrole == "Sales") {
+                                            $("#salesrepresentive").attr("required", false);
+
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: baseurl + "Quotation_Estimate/get_salespername",
+                                                async: false,
+                                                data: {
+                                                    useruniqueid: useruniqueid,
+                                                },
+                                                dataType: 'json',
+                                                success: function(data) {
+                                                    $('#salesrepresentive1').val(data[0].first_name + "" + data[0].last_name);
+                                                }
+                                            });
+
+                                        }
+                                        $('#salesrepresentive').val(data[i].salserepresentative).trigger('change');
+                                    }
+
                                     var totaluniprice = parseFloat(data[i].qty) * parseFloat(data[i].unit_transfor_price);
                                     var unittaxamt = parseFloat(data[i].transfor_tax) * parseFloat(totaluniprice) / 100;
                                     var transforwithtax = parseFloat(unittaxamt) + parseFloat(totaluniprice);
@@ -1861,7 +1895,55 @@ $(document).ready(function() {
 
     }
 
+    getMasterSelect('user_creation', '#salesrepresentive');
 
+    function getMasterSelect(table_name, selecter) {
+
+        $.ajax({
+            type: "POST",
+            url: base_url + "Quotation_Estimate/getdropdown",
+            data: {
+                table_name: table_name,
+            },
+            dataType: "JSON",
+            async: false,
+            success: function(data) {
+                console.log(data);
+                html = '';
+                var name = '';
+                //					
+                html += '<option selected disabled value="" >Select</option>';
+                //						}
+                for (i = 0; i < data.length; i++) {
+                    var id = '';
+
+                    name = data[i].first_name + " " + data[i].last_name;
+                    id = data[i].id;
+
+
+
+
+
+                    //alert(name);
+
+                    if (usertype == "SalesRepresentative") {
+                        if (id == useruniqueid) {
+                            html += '<option selected value="' + id + '" >' + name + '</option>';
+                        } else {
+                            html += '<option value="' + id + '" >' + name + '</option>';
+                        }
+                    } else {
+                        html += '<option value="' + id + '" >' + name + '</option>'; //last changes here
+                    }
+
+
+
+                }
+                $(selecter).html(html);
+            }
+        });
+
+    }
 
 
 });

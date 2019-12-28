@@ -242,6 +242,8 @@ function logincode()
 					'email' =>$x[0]['email'],
 					'useruniqueid' =>$x[0]['id'],
 					'userrole' =>$x[0]['user_role'],
+					'first_name' =>$x[0]['first_name'],
+					'last_name' =>$x[0]['last_name'],
 					 'calendar_id'=>$x[0]['google_calendar_id'],
                     #'emp_id' =>$x[0]->emp_id
                     'user_type'=>$x[0]['user_type']
@@ -1036,8 +1038,9 @@ function logoutcode()
 		  $region_type=$this->input->post('d_region_type');
 		  $company=$this->input->post('d_company_name');
 		  $addr=$this->input->post('d_address');
+		  $currentfcyearamt=$this->input->post('currentfcyearamt');
 		 // print_r(expression)
-		  $this->lead_management->insert_user_data($user_id,$emp_id,$user_name,$fisrt_name,$last_name,$email,$p,$phone_number,$user_type,$gender,$google_id,$title,$department,$comments,$user_role,$region,$region_type,$company,$addr);
+		  $this->lead_management->insert_user_data($user_id,$emp_id,$user_name,$fisrt_name,$last_name,$email,$p,$phone_number,$user_type,$gender,$google_id,$title,$department,$comments,$user_role,$region,$region_type,$company,$addr,$currentfcyearamt);
 		  $this->session->set_flashdata('msg', 'User data saved');
 		  
 		 redirect('user_creation');
@@ -1155,7 +1158,8 @@ function edit_sales_rep_data()
 		$department=$this->input->post('department');
 		$comments=$this->input->post('comments');
 		$address=$this->input->post('address');
-		$this->lead_management->edit_sales_rep_data_code($id,$f_name,$l_name,$u_name,$email,$gender,$phone,$user_role,$c_name,$region,$region_type,$u_type,$cal_id,$u_title,$department,$comments,$address);
+		$currentfcyearamt=$this->input->post('currentfcyearamt');
+		$this->lead_management->edit_sales_rep_data_code($id,$f_name,$l_name,$u_name,$email,$gender,$phone,$user_role,$c_name,$region,$region_type,$u_type,$cal_id,$u_title,$department,$comments,$address,$currentfcyearamt);
 		 $this->session->set_flashdata('edit_userdata', 'data updated ');
 		redirect('user_dtl');
 	}
