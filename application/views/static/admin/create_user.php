@@ -62,7 +62,7 @@
                                 <select id="user_role" name="user_role" class="user_role form-control" required >
                                   <option value="">Select</option>
                                   <option value="User">User</option>
-                                  <option value="Dealer">Dealer</option>
+                                  <option selected value="Sales">Sales</option>
                                 </select>
                                 </div>
                             </div>
@@ -133,9 +133,9 @@
                                 <span class="input-group-addon"> <i class="fa fa-user-circle"></i><!-- <img src="lead_type.jpg"> --></span>
                                 <select class=" form-control user_type" id='user_type' name="user_type">
                                      <option value="">--Select--</option>
-                                  <option value="SalesRepresentative">Sales Representative</option>
+                                  <option selected value="SalesRepresentative">Sales Representative</option>
                                   <option value="Admin">Admin</option>
-                                  <option value="Secretary"> Secretary</option>
+                                  <option value="Tele-caller"> Tele-caller</option>
                                  
                                   </select>
                                </div><span class="user_type1"></span>

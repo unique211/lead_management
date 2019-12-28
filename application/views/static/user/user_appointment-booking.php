@@ -5,8 +5,9 @@
  <div class="container">
    <br>
    <button class="btn btn-primary pull-right btnhide"><i class="fa fa-plus"></i>Add</button>
+   <button class="btn btn-primary pull-right closehide" style="display:none">Close</button>
    <br>
-   <h3>New Account</h3>
+   <h3>All Account</h3>
    <form class=" form-horizontal" method="post" id="newaccountform" name="newaccountform">
 
      <!--   <tr>

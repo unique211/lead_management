@@ -374,6 +374,14 @@ function getquatationdate($id,$version){
     $hasil1=$this->db->get();
     return $hasil1->result();
 }
+function get_dropdown($table){
+    $this->db->select('*');  
+    $this->db->from('user_creation');
+    $this->db->where('status',1);
+    $this->db->where('user_type','SalesRepresentative');
+    $hasil1=$this->db->get();
+    return $hasil1->result();
+}
 
 }
 

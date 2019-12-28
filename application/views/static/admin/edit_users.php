@@ -96,7 +96,7 @@
              <select id="user_role" name="user_role" class="user_role form-control" required >
                                   <option value="">Select</option>
                                   <option value="User">User</option>
-                                  <option value="Dealer">Dealer</option>
+                                  <option value="Sales">Sales</option>
                                 </select>
           </div>
              <div class="form-group">

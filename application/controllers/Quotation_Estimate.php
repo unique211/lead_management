@@ -395,6 +395,13 @@ class Quotation_Estimate extends CI_Controller {
             $data=$this->quatationmodel->getquatationdate($id,$version);
             echo json_encode($data);
         }
+
+        public function getdropdown(){
+            $table_name	= $this->input->post('table_name');
+           
+            $data=$this->quatationmodel->get_dropdown($table_name);
+            echo json_encode($data);
+        }
        
 
 
