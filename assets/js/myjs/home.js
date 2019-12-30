@@ -272,7 +272,7 @@ $(document).ready(function() {
                     dataType: "JSON",
                     async: false,
                     success: function(data) {
-                        alert(data);
+                       // alert(data);
                         console.log("data" + data);
                         for (i = 0; i < data.length; i++) {
                             if (i == 0) {
