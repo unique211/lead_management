@@ -27,6 +27,7 @@
 $config['base_url'] = 'https://erp-leadmanagement.herokuapp.com/';
 //$config['base_url'] = 'http://localhost/lead_management/';
 
+
 /*
 |--------------------------------------------------------------------------
 | Index File
