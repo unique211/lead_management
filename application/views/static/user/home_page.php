@@ -23,7 +23,7 @@
 			<table class="table table-striped table-bordered" style="width:100%">
 				<thead>
 					<tr>
-						<th colspan="8" style="text-align: center;width:100%">Target and Achievement Dash board</th>
+						<th colspan="8" style="text-align: center;width:100%; background-color: #0071ba; color:white;">Target and Achievement Dash board</th>
 					</tr>
 					<tr>
 						<th colspan="8" style="text-align: center;width:100%"></th>
