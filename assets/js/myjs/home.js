@@ -198,6 +198,21 @@ $(document).ready(function() {
     if (usertype == "SalesRepresentative" && userrole == "Sales") {
         getfinicialamt(useruniqueid);
 
+
+
+        $.ajax({
+            type: 'POST',
+            url: baseurl + "Quotation_Estimate/get_salespername",
+            async: false,
+            data: {
+                useruniqueid: useruniqueid,
+            },
+            dataType: 'json',
+            success: function(data) {
+                $('#salesrepresentive1').val(data[0].first_name + "" + data[0].last_name);
+            }
+        });
+
     }
 
     function getfinicialamt(uid) {
