@@ -88,4 +88,13 @@ class Homecontroller extends CI_Controller
 
         echo json_encode($data1);
     }
+    public function getfinicialyearwisedata(){
+        $startyear	= $this->input->post('startyear');
+        $endyear	= $this->input->post('endyear');
+        $uid	= $this->input->post('uid');
+
+        $data1 = $this->homemodel->getachiveamt($startyear,$endyear,$uid);
+
+        echo json_encode($data1); 
+    }
 }

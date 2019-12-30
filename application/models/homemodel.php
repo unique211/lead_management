@@ -83,6 +83,165 @@ function getfinicialamt($uid){
 
 return $hasil->result();
 }
+function getachiveamt($startyear,$endyear,$uid){
+    
+   
+    $result1=array();
+
+// $uid=19;
+// $startyear=2019;
+// $endyear=2020;
+
+ for($i=4;$i<=12;$i++){
+
+  
+
+   $firstdate = strtotime("{$startyear}-{$i}-01");
+   $firstdate= date('Y-m-d', $firstdate);
+   $enddate = strtotime("{$startyear}-{$i}-01");
+    $result = strtotime('-1 second', strtotime('+1 month', $enddate));
+    $enddate= date('Y-m-d', $result);
+
+
+    
+  
+    $sum=0;
+   
+
+    $this->db->select('*');    
+    $this->db->from('order_master');
+    $this->db->where('order_date >=',$firstdate);
+    $this->db->where('order_date <=', $enddate);
+    if(($this->session->userdata('user_type')=="SalesRepresentative") && ($this->session->userdata('userrole')=="Sales") ){
+        $this->db->where('salesrepresentative',$this->session->userdata('useruniqueid'));
+    }else{
+        $this->db->where('salesrepresentative',$uid);
+    }
+        $hasil=$this->db->get();
+        foreach($hasil->result_array() as $getdata){
+            $id=$getdata['id'];
+
+            if($id >0){
+                $this->db->select('*');    
+                $this->db->from('order_detalis');
+                $this->db->where('order_id',$id);
+                $hasil2=$this->db->get();
+                foreach($hasil2->result_array() as $getdata1){
+                    $qty=$getdata1['qty'];
+                    $unit_order_value=$getdata1['unit_order_value'];
+                    $order_tax=$getdata1['order_tax'];
+
+                    $total=$qty * $unit_order_value;
+                    $taxamt=$total *$order_tax/100;
+                    $sum=$sum+$total+$taxamt;
+
+                    //echo $total."".$taxamt."".$sum;
+
+
+            }
+        }
+
+  
 }
+
+$result1[]=array(
+    'sum'=>$sum,
+);
+ }
+ for($i=1;$i<=3;$i++){
+
+  
+
+    $firstdate = strtotime("{$endyear}-{$i}-01");
+    $firstdate= date('Y-m-d', $firstdate);
+    $enddate = strtotime("{$endyear}-{$i}-01");
+     $result = strtotime('-1 second', strtotime('+1 month', $enddate));
+     $enddate= date('Y-m-d', $result);
+ 
+ 
+     
+   
+     $sum=0;
+    
+ 
+     $this->db->select('*');    
+     $this->db->from('order_master');
+     $this->db->where('order_date >=',$firstdate);
+     $this->db->where('order_date <=', $enddate);
+     if(($this->session->userdata('user_type')=="SalesRepresentative") && ($this->session->userdata('userrole')=="Sales") ){
+         $this->db->where('salesrepresentative',$this->session->userdata('useruniqueid'));
+     }else{
+         $this->db->where('salesrepresentative',$uid);
+     }
+         $hasil=$this->db->get();
+         foreach($hasil->result_array() as $getdata){
+             $id=$getdata['id'];
+ 
+             if($id >0){
+                 $this->db->select('*');    
+                 $this->db->from('order_detalis');
+                 $this->db->where('order_id',$id);
+                 $hasil2=$this->db->get();
+                 foreach($hasil2->result_array() as $getdata1){
+                     $qty=$getdata1['qty'];
+                     $unit_order_value=$getdata1['unit_order_value'];
+                     $order_tax=$getdata1['order_tax'];
+ 
+                     $total=$qty * $unit_order_value;
+                     $taxamt=$total *$order_tax/100;
+                     $sum=$sum+$total+$taxamt;
+ 
+                     //echo $total."".$taxamt."".$sum;
+ 
+ 
+             }
+         }
+ 
+   
+ }
+ 
+ $result1[]=array(
+     'sum'=>$sum,
+ );
+  }
+
+ return $result1;
+// for($i=1;$i<=3;$i++){
+//     $firstdate= firstDay($i,$endyear);
+//     $enddate= lastday($i,$endyear);
+// }
+
+
+  
+     
+}
+function lastday($month = '', $year = '') {
+    // if (empty($month)) {
+    //    $month = date('m');
+    // }
+    // if (empty($year)) {
+    //    $year = date('Y');
+    // }
+    $result = strtotime("{$year}-{$month}-01");
+    $result = strtotime('-1 second', strtotime('+1 month', $result));
+    return date('Y-m-d', $result);
+ }
+
+ function firstDay($month = '', $year = '')
+{
+    if (empty($month)) {
+      $month = date('m');
+   }
+   if (empty($year)) {
+      $year = date('Y');
+   }
+   $result = strtotime("{$year}-{$month}-01");
+   return date('Y-m-d', $result);
+} 
+
+
+
+}
+
 
 ?>
