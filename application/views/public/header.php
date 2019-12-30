@@ -48,7 +48,7 @@
         </ul>
 
         </li> -->
-                  <li class="dropdown"><a  <?php if (in_array('createLead', $user_permission)) : ?> href="<?php echo base_url() ?>account_create"  <?php endif; ?>>All Account <span class="caret"></span></a>
+                  <li ><a  <?php if (in_array('createLead', $user_permission)) : ?> href="<?php echo base_url() ?>account_create"  <?php endif; ?>>All Account <span ></span></a>
 
                     <!-- <ul class="dropdown-menu">
                       <?php if (in_array('createLead', $user_permission)) : ?>
