@@ -754,6 +754,7 @@ $(document).ready(function() {
                 var h2achieveper = 0;
 
 
+
                 h2target = (parseFloat(overallq3target) + parseFloat(overallq4target)).toFixed(2);
 
                 h2task = (parseFloat(overallq4target) + parseFloat(overallq3excess)).toFixed(2);
