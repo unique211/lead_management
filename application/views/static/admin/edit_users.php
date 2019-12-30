@@ -156,6 +156,12 @@
             <textarea class="form-control" id="address" 
             name="address"></textarea>          
             </div>  
+            <div class="form-group">
+                            <label id="currentfcyear" class="control-label"></label>
+                            
+                            <div class="input-group"><span class="input-group-addon"><i class="fa fa-dollar"></i></span><input type="number" min="0" id="currentfcyearamt" name="currentfcyearamt"  class="form-control" required="true" value="" type="text" maxlength="20"></div>
+                            </div>
+                        
             </div>
           </div>
      
@@ -228,6 +234,38 @@
     <!-- =======view sales reps end======== -->
     <script type="text/javascript">
       /*====update sales Representatives======*/
+      function getCurrentFinancialYear() {
+  var fiscalyear = "";
+  var today = new Date();
+  var fyear= today.getFullYear().toString().substr(-2);
+  if ((today.getMonth() + 1) <= 3) {
+
+
+  
+    fiscalyear = (parseInt(fyear) -parseInt(1)) + "-" + fyear;
+   
+  } else {
+    fiscalyear =parseInt(fyear) + "-" + (parseInt(fyear) + parseInt(1));
+    //fiscalyear=  fiscalyear.toString().substr(-2);
+  }
+  return fiscalyear
+}
+
+      var currentfbyear=getCurrentFinancialYear();
+$('#currentfcyear').text("Target for FY"+currentfbyear+"(in Lakhs)");
+
+$("#currentfcyearamt").keypress(function (e) {
+			
+     //if the letter is not digit then display error and don't type anything
+     if (e.which != 8 && e.which != 0 && e.which !=='-' && (e.which < 48 || e.which > 57)) {
+
+        //$("#errmsg").html("Digits Only");
+               return false;
+    }else{
+		$("#errmsg").hide();
+	}
+   });
+$("#currentfcyearamt").attr("placeholder", "Target for FY"+currentfbyear+"(in Lakhs)").placeholder();
 function edit_view(emp_id)
 {
 
@@ -260,6 +298,7 @@ $.ajax(
       $("#department").val(l[0].department);
       $("#comments").val(l[0].comments);
       $("#address").val(l[0].address);
+      $("#currentfcyearamt").val(l[0].finicialyear_amt);
   }
 
 
@@ -308,4 +347,5 @@ $.notify({
   type: 'success'
 });
 }
+
 </script>

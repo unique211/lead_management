@@ -98,8 +98,8 @@
                             <div class="col-md-6 inputGroupContainer">
                                <div class="input-group"><span class="input-group-addon"><i class="fa fa-globe"></i></span>
                                 <input id="demo" name="d_region" placeholder="Region"
-                                 class="tags_input form-control" required="true" value="" type="text" ></div>
-                            </div>
+                                 class="tags_input form-control region" required="true" value="" type="text" required></div>
+                            </div><span class="user_type2"></span>
                          </div>
                          <div class="form-group">
                             <label class="col-md-4 control-label">Region Type</label>
@@ -139,6 +139,8 @@
                                  
                                   </select>
                                </div><span class="user_type1"></span>
+
+
                             </div>
                          </div>
          
@@ -171,6 +173,12 @@
                             <label class="col-md-4 control-label">Address</label>
                             <div class="col-md-6 inputGroupContainer">
                                <div class="input-group"><span class="input-group-addon"><i class="fa fa-map-marker"></i></span><textarea rows="4" cols="40" class="form-control" name="d_address"> </textarea></div>
+                            </div>
+                         </div>
+                         <div class="form-group" id="ficinacialamt">
+                            <label id="currentfcyear" class="col-md-4 control-label"></label>
+                            <div class="col-md-6 inputGroupContainer">
+                            <div class="input-group"><span class="input-group-addon"><i class="fa fa-dollar"></i></span><input type="number" min="0" id="currentfcyearamt" name="currentfcyearamt"  class="form-control" required="true" value="" type="text" maxlength="20" required></div>
                             </div>
                          </div>
 
@@ -283,6 +291,14 @@ function validate_data()
     $(".user_type1").text("This field is required");
         $(".user_type1").css("color","red");
         $(".user_type").focus();
+        return false;
+  }
+  var demo=$('#demo').val();
+
+  if(demo==""){
+   $(".user_type2").text("This field is required");
+        $(".user_type2").css("color","red");
+        $(".region").focus();
         return false;
   }
   return true;
@@ -421,6 +437,13 @@ function validate_data()
       }
       else
       {
+         if(v=="SalesRepresentative"){
+            $('#ficinacialamt').show();
+            $("#currentfcyearamt").prop('required',true);
+         }else{
+            $('#ficinacialamt').hide();
+            $("#currentfcyearamt").prop('required',false);
+         }
         $(".user_type1").text("");
       }
 
@@ -461,4 +484,35 @@ function validate_data()
   if (!charStr.match(/^[0-9]+$/))
     e.preventDefault();
 }
+function getCurrentFinancialYear() {
+  var fiscalyear = "";
+  var today = new Date();
+  var fyear= today.getFullYear().toString().substr(-2);
+  if ((today.getMonth() + 1) <= 3) {
+
+
+  
+    fiscalyear = (parseInt(fyear) -parseInt(1)) + "-" + fyear;
+   
+  } else {
+    fiscalyear =parseInt(fyear) + "-" + (parseInt(fyear) + parseInt(1));
+    //fiscalyear=  fiscalyear.toString().substr(-2);
+  }
+  return fiscalyear
+}
+var currentfbyear=getCurrentFinancialYear();
+$('#currentfcyear').text("Target for FY"+currentfbyear+"(in Lakhs)");
+
+$("#currentfcyearamt").keypress(function (e) {
+			
+     //if the letter is not digit then display error and don't type anything
+     if (e.which != 8 && e.which != 0 && e.which !=='-' && (e.which < 48 || e.which > 57)) {
+
+        //$("#errmsg").html("Digits Only");
+               return false;
+    }else{
+		$("#errmsg").hide();
+	}
+   });
+$("#currentfcyearamt").attr("placeholder", "Target for FY"+currentfbyear+"(in Lakhs)");
 </script>

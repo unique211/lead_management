@@ -402,6 +402,18 @@ class Quotation_Estimate extends CI_Controller {
             $data=$this->quatationmodel->get_dropdown($table_name);
             echo json_encode($data);
         }
+        public function getsalespersion(){
+            $id	= $this->input->post('id');
+            $version	= $this->input->post('version');
+           
+            $data=$this->quatationmodel->getsalesdata( $id,$version);
+            echo json_encode($data); 
+        }
+        public function get_salespername(){
+            $id	= $this->input->post('useruniqueid');
+            $data=$this->quatationmodel->get_salespername($id);
+            echo json_encode($data); 
+        }
        
 
 

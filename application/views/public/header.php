@@ -48,7 +48,7 @@
         </ul>
 
         </li> -->
-                  <li class="dropdown"><a   <?php if (in_array('createLead', $user_permission)) : ?> href="<?php echo base_url() ?>account_create"  <?php endif; ?>>All Account <span class="caret"></span></a>
+                  <li ><a  <?php if (in_array('createLead', $user_permission)) : ?> href="<?php echo base_url() ?>account_create"  <?php endif; ?>>All Account <span ></span></a>
 
                     <!-- <ul class="dropdown-menu">
                       <?php if (in_array('createLead', $user_permission)) : ?>
@@ -73,10 +73,10 @@
                 <?php endif; ?>
 
 
-                <li><a class="dropdown-toggle" data-toggle="dropdown" href="#">Create Quatation <span class="caret"></span></a>
+                <li><a class="dropdown-toggle" data-toggle="dropdown" href="#">Create Quotation <span class="caret"></span></a>
                   <ul class="dropdown-menu">
 
-                    <li><a href="<?php echo base_url() ?>quotation">Quatation</a></li>
+                    <li><a href="<?php echo base_url() ?>quotation">Quotation</a></li>
                     <li><a href="<?php echo base_url() ?>manageorder">Manage Order</a></li>
 
 
