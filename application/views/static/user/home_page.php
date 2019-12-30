@@ -30,7 +30,6 @@
 					</tr>
 					<tr>
 						<th colspan="2" style="text-align: center;width:30%">Sales Person</th>
-
 						<th colspan="3" style="text-align: center;width:30%">
 
 
@@ -48,20 +47,12 @@
 
 							</div>
 						</th>
-
-						<th colspan="3" style="text-align: center;width:30%"></th>
-
 						<th colspan="3" style="text-align: center;width:40%" rowspan="2"></th>
 
 					</tr>
 					<tr>
-
 						<th colspan="2" id="targetcurrerenyear" style="text-align: center;">Target for FY 18-19 (in Lakhs)</th>
 						<th colspan="3" id="targetyearamt" style="text-align: right;">35.00</th>
-
-						<th colspan="2" style="text-align: center;">Target for FY 18-19 (in Lakhs)</th>
-						<th colspan="3" style="text-align: right;">35.00</th>
-
 
 
 					</tr>
@@ -74,7 +65,6 @@
 				</thead>
 				<tbody>
 					<tr>
-
 						<td style="width:15%" >Q1 Tgt @ 22%</td>
 						<td style="width:10%;text-align:center" id="q1tgt">7.70</td>
 						<td style="width:15%">Q2 Target @ 25%</td>
@@ -123,56 +113,6 @@
 						<td style="width:10%;text-align:center" id="q3achdper">0%</td>
 						<td style="width:15%">Q4 Achd %</td>
 						<td style="width:10%;text-align:center" id="q4achdper">0%</td>
-
-						<td style="width:15%">Q1 Tgt @ 22%</td>
-						<td style="width:10%;text-align:center">7.70</td>
-						<td style="width:15%">Q2 Target @ 25%</td>
-						<td style="width:10%;text-align:center">8.75</td>
-						<td style="width:15%">Q3 Target @ 26%</td>
-						<td style="width:10%;text-align:center">9.10</td>
-						<td style="width:15%">Q4 Target @ 27%</td>
-						<td style="width:10%;text-align:center">9.45</td>
-					</tr>
-					<tr>
-						<td style="width:15%">Q1 Task</td>
-						<td style="width:10%;text-align:center">7.70</td>
-						<td style="width:15%">Q2 Task</td>
-						<td style="width:10%;text-align:center">16.45</td>
-						<td style="width:15%">Q3 Task</td>
-						<td style="width:10%;text-align:center">25.55</td>
-						<td style="width:15%">Q4 Task</td>
-						<td style="width:10%;text-align:center">35.00</td>
-					</tr>
-					<tr>
-						<td style="width:15%">Q1 Achd</td>
-						<td style="width:10%;text-align:center">0.00</td>
-						<td style="width:15%">Q2 Achd</td>
-						<td style="width:10%;text-align:center">0.00</td>
-						<td style="width:15%">Q3 Achd</td>
-						<td style="width:10%;text-align:center">0.00</td>
-						<td style="width:15%">Q4 Achd</td>
-						<td style="width:10%;text-align:center">0.00</td>
-					</tr>
-					<tr>
-						<td style="width:15%">Q1 Excess</td>
-						<td style="width:10%;text-align:center">7.70</td>
-						<td style="width:15%">Q2 Excess</td>
-						<td style="width:10%;text-align:center">16.45</td>
-						<td style="width:15%">Q3 Excess</td>
-						<td style="width:10%;text-align:center">25.55</td>
-						<td style="width:15%">Q4 Excess</td>
-						<td style="width:10%;text-align:center">35.00</td>
-					</tr>
-					<tr>
-						<td style="width:15%">Q1 Achd %</td>
-						<td style="width:10%;text-align:center">0%</td>
-						<td style="width:15%">Q2 Achd %</td>
-						<td style="width:10%;text-align:center">0%</td>
-						<td style="width:15%">Q3 Achd %</td>
-						<td style="width:10%;text-align:center">0%</td>
-						<td style="width:15%">Q4 Achd %</td>
-						<td style="width:10%;text-align:center">0%</td>
-
 					</tr>
 					<tr>
 						<td colspan="8" style="text-align: center;width:100%"></td>
@@ -189,11 +129,7 @@
 							<thead>
 								<tr>
 									<th style="text-align:center" colspan="2"></th>
-
 									<th style="text-align:center" >Target</th>
-
-									<th style="text-align:center">Target</th>
-
 									<th style="text-align:center">Task</th>
 									<th style="text-align:center">Achieved</th>
 									<th style="text-align:center">Excess</th>
@@ -205,7 +141,6 @@
 								<tr>
 									<td rowspan="4">Q1 @ 22%</td>
 									<td style="text-align:center">April @ 5%</td>
-
 									<td style="text-align:right" id="apriltarget">1.75</td>
 									<td style="text-align:right" id="apriltask">1.75</td>
 									<td style="text-align:right" id="aprilacheive"></td>
@@ -235,44 +170,12 @@
 									<td style="text-align:right" id="overallq1achive">-</td>
 									<td style="text-align:right" id="overallq1access">7.70</td>
 									<td style="text-align:center" id="overallq1per">0%</td>
-
-									<td style="text-align:right">1.75</td>
-									<td style="text-align:right">1.75</td>
-									<td style="text-align:right"></td>
-									<td style="text-align:right">1.75</td>
-									<td style="text-align:center">0%</td>
-								</tr>
-								<tr>
-									<td style="text-align:center">May @ 8%</td>
-									<td style="text-align:right">2.80</td>
-									<td style="text-align:right">4.55</td>
-									<td style="text-align:right"></td>
-									<td style="text-align:right">4.55</td>
-									<td style="text-align:center">0%</td>
-								</tr>
-								<tr>
-									<td style="text-align:center">June @ 9%</td>
-									<td style="text-align:right">3.15</td>
-									<td style="text-align:right">7.70</td>
-									<td style="text-align:right"></td>
-									<td style="text-align:right">7.70</td>
-									<td style="text-align:center">0%</td>
-								</tr>
-								<tr>
-									<td style="text-align:center">Over All Q1</td>
-									<td style="text-align:right">7.70</td>
-									<td style="text-align:right">7.70</td>
-									<td style="text-align:right">-</td>
-									<td style="text-align:right">7.70</td>
-									<td style="text-align:center">0%</td>
-
 								</tr>
 								<tr>
 									<td colspan="7" style="text-align:center"></td>
 								</tr>
 								<tr>
 									<td rowspan="4">Q2 @ 25%</td>
-
 									<td style="text-align:center" >July @ 8%</td>
 									<td style="text-align:right" id="julytarget">2.80</td>
 									<td style="text-align:right" id="julytask" >10.50</td>
@@ -303,64 +206,23 @@
 									<td style="text-align:right" id="overallq2achive">-</td>
 									<td style="text-align:right" id="overallq2access">16.45</td>
 									<td style="text-align:center" id="overallq2per">0%</td>
-
-									<td style="text-align:center">July @ 8%</td>
-									<td style="text-align:right">2.80</td>
-									<td style="text-align:right">10.50</td>
-									<td style="text-align:right"></td>
-									<td style="text-align:right">10.50</td>
-									<td style="text-align:center">0%</td>
-								</tr>
-								<tr>
-									<td style="text-align:center">August @ 9%</td>
-									<td style="text-align:right">3.15</td>
-									<td style="text-align:right">13.65</td>
-									<td style="text-align:right"></td>
-									<td style="text-align:right">13.65</td>
-									<td style="text-align:center">0%</td>
-								</tr>
-								<tr>
-									<td style="text-align:center">September @ 8%</td>
-									<td style="text-align:right">2.80</td>
-									<td style="text-align:right">16.45</td>
-									<td style="text-align:right"></td>
-									<td style="text-align:right">16.45</td>
-									<td style="text-align:center">0%</td>
-								</tr>
-								<tr>
-									<td style="text-align:center">Over All Q2</td>
-									<td style="text-align:right">8.75</td>
-									<td style="text-align:right">16.45</td>
-									<td style="text-align:right">-</td>
-									<td style="text-align:right">16.45</td>
-									<td style="text-align:center">0%</td>
-
 								</tr>
 								<tr>
 									<td colspan="7" style="text-align:center"></td>
 								</tr>
 								<tr>
 									<td colspan="2" style="text-align:center">H1 @ 47%</td>
-
 									<td style="text-align:right" id="h1target">16.45</td>
 									<td style="text-align:right" id="h1task">16.45</td>
 									<td style="text-align:right" id="h1achive">-</td>
 									<td style="text-align:right" id="h1excess">16.45</td>
 									<td style="text-align:center" id="h1per">0%</td>
-
-									<td style="text-align:right">16.45</td>
-									<td style="text-align:right">16.45</td>
-									<td style="text-align:right">-</td>
-									<td style="text-align:right">16.45</td>
-									<td style="text-align:center">0%</td>
-
 								</tr>
 								<tr>
 									<td colspan="7" style="text-align:center"></td>
 								</tr>
 								<tr>
 									<td rowspan="4">Q3 @ 26%</td>
-
 									<td style="text-align:center" >October @ 8%</td>
 									<td style="text-align:right"  id="octombertarget">2.80</td>
 									<td style="text-align:right"  id="octombertask">19.25</td>
@@ -391,38 +253,6 @@
 									<td style="text-align:right" id="overallq3achieved">-</td>
 									<td style="text-align:right" id="overallq3excess">25.55</td>
 									<td style="text-align:center" id="overallq3achieveper">0%</td>
-
-									<td style="text-align:center">October @ 8%</td>
-									<td style="text-align:right">2.80</td>
-									<td style="text-align:right">19.25</td>
-									<td style="text-align:right"></td>
-									<td style="text-align:right">19.25</td>
-									<td style="text-align:center">0%</td>
-								</tr>
-								<tr>
-									<td style="text-align:center">November @ 9%</td>
-									<td style="text-align:right">3.15</td>
-									<td style="text-align:right">22.40</td>
-									<td style="text-align:right"></td>
-									<td style="text-align:right">22.40</td>
-									<td style="text-align:center">0%</td>
-								</tr>
-								<tr>
-									<td style="text-align:center">December @ 9%</td>
-									<td style="text-align:right">3.15</td>
-									<td style="text-align:right">25.55</td>
-									<td style="text-align:right"></td>
-									<td style="text-align:right">25.55</td>
-									<td style="text-align:center">0%</td>
-								</tr>
-								<tr>
-									<td style="text-align:center">Over All Q3</td>
-									<td style="text-align:right">9.10</td>
-									<td style="text-align:right">25.55</td>
-									<td style="text-align:right">-</td>
-									<td style="text-align:right">25.55</td>
-									<td style="text-align:center">0%</td>
-
 								</tr>
 								<tr>
 									<td colspan="7" style="text-align:center"></td>
@@ -430,7 +260,6 @@
 								<tr>
 									<td rowspan="4">Q4 @ 27%</td>
 									<td style="text-align:center">January @ 9%</td>
-
 									<td style="text-align:right" id="januarytarget">3.15</td>
 									<td style="text-align:right" id="januarytask">28.70</td>
 									<td style="text-align:right" id="januaryachive"></td>
@@ -460,75 +289,28 @@
 									<td style="text-align:right" id="overallq4achive">-</td>
 									<td style="text-align:right" id="overallq4excess">35.00</td>
 									<td style="text-align:center" id="overallq4achieveper">0%</td>
-
-									<td style="text-align:right">3.15</td>
-									<td style="text-align:right">28.70</td>
-									<td style="text-align:right"></td>
-									<td style="text-align:right">28.70</td>
-									<td style="text-align:center">0%</td>
-								</tr>
-								<tr>
-									<td style="text-align:center">February @ 8%</td>
-									<td style="text-align:right">2.80</td>
-									<td style="text-align:right">31.50</td>
-									<td style="text-align:right"></td>
-									<td style="text-align:right">31.50</td>
-									<td style="text-align:center">0%</td>
-								</tr>
-								<tr>
-									<td style="text-align:center">March @ 10%</td>
-									<td style="text-align:right">3.50</td>
-									<td style="text-align:right">35.00</td>
-									<td style="text-align:right"></td>
-									<td style="text-align:right">35.00</td>
-									<td style="text-align:center">0%</td>
-								</tr>
-								<tr>
-									<td style="text-align:center">Over All Q4</td>
-									<td style="text-align:right">9.45</td>
-									<td style="text-align:right">35.00</td>
-									<td style="text-align:right">-</td>
-									<td style="text-align:right">35.00</td>
-									<td style="text-align:center">0%</td>
-
 								</tr>
 								<tr>
 									<td colspan="7" style="text-align:center"></td>
 								</tr>
 								<tr>
 									<td colspan="2" style="text-align:center">H2 @ 53%</td>
-
 									<td style="text-align:right" id="h2target">18.55</td>
 									<td style="text-align:right" id="h2task">35.00</td>
 									<td style="text-align:right" id="h2achive">-</td>
 									<td style="text-align:right" id="h2excess">35.00</td>
 									<td style="text-align:center" id="h2per">0%</td>
-
-									<td style="text-align:right">18.55</td>
-									<td style="text-align:right">35.00</td>
-									<td style="text-align:right">-</td>
-									<td style="text-align:right">35.00</td>
-									<td style="text-align:center">0%</td>
-
 								</tr>
 								<tr>
 									<td colspan="7" style="text-align:center"></td>
 								</tr>
 								<tr>
 									<td colspan="2" style="text-align:center">Yearly</td>
-
 									<td style="text-align:right" id="yeartarget">35.00</td>
 									<td style="text-align:right" id="yeartask">35.00</td>
 									<td style="text-align:right" id="yearacheive">-</td>
 									<td style="text-align:right" id="yearexcess">35.00</td>
 									<td style="text-align:center" id="yearper">0%</td>
-
-									<td style="text-align:right">35.00</td>
-									<td style="text-align:right">35.00</td>
-									<td style="text-align:right">-</td>
-									<td style="text-align:right">35.00</td>
-									<td style="text-align:center">0%</td>
-
 								</tr>
 							</tbody>
 
@@ -602,7 +384,6 @@
 
 
 
-
 </div>
 <script type="text/javascript">
    // Table Append 
@@ -615,6 +396,3 @@
  
 </script>
 <script src="<?php echo base_url(); ?>assets/js/myjs/home.js"></script>
-
-</div>
-
