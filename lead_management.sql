@@ -21,8 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `lead_management`
 --
-CREATE DATABASE IF NOT EXISTS `lead_management` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `lead_management`;
+CREATE DATABASE IF NOT EXISTS `heroku_ec5132e823f0df2` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `heroku_ec5132e823f0df2`;
 
 -- --------------------------------------------------------
 
