@@ -293,6 +293,7 @@ $(document).ready(function() {
 
 
 
+
         $('.ldate').val(date);
 
         $('#cname').val(customer_name);
