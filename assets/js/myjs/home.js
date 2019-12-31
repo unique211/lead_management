@@ -290,51 +290,51 @@ $(document).ready(function() {
                         for (i = 0; i < data.length; i++) {
                             if (i == 0) {
                                 aprilachieved = data[i].sum;
-                                aprilachieved = (parseFloat(aprilachieved) / 100000).toFixed(3);
+                                aprilachieved = (parseFloat(aprilachieved) / 100000).toFixed(2);
                             }
                             if (i == 1) {
                                 mayachieved = data[i].sum;
-                                mayachieved = (parseFloat(mayachieved) / 100000).toFixed(3);
+                                mayachieved = (parseFloat(mayachieved) / 100000).toFixed(2);
                             }
                             if (i == 2) {
                                 juneachieved = data[i].sum;
-                                juneachieved = (parseFloat(juneachieved) / 100000).toFixed(3);
+                                juneachieved = (parseFloat(juneachieved) / 100000).toFixed(2);
                             }
                             if (i == 3) {
                                 julyachieved = data[i].sum;
-                                julyachieved = (parseFloat(julyachieved) / 100000).toFixed(3);
+                                julyachieved = (parseFloat(julyachieved) / 100000).toFixed(2);
                             }
                             if (i == 4) {
                                 augustachieved = data[i].sum;
-                                augustachieved = (parseFloat(augustachieved) / 100000).toFixed(3);
+                                augustachieved = (parseFloat(augustachieved) / 100000).toFixed(2);
                             }
                             if (i == 5) {
                                 septemberachieved = data[i].sum;
-                                septemberachieved = (parseFloat(septemberachieved) / 100000).toFixed(3);
+                                septemberachieved = (parseFloat(septemberachieved) / 100000).toFixed(2);
                             }
                             if (i == 6) {
                                 octomberachive = data[i].sum;
-                                octomberachive = (parseFloat(octomberachive) / 100000).toFixed(3);
+                                octomberachive = (parseFloat(octomberachive) / 100000).toFixed(2);
                             }
                             if (i == 7) {
                                 novemberachive = data[i].sum;
-                                novemberachive = (parseFloat(novemberachive) / 100000).toFixed(3);
+                                novemberachive = (parseFloat(novemberachive) / 100000).toFixed(2);
                             }
                             if (i == 8) {
                                 decemberachive = data[i].sum;
-                                decemberachive = (parseFloat(decemberachive) / 100000).toFixed(3);
+                                decemberachive = (parseFloat(decemberachive) / 100000).toFixed(2);
                             }
                             if (i == 9) {
                                 januaryachive = data[i].sum;
-                                januaryachive = (parseFloat(januaryachive) / 100000).toFixed(3);
+                                januaryachive = (parseFloat(januaryachive) / 100000).toFixed(2);
                             }
                             if (i == 10) {
                                 februaryachive = data[i].sum;
-                                februaryachive = (parseFloat(februaryachive) / 100000).toFixed(3);
+                                februaryachive = (parseFloat(februaryachive) / 100000).toFixed(2);
                             }
                             if (i == 10) {
                                 marchachive = data[i].sum;
-                                marchachive = (parseFloat(marchachive) / 100000).toFixed(3);
+                                marchachive = (parseFloat(marchachive) / 100000).toFixed(2);
                             }
 
                         }
@@ -421,10 +421,10 @@ $(document).ready(function() {
 
                 //Q1  Achd % to Q4  Achd %
 
-                q1achdper = (parseFloat(q1achd) / parseFloat(q1tgt) * parseFloat(100)).toFixed(2);
-                q2achdper = (parseFloat(q2achd) / parseFloat(q2target) * parseFloat(100)).toFixed(2);
-                q3achdper = (parseFloat(q3achd) / parseFloat(q3target) * parseFloat(100)).toFixed(2);
-                q4achdper = (parseFloat(q4achd) / parseFloat(q4target) * parseFloat(100)).toFixed(2);
+                q1achdper = (parseFloat(q1achd) / parseFloat(q1excess) * parseFloat(100)).toFixed(2);
+                q2achdper = (parseFloat(q2achd) / parseFloat(q2excess) * parseFloat(100)).toFixed(2);
+                q3achdper = (parseFloat(q3achd) / parseFloat(q3excess) * parseFloat(100)).toFixed(2);
+                q4achdper = (parseFloat(q4achd) / parseFloat(q4excess) * parseFloat(100)).toFixed(2);
 
                 $('#q1achdper').html(q1achdper + "%");
                 $('#q2achdper').html(q2achdper + "%");
@@ -790,7 +790,7 @@ $(document).ready(function() {
 
                 h2target = (parseFloat(overallq3target) + parseFloat(overallq4target)).toFixed(2);
 
-                h2task = (parseFloat(overallq4target) + parseFloat(overallq3excess)).toFixed(2);
+                h2task = (parseFloat(h2target) + parseFloat(h1target)).toFixed(2);
                 h2achieved = (parseFloat(overallq4achieved) + parseFloat(overallq3achieved)).toFixed(2);
                 h2excess = (parseFloat(h2task) - parseFloat(h2achieved)).toFixed(2);
                 h2achieveper = (parseFloat(h2achieved) / parseFloat(h2excess) * parseFloat(100)).toFixed(2);
