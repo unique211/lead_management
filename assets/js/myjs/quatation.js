@@ -722,7 +722,8 @@ $(document).ready(function() {
                             } else {
                                 $('.btnhideshow').hide();
                                 $('.tablehideshow').show();
-
+                                $('.btnhide').show();
+                                $('.closehide').hide();
                                 form_clear();
                             }
 

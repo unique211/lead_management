@@ -84,6 +84,18 @@
                   </ul>
                 </li>
 
+                <li><a class="dropdown-toggle" data-toggle="dropdown" href="#">Report<span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+
+                    <li><a href="<?php echo base_url() ?>funnelreport">Funnel</a></li>
+                    <li><a href="<?php echo base_url() ?>wonreport">Won</a></li>
+                    <li><a href="<?php echo base_url() ?>lostreport">Lost</a></li>
+                    <li><a href="<?php echo base_url() ?>customerreport">Customer</a></li>
+
+
+                    <!-- <li><a href="manage_appointment">Manage Appointment</a></li>  -->
+                  </ul>
+                </li>
 
                 <!-- manage -->
                 <?php if (in_array('createLeadType', $user_permission) || in_array('editLeadType', $user_permission) || in_array('deleteLeadType', $user_permission) || in_array('createUser', $user_permission) || in_array('editUser', $user_permission) || in_array('deleteUser', $user_permission) || in_array('createDealer', $user_permission) || in_array(
