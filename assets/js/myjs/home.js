@@ -138,7 +138,7 @@ $(document).ready(function() {
     getMasterSelect('user_creation', '#salesrepresentive');
 
     function getMasterSelect(table_name, selecter) {
-
+        var userid = '';
         $.ajax({
             type: "POST",
             url: base_url + "Quotation_Estimate/getdropdown",
@@ -154,7 +154,7 @@ $(document).ready(function() {
                 //					
                 html += '<option selected disabled value="" >Select</option>';
                 //						}
-                for (i = 0; i < data.length; i++) {
+                for (var i = 0; i < data.length; i++) {
                     var id = '';
 
                     name = data[i].first_name + " " + data[i].last_name;
@@ -162,6 +162,9 @@ $(document).ready(function() {
 
 
 
+                    if (i == 0) {
+                        userid = id;
+                    }
 
 
                     //alert(name);
@@ -173,13 +176,20 @@ $(document).ready(function() {
                         //     html += '<option value="' + id + '" >' + name + '</option>';
                         // }
                     } else {
-                        html += '<option value="' + id + '" >' + name + '</option>'; //last changes here
+                        if (i == 0) {
+                            html += '<option selected value="' + id + '" >' + name + '</option>';
+                            // // getfinicialamt(id);
+                            userid = id;
+                        } else {
+                            html += '<option value="' + id + '" >' + name + '</option>'; //last changes here
+                        }
                     }
 
 
 
                 }
                 $(selecter).html(html);
+                getfinicialamt(userid);
             }
         });
 
@@ -261,6 +271,9 @@ $(document).ready(function() {
                 var januaryachive = 0;
                 var februaryachive = 0;
                 var marchachive = 0;
+
+
+
                 $.ajax({
                     type: "POST",
                     url: base_url + "Homecontroller/getfinicialyearwisedata",
@@ -272,45 +285,56 @@ $(document).ready(function() {
                     dataType: "JSON",
                     async: false,
                     success: function(data) {
-                       // alert(data);
+
                         console.log("data" + data);
                         for (i = 0; i < data.length; i++) {
                             if (i == 0) {
                                 aprilachieved = data[i].sum;
+                                aprilachieved = (parseFloat(aprilachieved) / 100000).toFixed(2);
                             }
                             if (i == 1) {
                                 mayachieved = data[i].sum;
+                                mayachieved = (parseFloat(mayachieved) / 100000).toFixed(2);
                             }
                             if (i == 2) {
                                 juneachieved = data[i].sum;
+                                juneachieved = (parseFloat(juneachieved) / 100000).toFixed(2);
                             }
                             if (i == 3) {
                                 julyachieved = data[i].sum;
+                                julyachieved = (parseFloat(julyachieved) / 100000).toFixed(2);
                             }
                             if (i == 4) {
                                 augustachieved = data[i].sum;
+                                augustachieved = (parseFloat(augustachieved) / 100000).toFixed(2);
                             }
                             if (i == 5) {
                                 septemberachieved = data[i].sum;
+                                septemberachieved = (parseFloat(septemberachieved) / 100000).toFixed(2);
                             }
                             if (i == 6) {
                                 octomberachive = data[i].sum;
+                                octomberachive = (parseFloat(octomberachive) / 100000).toFixed(2);
                             }
                             if (i == 7) {
                                 novemberachive = data[i].sum;
+                                novemberachive = (parseFloat(novemberachive) / 100000).toFixed(2);
                             }
                             if (i == 8) {
                                 decemberachive = data[i].sum;
-                                decemberachive = (parseFloat(decemberachive) / 100000).toFixed(3);
+                                decemberachive = (parseFloat(decemberachive) / 100000).toFixed(2);
                             }
                             if (i == 9) {
                                 januaryachive = data[i].sum;
+                                januaryachive = (parseFloat(januaryachive) / 100000).toFixed(2);
                             }
                             if (i == 10) {
                                 februaryachive = data[i].sum;
+                                februaryachive = (parseFloat(februaryachive) / 100000).toFixed(2);
                             }
                             if (i == 10) {
                                 marchachive = data[i].sum;
+                                marchachive = (parseFloat(marchachive) / 100000).toFixed(2);
                             }
 
                         }
@@ -342,6 +366,12 @@ $(document).ready(function() {
                 var q4achdper = 0;
 
 
+                var q1achd = parseFloat(aprilachieved) + parseFloat(mayachieved) + parseFloat(juneachieved);
+                var q2achd = parseFloat(julyachieved) + parseFloat(augustachieved) + parseFloat(septemberachieved);
+                var q3achd = parseFloat(octomberachive) + parseFloat(novemberachive) + parseFloat(decemberachive);
+                var q4achd = parseFloat(januaryachive) + parseFloat(februaryachive) + parseFloat(marchachive);
+
+
                 var finicialyearamt = data[0].finicialyear_amt;
                 // if (finicialyearamt > 0) {
                 q1tgt = parseFloat(finicialyearamt) * parseFloat(0.22).toFixed(2);
@@ -368,10 +398,10 @@ $(document).ready(function() {
 
                 //Q1 Achd to Q4 Achd
 
-                q1achd = 0;
-                q2achd = 0;
-                q3achd = 0;
-                q4achd = 0;
+                // q1achd = 0;
+                // q2achd = 0;
+                // q3achd = 0;
+                // q4achd = 0;
 
                 $('#q1achd').html(q1achd.toFixed(2));
                 $('#q2achd').html(q2achd.toFixed(2));
@@ -391,10 +421,10 @@ $(document).ready(function() {
 
                 //Q1  Achd % to Q4  Achd %
 
-                q1achdper = parseFloat(q1achd) / parseFloat(q1tgt).toFixed(2);
-                q2achdper = parseFloat(q2achd) / parseFloat(q2target).toFixed(2);
-                q3achdper = parseFloat(q3achd) / parseFloat(q3target).toFixed(2);
-                q4achdper = parseFloat(q4achd) / parseFloat(q4target).toFixed(2);
+                q1achdper = (parseFloat(q1achd) / parseFloat(q1excess) * parseFloat(100)).toFixed(2);
+                q2achdper = (parseFloat(q2achd) / parseFloat(q2excess) * parseFloat(100)).toFixed(2);
+                q3achdper = (parseFloat(q3achd) / parseFloat(q3excess) * parseFloat(100)).toFixed(2);
+                q4achdper = (parseFloat(q4achd) / parseFloat(q4excess) * parseFloat(100)).toFixed(2);
 
                 $('#q1achdper').html(q1achdper + "%");
                 $('#q2achdper').html(q2achdper + "%");
@@ -413,7 +443,7 @@ $(document).ready(function() {
 
                 apriltarget = (parseFloat(finicialyearamt) * parseFloat(0.05)).toFixed(2);
                 aprilexcess = (parseFloat(apriltarget)).toFixed(2);
-                aprilachieveper = (parseFloat(aprilachieved) / parseFloat(aprilexcess)).toFixed(2);
+                aprilachieveper = (parseFloat(aprilachieved) / parseFloat(aprilexcess) * parseFloat(100)).toFixed(2);
 
                 $('#apriltarget').html(apriltarget);
                 $('#apriltask').html(apriltarget);
@@ -432,7 +462,7 @@ $(document).ready(function() {
                 maytarget = (parseFloat(finicialyearamt) * parseFloat(0.08)).toFixed(2);
                 maytask = (parseFloat(maytarget) + parseFloat(aprilexcess)).toFixed(2);
                 mayexcess = (parseFloat(maytask) - parseFloat(mayachieved)).toFixed(2);
-                mayachieveper = (parseFloat(mayachieved) / parseFloat(mayexcess)).toFixed(2); ///last chanes
+                mayachieveper = (parseFloat(mayachieved) / parseFloat(mayexcess) * parseFloat(100)).toFixed(2); ///last chanes
 
 
                 $('#maytarget').html(maytarget);
@@ -452,7 +482,7 @@ $(document).ready(function() {
                 junetarget = (parseFloat(finicialyearamt) * parseFloat(0.09)).toFixed(2);
                 junetask = (parseFloat(junetarget) + parseFloat(mayexcess)).toFixed(2);
                 juneexcess = (parseFloat(junetask) - parseFloat(juneachieved)).toFixed(2);
-                juneachieveper = (parseFloat(juneachieved) / parseFloat(juneexcess)).toFixed(2); ///last chanes
+                juneachieveper = (parseFloat(juneachieved) / parseFloat(juneexcess) * parseFloat(100)).toFixed(2); ///last chanes
 
 
                 $('#junetarget').html(junetarget);
@@ -474,7 +504,7 @@ $(document).ready(function() {
                 overallq1task = junetask;
                 overallq1achieved = (parseFloat(aprilachieved) + parseFloat(mayachieved) + parseFloat(juneachieved)).toFixed(2);
                 overallq1excess = (parseFloat(overallq1task) - parseFloat(overallq1achieved));
-                overallq1achieveper = (parseFloat(overallq1achieved) / parseFloat(overallq1excess));
+                overallq1achieveper = (parseFloat(overallq1achieved) / parseFloat(overallq1excess) * parseFloat(100)).toFixed(2);
 
                 $('#overallq1target').html(overallq1target);
                 $('#overallq1task').html(overallq1task);
@@ -494,7 +524,7 @@ $(document).ready(function() {
                 julytarget = (parseFloat(finicialyearamt) * parseFloat(0.08)).toFixed(2);
                 julytask = (parseFloat(julytarget) + parseFloat(overallq1excess)).toFixed(2);
                 julyexcess = (parseFloat(julytask) - parseFloat(julyachieved)).toFixed(2);
-                julyachieveper = (parseFloat(julyachieved) / parseFloat(julyexcess)).toFixed(2); ///last chanes
+                julyachieveper = (parseFloat(julyachieved) / parseFloat(julyexcess) * parseFloat(100)).toFixed(2); ///last chanes
 
                 $('#julytarget').html(julytarget);
                 $('#julytask').html(julytask);
@@ -514,7 +544,7 @@ $(document).ready(function() {
                 augusttarget = (parseFloat(finicialyearamt) * parseFloat(0.09)).toFixed(2);
                 augusttask = (parseFloat(augusttarget) + parseFloat(julyexcess)).toFixed(2);
                 augustexcess = (parseFloat(augusttask) - parseFloat(augustachieved)).toFixed(2);
-                augustachieveper = (parseFloat(augustachieved) / parseFloat(augustexcess)).toFixed(2); ///last chanes
+                augustachieveper = (parseFloat(augustachieved) / parseFloat(augustexcess) * parseFloat(100)).toFixed(2); ///last chanes
 
                 $('#augusttarget').html(augusttarget);
                 $('#augusttask').html(augusttask);
@@ -534,7 +564,7 @@ $(document).ready(function() {
                 septembertarget = (parseFloat(finicialyearamt) * parseFloat(0.08)).toFixed(2);
                 septembertask = (parseFloat(septembertarget) + parseFloat(augustexcess)).toFixed(2);
                 septemberexcess = (parseFloat(septembertask) - parseFloat(septemberachieved)).toFixed(2);
-                septemberachieveper = (parseFloat(septemberachieved) / parseFloat(septemberexcess)).toFixed(2); ///last chanes
+                septemberachieveper = (parseFloat(septemberachieved) / parseFloat(septemberexcess) * parseFloat(100)).toFixed(2); ///last chanes
 
                 $('#septembertarget').html(septembertarget);
                 $('#septembertask').html(septembertask);
@@ -556,7 +586,7 @@ $(document).ready(function() {
                 overallq2task = (parseFloat(overallq1target) + parseFloat(overallq2target)).toFixed(2);;
                 overallq2achieved = (parseFloat(septemberachieved) + parseFloat(augustachieved) + parseFloat(julyachieved)).toFixed(2);
                 overallq2excess = (parseFloat(overallq2task) - parseFloat(overallq2achieved)).toFixed(2);
-                overallq2achieveper = (parseFloat(overallq2achieved) / parseFloat(overallq2excess));
+                overallq2achieveper = (parseFloat(overallq2achieved) / parseFloat(overallq2excess) * parseFloat(100)).toFixed(2);
 
                 $('#overallq2target').html(overallq2target);
                 $('#overallq2task').html(overallq2task);
@@ -575,7 +605,7 @@ $(document).ready(function() {
                 h1target = (parseFloat(overallq2target) + parseFloat(overallq1target)).toFixed(2);
                 h1achieved = (parseFloat(overallq2achieved) + parseFloat(overallq1achieved)).toFixed(2);
                 h1excess = (parseFloat(h1target) - parseFloat(h1achieved)).toFixed(2);
-                h1achieveper = (parseFloat(h1achieved) / parseFloat(h1target)).toFixed(2);
+                h1achieveper = (parseFloat(h1achieved) / parseFloat(h1target) * parseFloat(100)).toFixed(2);
 
 
                 $('#h1target').html(h1target);
@@ -597,7 +627,7 @@ $(document).ready(function() {
                 octombertarget = (parseFloat(finicialyearamt) * parseFloat(0.08)).toFixed(2);
                 octombertask = (parseFloat(octombertarget) + parseFloat(septemberexcess)).toFixed(2);
                 octomberexcess = (parseFloat(octombertask) - parseFloat(octomberachive)).toFixed(2);
-                octomberper = (parseFloat(octomberachive) / parseFloat(octomberexcess)).toFixed(2); ///last chanes
+                octomberper = (parseFloat(octomberachive) / parseFloat(octomberexcess) * parseFloat(100)).toFixed(2); ///last chanes
 
                 $('#octombertarget').html(octombertarget);
                 $('#octombertask').html(octombertask);
@@ -616,7 +646,7 @@ $(document).ready(function() {
                 novembertarget = (parseFloat(finicialyearamt) * parseFloat(0.09)).toFixed(2);
                 novembertask = (parseFloat(novembertarget) + parseFloat(octomberexcess)).toFixed(2);
                 novemberexcess = (parseFloat(novembertask) - parseFloat(novemberachive)).toFixed(2);
-                novemberper = (parseFloat(novemberachive) / parseFloat(novemberexcess)).toFixed(2); ///last chanes
+                novemberper = (parseFloat(novemberachive) / parseFloat(novemberexcess) * parseFloat(100)).toFixed(2); ///last chanes
 
                 $('#novembertarget').html(novembertarget);
                 $('#novembertask').html(novembertask);
@@ -635,7 +665,7 @@ $(document).ready(function() {
                 decembertarget = (parseFloat(finicialyearamt) * parseFloat(0.09)).toFixed(2);
                 decembertask = (parseFloat(decembertarget) + parseFloat(novemberexcess)).toFixed(2);
                 decemberexcess = (parseFloat(decembertask) - parseFloat(decemberachive)).toFixed(2);
-                decemberper = (parseFloat(decemberachive) / parseFloat(decemberexcess)).toFixed(2); ///last chanes
+                decemberper = (parseFloat(decemberachive) / parseFloat(decemberexcess) * parseFloat(100)).toFixed(2); ///last chanes
 
                 $('#decembertarget').html(decembertarget);
                 $('#decembertask').html(decembertask);
@@ -656,13 +686,13 @@ $(document).ready(function() {
 
                 overallq3target = (parseFloat(decembertarget) + parseFloat(novembertarget) + parseFloat(octombertarget)).toFixed(2);
                 overallq3task = (parseFloat(overallq2task) + parseFloat(overallq3target)).toFixed(2);;
-                overallq3achieved = (parseFloat(decemberachive) + parseFloat(novemberachive) + parseFloat(octomberachive)).toFixed(2);
+                overallq3achieved = (parseFloat(decemberachive) + parseFloat(novemberachive) + parseFloat(octomberachive));
                 overallq3excess = (parseFloat(overallq3task) - parseFloat(overallq3achieved)).toFixed(2);
-                overallq3achieveper = (parseFloat(overallq3achieved) / parseFloat(overallq3excess));
+                overallq3achieveper = (parseFloat(overallq3achieved) / parseFloat(overallq3excess) * parseFloat(100)).toFixed(2);
 
                 $('#overallq3target').html(overallq3target);
                 $('#overallq3task').html(overallq3task);
-                $('#overallq3achive').html(overallq3achieved);
+                $('#overallq3achieved').html(overallq3achieved);
                 $('#overallq3excess').html(overallq3excess);
                 $('#overallq3achieveper').html(overallq3achieveper + "%");
 
@@ -678,7 +708,7 @@ $(document).ready(function() {
                 januarytarget = (parseFloat(finicialyearamt) * parseFloat(0.09)).toFixed(2);
                 januarytask = (parseFloat(januarytarget) + parseFloat(overallq3excess)).toFixed(2);
                 januaryexcess = (parseFloat(januarytask) - parseFloat(januaryachive)).toFixed(2);
-                januaryper = (parseFloat(januaryachive) / parseFloat(januaryexcess)).toFixed(2); ///last chanes
+                januaryper = (parseFloat(januaryachive) / parseFloat(januaryexcess) * parseFloat(100)).toFixed(2); ///last chanes
 
                 $('#januarytarget').html(januarytarget);
                 $('#januarytask').html(januarytask);
@@ -697,7 +727,7 @@ $(document).ready(function() {
                 februarytarget = (parseFloat(finicialyearamt) * parseFloat(0.08)).toFixed(2);
                 februarytask = (parseFloat(februarytarget) + parseFloat(januaryexcess)).toFixed(2);
                 februaryexcess = (parseFloat(februarytask) - parseFloat(februaryachive)).toFixed(2);
-                februaryper = (parseFloat(februaryachive) / parseFloat(februaryexcess)).toFixed(2); ///last chanes
+                februaryper = (parseFloat(februaryachive) / parseFloat(februaryexcess) * parseFloat(100)).toFixed(2); ///last chanes
 
                 $('#februarytarget').html(februarytarget);
                 $('#februarytask').html(februarytask);
@@ -716,7 +746,7 @@ $(document).ready(function() {
                 marchtarget = (parseFloat(finicialyearamt) * parseFloat(0.10)).toFixed(2);
                 marchtask = (parseFloat(marchtarget) + parseFloat(februaryexcess)).toFixed(2);
                 marchexcess = (parseFloat(marchtask) - parseFloat(marchachive)).toFixed(2);
-                marchyper = (parseFloat(marchachive) / parseFloat(marchexcess)).toFixed(2); ///last chanes
+                marchyper = (parseFloat(marchachive) / parseFloat(marchexcess) * parseFloat(100)).toFixed(2); ///last chanes
 
                 $('#marchtarget').html(marchtarget);
                 $('#marchtask').html(marchtask);
@@ -738,7 +768,7 @@ $(document).ready(function() {
                 overallq4task = (parseFloat(overallq3task) + parseFloat(overallq4target)).toFixed(2);;
                 overallq4achieved = (parseFloat(januaryachive) + parseFloat(februaryachive) + parseFloat(marchachive)).toFixed(2);
                 overallq4excess = (parseFloat(overallq4task) - parseFloat(overallq4achieved)).toFixed(2);
-                overallq4achieveper = (parseFloat(overallq4achieved) / parseFloat(overallq4excess));
+                overallq4achieveper = (parseFloat(overallq4achieved) / parseFloat(overallq4excess) * parseFloat(100));
 
                 $('#overallq4target').html(overallq4target);
                 $('#overallq4task').html(overallq4task);
@@ -760,10 +790,10 @@ $(document).ready(function() {
 
                 h2target = (parseFloat(overallq3target) + parseFloat(overallq4target)).toFixed(2);
 
-                h2task = (parseFloat(overallq4target) + parseFloat(overallq3excess)).toFixed(2);
+                h2task = (parseFloat(h2target) + parseFloat(h1target)).toFixed(2);
                 h2achieved = (parseFloat(overallq4achieved) + parseFloat(overallq3achieved)).toFixed(2);
                 h2excess = (parseFloat(h2task) - parseFloat(h2achieved)).toFixed(2);
-                h2achieveper = (parseFloat(h2achieved) / parseFloat(h2excess));
+                h2achieveper = (parseFloat(h2achieved) / parseFloat(h2excess) * parseFloat(100)).toFixed(2);
 
                 $('#h2target').html(h2target);
                 $('#h2task').html(h2task);
@@ -781,10 +811,10 @@ $(document).ready(function() {
 
                 yearachieved = (parseFloat(h2achieved) + parseFloat(h1achieved)).toFixed(2);
                 yearexcess = (parseFloat(finicialyearamt) - parseFloat(yearachieved)).toFixed(2);
-                yearachieveper = (parseFloat(yearachieved) / parseFloat(yearexcess)).toFixed(2);
+                yearachieveper = (parseFloat(yearachieved) / parseFloat(yearexcess) * parseFloat(100)).toFixed(2);
 
                 $('#yeartarget').html(finicialyearamt);
-                $('#yeartask').html(yeartask);
+                $('#yeartask').html(finicialyearamt);
                 $('#yearacheive').html(yearachieved);
                 $('#yearexcess').html(yearexcess);
                 $('#yearper').html(yearachieveper);
