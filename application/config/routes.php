@@ -129,5 +129,11 @@ $route['manageorder']="Quotation_order/index";
 $route['getorderinfo/(:any)'] = "Quotation_Estimate/getorderinfo/$1";
 
 
+$route['funnelreport']="Funnelreport/index";
+$route['wonreport']="Wonreport/index";
+$route['lostreport']="Lostreport/index";
+$route['customerreport']="Customerreport/index";
+
+
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

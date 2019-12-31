@@ -277,6 +277,8 @@ $(document).ready(function() {
         e.preventDefault();
 
         var id1 = $(this).attr('id');
+        $('.btnhide').hide();
+        $('.closehide').show();
 
         $('.btnhideshow').show();
         $('.tablehideshow').hide();
@@ -291,11 +293,15 @@ $(document).ready(function() {
 
 
 
+
         $('.ldate').val(date);
 
         $('#cname').val(customer_name);
         $('#customer_type').val(customer_type_).trigger('change');
-        $('#category').val(category_id).trigger('change');
+        if (category_id > 0) {
+            $('#category').val(category_id).trigger('change');
+        }
+
         $('#employees').val(no_of_employee_);
         $('#requirement').val(requirement_);
         $('#remark').val(remark_);

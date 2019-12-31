@@ -19,6 +19,7 @@ class Quatationmodel extends CI_Model{
 
                 $data3=array(
                     'customer_name'=>$this->input->post('cus_name'),
+                    'user_id'=> $this->session->userdata('useruniqueid'),
                 );
                 $result = $this->db->insert('new_account',$data3);
                 $id1=$this->db->insert_id();
