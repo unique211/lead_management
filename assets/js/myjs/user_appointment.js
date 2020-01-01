@@ -121,6 +121,8 @@ $(document).ready(function() {
                             show_master(fromdate, todate);
                             $('.btnhideshow').hide();
                             $('.tablehideshow').show();
+                            $('.btnhide').show();
+                            $('.closehide').hide();
 
                         } else {
                             errorTost("Data Cannot Save");
@@ -297,9 +299,12 @@ $(document).ready(function() {
         $('.ldate').val(date);
 
         $('#cname').val(customer_name);
-        $('#customer_type').val(customer_type_).trigger('change');
+
         if (category_id > 0) {
             $('#category').val(category_id).trigger('change');
+        }
+        if (customer_type_ > 0) {
+            $('#customer_type').val(customer_type_).trigger('change');
         }
 
         $('#employees').val(no_of_employee_);
