@@ -190,6 +190,7 @@ $(document).ready(function() {
                 }
                 $(selecter).html(html);
                 getfinicialamt(userid);
+                getfunalchart(userid);
             }
         });
 
@@ -201,6 +202,7 @@ $(document).ready(function() {
         var uid = $(this).val();
 
         getfinicialamt(uid);
+        getfunalchart(uid);
 
 
     });
@@ -208,7 +210,7 @@ $(document).ready(function() {
     if (usertype == "SalesRepresentative" && userrole == "Sales") {
         getfinicialamt(useruniqueid);
 
-
+        getfunalchart(useruniqueid);
 
         $.ajax({
             type: 'POST',
@@ -846,8 +848,116 @@ $(document).ready(function() {
         }
         return fiscalyear
     }
+
+
+
+
+
     var currentfbyear = getCurrentFinancialYear();
     $('#targetcurrerenyear').html("Target for FY" + currentfbyear + "(in Lakhs)");
 
 
+
+
+
+
+    //for funnel chart
+    function getfunalchart(uid) {
+
+        var today = new Date();
+
+        var Quatation = 0;
+        var ConformQuatation = 0;
+        var Order = 0;
+
+
+        var fyear = today.getFullYear().toString();
+        if ((today.getMonth() + 1) <= 3) {
+
+
+
+            fiscalyear = (parseInt(fyear) - parseInt(1)) + "-" + fyear;
+
+        } else {
+            fiscalyear = parseInt(fyear) + "-" + (parseInt(fyear) + parseInt(1));
+            //fiscalyear=  fiscalyear.toString().substr(-2);
+        }
+
+        fiscalyear = fiscalyear.split('-');
+        var statdate = fiscalyear[0] + "-" + "04" + "01";
+
+        console.log("statdate" + statdate);
+        $.ajax({
+            type: "POST",
+            url: base_url + "Homecontroller/funnelchartdata",
+            data: {
+                statdate: statdate,
+
+                uid: uid,
+            },
+            dataType: "JSON",
+            async: false,
+            success: function(data) {
+
+
+                Quatation = data[0].qutationsum;
+                ConformQuatation = data[0].conformsum;
+                Order = data[0].ordersum;
+
+                Quatation = parseFloat(Quatation) / parseFloat(100000);
+                ConformQuatation = parseFloat(ConformQuatation) / parseFloat(100000);
+                Order = parseFloat(Order) / parseFloat(100000);
+
+                var config = {
+                    type: 'funnel',
+                    data: {
+                        datasets: [{
+                            data: [Quatation, ConformQuatation, Order],
+                            backgroundColor: [
+                                "#FF6384",
+                                "#36A2EB",
+                                "#FFCE56"
+                            ],
+                            hoverBackgroundColor: [
+                                "#FF6384",
+                                "#36A2EB",
+                                "#FFCE56"
+                            ]
+                        }],
+                        labels: [
+                            "Quotation(In Lakh's)",
+                            "ConfirmQuatation(In Lakh's)",
+                            "Order(In Lakh's)"
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        sort: 'desc',
+                        legend: {
+                            position: 'top'
+                        },
+                        title: {
+                            display: true,
+                            text: 'Lead Management'
+                        },
+                        animation: {
+                            animateScale: true,
+                            animateRotate: true
+                        }
+                    }
+                };
+
+                window.onload = function() {
+                    var ctx = document.getElementById("chart-area").getContext("2d");
+                    window.myDoughnut = new Chart(ctx, config);
+                };
+
+            }
+        });
+    }
+
+
 });
+
+});
+

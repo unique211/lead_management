@@ -97,4 +97,15 @@ class Homecontroller extends CI_Controller
 
         echo json_encode($data1); 
     }
+    public function funnelchartdata(){
+       
+        $statdate	= $this->input->post('statdate');
+        $uid	= $this->input->post('uid');
+       // $uid=19;
+        //$statdate='2019-04-01';
+        $data1 = $this->homemodel->getfunnelchartdata($uid,$statdate);
+
+        echo json_encode($data1); 
+
+    }
 }
