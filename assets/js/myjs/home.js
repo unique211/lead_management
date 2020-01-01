@@ -884,7 +884,9 @@ $(document).ready(function() {
         }
 
         fiscalyear = fiscalyear.split('-');
-        var statdate = fiscalyear[0] + "-" + "04" + "01";
+        var statdate = fiscalyear[0] + "-" + "04" + "-" + "01";
+
+
 
         console.log("statdate" + statdate);
         $.ajax({
@@ -892,6 +894,7 @@ $(document).ready(function() {
             url: base_url + "Homecontroller/funnelchartdata",
             data: {
                 statdate: statdate,
+                // fiscalyear: fiscalyear,
 
                 uid: uid,
             },
@@ -900,9 +903,13 @@ $(document).ready(function() {
             success: function(data) {
 
 
+
                 Quatation = data[0].qutationsum;
                 ConformQuatation = data[0].conformsum;
                 Order = data[0].ordersum;
+
+
+
 
                 Quatation = parseFloat(Quatation) / parseFloat(100000);
                 ConformQuatation = parseFloat(ConformQuatation) / parseFloat(100000);
@@ -954,10 +961,12 @@ $(document).ready(function() {
 
             }
         });
+
+
     }
 
 
-});
+
 
 });
 
