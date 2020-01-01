@@ -244,6 +244,9 @@ $result1=array();
 $qutationsum=0;
 $conformsum=0;
 $ordersum=0;
+
+
+
     $this->db->select('*');    
     $this->db->from('quotation_master');
     $this->db->where('order_date >=',$statdate);
