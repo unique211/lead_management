@@ -860,6 +860,7 @@ $(document).ready(function() {
 
 
 
+
     //for funnel chart
     function getfunalchart(uid) {
 
@@ -966,4 +967,6 @@ $(document).ready(function() {
 
 
 
+
 });
+
