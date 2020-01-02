@@ -143,6 +143,7 @@ $(document).ready(function() {
                         '</tr>';
 
                     $("#wonrep_tbody").append(html);
+
                 }
                 $('#totaltop').html(sumtop);
                 $('#totalmargin').html(summargin);
