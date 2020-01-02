@@ -101,7 +101,7 @@ $(document).ready(function() {
             },
             dataType: 'json',
             success: function(data) {
-                alert(data);
+               // alert(data);
                 var html = '';
                 $("#customer_tbody").html('');
                 var sr = 0;
