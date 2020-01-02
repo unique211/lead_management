@@ -11,7 +11,7 @@ class Customerreport extends CI_Controller
 		header('Access-Control-Allow-Origin: *');
 		header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 
-        $this->load->model('newaccountmodel');
+        $this->load->model('customerreportmodel');
         $this->load->model('categorymodel');
 		$this->load->helper('download');
 		// $this->load->model('Settingsmodel');
@@ -77,6 +77,16 @@ class Customerreport extends CI_Controller
         $customer	= $this->input->post('customer');
 
         $data1 = $this->categorymodel->checkcustomerexists($id,$customer);
+
+        echo json_encode($data1);
+    }
+
+    //for customer report-----*/
+    public function getcustomerreportdasta(){
+        $salesid	= $this->input->post('uid');
+      //  $salesid=19;
+
+        $data1 = $this->customerreportmodel->getcustomerdata($salesid);
 
         echo json_encode($data1);
     }

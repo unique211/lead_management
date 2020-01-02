@@ -109,6 +109,7 @@ class Quotation_order extends CI_Controller {
             'qutone_no' =>  $this->input->post('quatationidno'),
             'quotation_no' =>  $this->input->post('quatation_no'),
             'salesrepresentative' =>  $this->input->post('salesrepresentive'),
+            'customer_id' =>  $this->input->post('customerid'),
             'user_id'=> $user_id,
             
        

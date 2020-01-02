@@ -106,13 +106,10 @@ class Quotation_Estimate extends CI_Controller {
             'less_others' =>  $this->input->post('lessother'),
             'margin' =>  $this->input->post('finalmargin'),
             'customer_id' =>  $this->input->post('customerid'),
-            'salesrepresentative' =>$this->input->post('salesrepresentive'),
             'version' => 1,
             'user_id'=> $user_id,
        
         );
-
-
     }else{
         $this->db->select_max('version');
         $this->db->from('quotation_master');
@@ -120,7 +117,7 @@ class Quotation_Estimate extends CI_Controller {
         $hasil1 = $this->db->get(); 
         foreach($hasil1->result_array() as $quotationdata){
             $version=$quotationdata['version'];
-            $version=$version+1;
+
             $data = array(
                 'customer_name' => $this->input->post('cus_name'),
                 'contact_person' =>$this->input->post('cotactperson'),
@@ -140,7 +137,6 @@ class Quotation_Estimate extends CI_Controller {
                 'less_others' =>  $this->input->post('lessother'),
                 'margin' =>  $this->input->post('finalmargin'),
                 'customer_id' =>  $this->input->post('customerid'),
-                'salesrepresentative' =>$this->input->post('salesrepresentive'),
                 'version' => $version,
                 'user_id'=> $user_id,
            
@@ -151,7 +147,7 @@ class Quotation_Estimate extends CI_Controller {
 
     }
 
-       // if ($id == "") {
+        if ($id == "") {
 
 
             $data1 = $this->quatationmodel->data_insert($data,$tablename);
@@ -159,9 +155,9 @@ class Quotation_Estimate extends CI_Controller {
            
 
 
-		// } else {
-		// 	$data1 = $this->quatationmodel->data_update($data,$tablename, "id", $id);
-		// }
+		} else {
+			$data1 = $this->quatationmodel->data_update($data,$tablename, "id", $id);
+		}
 
         echo json_encode($data1);
     
@@ -190,9 +186,9 @@ class Quotation_Estimate extends CI_Controller {
 		echo json_encode($data);
     }
     public function getquationversionwise(){
-        $bill_no	= $this->input->post('bill_no');
+        $id	= $this->input->post('id');
         $version	= $this->input->post('version');
-        $data = $this->quatationmodel->getquationversionwise($bill_no,$version);
+        $data = $this->quatationmodel->getquationversionwise($id,$version);
 		echo json_encode($data);
     }
     public function print_pdf(){
@@ -200,16 +196,16 @@ class Quotation_Estimate extends CI_Controller {
       
          $where=$this->input->post('btnprint');
 
-        //  $where = explode('_', $where); 
-        //  $id=$where[0];
-        //  $version=$where[1];
+         $where = explode('_', $where); 
+         $id=$where[0];
+         $version=$where[1];
 
          
         // $where=92;
-        $data['customerinfo']=$this->quatationmodel->getcustomerdetalis($where);
+        $data['customerinfo']=$this->quatationmodel->getcustomerdetalis($id);
 
-        $data['quatationdate']=$this->quatationmodel->getquatationdate($where);
-        $data['product_detalis']=$this->quatationmodel->getquatation_details_withversion($where);
+        $data['quatationdate']=$this->quatationmodel->getquatationdate($id,$version);
+        $data['product_detalis']=$this->quatationmodel->getquatation_details_withversion($id,$version);
  // echo json_encode($data);
            
       $this->load->view('static/user/quotationpdf',$data);
@@ -222,14 +218,12 @@ class Quotation_Estimate extends CI_Controller {
     }
     public function getproductdetalis(){
         $id	= $this->input->post('id');
-        //$version	= $this->input->post('version');
-        $data=$this->quatationmodel->getquatation_details_withversion($id);
+        $version	= $this->input->post('version');
+        $data=$this->quatationmodel->getquatation_details_withversion($id,$version);
         echo json_encode($data);
     }
     public function updatequotestatus(){
-       // $id	= $this->input->post('id');
-        $id	= $this->input->post('qnoid');
-       
+        $id	= $this->input->post('id');
       
      
 
@@ -436,8 +430,8 @@ class Quotation_Estimate extends CI_Controller {
         }
         public function getquatationdate(){
             $id	= $this->input->post('id');
-           // $version	= $this->input->post('version');
-            $data=$this->quatationmodel->getquatationdate($id);
+            $version	= $this->input->post('version');
+            $data=$this->quatationmodel->getquatationdate($id,$version);
             echo json_encode($data);
         }
 
@@ -463,19 +457,6 @@ class Quotation_Estimate extends CI_Controller {
           
             $data=$this->quatationmodel->getquatationno();
             echo json_encode($data); 
-        }
-        public function getquationvesiondata(){
-            $version	= $this->input->post('version');
-            $bill_no	= $this->input->post('bill_no');
-           
-            $data=$this->quatationmodel->getquatatinversiondata($bill_no,$version);
-            echo json_encode($data); 
-        }
-        public function getquationversionwise1(){
-            $qid	= $this->input->post('id');
-         
-            $data = $this->quatationmodel->getquationversionwise1($qid);
-            echo json_encode($data);
         }
        
 

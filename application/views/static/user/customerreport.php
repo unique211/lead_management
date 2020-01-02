@@ -109,7 +109,7 @@
     <script src='assets/src/tagcomplete.js'></script> -->
 <script src="assets/js/bootstrap-notify.js"></script>
 <script src="assets/js/bootstrap-notify.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/myjs/funnelreport.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/myjs/customerreport.js"></script>
 <script type="text/javascript">
     var x = document.getElementById('alert_msg').value;
 

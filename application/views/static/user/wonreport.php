@@ -48,8 +48,8 @@
           <td></td>
           <td>Total</td>
           <td></td>
-          <td>0</td>
-          <td>0</td>
+          <td id="totaltop">0</td>
+          <td id="totalmargin">0</td>
           <td> </td>
           <td> </td>
           <td> </td>
@@ -112,7 +112,7 @@
     <script src='assets/src/tagcomplete.js'></script> -->
 <script src="assets/js/bootstrap-notify.js"></script>
 <script src="assets/js/bootstrap-notify.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/myjs/funnelreport.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/myjs/wonreport.js"></script>
 <script type="text/javascript">
   var x = document.getElementById('alert_msg').value;
 

@@ -1,0 +1,24 @@
+
+
+ALTER TABLE quotation_master ADD customer_id INT(11) NOT NULL AFTER quote_lock_version;
+
+
+ALTER TABLE quotation_master ADD version INT(11) NOT NULL AFTER customer_id;
+
+ALTER TABLE quotation_master ADD salesrepresentative INT(11) NOT NULL AFTER version;
+
+
+
+table  quotation_log:-
+CREATE TABLE `quotation_log` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `qutaionid` int(11) NOT NULL,
+ `version` int(11) NOT NULL,
+ `userid` int(11) NOT NULL,
+ `adddate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+ `conformversion` int(11) NOT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4
+
+
+ALTER TABLE order_master ADD customer_id INT(11) NOT NULL AFTER salesrepresentative;
