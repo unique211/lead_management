@@ -467,7 +467,9 @@ $(document).ready(function() {
             success: function(data) {
 
                 var customer = [];
+
                 for (var i = 0; i < data.length; i++) {
+
                     customernm = data[i].customer_name;
 
                     customer.push(customernm);
@@ -487,6 +489,7 @@ $(document).ready(function() {
 
                     select: function(event, ui) {
                         var label = ui.item.label;
+
                         var value = ui.item.value;
                         //store in session
 
@@ -504,7 +507,9 @@ $(document).ready(function() {
                                     $('#cotactperson').val('');
                                     $('#phn').val('');
                                     $('#s_email').val('');
+                                    $('#customerid').val('');
                                 } else {
+                                    $('#customerid').val(data[0].account_id);
                                     $('#cotactperson').val(data[0].contact_name);
                                     $('#phn').val(data[0].mobile_no);
                                     $('#s_email').val(data[0].email_id);
@@ -571,7 +576,9 @@ $(document).ready(function() {
         var lessother = $('#lessother').val();
         var finalmargin = $('#finalmargin').val();
         var salesrepresentive = $('#salesrepresentive').val();
+        var customerid = $('#customerid').val();
 
+        console.log(customerid);
 
 
         if (usertype == "SalesRepresentative" && userrole == "Sales") {
@@ -597,6 +604,7 @@ $(document).ready(function() {
 
 
         var id = $('#save_update').val();
+
 
         var l1 = $('table#product_table').find('tbody').find('tr');
         var r = l1.length;
@@ -702,6 +710,7 @@ $(document).ready(function() {
                         finalmargin: finalmargin,
                         table_name: table_name,
                         salesrepresentive: salesrepresentive,
+                        customerid: customerid,
 
                     },
                     success: function(data) {
@@ -715,8 +724,8 @@ $(document).ready(function() {
                             });
                             if (id == "") {
                                 $('#save_update').val(data);
-                                $('#btnprint').val(data + "_" + 1);
-                                $('#btnExport').val(data + "_" + 1);
+                                $('#btnprint').val(data);
+                                $('#btnExport').val(data);
                                 $('#btnprint').show();
                                 $('#btnExport').show();
                             } else {
@@ -837,6 +846,7 @@ $(document).ready(function() {
     }
 
     function form_clear() {
+        $('#customerid').val('');
         $('#cus_name').val('');
         $('#cotactperson').val('');
         $('#phn').val('');
@@ -897,6 +907,7 @@ $(document).ready(function() {
         $('.btnhide').hide();
 
         form_clear();
+        getqutationno();
 
     });
 
@@ -907,6 +918,7 @@ $(document).ready(function() {
         $('.tablehideshow').show();
         $('.closehide').hide();
         form_clear();
+        getqutationno();
 
     });
     $(document).on('click', '#reset', function(e) {
@@ -953,6 +965,7 @@ $(document).ready(function() {
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Order Date</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Order Due Date</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Order Due Date</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Customer Id</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Status</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Action</th>' +
                     '</tr>' +
@@ -974,7 +987,7 @@ $(document).ready(function() {
                     odate = tdateAr[2] + '/' + tdateAr[1] + '/' + tdateAr[0];
                     html += '<tr>' +
                         '<td id="customer_name_' + data[i].id + '">' + data[i].customer_name + '</td>' +
-                        '<td id="quotaion_no_' + data[i].id + '">' + data[i].quotaion_no + '</td>' +
+                        '<td class="quotationnoversion" id="quotaion_no_' + data[i].id + '">' + data[i].quotaion_no + '</td>' +
                         '<td id="salesrepresent_' + data[i].id + '">' + data[i].firstname + "" + data[i].last_name + '</td>' +
                         '<td id="ref_number_' + data[i].id + '">' + data[i].ref_number + '</td>' +
                         '<td> <select name="latestversion_' + data[i].id + '" id="latestversion_' + data[i].id + '" class="form-control latestversion"></select></td>' +
@@ -993,7 +1006,8 @@ $(document).ready(function() {
                         '<td style="display:none;" id="less_bg_' + data[i].id + '">' + data[i].less_bg + '</td>' +
                         '<td style="display:none;" id="less_others_' + data[i].id + '">' + data[i].less_others + '</td>' +
                         '<td style="display:none;" id="margin_' + data[i].id + '">' + data[i].margin + '</td>' +
-                        '<td style="display:none;" id="salesperson_' + data[i].id + '">' + data[i].salesperson + '</td>';
+                        '<td style="display:none;" id="salesperson_' + data[i].id + '">' + data[i].salesperson + '</td>' +
+                        '<td style="display:none;" id="customer_id_' + data[i].id + '">' + data[i].customer_id + '</td>';
 
                     if (data[i].quote_status == 1) {
                         html += '<td> <select name="quotestatus_' + data[i].id + '" id="quotestatus_' + data[i].id + '" class="form-control quotestatus"><option disabled>select</option><option value="1" selected>Pending</option><option value="2">Confirm</option><option value="3">Cancel</option></select</td>';
@@ -1067,6 +1081,7 @@ $(document).ready(function() {
         var margin_ = $('#margin_' + id1).html();
         var salesperson = $('#salesperson_' + id1).html();
         var salesrepresent = $('#salesrepresent_' + id1).html();
+        var customer_id = $('#customer_id_' + id1).html();
 
         $('#cus_name').val(customer_name);
         $('#cotactperson').val(contact_person_);
@@ -1074,6 +1089,7 @@ $(document).ready(function() {
         $('#s_email').val(email_id_);
         $('#bill_no').val(quotaion_no);
         $('#refno').val(ref_number);
+        $('#customerid').val(customer_id);
 
         //$('#o_date').val(order_date_);
         $('#o_due_date').val(order_due_date_);
@@ -1187,7 +1203,7 @@ $(document).ready(function() {
 
                         $("#product_table tbody").append(html);
 
-
+                        $('#product_tbody').val(row_id);
                     }
                     getamt();
                     getallproduct();
@@ -1201,7 +1217,7 @@ $(document).ready(function() {
             type: "POST",
             url: baseurl + "Quotation_Estimate/getquotationversion",
             data: {
-                id: id1,
+                id: quotaion_no,
             },
             dataType: "JSON",
             async: false,
@@ -1237,8 +1253,8 @@ $(document).ready(function() {
 
 
 
-        $('#btnprint').val(id1 + "_" + vesion);
-        $('#btnExport').val(id1 + "_" + vesion);
+        $('#btnprint').val(id1);
+        $('#btnExport').val(id1);
 
 
 
@@ -1294,9 +1310,58 @@ $(document).ready(function() {
     $(document).on('change', '#search_version', function() {
         var version = $(this).val();
         var id = $('#save_update').val();
+        var bill_no = $('#bill_no').val();
 
-        $('#btnprint').val(id + "_" + version);
-        $('#btnExport').val(id + "_" + version);
+
+
+
+
+        $.ajax({
+            type: "POST",
+            url: baseurl + "Quotation_Estimate/getquationvesiondata",
+            dataType: "JSON",
+            data: {
+                version: version,
+                bill_no: bill_no,
+
+            },
+            success: function(data) {
+
+
+                $('#btnprint').val(data[0].id);
+                $('#btnExport').val(data[0].id);
+                $('#cus_name').val(data[0].customer_name);
+                $('#cotactperson').val(data[0].contact_person);
+                $('#phn').val(data[0].mobile_no);
+                $('#s_email').val(data[0].email_id);
+                $('#bill_no').val(data[0].quotaion_no);
+                $('#refno').val(data[0].ref_number);
+                $('#customerid').val(data[0].customer_id);
+
+                //$('#o_date').val(order_date_);
+                $('#o_due_date').val(data[0].order_due_date);
+                $('#description').val(data[0].description);
+
+
+
+                $('#finalordvalue').val(data[0].total_order_value);
+                $('#finaltrasforprice').val(data[0].total_trasfor_price);
+                $('#lesstaxcst').val(data[0].less_input_tax);
+                $('#lesstrasporation').val(data[0].less_trasportion);
+                $('#lessbg').val(data[0].less_bg);
+                $('#lessother').val(data[0].less_others);
+                $('#finalmargin').val(data[0].margin);
+
+
+                if (usertype == "SalesRepresentative" && userrole == "Sales") {
+
+                    $("#salesrepresentive1").val(data[0].first_name + "" + data[0].last_name);
+                } else {
+                    $('#salesrepresentive').val(data[0].salesrepresentative).trigger('change');
+                }
+
+            }
+        });
 
 
         $.ajax({
@@ -1305,10 +1370,11 @@ $(document).ready(function() {
             dataType: "JSON",
             data: {
                 version: version,
-                id: id,
+                bill_no: bill_no,
 
             },
             success: function(data) {
+
                 $("#product_table tbody").html('');
 
                 if (data.length > 0) {
@@ -1388,14 +1454,14 @@ $(document).ready(function() {
         // e.preventDefault();
         var id = $('#btnExport').val();
         $("#tblexporttbl").html('');
-
-        if (id != "") {
-            id = id.split("_");
-
-            getexclefile(id[0], id[1]);
+        getexclefile(id);
+        // if (id != "") {
+        //     id = id.split("_");
 
 
-        }
+
+
+        // }
 
 
 
@@ -1512,7 +1578,7 @@ $(document).ready(function() {
                             url: baseurl + "Quotation_Estimate/getproductdetalis",
                             dataType: "JSON",
                             data: {
-                                version: version,
+                                //version: version,
                                 id: id,
 
                             },
@@ -1669,22 +1735,30 @@ $(document).ready(function() {
     //function for getting all version 
 
     function getallversion() {
-        $(".latestversion").each(function() {
-            var id = $(this).attr('id');
-            var getid = id;
-            var id = id.split("_");
+        $(".quotationnoversion").each(function() {
+            var id1 = $(this).attr('id');
+
+
+            var val = $('#' + id1).html();
+
+            var id1 = id1.split("_");
+
+
+            var getid = id1[2];
+            console.log(getid);
 
 
             $.ajax({
                 type: "POST",
                 url: baseurl + "Quotation_Estimate/getquotationversion",
                 data: {
-                    id: id[1],
+                    id: val,
                 },
                 dataType: "JSON",
                 async: false,
                 success: function(data) {
                     console.log(data);
+
 
                     var html = '';
                     var name = '';
@@ -1708,21 +1782,23 @@ $(document).ready(function() {
 
 
                     }
-                    $('#' + getid).html(html);
+                    $('#latestversion_' + getid).html(html);
                 }
             });
             $.ajax({
                 type: "POST",
                 url: baseurl + "Quotation_Estimate/getquotationselect",
                 data: {
-                    id: id[1],
+                    id: val,
                 },
                 dataType: "JSON",
                 async: false,
                 success: function(data) {
-                    if (data[0].quote_lock_version > 0) {
-                        $('#' + getid).val(data[0].quote_lock_version).trigger('change');
-                        $("#" + getid).attr("disabled", "disabled");
+
+                    if (data.length > 0) {
+
+                        $('#latestversion_' + getid).val(data[0].quote_lock_version).trigger('change');
+                        $("#latestversion_" + getid).attr("disabled", "disabled");
                     }
 
                 }
@@ -1735,8 +1811,10 @@ $(document).ready(function() {
     $(document).on('change', '.quotestatus', function(e) {
         e.preventDefault();
         var id = $(this).attr('id');
+
         var status = $(this).val();
         id = id.split("_");
+        var qnoid = $('#quotaion_no_' + id[1]).html();
 
         var lversion = $('#latestversion_' + id[1]).val();
 
@@ -1747,6 +1825,7 @@ $(document).ready(function() {
                 id: id[1],
                 lversion: lversion,
                 status: status,
+                qnoid: qnoid,
             },
             dataType: "JSON",
             async: false,
@@ -1911,6 +1990,27 @@ $(document).ready(function() {
             }
         });
 
+    }
+
+
+    function getqutationno() {
+        var id = $('#save_update').val();
+        if (id == "") {
+
+            $.ajax({
+                type: "POST",
+                url: base_url + "Quotation_Estimate/getquatationno",
+                data: {
+                    table_name: table_name,
+                },
+                dataType: "JSON",
+                async: false,
+                success: function(data) {
+
+                    $('#bill_no').val(data);
+                }
+            });
+        }
     }
 
 

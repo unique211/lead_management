@@ -487,10 +487,12 @@ $(document).ready(function() {
                                     $('#cotactperson').val('');
                                     $('#phn').val('');
                                     $('#s_email').val('');
+                                    $('#customerid').val('');
                                 } else {
                                     $('#cotactperson').val(data[0].contact_name);
                                     $('#phn').val(data[0].mobile_no);
                                     $('#s_email').val(data[0].email_id);
+                                    $('#customerid').val(data[0].account_id);
                                 }
                             }
                         });
@@ -557,6 +559,7 @@ $(document).ready(function() {
         var finalmargin = $('#finalmargin').val();
         var quatation_no = $('#quatation_no').text();
         var search_version = $('#search_version').text();
+        var customerid = $('#customerid').val();
 
         var flag = 0;
         var salesrepresentive = $('#salesrepresentive').val();
@@ -676,6 +679,7 @@ $(document).ready(function() {
                         quatation_no: quatation_no,
                         table_name: table_name,
                         salesrepresentive: salesrepresentive,
+                        customerid: customerid,
 
                     },
                     success: function(data) {
@@ -809,6 +813,7 @@ $(document).ready(function() {
 
     function form_clear() {
         $('#cus_name').val('');
+        $('#customerid').val('');
         $('#cotactperson').val('');
         $('#phn').val('');
         $('#s_email').val('');
@@ -1218,9 +1223,11 @@ $(document).ready(function() {
     $(document).on('change', '#search_version', function() {
         var version = $(this).val();
         var id = $('#save_update').val();
+        var bill_no = $('#bill_no').val();
+        var version = $(this).val();
 
-        $('#btnprint').val(id + "_" + version);
-        $('#btnExport').val(id + "_" + version);
+        $('#btnprint').val(bill_no + "_" + version);
+        $('#btnExport').val(bill_no + "_" + version);
 
 
         $.ajax({
@@ -1745,6 +1752,7 @@ $(document).ready(function() {
                 $('#refno').val(data[0].ref_number);
                 $('#phn').val(data[0].mobile_no);
                 $('#s_email').val(data[0].email_id);
+                $('#customerid').val(data[0].customer_id);
                 var today = new Date();
                 var dd = today.getDate();
 
@@ -1786,7 +1794,7 @@ $(document).ready(function() {
                 if (data[0].quote_lock_version > 0) {
                     $.ajax({
                         type: "POST",
-                        url: baseurl + "Quotation_Estimate/getquationversionwise",
+                        url: baseurl + "Quotation_Estimate/getquationversionwise1",
                         dataType: "JSON",
                         data: {
 

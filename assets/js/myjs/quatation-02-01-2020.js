@@ -1,6 +1,29 @@
 $(document).ready(function() {
 
-    var table_name = "order_master";
+    var table_name = "quotation_master";
+
+    if (usertype == "SalesRepresentative" && userrole == "Sales") {
+        $("#salesrepresentive").attr("required", false);
+
+        $.ajax({
+            type: 'POST',
+            url: baseurl + "Quotation_Estimate/get_salespername",
+            async: false,
+            data: {
+                useruniqueid: useruniqueid,
+            },
+            dataType: 'json',
+            success: function(data) {
+                $('#salesrepresentive1').val(data[0].first_name + "" + data[0].last_name);
+            }
+        });
+
+    } else {
+
+        $("#salesrepresentive").attr("required", true);
+    }
+
+
     $(document).on('click', '#add_row', function(e) {
         e.preventDefault();
         addproduct();
@@ -444,7 +467,9 @@ $(document).ready(function() {
             success: function(data) {
 
                 var customer = [];
+
                 for (var i = 0; i < data.length; i++) {
+
                     customernm = data[i].customer_name;
 
                     customer.push(customernm);
@@ -464,6 +489,7 @@ $(document).ready(function() {
 
                     select: function(event, ui) {
                         var label = ui.item.label;
+
                         var value = ui.item.value;
                         //store in session
 
@@ -483,10 +509,10 @@ $(document).ready(function() {
                                     $('#s_email').val('');
                                     $('#customerid').val('');
                                 } else {
+                                    $('#customerid').val(data[0].id);
                                     $('#cotactperson').val(data[0].contact_name);
                                     $('#phn').val(data[0].mobile_no);
                                     $('#s_email').val(data[0].email_id);
-                                    $('#customerid').val(data[0].account_id);
                                 }
                             }
                         });
@@ -528,21 +554,19 @@ $(document).ready(function() {
 
 
     /*---------insert data into area_master start-----------------*/
-    $(document).on("submit", "#order_form", function(e) {
+    $(document).on("submit", "#quotation_form", function(e) {
         e.preventDefault();
 
         var cus_name = $('#cus_name').val();
         var cotactperson = $('#cotactperson').val();
         var phn = $('#phn').val();
         var s_email = $('#s_email').val();
-        var orderno = $('#orderno').val();
+        var bill_no = $('#bill_no').val();
         var refno = $('#refno').val();
         var Tax = $('#Tax').val();
         var o_date = $('#o_date').val();
         var o_due_date = $('#o_due_date').val();
         var description = $('#description').val();
-
-
 
         var finalordervalue = $('#finalordvalue').val();
         var finaltrasforprice = $('#finaltrasforprice').val();
@@ -551,19 +575,33 @@ $(document).ready(function() {
         var lessbg = $('#lessbg').val();
         var lessother = $('#lessother').val();
         var finalmargin = $('#finalmargin').val();
-        var search_version = $('#search_version').text();
-        var quatation_no = $('#quatation_no').text();
-        var quatationidno = $('#quatationid').val();
-        var customerid = $('#customerid').val();
-        var flag = 0;
-
         var salesrepresentive = $('#salesrepresentive').val();
+        var customerid = $('#customerid').val();
 
+        console.log(customerid);
 
 
         if (usertype == "SalesRepresentative" && userrole == "Sales") {
             salesrepresentive = useruniqueid;
         }
+
+        var flag = 0;
+
+        var today = new Date();
+        var dd = today.getDate();
+
+        var mm = today.getMonth() + 1;
+        var yyyy = today.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+        o_date = yyyy + '-' + mm + '-' + dd;
+
+
 
         var id = $('#save_update').val();
 
@@ -646,7 +684,7 @@ $(document).ready(function() {
             if (flag == 0) {
                 $.ajax({
                     type: "POST",
-                    url: baseurl + "Quotation_order/save_settings",
+                    url: baseurl + "Quotation_Estimate/save_settings",
                     dataType: "JSON",
                     async: false,
                     data: {
@@ -655,13 +693,13 @@ $(document).ready(function() {
                         cotactperson: cotactperson,
                         phn: phn,
                         s_email: s_email,
-                        bill_no: orderno,
+                        bill_no: bill_no,
                         refno: refno,
                         o_date: o_date,
                         o_due_date: o_due_date,
                         description: description,
                         studejsonObj: studejsonObj,
-                        search_version: search_version,
+
                         finalordervalue: finalordervalue,
                         finaltrasforprice: finaltrasforprice,
                         lesstaxcst: lesstaxcst,
@@ -670,31 +708,32 @@ $(document).ready(function() {
                         lessother: lessother,
                         finalmargin: finalmargin,
                         table_name: table_name,
-                        quatationidno: quatationidno,
-                        quatation_no: quatation_no,
                         salesrepresentive: salesrepresentive,
                         customerid: customerid,
+
                     },
                     success: function(data) {
                         console.log(data);
-
                         if (data > 0) {
-
-
-
-
-                            // $('#save_update').val(data);
-                            // $('#btnprint').val(data);
-                            // $('#btnExport').val(data);
-                            // $('#btnprint').show();
-                            // $('#btnExport').show();
-
                             $.notify({
                                 title: '',
                                 message: '<strong>Data saved successfully</strong>'
                             }, {
                                 type: 'success'
                             });
+                            if (id == "") {
+                                $('#save_update').val(data);
+                                $('#btnprint').val(data + "_" + 1);
+                                $('#btnExport').val(data + "_" + 1);
+                                $('#btnprint').show();
+                                $('#btnExport').show();
+                            } else {
+                                $('.btnhideshow').hide();
+                                $('.tablehideshow').show();
+                                $('.btnhide').show();
+                                $('.closehide').hide();
+                                form_clear();
+                            }
 
                             //$('.btnhideshow').hide();
                             //$('.tablehideshow').show();
@@ -806,15 +845,15 @@ $(document).ready(function() {
     }
 
     function form_clear() {
-        $('#cus_name').val('');
         $('#customerid').val('');
+        $('#cus_name').val('');
         $('#cotactperson').val('');
         $('#phn').val('');
         $('#s_email').val('');
         $('#bill_no').val('');
         $('#refno').val('');
         $('#Tax').val('');
-        $('#o_date').val('');
+        // $('#o_date').val('');
         $('#o_due_date').val('');
         $('#description').val('');
 
@@ -840,6 +879,23 @@ $(document).ready(function() {
         $('#btnExport').hide();
         $("#tblexporttbl").html('');
 
+        var today = new Date();
+        var dd = today.getDate();
+
+        var mm = today.getMonth() + 1;
+        var yyyy = today.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+        today = yyyy + '-' + mm + '-' + dd;
+
+
+        $("#o_date").val(today);
+
     }
 
     $(document).on('click', '.btnhide', function(e) {
@@ -859,7 +915,6 @@ $(document).ready(function() {
         $('.btnhide').show();
         $('.tablehideshow').show();
         $('.closehide').hide();
-        location.href = baseurl + "manageorder";
         form_clear();
 
     });
@@ -874,7 +929,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'POST',
-            url: baseurl + "Quotation_order/getallorder",
+            url: baseurl + "Quotation_Estimate/getallquatatyion",
             async: false,
             data: {
 
@@ -882,18 +937,15 @@ $(document).ready(function() {
             },
             dataType: 'json',
             success: function(data) {
-
                 var html = '';
                 html += '<table id="mytable" class="table table-striped">' +
                     '<thead>' +
                     '<tr>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Customer Name</th>' +
-                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Quotation No</th>' +
-                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Sales Representative	</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Quotation Number</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Sales Representative</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Ref Number</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Version</th>' +
-                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Order No</th>' +
-                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Ref. Number</th>' +
-
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Order Date </th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Order Due Date</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Description</th>' +
@@ -909,10 +961,9 @@ $(document).ready(function() {
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">MARGIN</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Order Date</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Order Due Date</th>' +
-                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Quoteno</th>' +
-                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Sales Representative ID</th>' +
-                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Customerid ID</th>' +
-
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Order Due Date</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Customer Id</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Status</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Action</th>' +
                     '</tr>' +
                     '</thead>' +
@@ -933,12 +984,10 @@ $(document).ready(function() {
                     odate = tdateAr[2] + '/' + tdateAr[1] + '/' + tdateAr[0];
                     html += '<tr>' +
                         '<td id="customer_name_' + data[i].id + '">' + data[i].customer_name + '</td>' +
-                        '<td id="quotation_no_' + data[i].id + '">' + data[i].quotation_no + '</td>' +
-                        '<td id="salesrepresentivename_' + data[i].id + '">' + data[i].firstname + "" + data[i].last_name + '</td>' +
-                        '<td  id="version_' + data[i].id + '">' + data[i].quote_lock_version + '</td>' +
-                        '<td id="order_no_' + data[i].id + '">' + data[i].order_no + '</td>' +
+                        '<td id="quotaion_no_' + data[i].id + '">' + data[i].quotaion_no + '</td>' +
+                        '<td id="salesrepresent_' + data[i].id + '">' + data[i].firstname + "" + data[i].last_name + '</td>' +
                         '<td id="ref_number_' + data[i].id + '">' + data[i].ref_number + '</td>' +
-
+                        '<td> <select name="latestversion_' + data[i].id + '" id="latestversion_' + data[i].id + '" class="form-control latestversion"></select></td>' +
                         '<td  id="date_' + data[i].id + '">' + date + '</td>' +
                         '<td id="odate_' + data[i].id + '">' + odate + '</td>' +
                         '<td style="display:none;" id="contact_person_' + data[i].id + '">' + data[i].contact_person + '</td>' +
@@ -954,19 +1003,29 @@ $(document).ready(function() {
                         '<td style="display:none;" id="less_bg_' + data[i].id + '">' + data[i].less_bg + '</td>' +
                         '<td style="display:none;" id="less_others_' + data[i].id + '">' + data[i].less_others + '</td>' +
                         '<td style="display:none;" id="margin_' + data[i].id + '">' + data[i].margin + '</td>' +
-                        '<td style="display:none;" id="qutone_no_' + data[i].id + '">' + data[i].qutone_no + '</td>' +
-                        '<td style="display:none;" id="salesrepresentative_' + data[i].id + '">' + data[i].salesrepresentative + '</td>' +
-                        '<td style="display:none;" id="customerid_' + data[i].id + '">' + data[i].customer_id + '</td>' +
+                        '<td style="display:none;" id="salesperson_' + data[i].id + '">' + data[i].salesperson + '</td>' +
+                        '<td style="display:none;" id="customer_id_' + data[i].id + '">' + data[i].customer_id + '</td>';
+
+                    if (data[i].quote_status == 1) {
+                        html += '<td> <select name="quotestatus_' + data[i].id + '" id="quotestatus_' + data[i].id + '" class="form-control quotestatus"><option disabled>select</option><option value="1" selected>Pending</option><option value="2">Confirm</option><option value="3">Cancel</option></select</td>';
+                    } else if (data[i].quote_status == 2) {
+                        html += '<td> <select disabled name="quotestatus_' + data[i].id + '" id="quotestatus_' + data[i].id + '" class="form-control quotestatus"><option disabled>select</option><option value="1">Pending</option><option value="2" selected>Confirm</option><option value="3">Cancel</option></select</td>';
+                    } else {
+                        html += '<td> <select disabled name="quotestatus_' + data[i].id + '" id="quotestatus_' + data[i].id + '" class="form-control quotestatus"><option disabled>select</option><option value="1">Pending</option><option value="2">Confirm</option><option value="3" selected>Cancel</option></select</td>';
+                    }
 
 
+                    html += '< /td>';
 
-                        ' <td><button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="edit_' + data[i].id + '"  ><i class="fa fa-edit"></i></button>&nbsp;<button name="delete" value="Delete" class="delete_data btn btn-xs btn-danger" id=' +
-                        data[i].id + '><i class="fa fa-trash"></i></button></td>';
+                    if (data[i].quote_status == 1) {
+                        html += ' <td><button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="' + data[i].id + '"  ><i class="fa fa-edit"></i></button>&nbsp;<button name="delete" value="Delete" class="delete_data btn btn-xs btn-danger" id=' +
+                            data[i].id + '><i class="fa fa-trash"></i></button></td>';
+                    } else if (data[i].quote_status == 2) {
 
-
-
-
-
+                        html += '<td><button  class="getorder btn btn-sm  btn-xs  btn-primary" id="' + data[i].id + '"  ><i class="fa fa-shopping-cart"></i></button></td>';
+                    } else {
+                        html += "-";
+                    }
 
                     html += '</tr>';
 
@@ -979,13 +1038,13 @@ $(document).ready(function() {
             }
         });
         getallversion();
+
     }
 
     $(document).on('click', '.edit_data', function(e) {
         e.preventDefault();
 
         var id1 = $(this).attr('id');
-        id1 = id1.split("_");
         var html1 = '';
 
 
@@ -1001,51 +1060,35 @@ $(document).ready(function() {
         $('#btnprint').show();
         $('#btnExport').show();
 
-        var customer_name = $('#customer_name_' + id1[1]).html();
-        var order_no_ = $('#order_no_' + id1[1]).html();
-        var ref_number = $('#ref_number_' + id1[1]).html();
-        var contact_person_ = $('#contact_person_' + id1[1]).html();
-        var mobile_no_ = $('#mobile_no_' + id1[1]).html();
-        var email_id_ = $('#email_id_' + id1[1]).html();
-        var order_date_ = $('#order_date_' + id1[1]).html();
-        var order_due_date_ = $('#order_due_date_' + id1[1]).html();
-        var description_ = $('#description_' + id1[1]).html();
-        var total_order_value_ = $('#total_order_value_' + id1[1]).html();
-        var total_trasfor_price_ = $('#total_trasfor_price_' + id1[1]).html();
-        var less_input_tax_ = $('#less_input_tax_' + id1[1]).html();
-        var less_trasportion_ = $('#less_trasportion_' + id1[1]).html();
-        var less_bg_ = $('#less_bg_' + id1[1]).html();
-        var less_others_ = $('#less_others_' + id1[1]).html();
-        var margin_ = $('#margin_' + id1[1]).html();
-        var version_ = $('#version_' + id1[1]).html();
-        var qutone_no = $('#qutone_no_' + id1[1]).html();
-        var quotation_no = $('#quotation_no_' + id1[1]).html();
-        var salesrepresentative_ = $('#salesrepresentative_' + id1[1]).html();
-        var salesrepresentivename = $('#salesrepresentivename_' + id1[1]).html();
-        var customerid = $('#customerid_' + id1[1]).html();
-
-        if (usertype == "SalesRepresentative" && userrole == "Sales") {
-
-            $("#salesrepresentive1").val(salesrepresentivename);
-        } else {
-            if (salesrepresentative_ > 0) {
-                $('#salesrepresentive').val(salesrepresentative_).trigger('change');
-            }
-
-        }
-
-
-        $('#quatationid').val(qutone_no);
-        $('#customerid').val(customerid);
+        var customer_name = $('#customer_name_' + id1).html();
+        var quotaion_no = $('#quotaion_no_' + id1).html();
+        var ref_number = $('#ref_number_' + id1).html();
+        var contact_person_ = $('#contact_person_' + id1).html();
+        var mobile_no_ = $('#mobile_no_' + id1).html();
+        var email_id_ = $('#email_id_' + id1).html();
+        var order_date_ = $('#order_date_' + id1).html();
+        var order_due_date_ = $('#order_due_date_' + id1).html();
+        var description_ = $('#description_' + id1).html();
+        var total_order_value_ = $('#total_order_value_' + id1).html();
+        var total_trasfor_price_ = $('#total_trasfor_price_' + id1).html();
+        var less_input_tax_ = $('#less_input_tax_' + id1).html();
+        var less_trasportion_ = $('#less_trasportion_' + id1).html();
+        var less_bg_ = $('#less_bg_' + id1).html();
+        var less_others_ = $('#less_others_' + id1).html();
+        var margin_ = $('#margin_' + id1).html();
+        var salesperson = $('#salesperson_' + id1).html();
+        var salesrepresent = $('#salesrepresent_' + id1).html();
+        var customer_id = $('#customer_id_' + id1).html();
 
         $('#cus_name').val(customer_name);
         $('#cotactperson').val(contact_person_);
         $('#phn').val(mobile_no_);
         $('#s_email').val(email_id_);
-        $('#orderno').val(order_no_);
+        $('#bill_no').val(quotaion_no);
         $('#refno').val(ref_number);
+        $('#customerid').val(customer_id);
 
-        $('#o_date').val(order_date_);
+        //$('#o_date').val(order_date_);
         $('#o_due_date').val(order_due_date_);
         $('#description').val(description_);
 
@@ -1058,20 +1101,43 @@ $(document).ready(function() {
         $('#lessbg').val(less_bg_);
         $('#lessother').val(less_others_);
         $('#finalmargin').val(margin_);
-        $('#save_update').val(id1[1]);
 
-        // var html1 = '<option selected value="' + version_ + '" >' + version_ + '</option>';
-        $('#search_version').text(version_);
-        $('#quatation_no').text(quotation_no);
+
+        if (usertype == "SalesRepresentative" && userrole == "Sales") {
+
+            $("#salesrepresentive1").val(salesrepresent);
+        } else {
+            $('#salesrepresentive').val(salesperson).trigger('change');
+        }
+
+
+        $('#save_update').val(id1);
+
+        var today = new Date();
+        var dd = today.getDate();
+
+        var mm = today.getMonth() + 1;
+        var yyyy = today.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+        today = yyyy + '-' + mm + '-' + dd;
+
+
+        $("#o_date").val(today);
 
 
 
         $.ajax({
             type: "POST",
-            url: baseurl + "Quotation_order/getproductdetalis",
+            url: baseurl + "Quotation_Estimate/getquatationdetalis",
             dataType: "JSON",
             data: {
-                id: id1[1],
+                id: id1,
 
             },
             success: function(data) {
@@ -1133,7 +1199,6 @@ $(document).ready(function() {
 
 
                         $("#product_table tbody").append(html);
-                        $('#product_tbody').val(row_id);
 
 
                     }
@@ -1185,8 +1250,8 @@ $(document).ready(function() {
 
 
 
-        $('#btnprint').val(id1[1]);
-        $('#btnExport').val(id1[1]);
+        $('#btnprint').val(id1 + "_" + vesion);
+        $('#btnExport').val(id1 + "_" + vesion);
 
 
 
@@ -1217,7 +1282,7 @@ $(document).ready(function() {
             dataType: "JSON",
             data: {
                 id: id1,
-                table_name: 'order_master',
+                table_name: 'quotation_master',
             },
             success: function(data) {
                 if (data == true) {
@@ -1263,6 +1328,7 @@ $(document).ready(function() {
                     var row_id = 0;
                     for (var i = 0; i < data.length; i++) {
                         row_id = row_id + 1;
+                        $('#order_date').val(data[0].quotation_date);
 
                         var totaluniprice = parseFloat(data[i].qty) * parseFloat(data[i].unit_transfor_price);
                         var unittaxamt = parseFloat(data[i].transfor_tax) * parseFloat(totaluniprice) / 100;
@@ -1337,9 +1403,9 @@ $(document).ready(function() {
         $("#tblexporttbl").html('');
 
         if (id != "") {
+            id = id.split("_");
 
-
-            getexclefile(id);
+            getexclefile(id[0], id[1]);
 
 
         }
@@ -1348,7 +1414,7 @@ $(document).ready(function() {
 
     });
 
-    function getexclefile(vid) {
+    function getexclefile(id, version) {
 
 
         var total_order_value = 0;
@@ -1358,234 +1424,253 @@ $(document).ready(function() {
         var less_bg = 0;
         var less_others = 0;
         var fmargin = 0;
-
+        var quedate = "";
 
         $.ajax({
             type: "POST",
-            url: baseurl + "Quotation_order/getcustomerinfo",
+            url: baseurl + "Quotation_Estimate/getcustomerinfo",
             dataType: "JSON",
             data: {
-
-                id: vid,
+                version: version,
+                id: id,
 
             },
             success: function(data) {
 
-
-                total_order_value = data[0].total_order_value;
-                total_trasfor_price = data[0].total_trasfor_price;
-                less_input_tax = data[0].less_input_tax;
-                less_trasportion = data[0].less_trasportion;
-                less_bg = data[0].less_bg;
-                less_others = data[0].less_others;
-                fmargin = data[0].margin;
-
-                var tdateAr = data[0].order_date.split('-');
-                var date = tdateAr[2] + '/' + tdateAr[1] + '/' + tdateAr[0];
-
-                var tdateAr = data[0].order_due_date.split('-');
-                var odate = tdateAr[2] + '/' + tdateAr[1] + '/' + tdateAr[0];
-                var exhtml = '<tr>' +
-                    '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;">Customer Name:</td>' +
-                    '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[0].customer_name + '</td>' +
-                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Order Number :</td>' +
-                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[0].order_no + '</td>' +
-
-
-                    '</tr>' +
-                    '<tr>' +
-                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Contact Person:</td>' +
-                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[0].contact_person + '</td>' +
-                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Ref Number:</td>' +
-                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[0].ref_number + '</td>' +
-
-
-                    '</tr>' +
-                    '<tr>' +
-                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Mobile No:</td>' +
-                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[0].mobile_no + '</td>' +
-                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Order Date:</td>' +
-                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + date + '</td>' +
-
-
-                    '</tr>' +
-                    '<tr>' +
-                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Email:</td>' +
-                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[0].email_id + '</td>' +
-                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Order Due Date:</td>' +
-                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + odate + '</td>' +
-
-
-                    '</tr>' +
-                    '<tr>' +
-                    '<td colspan="3"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Description</td>' +
-                    '<td colspan="1"   style="white-space:nowrap;text-align:left;padding:10px 10px;">Qty</td>' +
-                    '<td  colspan="1" style="white-space:nowrap;text-align:left;padding:10px 10px;">UnitTransfer Price</td>' +
-                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Total Transfer Price</td>' +
-                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Tax (%)</td>' +
-                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Tax (Rs)</td>' +
-                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Total Transfer Price With Inc Tax</td>' +
-
-                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Unit Order Value</td>' +
-                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Total Ord Value</td>' +
-                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Tax %</td>' +
-                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Tax (Value)</td>' +
-                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Total Ord Val With Tax</td>' +
-                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Margin</td>' +
-
-
-                    '</tr>';
-
-                $("#tblexporttbl").append(exhtml);
-
                 $.ajax({
                     type: "POST",
-                    url: baseurl + "Quotation_order/getproductdetalis",
+                    url: baseurl + "Quotation_Estimate/getquatationdate",
                     dataType: "JSON",
                     data: {
-
-                        id: vid,
+                        version: version,
+                        id: id,
 
                     },
-                    success: function(data) {
-
-                        var finaltotaluniprice = 0;
-                        var finalunittaxamt = 0;
-                        var finaltransforwithtax = 0;
-                        var finaltotalord = 0;
-                        var finalordtaxvalue = 0;
-                        var finalordwithtax = 0;
-                        var finalordmargin = 0;
-
-                        for (var i = 0; i < data.length; i++) {
-
-                            var totaluniprice = parseFloat(data[i].qty) * parseFloat(data[i].unit_transfor_price);
-                            var unittaxamt = parseFloat(data[i].transfor_tax) * parseFloat(totaluniprice) / 100;
-                            var transforwithtax = parseFloat(unittaxamt) + parseFloat(totaluniprice);
-
-                            var totalord = parseFloat(data[i].qty) * parseFloat(data[i].unit_order_value);
-                            var ordtaxvalue = parseFloat(data[i].order_tax) * parseFloat(totalord) / 100;
-                            var ordwithtax = parseFloat(totalord) + parseFloat(ordtaxvalue);
-
-                            var margin = parseFloat(totalord) - parseFloat(totaluniprice);
-
-                            finaltotaluniprice = parseFloat(finaltotaluniprice) + parseFloat(totaluniprice);
-                            finalunittaxamt = parseFloat(finalunittaxamt) + parseFloat(unittaxamt);
-                            finaltransforwithtax = parseFloat(finaltransforwithtax) + parseFloat(transforwithtax);
-                            finaltotalord = parseFloat(totalord) + parseFloat(finaltotalord);
-                            finalordtaxvalue = parseFloat(ordtaxvalue) + parseFloat(finalordtaxvalue);
-                            finalordwithtax = parseFloat(ordwithtax) + parseFloat(finalordwithtax);
-                            finalordmargin = parseFloat(finalordmargin) + parseFloat(margin);
-
-                            var html1 = '<tr>' +
-                                '<td colspan="3"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].product_name + '</td>' +
-                                '<td colspan="1"   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].qty + '</td>' +
-                                '<td  colspan="1" style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].unit_transfor_price + '</td>' +
-                                '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + totaluniprice + '</td>' +
-                                '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].transfor_tax + '</td>' +
-                                '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + unittaxamt + '</td>' +
-                                '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + transforwithtax + '</td>' +
-                                '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].unit_order_value + '</td>' +
-
-                                '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + totalord + '</td>' +
-                                '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].order_tax + '</td>' +
-                                '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + ordtaxvalue + '</td>' +
-                                '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + ordwithtax + '</td>' +
-                                '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + margin + '</td>' +
+                    success: function(result) {
+                        quedate = result[0].quotation_date;
 
 
-                                '</tr>';
-                            $("#tblexporttbl").append(html1);
+                        total_order_value = data[0].total_order_value;
+                        total_trasfor_price = data[0].total_trasfor_price;
+                        less_input_tax = data[0].less_input_tax;
+                        less_trasportion = data[0].less_trasportion;
+                        less_bg = data[0].less_bg;
+                        less_others = data[0].less_others;
+                        fmargin = data[0].margin;
+
+                        // var tdateAr = data[0].order_date.split('-');
+                        // var date = tdateAr[2] + '/' + tdateAr[1] + '/' + tdateAr[0];
+
+                        var tdateAr = data[0].order_due_date.split('-');
+                        var odate = tdateAr[2] + '/' + tdateAr[1] + '/' + tdateAr[0];
+                        if (quedate != "") {
+                            var tdateAr = quedate.split('-');
+                            quedate = tdateAr[2] + '/' + tdateAr[1] + '/' + tdateAr[0];
                         }
+                        var exhtml = '<tr>' +
+                            '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;">Customer Name:</td>' +
+                            '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[0].customer_name + '</td>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Quatation Number:</td>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[0].quotaion_no + '</td>' +
 
-                        var html3 = '<tr>' +
-                            '<td colspan="3"  style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="1"   style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td  colspan="1" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + finaltotaluniprice + '</td>' +
-                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + finalunittaxamt + '</td>' +
-                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + finaltransforwithtax + '</td>' +
-                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
 
-                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + finaltotalord + '</td>' +
-                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + finalordtaxvalue + '</td>' +
-                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + finalordwithtax + '</td>' +
-                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + finalordmargin + '</td>' +
+                            '</tr>' +
+                            '<tr>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Contact Person:</td>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[0].contact_person + '</td>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Ref Number:</td>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[0].ref_number + '</td>' +
+
+
+                            '</tr>' +
+                            '<tr>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Mobile No:</td>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[0].mobile_no + '</td>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Quotation Date:</td>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + quedate + '</td>' +
+
+
+                            '</tr>' +
+                            '<tr>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Email:</td>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[0].email_id + '</td>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Order Due Date:</td>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + odate + '</td>' +
+
+
+                            '</tr>' +
+                            '<tr>' +
+                            '<td colspan="3"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Description</td>' +
+                            '<td colspan="1"   style="white-space:nowrap;text-align:left;padding:10px 10px;">Qty</td>' +
+                            '<td  colspan="1" style="white-space:nowrap;text-align:left;padding:10px 10px;">UnitTransfer Price</td>' +
+                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Total Transfer Price</td>' +
+                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Tax (%)</td>' +
+                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Tax (Rs)</td>' +
+                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Total Transfer Price With Inc Tax</td>' +
+
+                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Unit Order Value</td>' +
+                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Total Ord Value</td>' +
+                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Tax %</td>' +
+                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Tax (Value)</td>' +
+                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Total Ord Val With Tax</td>' +
+                            '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Margin</td>' +
 
 
                             '</tr>';
-                        $("#tblexporttbl").append(html3);
-                        var html2 = '<tr>' +
-                            '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Total Order Value (without Tax):</td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + total_order_value + '</td>' +
+
+                        $("#tblexporttbl").append(exhtml);
+
+                        $.ajax({
+                            type: "POST",
+                            url: baseurl + "Quotation_Estimate/getproductdetalis",
+                            dataType: "JSON",
+                            data: {
+                                version: version,
+                                id: id,
+
+                            },
+                            success: function(data) {
+
+                                var finaltotaluniprice = 0;
+                                var finalunittaxamt = 0;
+                                var finaltransforwithtax = 0;
+                                var finaltotalord = 0;
+                                var finalordtaxvalue = 0;
+                                var finalordwithtax = 0;
+                                var finalordmargin = 0;
+
+                                for (var i = 0; i < data.length; i++) {
+
+                                    var totaluniprice = parseFloat(data[i].qty) * parseFloat(data[i].unit_transfor_price);
+                                    var unittaxamt = parseFloat(data[i].transfor_tax) * parseFloat(totaluniprice) / 100;
+                                    var transforwithtax = parseFloat(unittaxamt) + parseFloat(totaluniprice);
+
+                                    var totalord = parseFloat(data[i].qty) * parseFloat(data[i].unit_order_value);
+                                    var ordtaxvalue = parseFloat(data[i].order_tax) * parseFloat(totalord) / 100;
+                                    var ordwithtax = parseFloat(totalord) + parseFloat(ordtaxvalue);
+
+                                    var margin = parseFloat(totalord) - parseFloat(totaluniprice);
+
+                                    finaltotaluniprice = parseFloat(finaltotaluniprice) + parseFloat(totaluniprice);
+                                    finalunittaxamt = parseFloat(finalunittaxamt) + parseFloat(unittaxamt);
+                                    finaltransforwithtax = parseFloat(finaltransforwithtax) + parseFloat(transforwithtax);
+                                    finaltotalord = parseFloat(totalord) + parseFloat(finaltotalord);
+                                    finalordtaxvalue = parseFloat(ordtaxvalue) + parseFloat(finalordtaxvalue);
+                                    finalordwithtax = parseFloat(ordwithtax) + parseFloat(finalordwithtax);
+                                    finalordmargin = parseFloat(finalordmargin) + parseFloat(margin);
+
+                                    var html1 = '<tr>' +
+                                        '<td colspan="3"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].product_name + '</td>' +
+                                        '<td colspan="1"   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].qty + '</td>' +
+                                        '<td  colspan="1" style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].unit_transfor_price + '</td>' +
+                                        '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + totaluniprice + '</td>' +
+                                        '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].transfor_tax + '</td>' +
+                                        '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + unittaxamt + '</td>' +
+                                        '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + transforwithtax + '</td>' +
+                                        '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].unit_order_value + '</td>' +
+
+                                        '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + totalord + '</td>' +
+                                        '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].order_tax + '</td>' +
+                                        '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + ordtaxvalue + '</td>' +
+                                        '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + ordwithtax + '</td>' +
+                                        '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + margin + '</td>' +
 
 
-                            '</tr>' +
-                            '<tr>' +
-                            '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Total Transfer Price (without Tax):</td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + total_trasfor_price + '</td>' +
+                                        '</tr>';
+                                    $("#tblexporttbl").append(html1);
+                                }
+
+                                var html3 = '<tr>' +
+                                    '<td colspan="3"  style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="1"   style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td  colspan="1" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + finaltotaluniprice + '</td>' +
+                                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + finalunittaxamt + '</td>' +
+                                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + finaltransforwithtax + '</td>' +
+                                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+
+                                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + finaltotalord + '</td>' +
+                                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + finalordtaxvalue + '</td>' +
+                                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + finalordwithtax + '</td>' +
+                                    '<td colspan="1"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + finalordmargin + '</td>' +
 
 
-                            '</tr>' +
-                            '<tr>' +
-                            '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Less Input Tax if CST:</td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + less_input_tax + '</td>' +
+                                    '</tr>';
+                                $("#tblexporttbl").append(html3);
+                                var html2 = '<tr>' +
+                                    '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Total Order Value (without Tax):</td>' +
+                                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + total_order_value + '</td>' +
 
 
-                            '</tr>' +
-                            '<tr>' +
-                            '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Less Transporation:</td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + less_trasportion + '</td>' +
+                                    '</tr>' +
+                                    '<tr>' +
+                                    '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Total Transfer Price (without Tax):</td>' +
+                                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + total_trasfor_price + '</td>' +
 
 
-                            '</tr>' +
-                            '<tr>' +
-                            '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Less BG/Insurance Cost:</td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + less_bg + '</td>' +
+                                    '</tr>' +
+                                    '<tr>' +
+                                    '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Less Input Tax if CST:</td>' +
+                                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + less_input_tax + '</td>' +
 
 
-                            '</tr>' +
-                            '<tr>' +
-                            '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Less others (if any):</td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + less_others + '</td>' +
+                                    '</tr>' +
+                                    '<tr>' +
+                                    '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Less Transporation:</td>' +
+                                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + less_trasportion + '</td>' +
 
 
-                            '</tr>' +
-                            '<tr>' +
-                            '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">MARGIN:</td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + fmargin + '</td>' +
+                                    '</tr>' +
+                                    '<tr>' +
+                                    '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Less BG/Insurance Cost:</td>' +
+                                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + less_bg + '</td>' +
 
 
-                            '</tr>';
-                        $("#tblexporttbl").append(html2);
+                                    '</tr>' +
+                                    '<tr>' +
+                                    '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Less others (if any):</td>' +
+                                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + less_others + '</td>' +
 
-                        $("#tblexport").table2excel({
-                            name: "Table2Excel",
-                            filename: "quotation.xls"
-                                //fileext: "."
+
+                                    '</tr>' +
+                                    '<tr>' +
+                                    '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">MARGIN:</td>' +
+                                    '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + fmargin + '</td>' +
+
+
+                                    '</tr>';
+                                $("#tblexporttbl").append(html2);
+
+                                $("#tblexport").table2excel({
+                                    name: "Table2Excel",
+                                    filename: "quotation.xls"
+                                        // fileext: ".xls"
+                                });
+
+                            }
                         });
-
                     }
                 });
 
-
             }
+
+
 
         });
 
@@ -1700,14 +1785,82 @@ $(document).ready(function() {
 
     });
 
+    $(document).on('change', '.latestversion', function(e) {
+        e.preventDefault();
+
+        var id = $(this).attr('id');
+        var version = $(this).val();
+        id = id.split("_");
+        saleid = id[1];
+
+
+        $.ajax({
+            type: "POST",
+            url: base_url + "Quotation_Estimate/getsalespersion",
+            data: {
+                table_name: table_name,
+                id: id[1],
+                version: version,
+            },
+            dataType: "JSON",
+            async: false,
+            success: function(data) {
+
+                if (data.length > 0) {
+
+                    $('#salesrepresent_' + saleid).html(data[0].first_name + "" + data[0].last_name);
+                    $('#salesperson_' + saleid).html(data[0].id);
+                }
+
+
+            }
+        });
+
+
+    });
+
+    $(document).on('change', '#search_version', function(e) {
+        e.preventDefault();
+
+        var id = $('#save_update').val();
+        var version = $(this).val();
+
+
+
+        $.ajax({
+            type: "POST",
+            url: base_url + "Quotation_Estimate/getsalespersion",
+            data: {
+                table_name: table_name,
+                id: id,
+                version: version,
+            },
+            dataType: "JSON",
+            async: false,
+            success: function(data) {
+
+                if (data.length > 0) {
+
+                    //$('#salesrepresent_' + saleid).html(data[0].first_name + "" + data[0].last_name);
+                    $('#salesrepresentive').val(data[0].id).trigger('change');
+                }
+
+
+            }
+        });
+
+
+    });
+
     //  
     $(document).on('click', '.getorder', function(e) {
         e.preventDefault();
 
         var id = $(this).attr('id');
 
+        location.href = "getorderinfo/" + id;
 
-        location.href = baseurl + "Quotation_Estimate/getorderinfo/?quotation_id=" + id;
+        //location.href = baseurl + "Quotation_Estimate/getorderinfo/?quotation_id=" + id;
 
         // $.ajax({
         //     type: "POST",
@@ -1723,11 +1876,6 @@ $(document).ready(function() {
         //     }
         // });
     });
-
-    if (quatationid1 > 0) {
-        $('#edit_' + quatationid1).trigger('click');
-
-    }
     getMasterSelect('user_creation', '#salesrepresentive');
 
     function getMasterSelect(table_name, selecter) {
@@ -1777,7 +1925,6 @@ $(document).ready(function() {
         });
 
     }
-
 
 
 });

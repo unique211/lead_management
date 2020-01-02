@@ -76,7 +76,7 @@
 
                                  <label class="col-md-4 control-label">Quatation Number</label>
                                  <div class="col-md-8 inputGroupContainer">
-                                    <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input id="bill_no" name="bill_no" placeholder="Quatation Number" class="form-control " required="true" maxlength="20" type="text">
+                                    <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input id="bill_no" name="bill_no" placeholder="Quatation Number" class="form-control " required="true" maxlength="20" type="text" readonly >
 
                                     </div><span class="Bill_No"></span>
                                  </div>
@@ -395,6 +395,8 @@
                <td><input type="submit" class="btn btn-primary" name="submit" value="Save">
               
                   <input type="hidden" id="save_update" name="save_update" value="">
+                  <input type="hidden" id="customerid" name="customerid" value="">
+                  <input type="hidden" id="quatationno" name="quatationno" value="">
                   <input type="reset" id="reset" class="btn btn-danger" name="reset" value="Reset">
                   <button type="button"  id="btnExport" name="btnExport"  class="btn btn-sm btn-info pull-right" style="display:none;">Excel</button>
                	<button type="submit" form="pdf" id="btnprint" name="btnprint" value="" class="btn btn-sm btn-info pull-right" style="display:none;">Print</button>

@@ -11,7 +11,7 @@ class Wonreport extends CI_Controller
 		header('Access-Control-Allow-Origin: *');
 		header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 
-        $this->load->model('newaccountmodel');
+        $this->load->model('wonreportmodel');
         $this->load->model('categorymodel');
 		$this->load->helper('download');
 		// $this->load->model('Settingsmodel');
@@ -77,6 +77,24 @@ class Wonreport extends CI_Controller
         $customer	= $this->input->post('customer');
 
         $data1 = $this->categorymodel->checkcustomerexists($id,$customer);
+
+        echo json_encode($data1);
+    }
+    public function getinvoicewone(){
+        $id	= $this->input->post('uid');
+        $statdate	= $this->input->post('statdate');
+        //$statdate="2019-12-01";
+       // $id=19;;
+        $data1 = $this->wonreportmodel->getwondata($id,$statdate);
+
+        echo json_encode($data1);
+    }
+    public function getloss(){
+        $id	= $this->input->post('uid');
+        $statdate	= $this->input->post('statdate');
+        $statdate="2019-12-01";
+       $id=19;
+        $data1 = $this->wonreportmodel->getlossreport($id,$statdate);
 
         echo json_encode($data1);
     }

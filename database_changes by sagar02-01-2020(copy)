@@ -1,0 +1,10 @@
+
+
+quotation_master:
+
+ALTER TABLE quotation_master ADD customer_id INT(11) NOT NULL AFTER quote_lock_version;
+
+
+order_master:
+
+ALTER TABLE `order_master` ADD `customer_id` INT(11) NOT NULL AFTER `salesrepresentative`;
