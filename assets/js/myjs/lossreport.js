@@ -143,7 +143,7 @@ $(document).ready(function() {
                         '<td  style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
                         '<td  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].customer_name + '</td>' +
                         '<td  style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                        '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].product + '<button class="productinfo" name="' + sr + '" id=' + data[i].qid1 + '><i class="fa fa-info" aria-hidden="true"></i></button></td>' +
+                        '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].product + '<button class="productinfo" name="' + sr + '" style="color:blue" id=' + data[i].qid1 + '> View More</button></td>' +
                         '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].order_due_date + '</td>' +
                         '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + parseFloat(data[i].totalordvalue).toFixed(2) + '</td>' +
                         '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + parseFloat(data[i].magin).toFixed(2) + '</td>' +
