@@ -91,11 +91,19 @@ class Wonreport extends CI_Controller
     }
     public function getloss(){
         $id	= $this->input->post('uid');
-        $statdate	= $this->input->post('statdate');
-        $statdate="2019-12-01";
-       $id=19;
+         $statdate	= $this->input->post('statdate');
+    //     $statdate="2019-12-01";
+    //    $id=19;
         $data1 = $this->wonreportmodel->getlossreport($id,$statdate);
 
         echo json_encode($data1);
+    }
+    public function getlossproductinfo(){
+        $id	= $this->input->post('id');
+      
+   
+        $data1 = $this->wonreportmodel->getlossproductinfo($id);
+
+        echo json_encode($data1); 
     }
 }
