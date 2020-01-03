@@ -1,6 +1,6 @@
 <?php 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class Wonreportmodel extends CI_Model{
+class Funnelreportmodel extends CI_Model{
     function data_insert($data,$table){
       
       
@@ -15,152 +15,13 @@ class Wonreportmodel extends CI_Model{
     return $result;
 }
 
-function getcustomerdata($salesid){
-    $result=array();
-    $this->db->select('*');    
-    $this->db->from('new_account');
-    $this->db->where('user_id',$salesid);
-    $this->db->or_where('`id` IN (SELECT `customer_id` FROM `quotation_master` where salesrepresentative='.$salesid.')', NULL, FALSE);
-    $this->db->or_where('`id` IN (SELECT `customer_id` FROM `order_master` where salesrepresentative='.$salesid.')', NULL, FALSE);
-     $hasil=$this->db->get();
-     if($hasil->num_rows()>0){
-         foreach($hasil->result_array() as $newacdata){
-             $custname=$newacdata['customer_name'];
-             $id=$newacdata['id'];
-             $no_of_employee=$newacdata['no_of_employee'];
-             $customer_type=$newacdata['customer_type'];
-             $remark=$newacdata['remark'];
-             $customertype='';
-             $contactdata=array();
-                if($customer_type >0){
-                    $this->db->select('*');    
-                    $this->db->from('customer_type');
-                    $this->db->where('id',$customer_type);
-                    $hasil1=$this->db->get();
-                    foreach($hasil1->result_array() as $data){
-                        $customertype=$data['customer_type'];
-                    }
-                }
-                if($id >0){
-                    $this->db->select('*');    
-                    $this->db->from('contact_information');
-                    $this->db->where('account_id',$id);
-                    $hasil2=$this->db->get();
-                    foreach($hasil2->result_array() as $contactinfo){
-                       $contact_name=$contactinfo['contact_name'];
-                       $designation=$contactinfo['designation'];
-                       $email_id=$contactinfo['email_id'];
-                       $mobile_no=$contactinfo['mobile_no'];
-
-                       $contactdata[]=array(
-                           'contact_name'=>$contact_name,
-                           'designation'=>$designation,
-                           'email_id'=>$email_id,
-                           'mobile_no'=>$mobile_no,
-                       );
-                        
-                    }
-                }
-                $result[]=array(
-                    'custname'=>$custname,
-                    'no_of_employee'=>$no_of_employee,
-                    'customer_type'=>$customer_type,
-                    'customertype'=>$customertype,
-                    'remark'=>$remark,
-                    'contactdata'=>$contactdata,
-                );
-
-
-         }
-     }
-
-    return $result;
-}
-public function getwondata($id,$statdate){
-    $sum=0;
-    $summargin=0;
-    $result=array();
-    $this->db->select('*');    
-    $this->db->from('order_master');
-    $this->db->where('salesrepresentative',$id);
-    $this->db->where('order_date >=',$statdate);
-    $this->db->where('order_date <=', date('Y-m-d'));
-    $hasil=$this->db->get();//for gettting  order between date
-
-    if($hasil->num_rows() >0){
-        foreach($hasil->result_array() as $data){
-            $oid=$data['id'];
-            $order_no=$data['order_no'];
-            $customer_name=$data['customer_name'];
-            $quotation_no=$data['quotation_no'];
-            $poorder_date=$data['order_date'];
-            $description=$data['description'];
-            $orderdate='';
-            $magin=0;
-            $totalordvalue=0;
-            $product='';
-
-            if($quotation_no >0){
-                $this->db->select('*');    
-            $this->db->from('quotation_master');
-            $this->db->where('quotaion_no',$quotation_no);
-            $this->db->where('version',1);//for first qutation date
-            $hasil1=$this->db->get();
-            foreach($hasil1->result_array() as $qutationdata){
-                $orderdate=$qutationdata['order_date'];
-            }
-         
-            }
-
-            $this->db->select('*');    
-            $this->db->from('order_detalis');
-            $this->db->where('order_id',$oid);
-            $hasil2=$this->db->get();
-            foreach($hasil2->result_array() as $odetalis ){
-                $product=$odetalis['product_name'];
-                $qty=$odetalis['qty'];
-                $unit_order_value=$odetalis['unit_order_value'];
-                $unit_transfor_price=$odetalis['unit_transfor_price'];
-                $transfor_tax=$odetalis['transfor_tax'];
-                $order_tax=$odetalis['order_tax'];
-
-                $total= $qty * $unit_order_value;
-                $total1= $qty * $unit_transfor_price;
-                $otax=($total * $order_tax)/100;
-
-                $magin= $magin+( $total- $total1);
-                $totalordvalue= $totalordvalue+$total+$otax;
-
-                $summargin=$magin+$summargin;
-                $sum=$totalordvalue+$sum;
-
-            }
-
-            $result[]=array(
-                'order_no'=>$order_no,
-                'customer_name'=>$customer_name,
-                'poorder_date'=>$poorder_date,
-                'description'=>$description,
-                'orderdate'=>$orderdate,
-                'magin'=>$magin,
-                'totalordvalue'=>$totalordvalue,
-                'product'=>$product,
-                'status'=>'Invoice Generated',
-                'oid'=>$oid,
-            );
-           
-        }
-    }
-    return $result;
-
-}
-function getlossreport($id,$statdate){
+function getfunnel_report($uid,$statdate){
     $sum=0;
     $summargin=0;
     $result=array();
     $this->db->select('*');    
     $this->db->from('quotation_master');
-    $this->db->where('salesrepresentative',$id);
+    $this->db->where('salesrepresentative',$uid);
     $this->db->where('order_date >=',$statdate);
     $this->db->where('order_date <=', date('Y-m-d'));
     $this->db->group_by('quotaion_no');
@@ -174,8 +35,92 @@ function getlossreport($id,$statdate){
         $this->db->select('*');    
         $this->db->from('order_master');
         $this->db->where('quotation_no',$quotaion_no);//for checking quotation is exist in oreder
-         $hasil4=$this->db->get();
+        $hasil4=$this->db->get();
         if($hasil4->num_rows()>0){
+            foreach($hasil4->result_array() as $orderdata){
+                $qutone_no=$orderdata['qutone_no'];
+
+                $this->db->select('*');
+                 $this->db->from('quotation_master');
+                 $this->db->where('id',$qutone_no);
+                
+                $hasil10 = $this->db->get(); 
+                 if($hasil10->num_rows() >0){
+                    foreach($hasil10->result_array() as $quotaionorderdata){
+                        $qid3=$quotaionorderdata['id'];
+                        $customer_name=$quotaionorderdata['customer_name'];
+                        $quotaion_no=$quotaionorderdata['quotaion_no'];
+                        $order_due_date=$quotaionorderdata['order_due_date'];
+                        $status=$quotaionorderdata['quote_status'];
+                        $description=$quotationdata['description'];
+                        $magin=0;
+                        $totalordvalue=0;
+                        $orderdate='';
+
+                        if($qid3 >0){
+                            $this->db->select('*');    
+                            $this->db->from('quotation_master');
+                            $this->db->where('quotaion_no',$quotaion_no);
+                            $this->db->where('version',1);
+                            $hasil1=$this->db->get();
+                            foreach($hasil1->result_array() as $qutationdata){
+                                $orderdate=$qutationdata['order_date'];
+                            }
+                            $this->db->select('*');    
+                            $this->db->from('quotation_detalis');
+                            $this->db->where('quatation_id',$qid3);
+                            $hasil2=$this->db->get();
+                            foreach($hasil2->result_array() as $odetalis ){
+                                $c=1;
+                                if($c==1){
+                                    $product=$odetalis['product_name'];
+                                }
+                                $c=$c+1;
+                              
+                                $qty=$odetalis['qty'];
+                                $unit_order_value=$odetalis['unit_order_value'];
+                                $unit_transfor_price=$odetalis['unit_transfor_price'];
+                                $transfor_tax=$odetalis['transfor_tax'];
+                                $order_tax=$odetalis['order_tax'];
+                    
+                                $total= $qty * $unit_order_value;
+                                $total1= $qty * $unit_transfor_price;
+                                $otax=($total * $order_tax)/100;
+                    
+                                $magin= $magin+( $total- $total1);
+                                $totalordvalue= $totalordvalue+$total+$otax;
+                    
+                                $summargin=$magin+$summargin;
+                                $sum=$totalordvalue+$sum;
+                    
+                            }
+
+
+                        }
+                        $result[]=array(
+                            'qid1'=>$qid3,
+                            'customer_name'=>$customer_name,
+                            'quotaion_no'=>$quotaion_no,
+                            'order_due_date'=>$order_due_date,
+                            'orderdate'=>$orderdate,
+                            'magin'=>$magin,
+                            'totalordvalue'=>$totalordvalue,
+                            'product'=>$product,
+                            'status'=>"Invoice Generated",
+                            'description'=>$description,
+                            'probability'=>100,
+                        );
+
+
+                    }
+
+                 }
+
+            }
+
+
+
+
 
         }else{
             $this->db->select('*');
@@ -192,9 +137,7 @@ function getlossreport($id,$statdate){
                  $this->db->select('*');
                  $this->db->from('quotation_master');
                  $this->db->where('id',$id2);
-                 if($quote_status==2){
-                    $this->db->where('order_due_date <', date('Y-m-d'));
-                 }
+                
                 $hasil9 = $this->db->get(); 
                  if($hasil9->num_rows() >0){
                      foreach($hasil9->result_array() as $qotationdata){
@@ -229,7 +172,13 @@ function getlossreport($id,$statdate){
                             $this->db->where('quatation_id',$qid1);
                             $hasil2=$this->db->get();
                             foreach($hasil2->result_array() as $odetalis ){
-                                $product=$odetalis['product_name'];
+                                //$product=$odetalis['product_name'];
+
+                                $c1=1;
+                                if($c==1){
+                                    $product=$odetalis['product_name'];
+                                }
+                                $c1=$c1+1;
                                 $qty=$odetalis['qty'];
                                 $unit_order_value=$odetalis['unit_order_value'];
                                 $unit_transfor_price=$odetalis['unit_transfor_price'];
@@ -282,7 +231,7 @@ function getlossreport($id,$statdate){
                         $this->db->select('*');
                         $this->db->from('quotation_master');
                         $this->db->where('id',$qid2);
-                        $this->db->where('order_due_date <', date('Y-m-d'));
+                        
                        $hasil9 = $this->db->get(); 
                        foreach($hasil9->result_array() as $qotationdata3){
                         $customer_name=$qotationdata3['customer_name'];
@@ -357,21 +306,15 @@ function getlossreport($id,$statdate){
 }
 return $result;
 }
-
-public function getlossproductinfo($qid){
+function getfunnelproduct($id){
     $this->db->select('*');    
     $this->db->from('quotation_detalis');
-    $this->db->where('quatation_id',$qid);
-    $hasil2=$this->db->get();
-    return $hasil2->result();
-}
-public function getwonproductinfo($id){
-    $this->db->select('*');    
-    $this->db->from('order_detalis');
-    $this->db->where('order_id',$id);
+    $this->db->where('quatation_id',$id);
     $hasil2=$this->db->get();
     return $hasil2->result();
 }
 
 
 }
+
+?>
