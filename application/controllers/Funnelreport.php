@@ -13,6 +13,7 @@ class Funnelreport extends CI_Controller
 
         $this->load->model('newaccountmodel');
         $this->load->model('categorymodel');
+        $this->load->model('funnelreportmodel');
 		$this->load->helper('download');
 		// $this->load->model('Settingsmodel');
     }
@@ -66,18 +67,19 @@ class Funnelreport extends CI_Controller
 		$data = $this->categorymodel->data_get($table_name);
 		echo json_encode($data);
     }
-    public function delete_master(){
-        $id	= $this->input->post('id');
-        $table_name	= $this->input->post('table_name');
-		$data = $this->categorymodel->deletedata($id,$table_name);
+    
+    
+    public function getfunnelreportdata(){
+        $uid	= $this->input->post('uid');
+        $statdate	= $this->input->post('statdate');
+        $data = $this->funnelreportmodel->getfunnel_report($uid,$statdate);
 		echo json_encode($data);
+
     }
-    public function checkcustomer(){
+    public function getfunnelproductinfo(){
         $id	= $this->input->post('id');
-        $customer	= $this->input->post('customer');
-
-        $data1 = $this->categorymodel->checkcustomerexists($id,$customer);
-
-        echo json_encode($data1);
+      
+        $data = $this->funnelreportmodel->getfunnelproduct($id);
+		echo json_encode($data);
     }
 }

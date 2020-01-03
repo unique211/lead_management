@@ -106,4 +106,10 @@ class Wonreport extends CI_Controller
 
         echo json_encode($data1); 
     }
+    public function getwonproductinfo(){
+        $id	= $this->input->post('id');
+        $data1 = $this->wonreportmodel->getwonproductinfo($id);
+
+        echo json_encode($data1); 
+    }
 }
