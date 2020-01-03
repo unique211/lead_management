@@ -91,7 +91,7 @@ $(document).ready(function() {
     $(document).on('change', '#salesrepresentive', function() {
 
         var userid = $(this).val();
-        getcustomerdata(userid);
+        funnelreport(userid);
     });
 
     //for getting all funnel report table ---*/
