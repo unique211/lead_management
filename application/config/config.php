@@ -28,6 +28,7 @@
 $config['base_url'] = 'http://localhost/lead_management/';
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Index File
