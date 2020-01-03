@@ -48,8 +48,8 @@
           <td></td>
           <td>Total</td>
           <td></td>
-          <td>0</td>
-          <td>0</td>
+          <td id="totaltop">0</td>
+          <td id="totalmargin">0</td>
           <td> </td>
           <td> </td>
           <td> </td>
@@ -70,7 +70,7 @@
           <td>Remarks </td>
         </tr>
       </thead>
-      <tbody id="wonrep_tbody">
+      <tbody id="loserep_tbody">
 
 
       </tbody>
@@ -78,7 +78,7 @@
   </div>
 
   <!-- Delete Modal -->
-  <div id="myModal1" class=" modal fade " role="dialog">
+  <div id="myModal1" class="modal fade "  style="width:100%;">
 
     <div class="modal-dialog ">
 
@@ -92,8 +92,33 @@
         <input type="hidden" name="del_id" id='del_id'>
 
         <div class="modal-body">
+                <div class="col-md-12">
+                <table id="productinformation">
+                  <thead>
+                    <tr>
+                    <th>Description</th>
+                    <th>Qty</th>
+                    <th>UnitTransfer Price</th>
+                    <th>Total Transfer Price</th>
+                    <th>Tax (%)</th>
+                    <th>Tax (Rs)</th>
+                    <th>Total Transfer Price With Inc Tax	</th>
+                    <th>Unit Ord Value</th>
+                    <th>Total Ord Value</th>
+                    <th>Tax %</th>
+                    <th>Tax (Value)</th>
+                    <th>Total Ord Val With Tax</th>
+                    <th>Margin</th>
 
-          <h5>Are You Sure You Want To Delete</h5>
+                    </tr>
+
+                  </thead>
+                  <tbody id="product_tbody"></tbody>
+
+                </table>
+
+                </div>
+        
           <button type="button" class="close" style="margin-top: -1.5em;" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </div>
@@ -113,7 +138,7 @@
     <script src='assets/src/tagcomplete.js'></script> -->
 <script src="assets/js/bootstrap-notify.js"></script>
 <script src="assets/js/bootstrap-notify.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/myjs/funnelreport.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/myjs/lossreport.js"></script>
 <script type="text/javascript">
   var x = document.getElementById('alert_msg').value;
 

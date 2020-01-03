@@ -58,7 +58,7 @@ $(document).ready(function() {
 
                 }
                 $(selecter).html(html);
-                getcustomerdata(userid);
+                getlossdata(userid);
             }
         });
 
@@ -82,16 +82,17 @@ $(document).ready(function() {
                 $('#salesrepresentive1').val(data[0].first_name + "" + data[0].last_name);
             }
         });
-        getcustomerdata(useruniqueid);
+        getlossdata(useruniqueid);
 
     }
     $(document).on('change', '#salesrepresentive', function() {
 
         var userid = $(this).val();
-        getcustomerdata(userid);
+        getlossdata(userid);
     });
 
-    function getcustomerdata(uid) {
+    function getlossdata(uid) {
+
         var today = new Date();
         var fyear = today.getFullYear().toString();
         if ((today.getMonth() + 1) <= 3) {
@@ -121,28 +122,39 @@ $(document).ready(function() {
                 var summargin = 0;
                 var sumtop = 0;
                 var html = '';
-                $("#wonrep_tbody").html('');
+                $("#loserep_tbody").html('');
+
                 var sr = 0;
+                var statusinfo = '';
                 for (i = 0; i < data.length; i++) {
+
                     sr = sr + 1;
+
 
                     summargin = (parseFloat(summargin) + parseFloat(data[i].magin)).toFixed(2);
                     sumtop = (parseFloat(sumtop) + parseFloat(data[i].totalordvalue)).toFixed(2);
-                    html = '<tr>' +
+
+                    if (data[i].status == 1) {
+                        statusinfo = 'Pending';
+                    } else {
+                        statusinfo = 'Confirm';
+                    }
+                    html = '<tr id="lossrep_' + sr + '">' +
                         '<td  style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
                         '<td  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].customer_name + '</td>' +
                         '<td  style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                        '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].product + '</td>' +
+                        '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].product + '<button class="productinfo" name="' + sr + '" id=' + data[i].qid1 + '><i class="fa fa-info" aria-hidden="true"></i></button></td>' +
+                        '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].order_due_date + '</td>' +
+                        '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + parseFloat(data[i].totalordvalue).toFixed(2) + '</td>' +
+                        '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + parseFloat(data[i].magin).toFixed(2) + '</td>' +
                         '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].orderdate + '</td>' +
-                        '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + parseFloat(data[i].totalordvalue).toFixed(2) + '</td>' +
-                        '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].magin + '</td>' +
-                        '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].poorder_date + '</td>' +
-                        '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].status + '</td>' +
-                        '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].description + '</td>' +
-                        '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].order_no + '</td>' +
-                        '</tr>';
+                        '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].probability + '%</td>' +
+                        '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + statusinfo + '</td>' +
 
-                    $("#wonrep_tbody").append(html);
+                        '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].description + '</td>' +
+                        '</tr><tr style="display:none;" id="productinfo_' + data[i].qid1 + '"></tr>';
+
+                    $("#loserep_tbody").append(html);
 
                 }
                 $('#totaltop').html(sumtop);
@@ -156,7 +168,107 @@ $(document).ready(function() {
 
         });
     }
+    //for getting product view information--start
+    var proid = 0;
+    $(document).on("click", ".productinfo", function(e) {
+        e.preventDefault();
+        var id = $(this).attr('id');
+        var sr = $(this).attr('name');
+        console.log(sr);
 
+        $('#productinfo_' + id).show();
+
+        if (proid > 0) {
+            $("#dis_" + proid).remove();
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: base_url + "Wonreport/getlossproductinfo",
+            async: false,
+            data: {
+                id: id,
+
+            },
+            dataType: 'json',
+            success: function(data) {
+                var html = '';
+                $('#productinfo_' + id).html('');
+                if (data.length > 0) {
+                    html += '<tr id="dis_' + id + '"><td colspan="11"><table class="table table-bordered table-hover" id="productinformation">' +
+
+                        '<thead>' +
+                        '<tr>' +
+                        '<th width="20%">Description</th>' +
+                        '<th>Qty</th>' +
+                        '<th>UnitTransfer Price</th>' +
+                        '<th>Total Transfer Price</th>' +
+                        '<th>Tax (%)</th>' +
+                        '<th>Tax (Rs)</th>' +
+                        '<th>Total Transfer Price With Inc Tax	</th>' +
+                        '<th>Unit Ord Value</th>' +
+                        '<th>Total Ord Value</th>' +
+                        '<th>Tax %</th>' +
+                        '<th>Tax (Value)</th>' +
+                        '<th>Total Ord Val With Tax</th>' +
+                        '<th>Margin</th>' +
+                        '</tr>' +
+                        '</thead>' +
+                        '<tbody>';
+                    for (var i = 0; i < data.length; i++) {
+
+                        var totaltransforprice = parseFloat(data[i].qty) * parseFloat(data[i].unit_transfor_price);
+                        var taxrs = parseFloat(totaltransforprice) * parseFloat(data[i].transfor_tax);
+                        var totaltpricewithtax = parseFloat(totaltransforprice) + parseFloat(taxrs);
+
+                        var totalordvalue = parseFloat(data[i].unit_order_value) * parseFloat(data[i].qty);
+                        var otaxrs = parseFloat(totalordvalue) * parseFloat(data[i].order_tax) / 100;
+                        var totalowithtax = parseFloat(totalordvalue) + parseFloat(otaxrs);
+
+
+                        var margin = parseFloat(totalordvalue) - parseFloat(totaltransforprice);
+
+                        html += '<tr><td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].product_name + '</td>' +
+                            '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].qty + '</td>' +
+                            '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + data[i].unit_transfor_price + '</td>' +
+                            '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + totaltransforprice + '</td>' +
+                            '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + data[i].transfor_tax + '</td>' +
+                            '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + taxrs + '</td>' +
+                            '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + totaltpricewithtax + '</td>' +
+                            '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + data[i].unit_order_value + '</td>' +
+                            '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + totalordvalue + '</td>' +
+                            '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + data[i].order_tax + '</td>' +
+                            '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + otaxrs + '</td>' +
+                            '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + totalowithtax + '</td>' +
+                            '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + margin + '</td>' +
+                            '</tr>';
+
+
+                    }
+
+
+                    '</tbody>' +
+                    '</table></td></tr>';
+
+                    $('#loserep_tbody tr:eq(' + sr + ')').after(html);
+
+                    proid = id;
+                    // $('#lossrep_' + id).prepend(html);
+
+                    // $('#' + id + ' .innerDiv').after(html);
+
+                    //$('#productinfo_' + id).html(html);
+                }
+
+
+            }
+        });
+
+
+
+
+
+    });
 
 
 });

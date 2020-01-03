@@ -85,7 +85,7 @@ public function getwondata($id,$statdate){
     $this->db->where('salesrepresentative',$id);
     $this->db->where('order_date >=',$statdate);
     $this->db->where('order_date <=', date('Y-m-d'));
-    $hasil=$this->db->get();
+    $hasil=$this->db->get();//for gettting  order between date
 
     if($hasil->num_rows() >0){
         foreach($hasil->result_array() as $data){
@@ -104,7 +104,7 @@ public function getwondata($id,$statdate){
                 $this->db->select('*');    
             $this->db->from('quotation_master');
             $this->db->where('quotaion_no',$quotation_no);
-            $this->db->where('version',1);
+            $this->db->where('version',1);//for first qutation date
             $hasil1=$this->db->get();
             foreach($hasil1->result_array() as $qutationdata){
                 $orderdate=$qutationdata['order_date'];
@@ -145,7 +145,8 @@ public function getwondata($id,$statdate){
                 'magin'=>$magin,
                 'totalordvalue'=>$totalordvalue,
                 'product'=>$product,
-                'status'=>'Invoice Generated'
+                'status'=>'Invoice Generated',
+                'oid'=>$oid,
             );
            
         }
@@ -168,11 +169,11 @@ function getlossreport($id,$statdate){
        
        
         $quotaion_no=$quotationdata['quotaion_no'];
-        //echo $quotaion_no;
+       
 
         $this->db->select('*');    
         $this->db->from('order_master');
-        $this->db->where('quotation_no',$quotaion_no);
+        $this->db->where('quotation_no',$quotaion_no);//for checking quotation is exist in oreder
          $hasil4=$this->db->get();
         if($hasil4->num_rows()>0){
 
@@ -180,7 +181,7 @@ function getlossreport($id,$statdate){
             $this->db->select('*');
             $this->db->from('quotation_master');
             $this->db->where('quotaion_no',$quotaion_no);
-            $this->db->where('quote_lock_version >',0);
+            $this->db->where('quote_lock_version >',0);//for conform quotation
             $hasil8 = $this->db->get(); 
             if($hasil8->num_rows() >0){
              foreach($hasil8->result_array() as $quotationdata1){
@@ -205,7 +206,7 @@ function getlossreport($id,$statdate){
                         if($qid1 >0){
                             $this->db->select('*');    
                             $this->db->from('quotation_master');
-                            $this->db->where('quotaion_no',$qid1);
+                            $this->db->where('quotaion_no',$quotaion_no);
                             $this->db->where('version',1);
                             $hasil1=$this->db->get();
                             foreach($hasil1->result_array() as $qutationdata){
@@ -248,6 +249,7 @@ function getlossreport($id,$statdate){
                             'product'=>$product,
                             'status'=>$status,
                             'description'=>$description,
+                            'probability'=>100,
                         );
 
                      }
@@ -264,16 +266,20 @@ function getlossreport($id,$statdate){
                    
                         
                     $qid2=$quotationdata2['id'];
+
+                 
                     $this->db->select('*');
                     $this->db->from('quotation_master');
-                    $this->db->where('id',$id2);
+                    $this->db->where('id',$qid2);
                        $hasil9 = $this->db->get(); 
-                       foreach($hasil9->result_array() as $qotationdata){
-                        $customer_name=$quotationdata['customer_name'];
-                        $quotaion_no=$quotationdata['quotaion_no'];
-                        $order_due_date=$quotationdata['order_due_date'];
-                        $status=$quotationdata['quote_status'];
-                        $description=$quotationdata['description'];
+                       foreach($hasil9->result_array() as $qotationdata3){
+                        $customer_name=$qotationdata3['customer_name'];
+
+                       
+                        $quotaion_no=$qotationdata3['quotaion_no'];
+                        $order_due_date=$qotationdata3['order_due_date'];
+                        $status=$qotationdata3['quote_status'];
+                        $description=$qotationdata3['description'];
                         $magin=0;
                         $totalordvalue=0;
                         $orderdate='';
@@ -292,7 +298,11 @@ function getlossreport($id,$statdate){
                 $this->db->where('quatation_id',$qid2);
                 $hasil2=$this->db->get();
                 foreach($hasil2->result_array() as $odetalis ){
+                    $count=1;
+                    if($count==1){
                     $product=$odetalis['product_name'];
+                    }
+                    $count++;
                     $qty=$odetalis['qty'];
                     $unit_order_value=$odetalis['unit_order_value'];
                     $unit_transfor_price=$odetalis['unit_transfor_price'];
@@ -322,6 +332,7 @@ function getlossreport($id,$statdate){
                 'product'=>$product,
                 'status'=>$status,
                 'description'=>$description,
+                'probability'=>0,
             );
         } 
         }
@@ -333,6 +344,14 @@ function getlossreport($id,$statdate){
     }
 }
 return $result;
+}
+
+public function getlossproductinfo($qid){
+    $this->db->select('*');    
+    $this->db->from('quotation_detalis');
+    $this->db->where('quatation_id',$qid);
+    $hasil2=$this->db->get();
+    return $hasil2->result();
 }
 
 
