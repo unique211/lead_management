@@ -6,7 +6,23 @@
                 <span  ><img  src="<?php echo base_url(); ?>images/whitelogo.png" alt="" height="5%" width="9%" style="margin-top:20px;"  /></span>
                 <span class="text-toggle"> </span>
               </a><!-- /brand -->
+
+              <div   class="header_bottom pull-right" style="margin-right:2%;margin-top:1%">
+        <?php $email=$this->session->userdata('email');  
+                    $u_type=$this->user_model->get_usertype($email);
+                    $u=$u_type[0]['user_type'];
+                   $uname=$u_type[0]['user_name'];
+                   ?>
+
+                   <a href="#"  style="color:white;" >
+                   <span  ></span>
+                   <span class="text-toggle"><? echo "Welcome ".$uname?> </span>
+                 </a><!-- /brand -->
+                 
         </div>
+                  
+        </div>
+        
     <div class="header_bottom">
   
       <div class="container">
@@ -173,11 +189,17 @@
                     </ul>
                   </li>
                   <li><a href="<?php echo base_url(); ?>logout" class="nav-link"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-                <?php endif; ?>
+                 
 
+              
+                
+                <?php endif; ?>
+              
 
               </ul>
+           
             </div>
+            
           </nav>
         </div>
       </div>
