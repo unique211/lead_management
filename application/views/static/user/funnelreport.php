@@ -1,4 +1,7 @@
 <div class="container">
+<form method="post" action="<?php echo base_url(); ?>Export/action">
+<button type="submit" id="btnExport" name="btnExport" class="btn btn-primary pull-right">Export</button>
+</form>
   <h3>Funnel Report</h3><br>
   <input type="hidden" name="alert_msg" id='alert_msg' value="<?php echo $this->session->flashdata('msglp'); ?>">
 
@@ -114,6 +117,7 @@
 
 
 <script src="<?php echo base_url(); ?>assets/js/myjs/funnelreport.js"></script>
+<script src='<?php echo base_url(); ?>assets/js/tabletoexcle1.js'></script>
 
 <script type="text/javascript">
   var x = document.getElementById('alert_msg').value;

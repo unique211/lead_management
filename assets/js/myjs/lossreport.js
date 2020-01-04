@@ -109,6 +109,8 @@ $(document).ready(function() {
         fiscalyear = fiscalyear.split('-');
         var statdate = fiscalyear[0] + "-" + "04" + "-" + "01";
 
+        $('#btnExport').val(uid + "_" + statdate);
+
         $.ajax({
             type: 'POST',
             url: base_url + "Wonreport/getloss",

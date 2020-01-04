@@ -1,4 +1,7 @@
 <div class="container">
+<form method="post" action="<?php echo base_url(); ?>Lossexport/action">
+<button type="submit" id="btnExport" name="btnExport" class="btn btn-primary pull-right">Export</button>
+</form>
   <h3>Lost Report</h3><br>
   <input type="hidden" name="alert_msg" id='alert_msg' value="<?php echo $this->session->flashdata('msglp'); ?>">
 

@@ -72,6 +72,7 @@ class Funnelreport extends CI_Controller
     public function getfunnelreportdata(){
         $uid	= $this->input->post('uid');
         $statdate	= $this->input->post('statdate');
+      
         $data = $this->funnelreportmodel->getfunnel_report($uid,$statdate);
 		echo json_encode($data);
 
