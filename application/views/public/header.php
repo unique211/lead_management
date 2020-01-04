@@ -48,10 +48,8 @@
          
               <ul id="fresponsive" class="nav navbar-nav dropdown">
               
-                <li class=""><a href="home_page"> Home</a></li>
-                <?php if (in_array('createLead', $user_permission) || in_array('editLead', $user_permission) || in_array('deleteLead', $user_permission)) : ?>
-                  <!--  <li class=""><a href="view_appointments">view appointments</a></li> -->
-                  <li class=""><a href="<?php echo base_url() ?>google_appointments"> View Appointments</a></li>
+                <li class=""><a href="home_page"> Dashboard</a></li>
+               
 
                   <!--  <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Account <span class="caret"></span></a>
 
@@ -84,6 +82,9 @@
                       <?php endif; ?>
                       <?php if (in_array('editAppointment', $user_permission) || in_array('deleteAppointment', $user_permission)) : ?>
                         <li><a href="<?php echo base_url() ?>manage_appointment">Manage Appointment</a></li> <?php endif; ?>
+                       <?php if (in_array('createLead', $user_permission) || in_array('editLead', $user_permission) || in_array('deleteLead', $user_permission)) : ?>
+                        <!--  <li class=""><a href="view_appointments">view appointments</a></li> -->
+                        <li class=""><a href="<?php echo base_url() ?>google_appointments"> View Appointments</a></li>
                     </ul>
                   </li>
                 <?php endif; ?>
@@ -139,19 +140,19 @@
                         </li>
 
                       <?php endif; ?>
-                      <?php if (in_array('createRelationship', $user_permission) || in_array(
+                      <?php /*if (in_array('createRelationship', $user_permission) || in_array(
                             'editRelationship',
                             $user_permission
-                          ) || in_array('deleteRelationship', $user_permission)) : ?>
-                        <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Relationship <span class="caret"></span> </a>
-                          <ul class="dropdown-menu">
-                            <?php if (in_array('createRelationship', $user_permission)) : ?>
-                              <li><a href="<?php echo base_url() ?>relationship">Add Relationship</a></li><?php endif; ?>
-                            <?php if (in_array('editRelationship', $user_permission) || in_array('deleteRelationship', $user_permission)) : ?>
-                              <li><a href="<?php echo base_url() ?>managerelationship">Manage Relationship</a></li><?php endif; ?>
-                          </ul>
-                        </li>
-                      <?php endif; ?>
+                          ) || in_array('deleteRelationship', $user_permission)) :*/ ?>
+                       <!-- <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Relationship <span class="caret"></span> </a>-->
+                        <!--  <ul class="dropdown-menu"> -->
+                            <?php //if (in_array('createRelationship', $user_permission)) : ?>
+                            <!--  <li><a href="<?php //echo base_url() ?>relationship">Add Relationship</a></li><?php// endif; ?>
+                            <?php// if (in_array('editRelationship', $user_permission) || in_array('deleteRelationship', $user_permission)) : ?>
+                            <!--  <li><a href="<?php// echo base_url() ?>managerelationship">Manage Relationship</a></li><?php //endif; ?>
+                        <!--  </ul>-->
+                       <!--</li> -->
+                      <?php //endif; ?>
                       <!-- <?php if (in_array('createLeadType', $user_permission) || in_array('editLeadType', $user_permission) || in_array('deleteLeadType', $user_permission)) : ?>
    <li ><a class="dropdown-toggle" data-toggle="dropdown" href="#">Lead Types <span class="caret"></span></a>
      <ul class="dropdown-menu">
