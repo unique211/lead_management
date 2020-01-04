@@ -1,6 +1,9 @@
 $(document).ready(function() {
     var table_name = "category_type";
     var validate = 0;
+    var cuser = 0;
+
+
 
 
 
@@ -59,6 +62,7 @@ $(document).ready(function() {
 
                 }
                 $(selecter).html(html);
+
                 funnelreport(userid);
             }
         });
@@ -83,6 +87,7 @@ $(document).ready(function() {
                 $('#salesrepresentive1').val(data[0].first_name + "" + data[0].last_name);
             }
         });
+
         funnelreport(useruniqueid);
 
     }
@@ -91,6 +96,7 @@ $(document).ready(function() {
     $(document).on('change', '#salesrepresentive', function() {
 
         var userid = $(this).val();
+
         funnelreport(userid);
     });
 
@@ -111,7 +117,7 @@ $(document).ready(function() {
 
         fiscalyear = fiscalyear.split('-');
         var statdate = fiscalyear[0] + "-" + "04" + "-" + "01";
-
+        $('#btnExport').val(uid + "_" + statdate);
 
         $.ajax({
             type: 'POST',
@@ -151,7 +157,7 @@ $(document).ready(function() {
                     } else {
                         statusinfo = 'Invoice Generated';
                     }
-                    html = '<tr id="lossrep_' + sr + '">' +
+                    html += '<tr id="lossrep_' + sr + '">' +
                         '<td  style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
                         '<td  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].customer_name + '</td>' +
                         '<td  style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
@@ -164,10 +170,65 @@ $(document).ready(function() {
                         '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + statusinfo + '</td>' +
 
                         '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].description + '</td>' +
-                        '</tr><tr style="display:none;" id="productinfo_' + data[i].qid1 + '"></tr>';
+                        '</tr>';
 
-                    $("#funnelrep_tbody").append(html);
+                    html += '<tr id="productinfo_' + data[i].qid1 + '" style="display:none;" ><td colspan="11"><div><table class="table table-bordered table-hover" id="productinformation">' +
+
+                        '<thead>' +
+                        '<tr>' +
+                        '<td width="20%">Description</td>' +
+                        '<td>Qty</td>' +
+                        '<td>UnitTransfer Price</td>' +
+                        '<td>Total Transfer Price</td>' +
+                        '<td>Tax (%)</td>' +
+                        '<td>Tax (Rs)</td>' +
+                        '<td>Total Transfer Price With Inc Tax	</td>' +
+                        '<td>Unit Ord Value</td>' +
+                        '<td>Total Ord Value</td>' +
+                        '<td>Tax %</td>' +
+                        '<td>Tax (Value)</td>' +
+                        '<td>Total Ord Val With Tax</td>' +
+                        '<td>Margin</td>' +
+                        '</tr>' +
+                        '</thead>' +
+                        '<tbody>';
+                    for (j = 0; j < data[i].productinfo.length; j++) {
+                        var totaltransforprice = parseFloat(data[i].productinfo[j].qty) * parseFloat(data[i].productinfo[j].unit_transfor_price);
+                        var taxrs = parseFloat(totaltransforprice) * parseFloat(data[i].productinfo[j].transfor_tax) / 100;
+                        var totaltpricewithtax = parseFloat(totaltransforprice) + parseFloat(taxrs);
+
+                        var totalordvalue = parseFloat(data[i].productinfo[j].unit_order_value) * parseFloat(data[i].productinfo[j].qty);
+                        var otaxrs = parseFloat(totalordvalue) * parseFloat(data[i].productinfo[j].order_tax) / 100;
+                        var totalowithtax = parseFloat(totalordvalue) + parseFloat(otaxrs);
+
+
+                        var margin = parseFloat(totalordvalue) - parseFloat(totaltransforprice);
+
+
+                        html += '<tr><td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].productinfo[j].product_name + '</td>' +
+                            '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].productinfo[j].qty + '</td>' +
+                            '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + data[i].productinfo[j].unit_transfor_price + '</td>' +
+                            '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + totaltransforprice + '</td>' +
+                            '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + data[i].productinfo[j].transfor_tax + '</td>' +
+                            '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + taxrs + '</td>' +
+                            '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + totaltpricewithtax + '</td>' +
+                            '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + data[i].productinfo[j].unit_order_value + '</td>' +
+                            '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + totalordvalue + '</td>' +
+                            '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + data[i].productinfo[j].order_tax + '</td>' +
+                            '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + otaxrs + '</td>' +
+                            '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + totalowithtax + '</td>' +
+                            '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + margin + '</td>' +
+                            '</tr>';
+
+                    }
+
+                    html += '</tbody>' +
+                        '</table></div></td></tr>';
+
+
                 }
+                console.log(html);
+                $("#funnelrep_tbody").html(html);
                 $('#totaltop').html(sumtop);
                 $('#totalmargin').html(summargin);
             }
@@ -183,106 +244,31 @@ $(document).ready(function() {
         var text = $(this).text();
         console.log(sr);
 
-        $('#productinfo_' + id).show();
+        //$('#productinfo_' + id).show();
 
         if (text == "View More") {
 
             if (proid > 0) {
-                $("#dis_" + proid).remove();
+                $('#productinfo_' + proid).hide();
                 $('#' + proid).text('View More');
             }
+            $('#productinfo_' + id).show();
+            proid = id;
 
-            $.ajax({
-                type: 'POST',
-                url: base_url + "Funnelreport/getfunnelproductinfo",
-                async: false,
-                data: {
-                    id: id,
-
-                },
-                dataType: 'json',
-                success: function(data) {
-                    var html = '';
-                    $('#productinfo_' + id).html('');
-                    if (data.length > 0) {
-                        html += '<tr id="dis_' + id + '"><td colspan="11"><table class="table table-bordered table-hover" id="productinformation">' +
-
-                            '<thead>' +
-                            '<tr>' +
-                            '<th width="20%">Description</th>' +
-                            '<th>Qty</th>' +
-                            '<th>UnitTransfer Price</th>' +
-                            '<th>Total Transfer Price</th>' +
-                            '<th>Tax (%)</th>' +
-                            '<th>Tax (Rs)</th>' +
-                            '<th>Total Transfer Price With Inc Tax	</th>' +
-                            '<th>Unit Ord Value</th>' +
-                            '<th>Total Ord Value</th>' +
-                            '<th>Tax %</th>' +
-                            '<th>Tax (Value)</th>' +
-                            '<th>Total Ord Val With Tax</th>' +
-                            '<th>Margin</th>' +
-                            '</tr>' +
-                            '</thead>' +
-                            '<tbody>';
-                        for (var i = 0; i < data.length; i++) {
-
-                            var totaltransforprice = parseFloat(data[i].qty) * parseFloat(data[i].unit_transfor_price);
-                            var taxrs = parseFloat(totaltransforprice) * parseFloat(data[i].transfor_tax);
-                            var totaltpricewithtax = parseFloat(totaltransforprice) + parseFloat(taxrs);
-
-                            var totalordvalue = parseFloat(data[i].unit_order_value) * parseFloat(data[i].qty);
-                            var otaxrs = parseFloat(totalordvalue) * parseFloat(data[i].order_tax) / 100;
-                            var totalowithtax = parseFloat(totalordvalue) + parseFloat(otaxrs);
-
-
-                            var margin = parseFloat(totalordvalue) - parseFloat(totaltransforprice);
-
-                            html += '<tr><td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].product_name + '</td>' +
-                                '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].qty + '</td>' +
-                                '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + data[i].unit_transfor_price + '</td>' +
-                                '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + totaltransforprice + '</td>' +
-                                '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + data[i].transfor_tax + '</td>' +
-                                '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + taxrs + '</td>' +
-                                '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + totaltpricewithtax + '</td>' +
-                                '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + data[i].unit_order_value + '</td>' +
-                                '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + totalordvalue + '</td>' +
-                                '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + data[i].order_tax + '</td>' +
-                                '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + otaxrs + '</td>' +
-                                '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + totalowithtax + '</td>' +
-                                '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + margin + '</td>' +
-                                '</tr>';
-
-
-                        }
-
-
-                        '</tbody>' +
-                        '</table></td></tr>';
-
-                        $('#funnelrep_tbody tr:eq(' + sr + ')').after(html);
-
-                        proid = id;
-                        // $('#lossrep_' + id).prepend(html);
-
-                        // $('#' + id + ' .innerDiv').after(html);
-
-                        //$('#productinfo_' + id).html(html);
-                    }
-
-
-                }
-            });
             $('#' + id).text('View Less');
         } else {
             $('#' + id).text('View More');
-            $("#dis_" + proid).remove();
+            $('#productinfo_' + id).hide();
         }
 
 
 
 
     });
+
+    //click event of btn export
+
+
 
 
 

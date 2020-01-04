@@ -56,6 +56,7 @@ function getfunnel_report($uid,$statdate){
                         $magin=0;
                         $totalordvalue=0;
                         $orderdate='';
+                        $productinfo=array();
 
                         if($qid3 >0){
                             $this->db->select('*');    
@@ -70,13 +71,16 @@ function getfunnel_report($uid,$statdate){
                             $this->db->from('quotation_detalis');
                             $this->db->where('quatation_id',$qid3);
                             $hasil2=$this->db->get();
+                            $c=1;
                             foreach($hasil2->result_array() as $odetalis ){
-                                $c=1;
+                               
                                 if($c==1){
                                     $product=$odetalis['product_name'];
                                 }
                                 $c=$c+1;
-                              
+
+
+                                $product_name=$odetalis['product_name'];
                                 $qty=$odetalis['qty'];
                                 $unit_order_value=$odetalis['unit_order_value'];
                                 $unit_transfor_price=$odetalis['unit_transfor_price'];
@@ -92,6 +96,15 @@ function getfunnel_report($uid,$statdate){
                     
                                 $summargin=$magin+$summargin;
                                 $sum=$totalordvalue+$sum;
+
+                                $productinfo[]=array(
+                                    'qty'=>$qty,
+                                    'product_name'=>$product_name,
+                                    'unit_transfor_price'=>$unit_transfor_price,
+                                    'transfor_tax'=>$transfor_tax,
+                                    'unit_order_value'=>$unit_order_value,
+                                    'order_tax'=>$order_tax,
+                                );
                     
                             }
 
@@ -109,6 +122,7 @@ function getfunnel_report($uid,$statdate){
                             'status'=>"Invoice Generated",
                             'description'=>$description,
                             'probability'=>100,
+                            'productinfo'=>$productinfo,
                         );
 
 
@@ -142,6 +156,8 @@ function getfunnel_report($uid,$statdate){
                  if($hasil9->num_rows() >0){
                      foreach($hasil9->result_array() as $qotationdata){
                         $qid1=$qotationdata['id'];
+
+                       
                         $customer_name=$qotationdata['customer_name'];
                         $quotaion_no=$qotationdata['quotaion_no'];
                         $order_due_date=$qotationdata['order_due_date'];
@@ -152,7 +168,7 @@ function getfunnel_report($uid,$statdate){
                         }else{
                             $probability=100;
                         }
-
+                        $productinfo=array();
                         $description=$quotationdata['description'];
                         $magin=0;
                         $totalordvalue=0;
@@ -171,14 +187,16 @@ function getfunnel_report($uid,$statdate){
                             $this->db->from('quotation_detalis');
                             $this->db->where('quatation_id',$qid1);
                             $hasil2=$this->db->get();
+                            $c1=1;
                             foreach($hasil2->result_array() as $odetalis ){
                                 //$product=$odetalis['product_name'];
 
-                                $c1=1;
-                                if($c==1){
+                              
+                                if($c1==1){
                                     $product=$odetalis['product_name'];
                                 }
                                 $c1=$c1+1;
+                                $product_name=$odetalis['product_name'];
                                 $qty=$odetalis['qty'];
                                 $unit_order_value=$odetalis['unit_order_value'];
                                 $unit_transfor_price=$odetalis['unit_transfor_price'];
@@ -194,6 +212,15 @@ function getfunnel_report($uid,$statdate){
                     
                                 $summargin=$magin+$summargin;
                                 $sum=$totalordvalue+$sum;
+
+                                $productinfo[]=array(
+                                    'qty'=>$qty,
+                                    'product_name'=>$product_name,
+                                    'unit_transfor_price'=>$unit_transfor_price,
+                                    'transfor_tax'=>$transfor_tax,
+                                    'unit_order_value'=>$unit_order_value,
+                                    'order_tax'=>$order_tax,
+                                );
                     
                             }
                         }
@@ -210,6 +237,7 @@ function getfunnel_report($uid,$statdate){
                             'status'=>$status,
                             'description'=>$description,
                             'probability'=>$probability,
+                            'productinfo'=>$productinfo,
                         );
 
                      }
@@ -244,6 +272,7 @@ function getfunnel_report($uid,$statdate){
                         $magin=0;
                         $totalordvalue=0;
                         $orderdate='';
+                        $productinfo=array();
                 if($qid2 >0){
                 $this->db->select('*');    
                 $this->db->from('quotation_master');
@@ -258,12 +287,14 @@ function getfunnel_report($uid,$statdate){
                 $this->db->from('quotation_detalis');
                 $this->db->where('quatation_id',$qid2);
                 $hasil2=$this->db->get();
+                $count=1;
                 foreach($hasil2->result_array() as $odetalis ){
-                    $count=1;
+                   
                     if($count==1){
                     $product=$odetalis['product_name'];
                     }
-                    $count++;
+                    $count= $count+1;
+                    $product_name=$odetalis['product_name'];
                     $qty=$odetalis['qty'];
                     $unit_order_value=$odetalis['unit_order_value'];
                     $unit_transfor_price=$odetalis['unit_transfor_price'];
@@ -279,6 +310,14 @@ function getfunnel_report($uid,$statdate){
         
                     $summargin=$magin+$summargin;
                     $sum=$totalordvalue+$sum;
+                    $productinfo[]=array(
+                        'qty'=>$qty,
+                        'product_name'=>$product_name,
+                        'unit_transfor_price'=>$unit_transfor_price,
+                        'transfor_tax'=>$transfor_tax,
+                        'unit_order_value'=>$unit_order_value,
+                        'order_tax'=>$order_tax,
+                    );
         
                 }
             }
@@ -294,6 +333,7 @@ function getfunnel_report($uid,$statdate){
                 'status'=>$status,
                 'description'=>$description,
                 'probability'=>0,
+                'productinfo'=>$productinfo,
             );
         } 
         }
@@ -310,6 +350,13 @@ function getfunnelproduct($id){
     $this->db->select('*');    
     $this->db->from('quotation_detalis');
     $this->db->where('quatation_id',$id);
+    $hasil2=$this->db->get();
+    return $hasil2->result();
+}
+function getsalespersonname($uid){
+    $this->db->select('*');    
+    $this->db->from('user_creation');
+    $this->db->where('id',$uid);
     $hasil2=$this->db->get();
     return $hasil2->result();
 }

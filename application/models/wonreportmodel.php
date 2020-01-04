@@ -98,6 +98,7 @@ public function getwondata($id,$statdate){
             $orderdate='';
             $magin=0;
             $totalordvalue=0;
+            $productinfo=array();
             $product='';
 
             if($quotation_no >0){
@@ -116,8 +117,13 @@ public function getwondata($id,$statdate){
             $this->db->from('order_detalis');
             $this->db->where('order_id',$oid);
             $hasil2=$this->db->get();
+            $c=0;
             foreach($hasil2->result_array() as $odetalis ){
-                $product=$odetalis['product_name'];
+                if($c==0){
+                    $product=$odetalis['product_name'];
+                }
+                $c=$c+1;
+                $productname=$odetalis['product_name'];
                 $qty=$odetalis['qty'];
                 $unit_order_value=$odetalis['unit_order_value'];
                 $unit_transfor_price=$odetalis['unit_transfor_price'];
@@ -134,6 +140,15 @@ public function getwondata($id,$statdate){
                 $summargin=$magin+$summargin;
                 $sum=$totalordvalue+$sum;
 
+                $productinfo[]=array(
+                    'qty'=>$qty,
+                    'product_name'=>$productname,
+                    'unit_transfor_price'=>$unit_transfor_price,
+                    'transfor_tax'=>$transfor_tax,
+                    'unit_order_value'=>$unit_order_value,
+                    'order_tax'=>$order_tax,
+                );
+
             }
 
             $result[]=array(
@@ -147,6 +162,7 @@ public function getwondata($id,$statdate){
                 'product'=>$product,
                 'status'=>'Invoice Generated',
                 'oid'=>$oid,
+                'productinfo'=>$productinfo,
             );
            
         }
@@ -203,6 +219,7 @@ function getlossreport($id,$statdate){
                         $quotaion_no=$qotationdata['quotaion_no'];
                         $order_due_date=$qotationdata['order_due_date'];
                         $status=$qotationdata['quote_status'];
+                        $productinfo=array();
                         $probability=0;
                         if($status==3){
                             $probability=0;
@@ -245,6 +262,14 @@ function getlossreport($id,$statdate){
                     
                                 $summargin=$magin+$summargin;
                                 $sum=$totalordvalue+$sum;
+                                $productinfo[]=array(
+                                    'qty'=>$qty,
+                                    'product_name'=>$product,
+                                    'unit_transfor_price'=>$unit_transfor_price,
+                                    'transfor_tax'=>$transfor_tax,
+                                    'unit_order_value'=>$unit_order_value,
+                                    'order_tax'=>$order_tax,
+                                );
                     
                             }
                         }
@@ -261,6 +286,7 @@ function getlossreport($id,$statdate){
                             'status'=>$status,
                             'description'=>$description,
                             'probability'=>$probability,
+                            'productinfo'=>$productinfo,
                         );
 
                      }
@@ -292,6 +318,7 @@ function getlossreport($id,$statdate){
                         $order_due_date=$qotationdata3['order_due_date'];
                         $status=$qotationdata3['quote_status'];
                         $description=$qotationdata3['description'];
+                        $productinfo=array();
                         $magin=0;
                         $totalordvalue=0;
                         $orderdate='';
@@ -309,12 +336,15 @@ function getlossreport($id,$statdate){
                 $this->db->from('quotation_detalis');
                 $this->db->where('quatation_id',$qid2);
                 $hasil2=$this->db->get();
+                $count=1;
                 foreach($hasil2->result_array() as $odetalis ){
-                    $count=1;
+                  
                     if($count==1){
                     $product=$odetalis['product_name'];
                     }
                     $count++;
+
+                    $productname=$odetalis['product_name'];
                     $qty=$odetalis['qty'];
                     $unit_order_value=$odetalis['unit_order_value'];
                     $unit_transfor_price=$odetalis['unit_transfor_price'];
@@ -330,6 +360,14 @@ function getlossreport($id,$statdate){
         
                     $summargin=$magin+$summargin;
                     $sum=$totalordvalue+$sum;
+                    $productinfo[]=array(
+                        'qty'=>$qty,
+                        'product_name'=>$productname,
+                        'unit_transfor_price'=>$unit_transfor_price,
+                        'transfor_tax'=>$transfor_tax,
+                        'unit_order_value'=>$unit_order_value,
+                        'order_tax'=>$order_tax,
+                    );
         
                 }
             }
@@ -345,6 +383,7 @@ function getlossreport($id,$statdate){
                 'status'=>$status,
                 'description'=>$description,
                 'probability'=>0,
+                'productinfo'=>$productinfo,
             );
         } 
         }
@@ -369,6 +408,13 @@ public function getwonproductinfo($id){
     $this->db->select('*');    
     $this->db->from('order_detalis');
     $this->db->where('order_id',$id);
+    $hasil2=$this->db->get();
+    return $hasil2->result();
+}
+public function getsalespersonname($uid){
+    $this->db->select('*');    
+    $this->db->from('user_creation');
+    $this->db->where('id',$uid);
     $hasil2=$this->db->get();
     return $hasil2->result();
 }

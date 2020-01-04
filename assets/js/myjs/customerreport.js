@@ -92,6 +92,8 @@ $(document).ready(function() {
     });
 
     function getcustomerdata(uid) {
+
+        $('#btnExport').val(uid);
         $.ajax({
             type: 'POST',
             url: base_url + "Customerreport/getcustomerreportdasta",
@@ -101,7 +103,7 @@ $(document).ready(function() {
             },
             dataType: 'json',
             success: function(data) {
-               // alert(data);
+                // alert(data);
                 var html = '';
                 $("#customer_tbody").html('');
                 var sr = 0;
