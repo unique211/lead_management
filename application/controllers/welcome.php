@@ -83,7 +83,10 @@ class Welcome extends CI_Controller {
 	        $u_type=$this->user_model->get_usertype($email);
 	        $u=$u_type[0]['user_type'];
 			$data['name']=$u_type[0]['user_name'];
-	        $get=$this->user_model->get_permissions($u);
+
+			
+			$get=$this->user_model->get_permissions($u);
+		
 			
 			$data['user_permission']=unserialize($get[0]['permissions']);
 	$data['layout']='public/layout';
@@ -259,10 +262,12 @@ function logincode()
 		         $user_id=$this->user_model->user_id($email);
 		        $u=$u_type[0]['user_type'];
 				$data['name']=$u_type[0]['user_name'];
+
+			
 		       
 		        $get=$this->user_model->get_permissions($u);
 				
-				$data['user_permission']=unserialize($get[0]['permissions']);
+					$data['user_permission']=unserialize($get[0]['permissions']);
 				  $data['records1']=$this->lead_management->dealer_display_data($user_id);
 					 $data['body']="static/user/home_page";
 				$this->load->view('welcome_message',$data);

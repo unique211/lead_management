@@ -62,7 +62,7 @@
         </ul>
 
         </li> -->
-                  <li ><a  href="<?php echo base_url() ?>account_create"  >All Account <span ></span></a>
+                  <li ><a  <?php if (in_array('createAccount', $user_permission)) : ?> href="<?php echo base_url() ?>account_create"  <?php endif; ?>>All Account <span ></span></a>
 
                     <!-- <ul class="dropdown-menu">
                       <?php if (in_array('createLead', $user_permission)) : ?>
@@ -73,7 +73,7 @@
                     <!-- </ul> --> 
 
                   </li>
-               
+                <?php endif; ?>
                 <?php if (in_array('createAppointment', $user_permission) || in_array('editAppointment', $user_permission) || in_array('deleteAppointment', $user_permission)) : ?>
                   <li><a class="dropdown-toggle" data-toggle="dropdown" href="#">Appointments <span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -82,15 +82,14 @@
                       <?php endif; ?>
                       <?php if (in_array('editAppointment', $user_permission) || in_array('deleteAppointment', $user_permission)) : ?>
                         <li><a href="<?php echo base_url() ?>manage_appointment">Manage Appointment</a></li> <?php endif; ?>
-                       <?php if (in_array('createLead', $user_permission) || in_array('editLead', $user_permission) || in_array('deleteLead', $user_permission)) : ?> 
+                       <?php if (in_array('createLead', $user_permission) || in_array('editLead', $user_permission) || in_array('deleteLead', $user_permission)) : ?>
                         <!--  <li class=""><a href="view_appointments">view appointments</a></li> -->
                         <li class=""><a href="<?php echo base_url() ?>google_appointments"> View Appointments</a></li>
-                        <?php endif; ?>
-                      </ul>
+                    </ul>
                   </li>
                 <?php endif; ?>
 
-                <?php if (in_array('createAppointment', $user_permission) || in_array('editAppointment', $user_permission) || in_array('deleteAppointment', $user_permission)) : ?>
+
                 <li><a class="dropdown-toggle" data-toggle="dropdown" href="#">Quotes & Orders<span class="caret"></span></a>
                   <ul class="dropdown-menu">
 
@@ -101,7 +100,6 @@
                     <!-- <li><a href="manage_appointment">Manage Appointment</a></li>  -->
                   </ul>
                 </li>
-                <?php endif; ?>
 
                 <li><a class="dropdown-toggle" data-toggle="dropdown" href="#">Report<span class="caret"></span></a>
                   <ul class="dropdown-menu">

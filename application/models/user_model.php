@@ -465,5 +465,13 @@ class User_model extends CI_Model {
 		}
 		return $hasil->result_array();
 	}
+	function set_userpermissions($data,$email)
+	{
+	  $p=$data['permissions'];
+	  $u_type=$data['user_type'];
+	   $s="UPDATE  page_access SET permissions='$p' where user_type='$u_type'";
+	  $this->db->query($s);
+	  
+	}
 }
 ?>
