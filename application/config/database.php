@@ -48,14 +48,14 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'us-cdbr-iron-east-05.cleardb.net';
-$db['default']['username'] = 'bb5556bf32b89e';
-$db['default']['password'] = 'bb86fef6';
-$db['default']['database'] = 'heroku_ec5132e823f0df2';
-//$db['default']['hostname'] = 'localhost';
-//$db['default']['username'] = 'root';
-//$db['default']['password'] = '';
-//$db['default']['database'] = 'lead_management';
+// $db['default']['hostname'] = 'us-cdbr-iron-east-05.cleardb.net';
+// $db['default']['username'] = 'bb5556bf32b89e';
+// $db['default']['password'] = 'bb86fef6';
+// $db['default']['database'] = 'heroku_ec5132e823f0df2';
+$db['default']['hostname'] = 'localhost';
+$db['default']['username'] = 'root';
+$db['default']['password'] = '';
+$db['default']['database'] = 'lead_management';
 $db['default']['dbdriver'] = 'mysqli';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;

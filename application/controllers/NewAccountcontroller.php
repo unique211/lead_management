@@ -35,6 +35,7 @@ class NewAccountcontroller extends CI_Controller
             'no_of_employee' => $this->input->post('employees'),
             'requirement' => $this->input->post('requirement'),
             'remark' => $this->input->post('remark'),
+            'address' => $this->input->post('u_addr'),
             'user_id'=> $user_id,
        
         );
@@ -101,6 +102,30 @@ class NewAccountcontroller extends CI_Controller
         $table_name	= $this->input->post('table_name');
 
         $data1 = $this->newaccountmodel->getcontactdata($id,$table_name);
+
+        echo json_encode($data1);
+    }
+    public function checkemail(){
+        $id	= $this->input->post('id');
+        $email	= $this->input->post('email');
+
+        $data1 = $this->newaccountmodel->checkemail($id,$email);
+
+        echo json_encode($data1);
+    }
+    public function checkmoblino(){
+        $id	= $this->input->post('id');
+        $phn	= $this->input->post('phn');
+
+        $data1 = $this->newaccountmodel->checkmoblino($id,$phn);
+
+        echo json_encode($data1);
+    }
+    public function checklandline(){
+        $id	= $this->input->post('id');
+        $landline	= $this->input->post('landline');
+
+        $data1 = $this->newaccountmodel->checklandline($id,$landline);
 
         echo json_encode($data1);
     }

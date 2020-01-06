@@ -125,15 +125,15 @@
                             <label class="col-md-4 control-label">Sales Representative</label>
                             <div class="col-md-4 inputGroupContainer">
                                <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                <input id="demo_dealer" name="demo_dealer" class="form-control demo_dealer" autocomplete="off" list="salesreprentative">
-								<datalist id="salesreprentative">
+                                <input id="demo_dealer" name="demo_dealer" class="form-control demo_dealer" autocomplete="off" list="d_dealer">
+								<datalist id="d_dealer">
 								<?php 
-                                foreach($salesreprentative as $key => $value)
+                                foreach($records1 as $l)
                                 {
 
                                 ?>
                                 <option value="<?php echo 
-                                $value['first_name']; ?>"><?php echo $value['first_name']; ?></option>
+                                $l['first_name']; ?>"><?php echo $l['first_name']; ?></option>
    
             <?php } ?>
 								</datalist>

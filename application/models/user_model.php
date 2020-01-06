@@ -365,7 +365,7 @@ class User_model extends CI_Model {
 	}
 	 function update_appointment($app_id,$selected_cal_id,$event_id,$date,$time,$gift,$demo_dealer,$ride,$setby,$addr,$notes,$lead,$assistant,$supervisor,$status,$demo_note)
 	{
-		 $s="UPDATE appointment_information SET calendar_id='$selected_cal_id',event_id='$event_id1',start_date='$date',start_time='$time',end_time='$time',gift='$gift',demo_dealer='$demo_dealer',ride_along='$ride',set_by='$setby',appointment_address='$addr',appointment_notes='$notes',lead_id='$lead',assistant='$assistant' ,supervisor='$supervisor',appointment_status='$status',demo_notes='$demo_note' where id=$app_id";
+		 $s="UPDATE appointment_information SET calendar_id='$selected_cal_id',event_id='$event_id',start_date='$date',start_time='$time',end_time='$time',demo_dealer='$demo_dealer',ride_along='$ride',set_by='$setby',appointment_address='$addr',appointment_notes='$notes',lead_id='$lead',assistant='$assistant' ,supervisor='$supervisor',appointment_status='$status',demo_notes='$demo_note' where id=$app_id";
 		 $this->db->query($s);
 		
 	}
@@ -427,6 +427,43 @@ class User_model extends CI_Model {
 		if($row==0)
 		$this->db->insert('sync_details',$details);
         return true;
+	}
+	function getcustomername($id){
+		$user_type=$this->session->userdata('user_type');
+		if($user_type=="Admin" || $user_type=="Tele-caller" ){
+			$this->db->select('*');    
+			$this->db->from('new_account');
+			$hasil=$this->db->get();
+		}else{
+			$this->db->select('*');    
+			$this->db->from('new_account');
+			$this->db->where('user_id',$id);
+			$this->db->or_where('`id` IN (SELECT `customer_id` FROM `quotation_master` where salesrepresentative='.$id.')', NULL, FALSE);
+			$this->db->or_where('`id` IN (SELECT `customer_id` FROM `order_master` where salesrepresentative='.$id.')', NULL, FALSE);
+			 $hasil=$this->db->get();
+		}
+		return $hasil->result_array();
+	
+	 
+	
+	}
+	function getreprentative($id){
+		$user_type=$this->session->userdata('user_type');
+		if($user_type=="Admin" || $user_type=="Tele-caller" ){
+			$this->db->select('*');    
+			$this->db->from('user_creation');
+			$this->db->where('user_type','SalesRepresentative');
+			$this->db->where('user_role','Sales');
+			$hasil=$this->db->get();
+		}else{
+			$this->db->select('*');    
+			$this->db->from('user_creation');
+			$this->db->where('user_type','SalesRepresentative');
+			$this->db->where('user_role','Sales');
+			$this->db->where('id',$id);
+			$hasil=$this->db->get();
+		}
+		return $hasil->result_array();
 	}
 }
 ?>

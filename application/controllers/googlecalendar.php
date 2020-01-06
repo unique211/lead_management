@@ -926,7 +926,8 @@ class Googlecalendar extends CI_Controller
 
          
             if (($calendar_id == '--' && $calendar_id1 == '') || ($calendar_id == '' && $calendar_id1 == '--')) {
-                $lead = $this->input->post('lead');
+              //  $lead = $this->input->post('lead');
+                 $lead = $this->input->post('lead');// change by sagar
                 $date = $this->input->post('ap_date');
                 $start_time = $this->input->post('ap_stime');
                 $end_time = $this->input->post('ap_stime');

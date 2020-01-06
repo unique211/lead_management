@@ -1,0 +1,4 @@
+
+table name:new_account
+
+ALTER TABLE `new_account` ADD `address` VARCHAR(255) NOT NULL AFTER `no_of_employee`;

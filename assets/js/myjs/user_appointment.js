@@ -3,145 +3,193 @@ $(document).ready(function() {
     var validate = 0;
     var fromdate = '';
     var todate = '';
+    var checkemail = 0;
+    var checkmobile = 0;
+    var checklandline = 0;
+
+    if (usertype != "SalesRepresentative") {
+
+        $("#date").removeAttr("disabled");
+    } else {
+        // $("#date").removeAttr("disabled");  
+
+        $("#date").attr("disabled", "disabled");
+    }
+
+    var today = new Date();
+    var dd = today.getDate();
+
+    var mm = today.getMonth() + 1;
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    today = yyyy + '-' + mm + '-' + dd;
+
+
+    $("#date").val(today);
 
     /*---------insert data into area_master start-----------------*/
     $(document).on("submit", "#newaccountform", function(e) {
         e.preventDefault();
 
+        if (checkemail == 0 && checkmobile == 0 && checklandline == 0) {
 
-
-        var l_date = $('#date').val();
-        var id = $('#save_update').val();
-        var cname = $('#cname').val();
-        var customer_type = $('#customer_type').val();
-        var category = $('#category').val();
-        var employees = $('#employees').val();
-        var requirement = $('#requirement').val();
-        var remark = $('#remark').val();
-
-        // if(id !=""){
-        //     var tdateAr = l_date.split('/');
-        //     l_date = tdateAr[2] + '-' + tdateAr[1] + '-' + tdateAr[0];
-
-        // }
-        var flag = 0;
-        if (validate == 0) {
-
+            var l_date = $('#date').val();
             var id = $('#save_update').val();
-            studejsonObj = [];
-            $(".addcontactinfo").each(function() {
-                var id1 = $(this).attr('id');
-                console.log(id1);
+            var cname = $('#cname').val();
+            var customer_type = $('#customer_type').val();
+            var category = $('#category').val();
+            var employees = $('#employees').val();
+            var requirement = $('#requirement').val();
+            var remark = $('#remark').val();
+            var u_addr = $('#u_addr').val();
 
-                id1 = id1.split("_");
+            // if(id !=""){
+            //     var tdateAr = l_date.split('/');
+            //     l_date = tdateAr[2] + '-' + tdateAr[1] + '-' + tdateAr[0];
+
+            // }
+            var flag = 0;
+            if (validate == 0) {
+
+                var id = $('#save_update').val();
+                studejsonObj = [];
+                $(".addcontactinfo").each(function() {
+                    var id1 = $(this).attr('id');
+                    console.log(id1);
+
+                    id1 = id1.split("_");
 
 
-                student = {};
+                    student = {};
 
-                var contactname = $('#contactname_' + id1[1]).val();
-                var designation = $('#designation_' + id1[1]).val();
-                var email = $('#email_' + id1[1]).val();
-                var mobile = $('#mobile_' + id1[1]).val();
-                var landline = $('#landline_' + id1[1]).val();
-
-
-
-                if (contactname != "" && designation != "" && email != "" && mobile != "" && landline != "") {
-
-                    console.log("contactname" + contactname + "designation" + designation + "email" + email + "mobile" + mobile + "" + landline)
-
-                    student["contactname"] = contactname;
-                    student["designation"] = designation;
-                    student["email"] = email;
-                    student["mobile"] = mobile;
-                    student["landline"] = landline;
-
-                    for (var i = 0; i < studejsonObj.length; i++) {
-
-                        console.log("mobile" + mobile + "studejsonObj" + studejsonObj[i].mobile);
-                        if (mobile == studejsonObj[i].mobile) {
-                            flag = 1;
-
-                        }
-                    }
+                    var contactname = $('#contactname_' + id1[1]).val();
+                    var designation = $('#designation_' + id1[1]).val();
+                    var email = $('#email_' + id1[1]).val();
+                    var mobile = $('#mobile_' + id1[1]).val();
+                    var landline = $('#landline_' + id1[1]).val();
 
 
 
+                    if (contactname != "" && designation != "") {
+                        if (email != "" || mobile != "" || landline != "") {
+                            console.log("contactname" + contactname + "designation" + designation + "email" + email + "mobile" + mobile + "" + landline)
+
+                            student["contactname"] = contactname;
+                            student["designation"] = designation;
+                            student["email"] = email;
+                            student["mobile"] = mobile;
+                            student["landline"] = landline;
+
+                            for (var i = 0; i < studejsonObj.length; i++) {
+
+                                console.log("mobile" + mobile + "studejsonObj" + studejsonObj[i].mobile);
+                                if (mobile == studejsonObj[i].mobile || email == studejsonObj[i].email || landline == studejsonObj[i].landline) {
+                                    flag = 1;
+
+                                }
+                            }
 
 
 
-                } else {
 
-                    $.notify({
-                        title: '',
-                        message: '<strong>Empty Row Found !!/strong>'
-                    }, {
-                        type: 'success'
-                    });
-                }
-                if (flag == 1) {
-
-
-                } else {
-                    studejsonObj.push(student);
-                }
-
-            });
-
-
-            if (flag == 0) {
-                $.ajax({
-                    type: "POST",
-                    url: baseurl + "NewAccountcontroller/save_settings",
-                    dataType: "JSON",
-                    async: false,
-                    data: {
-                        id: id,
-                        l_date: l_date,
-                        cname: cname,
-                        customer_type: customer_type,
-                        category: category,
-                        employees: employees,
-                        requirement: requirement,
-                        remark: remark,
-                        studejsonObj: studejsonObj,
-                        table_name: table_name,
-                    },
-                    success: function(data) {
-                        console.log(data);
-                        if (data == true) {
+                        } else {
                             $.notify({
                                 title: '',
-                                message: '<strong>Data saved successfully</strong>'
+                                message: '<strong>Email id OR Mobile no Or Land line Required</strong>'
                             }, {
                                 type: 'success'
                             });
-
-                            form_clear();
-                            show_master(fromdate, todate);
-                            $('.btnhideshow').hide();
-                            $('.tablehideshow').show();
-                            $('.btnhide').show();
-                            $('.closehide').hide();
-
-                        } else {
-                            errorTost("Data Cannot Save");
+                            flag = 1;
                         }
+
+                    } else {
+
+                        $.notify({
+                            title: '',
+                            message: '<strong>Empty Row Found !!/strong>'
+                        }, {
+                            type: 'success'
+                        });
                     }
+                    if (flag == 1) {
+
+
+                    } else {
+                        studejsonObj.push(student);
+                    }
+
                 });
+
+
+                if (flag == 0) {
+                    $.ajax({
+                        type: "POST",
+                        url: baseurl + "NewAccountcontroller/save_settings",
+                        dataType: "JSON",
+                        async: false,
+                        data: {
+                            id: id,
+                            l_date: l_date,
+                            cname: cname,
+                            customer_type: customer_type,
+                            category: category,
+                            employees: employees,
+                            requirement: requirement,
+                            remark: remark,
+                            u_addr: u_addr,
+                            studejsonObj: studejsonObj,
+                            table_name: table_name,
+                        },
+                        success: function(data) {
+                            console.log(data);
+                            if (data == true) {
+                                $.notify({
+                                    title: '',
+                                    message: '<strong>Data saved successfully</strong>'
+                                }, {
+                                    type: 'success'
+                                });
+
+                                form_clear();
+                                show_master(fromdate, todate);
+                                $('.btnhideshow').hide();
+                                $('.tablehideshow').show();
+                                $('.btnhide').show();
+                                $('.closehide').hide();
+                                $('#setaccounttext').text('All Account');
+
+                            } else {
+                                errorTost("Data Cannot Save");
+                            }
+                        }
+                    });
+                } else {
+                    $.notify({
+                        title: '',
+                        message: '<strong> Mobile No OR Email OR Land line Already Exists</strong>'
+                    }, {
+                        type: 'success'
+                    });
+                    studejsonObj = [];
+                }
             } else {
                 $.notify({
                     title: '',
-                    message: '<strong> Mobile Name Already Exists</strong>'
+                    message: '<strong> Customer Name Already Exists</strong>'
                 }, {
                     type: 'success'
                 });
-                studejsonObj = [];
             }
         } else {
             $.notify({
                 title: '',
-                message: '<strong> Customer Name Already Exists</strong>'
+                message: '<strong>Mobile No OR Email OR Land line Already Exists </strong>'
             }, {
                 type: 'success'
             });
@@ -185,6 +233,7 @@ $(document).ready(function() {
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Customer Type ID</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Requirement</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Remarks</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Address</th>' +
 
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Action</th>' +
                     '</tr>' +
@@ -209,6 +258,7 @@ $(document).ready(function() {
                         '<td style="display:none;" id="customer_type_' + data[i].id + '">' + data[i].customer_type + '</td>' +
                         '<td style="display:none;" id="requirement_' + data[i].id + '">' + data[i].requirement + '</td>' +
                         '<td style="display:none;" id="remark_' + data[i].id + '">' + data[i].remark + '</td>' +
+                        '<td style="display:none;" id="address_' + data[i].id + '">' + data[i].address + '</td>' +
 
                         //'<td><button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="' + data[i].id + '" value="' + data[i].id + '" ><i class="fa fa-edit"></i></button></td>' +
                         '<td><button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="' + data[i].id + '"  ><i class="fa fa-edit"></i></button>&nbsp;<button name="delete" value="Delete" class="delete_data btn btn-xs btn-danger" id=' +
@@ -280,6 +330,7 @@ $(document).ready(function() {
 
         var id1 = $(this).attr('id');
         $('.btnhide').hide();
+        $('#setaccounttext').text('New Account');
         $('.closehide').show();
 
         $('.btnhideshow').show();
@@ -291,6 +342,7 @@ $(document).ready(function() {
         var customer_type_ = $('#customer_type_' + id1).html();
         var requirement_ = $('#requirement_' + id1).html();
         var remark_ = $('#remark_' + id1).html();
+        var address_ = $('#address_' + id1).html();
 
 
 
@@ -310,6 +362,7 @@ $(document).ready(function() {
         $('#employees').val(no_of_employee_);
         $('#requirement').val(requirement_);
         $('#remark').val(remark_);
+        $('#u_addr').val(address_);
         $('#save_update').val(id1);
 
 
@@ -339,7 +392,7 @@ $(document).ready(function() {
                             '</td>' +
 
                             '<td>' +
-                            '<div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span><input id="email_' + row_id + '" name="email_' + row_id + '" placeholder="Email" class="form-control" value="' + data[i].email_id + '" type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"></div><span class="email1"></span></div>' +
+                            '<div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span><input id="email_' + row_id + '" name="email_' + row_id + '" placeholder="Email" class="form-control email" value="' + data[i].email_id + '" type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"></div><span class="email1"></span></div>' +
                             '</td>' +
 
                             '<td>' +
@@ -347,7 +400,7 @@ $(document).ready(function() {
                             '</td>' +
 
                             '<td>' +
-                            '<div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span><input type="number" id="landline_' + row_id + '" name="landline_' + row_id + '" placeholder="Land line" class="form-control  small-input" value="' + data[i].lead_line + '"  pattern="[0-9]" type="number" ></div><span class="phn1"></span></div>' +
+                            '<div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span><input type="number" id="landline_' + row_id + '" name="landline_' + row_id + '" placeholder="Land line" class="form-control  small-input landline" value="' + data[i].lead_line + '"  pattern="[0-9]" type="number" ></div><span></span></div>' +
                             '</td>' +
 
                             '<td>&nbsp;<button  class="proff_delete_data btn btn-xs btn-danger"   id="addcontactinfo_' + row_id + '" title="Remove Section !!!" ><i class="fa fa-trash"></i></button></td>' +
@@ -474,7 +527,7 @@ $(document).ready(function() {
             '</td>' +
 
             '<td>' +
-            '<div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span><input id="landline_' + row_id + '" name="landline_' + row_id + '" placeholder="Land line" class="form-control  small-input"  pattern="[0-9]" type="number" ></div><span ></span></div>' +
+            '<div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span><input id="landline_' + row_id + '" name="landline_' + row_id + '" placeholder="Land line" class="form-control  small-input landline"  pattern="[0-9]" type="number" ></div><span ></span></div>' +
             '</td>' +
 
             '<td>&nbsp;<button  class="proff_delete_data btn btn-xs btn-danger"   id="addcontactinfo_' + row_id + '" title="Remove Section !!!" ><i class="fa fa-trash"></i></button></td>' +
@@ -512,6 +565,7 @@ $(document).ready(function() {
         $('.tablehideshow').hide();
         $('.btnhide').hide();
         $('.closehide').show();
+        $('#setaccounttext').text('New Account');
     });
     $(document).on('click', '#reset', function(e) {
         e.preventDefault();
@@ -524,6 +578,7 @@ $(document).ready(function() {
         $('.tablehideshow').show();
         $('.btnhide').show();
         $('.closehide').hide();
+        $('#setaccounttext').text('All Account');
     });
 
 
@@ -580,5 +635,106 @@ $(document).ready(function() {
 
         show_master(fromdate, todate);
     });
+
+    $(document).on("blur", ".email", function(e) {
+        e.preventDefault();
+        var email = $(this).val();
+
+        var id = $('#save_update').val();
+        if (email != '') {
+            $.ajax({
+                type: "POST",
+                url: baseurl + "NewAccountcontroller/checkemail",
+                data: {
+                    email: email,
+                    id: id,
+
+                },
+                dataType: "JSON",
+                async: false,
+                success: function(data) {
+                    if (data == '100') {
+                        checkemail = 1;
+                        $.notify({
+                            title: '',
+                            message: '<strong>Email  Already Exists </strong>'
+                        }, {
+                            type: 'success'
+                        });
+                    } else {
+                        checkemail = 0;
+                    }
+                }
+            });
+        }
+    });
+
+    $(document).on("blur", ".phn", function(e) {
+        e.preventDefault();
+        var phn = $(this).val();
+
+        var id = $('#save_update').val();
+        if (phn != '') {
+            $.ajax({
+                type: "POST",
+                url: baseurl + "NewAccountcontroller/checkmoblino",
+                data: {
+                    phn: phn,
+                    id: id,
+
+                },
+                dataType: "JSON",
+                async: false,
+                success: function(data) {
+                    if (data == '100') {
+                        checkmobile = 1;
+                        $.notify({
+                            title: '',
+                            message: '<strong>Mobile  Already Exists </strong>'
+                        }, {
+                            type: 'success'
+                        });
+                    } else {
+                        checkmobile = 0;
+                    }
+                }
+            });
+        }
+    });
+
+    $(document).on("blur", ".landline", function(e) {
+        e.preventDefault();
+        var landline = $(this).val();
+
+        var id = $('#save_update').val();
+        if (landline != '') {
+            $.ajax({
+                type: "POST",
+                url: baseurl + "NewAccountcontroller/checklandline",
+                data: {
+                    landline: landline,
+                    id: id,
+
+                },
+                dataType: "JSON",
+                async: false,
+                success: function(data) {
+                    if (data == '100') {
+                        checklandline = 1;
+                        $.notify({
+                            title: '',
+                            message: '<strong>Land line  Already Exists </strong>'
+                        }, {
+                            type: 'success'
+                        });
+                    } else {
+                        checklandline = 0;
+                    }
+                }
+            });
+        }
+    });
+
+
 
 });

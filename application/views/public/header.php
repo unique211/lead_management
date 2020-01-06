@@ -90,11 +90,11 @@
                 <?php endif; ?>
 
 
-                <li><a class="dropdown-toggle" data-toggle="dropdown" href="#">Create Quotation <span class="caret"></span></a>
+                <li><a class="dropdown-toggle" data-toggle="dropdown" href="#">Quotes & Orders<span class="caret"></span></a>
                   <ul class="dropdown-menu">
 
                     <li><a href="<?php echo base_url() ?>quotation">Quotation</a></li>
-                    <li><a href="<?php echo base_url() ?>manageorder">Manage Order</a></li>
+                    <li><a href="<?php echo base_url() ?>manageorder">Order</a></li>
 
 
                     <!-- <li><a href="manage_appointment">Manage Appointment</a></li>  -->
@@ -171,7 +171,7 @@
                               <li><a href="<?php echo base_url() ?>newcustomer_type">Create Customer Types</a></li>
                             <?php endif; ?>
                             <?php if (in_array('editLeadType', $user_permission) || in_array('deleteLeadType', $user_permission)) : ?>
-                              <li><a href="<?php echo base_url() ?>display_customer_type">Manage Customer Types</a></li> <?php endif; ?>
+                              <!-- <li><a href="<?php echo base_url() ?>display_customer_type">Manage Customer Types</a></li> <?php endif; ?> -->
                           </ul>
                         </li>
                       <?php endif; ?>
@@ -183,7 +183,7 @@
                               <li><a href="<?php echo base_url() ?>newcategory_type">Create Category Types</a></li>
                             <?php endif; ?>
                             <?php if (in_array('editLeadType', $user_permission) || in_array('deleteLeadType', $user_permission)) : ?>
-                              <li><a href="<?php echo base_url() ?>display_category_type">Manage Category Types</a></li> <?php endif; ?>
+                              <!-- <li><a href="<?php echo base_url() ?>display_category_type">Manage Category Types</a></li> <?php endif; ?> -->
                           </ul>
                         </li>
                       <?php endif; ?>
