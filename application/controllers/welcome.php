@@ -336,7 +336,11 @@ function logoutcode()
         $data['header']="public/header";
         $data['footer']="public/footer";
       //  print_r($user_id);exit;
-        $data['leads']=$this->user_model->get_leads($user_id);
+		$data['leads']=$this->user_model->get_leads($user_id);
+		
+		$data['customer']=$this->user_model->getcustomername($user_id);
+
+		$data['salesreprentative']=$this->user_model->getreprentative($user_id);
         //print_r($this->user_model->get_leads($user_id));
        // exit;
           $data['records1']=$this->lead_management->dealer_display_data($user_id);

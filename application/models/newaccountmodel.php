@@ -105,6 +105,7 @@ function data_get($table,$fromdate,$todate){
             $customer_type=$newacdata['customer_type'];
             $requirement=$newacdata['requirement'];
             $remark=$newacdata['remark'];
+            $address=$newacdata['address'];
             $customertype='';
             $categorytype='';
 
@@ -144,6 +145,7 @@ function data_get($table,$fromdate,$todate){
             'remark'=>$remark,
             'customertype'=>$customertype,
             'categorytype'=>$categorytype,
+            'address'=>$address,
            );
         
         }
@@ -203,6 +205,48 @@ function data_get_1($table,$fromdate,$todate){
     $this->db->where('new_account.status',1);
     $hasil=$this->db->get();
     return $hasil->result();
+}
+function checkemail($id,$email){
+    $this->db->select('*');    
+    $this->db->from('contact_information');
+    if($id >0){
+        $this->db->where('account_id !=',$id);
+    }
+    $this->db->where('email_id',$email);
+    $hasil=$this->db->get();
+   if($hasil->num_rows() >0){
+       return '100';
+   }else{
+    return '0';
+   }
+}
+function checkmoblino($id,$mobile){
+    $this->db->select('*');    
+    $this->db->from('contact_information');
+    if($id >0){
+        $this->db->where('account_id !=',$id);
+    }
+    $this->db->where('mobile_no',$mobile);
+    $hasil=$this->db->get();
+   if($hasil->num_rows() >0){
+       return '100';
+   }else{
+    return '0';
+   }
+}
+function checklandline($id,$landline){
+    $this->db->select('*');    
+    $this->db->from('contact_information');
+    if($id >0){
+        $this->db->where('account_id !=',$id);
+    }
+    $this->db->where('lead_line',$landline);
+    $hasil=$this->db->get();
+   if($hasil->num_rows() >0){
+       return '100';
+   }else{
+    return '0';
+   }
 }
 
 }

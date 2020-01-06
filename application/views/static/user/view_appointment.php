@@ -55,7 +55,7 @@
         <th>Serial No</th>
     <!--    <th>User Id</th> -->
         <th>Appointment Date</th>
-        <th>Demo dealer</th>
+        <th>Sales Representative</th>
 
         <th>Appointment Address</th>
         <!-- <th>Gift</th> change by sagar-->
@@ -305,7 +305,7 @@
             
           </div> -->
            <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Demo dealer:</label>
+            <label for="recipient-name" class="col-form-label">Sales Representative:</label>
             <input type="text" class="form-control" id="demo_dealer" 
             name="demo_dealer" maxlength="20">
           </div>
@@ -340,7 +340,7 @@
           </div>
           <div class="col-md-6">
          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Lead:</label>
+            <label for="recipient-name" class="col-form-label">Select Account:</label>
             <input type="text" class="form-control" id="lead" 
             name="lead" maxlength="20">
           </div>

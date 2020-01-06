@@ -7,7 +7,7 @@
    <button class="btn btn-primary pull-right btnhide"><i class="fa fa-plus"></i>Add</button>
    <button class="btn btn-primary pull-right closehide" style="display:none">Close</button>
    <br>
-   <h3>All Account</h3>
+   <h3 id="setaccounttext">All Account</h3>
    <form class=" form-horizontal" method="post" id="newaccountform" name="newaccountform">
 
      <!--   <tr>
@@ -23,7 +23,7 @@
              <label class="col-md-4 control-label">Date</label>
              <div class="col-md-8 inputGroupContainer">
                <div class="input-group"><span class="adj_size input-group-addon"><i class="fa fa-calendar" style="font-size:14px;"></i></span>
-                 <input type="date" id="date" name="date" class="form-control ldate"></div><span class="l_date1"></span>
+                 <input type="date" id="date" name="date" class="form-control ldate" disabled></div><span class="l_date1"></span>
              </div>
            </div>
            <div class="form-group">
@@ -75,7 +75,13 @@
                </div><span class="employees"></span>
              </div>
            </div>
-
+           <div class="form-group">
+                            <label class="col-md-4 control-label">Address</label>
+                            <div class="col-md-8 inputGroupContainer">
+                               <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
+                                <input type="text" class="form-control u_addr" name="u_addr" id="u_addr"><!-- <textarea rows="4" cols="40" class="form-control u_addr" name="u_addr" id="u_addr" placeholder="Address"> </textarea> --></div><span class="u_addr1"></span>
+                            </div>
+                         </div>
 
 
 
@@ -271,6 +277,9 @@
    }
  </script>
  <script type="text/javascript">
+
+var userrole="<?php echo $this->session->userdata('userrole') ?>"; 
+var usertype="<?php echo $this->session->userdata('user_type') ?>";  
    $("#spouse_details").hide();
 
    function show_spouse(m_status) {
@@ -532,22 +541,22 @@
 
 
        if (v == '') {
-         $(".phn1").text("This field is required");
-         $(".phn1").css("color", "red");
+        //  $(".phn1").text("This field is required");
+        //  $(".phn1").css("color", "red");
 
        } else {
          if (v.length < 10) {
            $('.phn1').text("Phone number must contain 10 digits");
            $(".phn1").css("color", "red");
-           $("#save").attr("disabled", "disabled");
+       //    $("#save").attr("disabled", "disabled");
 
          } else if (v.length > 10) {
            $('.phn1').text("Please enter 10 digit phone number");
            $(".phn1").css("color", "red");
-           $("#save").attr("disabled", "disabled");
+          // $("#save").attr("disabled", "disabled");
          } else {
            $('.phn1').text("");
-           $("#save").removeAttr("disabled");
+          // $("#save").removeAttr("disabled");
          }
 
        }
