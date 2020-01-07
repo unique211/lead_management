@@ -1026,16 +1026,24 @@ $(document).ready(function() {
                         '<td style="display:none;" id="salesperson_' + data[i].id + '">' + data[i].salesperson + '</td>' +
                         '<td style="display:none;" id="customer_id_' + data[i].id + '">' + data[i].customer_id + '</td>';
 
+                    // if (data[i].quote_status == 1) {
+                    //     html += '<td> <select name="quotestatus_' + data[i].id + '" id="quotestatus_' + data[i].id + '" class="form-control quotestatus"><option disabled>select</option><option value="1" selected>Pending</option><option value="2">Confirm</option><option value="3">Cancel</option></select</td>';
+                    // } else if (data[i].quote_status == 2) {
+                    //     html += '<td> <select disabled name="quotestatus_' + data[i].id + '" id="quotestatus_' + data[i].id + '" class="form-control quotestatus"><option disabled>select</option><option value="1">Pending</option><option value="2" selected>Confirm</option><option value="3">Cancel</option></select</td>';
+                    // } else {
+                    //     html += '<td> <select disabled name="quotestatus_' + data[i].id + '" id="quotestatus_' + data[i].id + '" class="form-control quotestatus"><option disabled>select</option><option value="1">Pending</option><option value="2">Confirm</option><option value="3" selected>Cancel</option></select</td>';
+                    // }
+
                     if (data[i].quote_status == 1) {
-                        html += '<td> <select name="quotestatus_' + data[i].id + '" id="quotestatus_' + data[i].id + '" class="form-control quotestatus"><option disabled>select</option><option value="1" selected>Pending</option><option value="2">Confirm</option><option value="3">Cancel</option></select</td>';
+                        html += '<td> <button  class="btn btn-sm  btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '" style= " background-color:orange;"  >Pending</button>&nbsp;</td>';
                     } else if (data[i].quote_status == 2) {
-                        html += '<td> <select disabled name="quotestatus_' + data[i].id + '" id="quotestatus_' + data[i].id + '" class="form-control quotestatus"><option disabled>select</option><option value="1">Pending</option><option value="2" selected>Confirm</option><option value="3">Cancel</option></select</td>';
+                        html += '<td> <button  class="btn btn-sm  btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '" style= " background-color:green;"  disabled >Confirm</button>&nbsp;</td>';
                     } else {
-                        html += '<td> <select disabled name="quotestatus_' + data[i].id + '" id="quotestatus_' + data[i].id + '" class="form-control quotestatus"><option disabled>select</option><option value="1">Pending</option><option value="2">Confirm</option><option value="3" selected>Cancel</option></select</td>';
+                        html += '<td> <button  class="btn btn-sm  btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '" style= " background-color:red;"  disabled>Cancle</button>&nbsp;</td>';
                     }
 
 
-                    html += '< /td>';
+                    // html += '< /td>';
 
                     if (data[i].quote_status == 1) {
 
@@ -2044,6 +2052,68 @@ $(document).ready(function() {
             });
         }
     }
+
+
+    //click event of pending confirm and cancle 
+    $(document).on('click', '.changestatusmodel', function(e) {
+        e.preventDefault();
+        $('#myModal2').modal('show');
+        var statusid = $(this).attr('id');
+        var statusval = $(this).val();
+        var status = 0;
+        if (statusval == "Pending") {
+            status = 1;
+        } else if (statusval == "Confirm") {
+            status = 2;
+        } else if (statusval == "Cancle") {
+            status = 3;
+        }
+        $('#quote_status').val(status).trigger('change');
+        $('#status_id').val(statusid);
+
+    });
+
+    $(document).on('click', '#changestatuainfo', function(e) {
+        e.preventDefault();
+        var id = $('#status_id').val();
+        var status = $('#quote_status').val();
+        id = id.split("_");
+        var qnoid = $('#quotaion_no_' + id[1]).html();
+
+        var lversion = $('#latestversion_' + id[1]).val();
+
+
+
+        $.ajax({
+            type: "POST",
+            url: baseurl + "Quotation_Estimate/updatequotestatus",
+            data: {
+                id: id[1],
+                lversion: lversion,
+                status: status,
+                qnoid: qnoid,
+            },
+            dataType: "JSON",
+            async: false,
+            success: function(data) {
+
+                if (data == true) {
+                    $.notify({
+                        title: '',
+                        message: '<strong>Change Status Success Fully  !!</strong>'
+                    }, {
+                        type: 'success'
+                    });
+                    displayqutation();
+                    $('#myModal2').modal('hide');
+                }
+
+
+
+            }
+        });
+
+    });
 
 
 });

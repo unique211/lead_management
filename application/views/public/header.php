@@ -176,10 +176,10 @@
         </ul>
    </li>
    <?php endif; ?>  -->
-                      <?php if (in_array('createLeadType', $user_permission) || in_array('editLeadType', $user_permission) || in_array('deleteLeadType', $user_permission)) : ?>
+                      <?php if (in_array('createCustomerType', $user_permission) || in_array('editCustomerType', $user_permission) || in_array('deleteCustomerType', $user_permission)) : ?>
                         <li><a class="dropdown-toggle" data-toggle="dropdown" href="#">Customer Types <span class="caret"></span></a>
                           <ul class="dropdown-menu">
-                            <?php if (in_array('createLeadType', $user_permission)) : ?>
+                            <?php if (in_array('createCustomerType', $user_permission) || in_array('editCustomerType', $user_permission) || in_array('deleteCustomerType', $user_permission) ) : ?>
                               <li><a href="<?php echo base_url() ?>newcustomer_type">Create Customer Types</a></li>
                             <?php endif; ?>
                             <?php if (in_array('editLeadType', $user_permission) || in_array('deleteLeadType', $user_permission)) : ?>
@@ -188,10 +188,10 @@
                         </li>
                       <?php endif; ?>
 
-                      <?php if (in_array('createLeadType', $user_permission) || in_array('editLeadType', $user_permission) || in_array('deleteLeadType', $user_permission)) : ?>
+                      <?php if (in_array('createCategoryType', $user_permission) || in_array('editCategoryType', $user_permission) || in_array('deleteCategoryType', $user_permission)) : ?>
                         <li><a class="dropdown-toggle" data-toggle="dropdown" href="#">Category Master <span class="caret"></span></a>
                           <ul class="dropdown-menu">
-                            <?php if (in_array('createLeadType', $user_permission)) : ?>
+                            <?php if (in_array('createCategoryType', $user_permission) || in_array('editCategoryType', $user_permission) || in_array('deleteCategoryType', $user_permission)) : ?>
                               <li><a href="<?php echo base_url() ?>newcategory_type">Create Category Types</a></li>
                             <?php endif; ?>
                             <?php if (in_array('editLeadType', $user_permission) || in_array('deleteLeadType', $user_permission)) : ?>

@@ -463,8 +463,18 @@
             <input type="hidden" name="del_id" id='del_id'>
 
             <div class="modal-body">
+           
+                           <div class="col-md-12">
+                          
+                           <div class="form-group">
+                                       <label class="col-sm-4"><b>	Status </b></label>
+                                       <div class="col-md-8 inputGroupContainer">
+                                          <input type="number" style="text-align:right;" class="form-control " id="finalmargin" name="finalmargin">
+                                       </div>
+                                    </div>
 
-               <h5>Are You Sure You Want To Delete</h5>
+                        </div>
+             
                <button type="button" class="close" style="margin-top: -1.5em;" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
             </div>
@@ -477,55 +487,9 @@
 
       </div>
    </div>
+</div>
 
 <!-- Delete Modal -->
-
-<!-- Change Status Modal -->
-   <div id="myModal2" class=" modal fade " role="dialog">
-                                    <form id="form_changestatus" name="form_changestatus">
-<div class="modal-dialog ">
-
-   <div class="modal-content">
-        <div class="modal-header">
-
-         
-  
-  <h4 class="modal-title">Change Status</h4>
-  <button type="button" class="close" style="margin-top: -1.5em;" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-</div>
-      <span id='cal_error'></span>
-
-      <input type="hidden" name="status_id" id='status_id'>
-
-      <div class="modal-body">
-     
-                     <div class="col-md-12">
-                    
-                     <div class="form-group">
-                                 <label class="col-sm-4"><b>Status </b></label>
-                                 <div class="col-md-6 inputGroupContainer">
-                                 <select  name="quote_status" id="quote_status" class="form-control"><option disabled>select</option><option value="1">Pending</option><option value="2" selected>Confirm</option><option value="3">Cancel</option></select>
-                                 </div>
-                              </div>
-
-                  </div>
-       
-      </div>
-      <div class="modal-footer">
-         <button class="btn btn-primary" id="changestatuainfo">OK</button>
-
-         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-      </div>
-   </div>
-
-</div>
-                                    </form>
-</div>
-<!-- Change Status Modal -->
-</div>
-
-
 
 
 
