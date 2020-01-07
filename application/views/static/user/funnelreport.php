@@ -1,7 +1,12 @@
 <div class="container">
+<?php if ($user_permission){?>
+    <?php if (in_array('exportFunnelReport', $user_permission)) { ?>
+  
+   
 <form method="post" action="<?php echo base_url(); ?>Export/action">
 <button type="submit" id="btnExport" name="btnExport" class="btn btn-primary pull-right">Export</button>
 </form>
+<?php } }?>
   <h3>Funnel Report</h3><br>
   <input type="hidden" name="alert_msg" id='alert_msg' value="<?php echo $this->session->flashdata('msglp'); ?>">
 

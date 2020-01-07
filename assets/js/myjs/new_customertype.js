@@ -1,5 +1,8 @@
 $(document).ready(function() {
     var table_name = "customer_type";
+    var Createflag = 0;
+    var editflag = 0;
+    var delflag = 0;
     var validate = 0;
 
 
@@ -11,6 +14,7 @@ $(document).ready(function() {
 
 
         var id = $('#save_update').val();
+
 
         if (validate == 0) {
             $.ajax({
@@ -62,6 +66,18 @@ $(document).ready(function() {
 
     //	function show data table
     function show_master() {
+        for (var j = 0; j < arrayFromPHP.length; j++) {
+
+            if (arrayFromPHP[j] == "editCustomerType") {
+                editflag = 1;
+            }
+            if (arrayFromPHP[j] == "deleteCustomerType") {
+                delflag = 1;
+            }
+            if (arrayFromPHP[j] == "createCustomerType") {
+                Createflag = 1;
+            }
+        }
 
         $.ajax({
             type: 'POST',
@@ -94,9 +110,17 @@ $(document).ready(function() {
                         '<td id="id_' + data[i].id + '">' + sr + '</td>' +
                         '<td id="name_' + data[i].id + '">' + data[i].customer_type + '</td>' +
                         //'<td><button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="' + data[i].id + '" value="' + data[i].id + '" ><i class="fa fa-edit"></i></button></td>' +
-                        '<td><button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="' + data[i].id + '"  ><i class="fa fa-edit"></i></button>&nbsp;<button name="delete" value="Delete" class="delete_data btn btn-xs btn-danger" id=' +
-                        data[i].id + '><i class="fa fa-trash"></i></button></td>' +
-                        '</tr>';
+
+
+                        '<td>';
+                    if (editflag == 1) {
+                        html += '<button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="' + data[i].id + '"  ><i class="fa fa-edit"></i></button>&nbsp;';
+                    }
+                    if (delflag == 1) {
+                        html += '<button name="delete" value="Delete" class="delete_data btn btn-xs btn-danger" id=' +
+                            data[i].id + '><i class="fa fa-trash"></i></button>';
+                    }
+                    html += '</td></tr>';
                 }
 
                 html += '</tbody></table>';

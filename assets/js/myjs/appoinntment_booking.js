@@ -5,7 +5,7 @@ $(document).ready(function() {
     $(document).on("submit", "#appimont_form", function(e) {
         e.preventDefault();
 
-        
+
 
         var ap_cal_id = $('#ap_cal_id').val();
         var id = $('#save_update').val();
@@ -19,90 +19,90 @@ $(document).ready(function() {
         // if(id !=""){
         //     var tdateAr = l_date.split('/');
         //     l_date = tdateAr[2] + '-' + tdateAr[1] + '-' + tdateAr[0];
-   
+
         // }
-      
-        if(validate==0){
 
-        var id = $('#save_update').val();
-        studejsonObj = [];
-        $(".addcontactinfo").each(function() {
-            var id1 = $(this).attr('id');
-            console.log(id1);
+        if (validate == 0) {
 
-            id1 = id1.split("_");
+            var id = $('#save_update').val();
+            studejsonObj = [];
+            $(".addcontactinfo").each(function() {
+                var id1 = $(this).attr('id');
+                console.log(id1);
 
-
-            student = {};
-
-            var contactname = $('#contactname_' + id1[1]).val();
-            var designation = $('#designation_' + id1[1]).val();
-            var email = $('#email_' + id1[1]).val();
-            var mobile = $('#mobile_' + id1[1]).val();
-            var landline = $('#landline_' + id1[1]).val();
-
-            if(contactname !=""){
-
-            console.log("contactname" + contactname + "designation" + designation + "email" + email + "mobile" + mobile + "" + landline)
-
-            student["contactname"] = contactname;
-            student["designation"] = designation;
-            student["email"] = email;
-            student["mobile"] = mobile;
-            student["landline"] = landline;
-
-            studejsonObj.push(student);
-            }
-
-        });
+                id1 = id1.split("_");
 
 
+                student = {};
 
-        $.ajax({
-            type: "POST",
-            url: baseurl + "NewAccountcontroller/save_settings",
-            dataType: "JSON",
-            async: false,
-            data: {
-                id: id,
-                l_date: l_date,
-                cname: cname,
-                customer_type: customer_type,
-                category: category,
-                employees: employees,
-                requirement: requirement,
-                remark: remark,
-                studejsonObj: studejsonObj,
-                table_name: table_name,
-            },
-            success: function(data) {
-                console.log(data);
-                if (data == true) {
-                    $.notify({
-                        title: '',
-                        message: '<strong>Data saved successfully</strong>'
-                    }, {
-                        type: 'success'
-                    });
+                var contactname = $('#contactname_' + id1[1]).val();
+                var designation = $('#designation_' + id1[1]).val();
+                var email = $('#email_' + id1[1]).val();
+                var mobile = $('#mobile_' + id1[1]).val();
+                var landline = $('#landline_' + id1[1]).val();
 
-                    form_clear();
-                    show_master();
-                    $('.btnhideshow').hide();
-                  $('.tablehideshow').show();
+                if (contactname != "") {
 
-                } else {
-                    errorTost("Data Cannot Save");
+                    console.log("contactname" + contactname + "designation" + designation + "email" + email + "mobile" + mobile + "" + landline)
+
+                    student["contactname"] = contactname;
+                    student["designation"] = designation;
+                    student["email"] = email;
+                    student["mobile"] = mobile;
+                    student["landline"] = landline;
+
+                    studejsonObj.push(student);
                 }
-            }
-        });
-    }else{
-        $.notify({
-            title: '',
-            message: '<strong> Customer Name Already Exists</strong>'
-        }, {
-            type: 'success'
-        });
-    }
+
+            });
+
+
+
+            $.ajax({
+                type: "POST",
+                url: baseurl + "NewAccountcontroller/save_settings",
+                dataType: "JSON",
+                async: false,
+                data: {
+                    id: id,
+                    l_date: l_date,
+                    cname: cname,
+                    customer_type: customer_type,
+                    category: category,
+                    employees: employees,
+                    requirement: requirement,
+                    remark: remark,
+                    studejsonObj: studejsonObj,
+                    table_name: table_name,
+                },
+                success: function(data) {
+                    console.log(data);
+                    if (data == true) {
+                        $.notify({
+                            title: '',
+                            message: '<strong>Data saved successfully</strong>'
+                        }, {
+                            type: 'success'
+                        });
+
+                        form_clear();
+                        show_master();
+                        $('.btnhideshow').hide();
+                        $('.tablehideshow').show();
+
+                    } else {
+                        errorTost("Data Cannot Save");
+                    }
+                }
+            });
+        } else {
+            $.notify({
+                title: '',
+                message: '<strong> Customer Name Already Exists</strong>'
+            }, {
+                type: 'success'
+            });
+        }
 
     });
     /*---------insert data into area_master end-----------------*/
@@ -115,7 +115,7 @@ $(document).ready(function() {
 
     //	function show data table
     function show_master() {
-       
+
         $.ajax({
             type: 'POST',
             url: baseurl + "NewAccountcontroller/get_master",
@@ -125,7 +125,7 @@ $(document).ready(function() {
             },
             dataType: 'json',
             success: function(data) {
-               
+
                 var html = '';
                 html += '<table class="table table-striped">' +
                     '<thead>' +
@@ -152,10 +152,10 @@ $(document).ready(function() {
                     var date = "";
 
                     var tdateAr = data[i].date.split('-');
-                     date = tdateAr[2] + '/' + tdateAr[1] + '/' + tdateAr[0];
+                    date = tdateAr[2] + '/' + tdateAr[1] + '/' + tdateAr[0];
                     html += '<tr>' +
-                        '<td id="date1_' + data[i].id + '">' +  date + '</td>' +
-                        '<td style="display:none;" id="date_' + data[i].id + '">' +  data[i].date + '</td>' +
+                        '<td id="date1_' + data[i].id + '">' + date + '</td>' +
+                        '<td style="display:none;" id="date_' + data[i].id + '">' + data[i].date + '</td>' +
                         '<td id="categorytype_' + data[i].id + '">' + data[i].categorytype + '</td>' +
                         '<td style="display:none;" id="category_id' + data[i].id + '">' + data[i].category_id + '</td>' +
                         '<td id="customer_name_' + data[i].id + '">' + data[i].customer_name + '</td>' +
@@ -166,6 +166,8 @@ $(document).ready(function() {
                         '<td style="display:none;" id="remark_' + data[i].id + '">' + data[i].remark + '</td>' +
 
                         //'<td><button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="' + data[i].id + '" value="' + data[i].id + '" ><i class="fa fa-edit"></i></button></td>' +
+
+
                         '<td><button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="' + data[i].id + '"  ><i class="fa fa-edit"></i></button>&nbsp;<button name="delete" value="Delete" class="delete_data btn btn-xs btn-danger" id=' +
                         data[i].id + '><i class="fa fa-trash"></i></button></td>' +
                         '</tr>';
@@ -187,9 +189,9 @@ $(document).ready(function() {
 
     function form_clear() {
 
-       
+
         $('#save_update').val('');
-       
+
 
 
         $('#date').val('');
@@ -224,9 +226,9 @@ $(document).ready(function() {
         var requirement_ = $('#requirement_' + id1).html();
         var remark_ = $('#remark_' + id1).html();
 
-        
 
-        
+
+
         $('.ldate').val(date);
 
         $('#cname').val(customer_name);
@@ -255,24 +257,24 @@ $(document).ready(function() {
                         row_id = parseInt(row_id) + 1;
                         var html = '<tr  class="addcontactinfo"  id="addcontactinfo_' + row_id + '" >' +
                             '<td>' +
-                            '<div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input id="contactname_' + row_id + '" name="contactname_' + row_id + '" placeholder="Contact Name" value="'+data[i].contact_name+'" class="form-control "  maxlength="20"  type="text"  ></div>' +
+                            '<div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input id="contactname_' + row_id + '" name="contactname_' + row_id + '" placeholder="Contact Name" value="' + data[i].contact_name + '" class="form-control "  maxlength="20"  type="text"  ></div>' +
 
                             '</td>' +
 
                             '<td>' +
-                            '<div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-briefcase"></i></span><input id="designation_' + row_id + '" name="designation_' + row_id + '" placeholder="Designation" class="form-control " value="'+data[i].designation+'" type="text" maxlength="20"></div><span class="job1"></span></div>' +
+                            '<div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-briefcase"></i></span><input id="designation_' + row_id + '" name="designation_' + row_id + '" placeholder="Designation" class="form-control " value="' + data[i].designation + '" type="text" maxlength="20"></div><span class="job1"></span></div>' +
                             '</td>' +
 
                             '<td>' +
-                            '<div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span><input id="email_' + row_id + '" name="email_' + row_id + '" placeholder="Email" class="form-control" value="'+data[i].email_id+'" type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"></div><span class="email1"></span></div>' +
+                            '<div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span><input id="email_' + row_id + '" name="email_' + row_id + '" placeholder="Email" class="form-control" value="' + data[i].email_id + '" type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"></div><span class="email1"></span></div>' +
                             '</td>' +
 
                             '<td>' +
-                            '<div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span><input type="number" id="mobile_' + row_id + '" name="mobile_' + row_id + '" placeholder="Phone Number" class="form-control phn small-input"  value="'+data[i].mobile_no+'" pattern="[0-9]{10}" type="number" ></div><span class="phn1"></span></div>' +
+                            '<div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span><input type="number" id="mobile_' + row_id + '" name="mobile_' + row_id + '" placeholder="Phone Number" class="form-control phn small-input"  value="' + data[i].mobile_no + '" pattern="[0-9]{10}" type="number" ></div><span class="phn1"></span></div>' +
                             '</td>' +
 
                             '<td>' +
-                            '<div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span><input type="number" id="landline_' + row_id + '" name="landline_' + row_id + '" placeholder="Land line" class="form-control  small-input" value="'+data[i].lead_line+'"  pattern="[0-9]" type="number" ></div><span class="phn1"></span></div>' +
+                            '<div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span><input type="number" id="landline_' + row_id + '" name="landline_' + row_id + '" placeholder="Land line" class="form-control  small-input" value="' + data[i].lead_line + '"  pattern="[0-9]" type="number" ></div><span class="phn1"></span></div>' +
                             '</td>' +
 
                             '<td>&nbsp;<button  class="proff_delete_data btn btn-xs btn-danger"   id="addcontactinfo_' + row_id + '" title="Remove Section !!!" ><i class="fa fa-trash"></i></button></td>' +
@@ -440,7 +442,7 @@ $(document).ready(function() {
         form_clear();
     });
 
-    
+
 
     //for getting dropdown---
     getMasterSelect("customer_type", "#customer_type", " status = '1'");

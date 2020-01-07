@@ -1,5 +1,6 @@
 <div class="container">
 <!-- <button class="btn btn-primary pull-right btnhide"><i class="fa fa-plus"></i>Add</button> -->
+<?php if ($user_permission){?>
 <button class="btn btn-primary pull-right closehide" style="display:none">Close</button>
    <h3> Manage Order </h3><br>
    
@@ -472,7 +473,11 @@
       </div>
    </div>
 </div>
-
+<script> 
+  var arrayFromPHP = <?php echo json_encode($user_permission); ?>;
+  console.log(arrayFromPHP);
+ </script>
+                                    <?php } ?>
 <!-- Delete Modal -->
 
 

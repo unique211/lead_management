@@ -1,6 +1,6 @@
 
 
-
+<?php if ($user_permission){?>
  <div class="container">
       <h3>Category Type Creation</h3><br>
          <input type="hidden" name="alert_msg" id='alert_msg' value="<?php echo $this->session->flashdata('msglp'); ?>">
@@ -80,6 +80,11 @@
   </div>
 </div>
 </div>
+<?php } ?>
+<script> 
+  var arrayFromPHP = <?php echo json_encode($user_permission); ?>;
+  console.log(arrayFromPHP);
+ </script>
 
 
    <!--   <script src='https://code.jquery.com/jquery-1.12.4.min.js'></script>

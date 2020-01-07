@@ -62,7 +62,7 @@
         </ul>
 
         </li> -->
-                  <li ><a  href="<?php echo base_url() ?>account_create"  >All Account <span ></span></a>
+                  <li ><a  <?php if (in_array('createAccount', $user_permission)) : ?> href="<?php echo base_url() ?>account_create"  <?php endif; ?>>All Account <span ></span></a>
 
                     <!-- <ul class="dropdown-menu">
                       <?php if (in_array('createLead', $user_permission)) : ?>
@@ -73,7 +73,7 @@
                     <!-- </ul> --> 
 
                   </li>
-               
+                <?php endif; ?>
                 <?php if (in_array('createAppointment', $user_permission) || in_array('editAppointment', $user_permission) || in_array('deleteAppointment', $user_permission)) : ?>
                   <li><a class="dropdown-toggle" data-toggle="dropdown" href="#">Appointments <span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -82,49 +82,37 @@
                       <?php endif; ?>
                       <?php if (in_array('editAppointment', $user_permission) || in_array('deleteAppointment', $user_permission)) : ?>
                         <li><a href="<?php echo base_url() ?>manage_appointment">Manage Appointment</a></li> <?php endif; ?>
-                       <?php if (in_array('createLead', $user_permission) || in_array('editLead', $user_permission) || in_array('deleteLead', $user_permission)) : ?> 
+                       <?php if (in_array('createLead', $user_permission) || in_array('editLead', $user_permission) || in_array('deleteLead', $user_permission)) : ?>
                         <!--  <li class=""><a href="view_appointments">view appointments</a></li> -->
                         <li class=""><a href="<?php echo base_url() ?>google_appointments"> View Appointments</a></li>
-                        <?php endif; ?>
-                      </ul>
+                    </ul>
                   </li>
                 <?php endif; ?>
 
-                <?php if (in_array('createQuotation', $user_permission) || in_array('editQuotation', $user_permission) || in_array('deleteQuotation', $user_permission) || in_array('createOrder', $user_permission) || in_array('deleteOrder', $user_permission) || in_array('editOrder', $user_permission) )  : ?>
+
                 <li><a class="dropdown-toggle" data-toggle="dropdown" href="#">Quotes & Orders<span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                  <?php if (in_array('createQuotation', $user_permission) || in_array('editQuotation', $user_permission) || in_array('deleteQuotation', $user_permission)) :?>
+
                     <li><a href="<?php echo base_url() ?>quotation">Quotation</a></li>
-                    <?php endif; ?>
-                    <?php if(in_array('createOrder', $user_permission) || in_array('deleteOrder', $user_permission) || in_array('editOrder', $user_permission) )  :  ?>
                     <li><a href="<?php echo base_url() ?>manageorder">Order</a></li>
-                    <?php endif; ?>
+
 
                     <!-- <li><a href="manage_appointment">Manage Appointment</a></li>  -->
                   </ul>
                 </li>
-                <?php endif; ?>
 
-                <?php if (in_array('createFunnelReport', $user_permission) || in_array('exportFunnelReport', $user_permission) || in_array('createWonReport', $user_permission) || in_array('exportWonReport', $user_permission) || in_array('createLostReport', $user_permission) || in_array('exportLostReport', $user_permission) || in_array('createCustomerReport', $user_permission) || in_array('exportCustomerReport', $user_permission) )  : ?>
                 <li><a class="dropdown-toggle" data-toggle="dropdown" href="#">Report<span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                  <?php if (in_array('createFunnelReport', $user_permission) || in_array('exportFunnelReport', $user_permission)): ?>
+
                     <li><a href="<?php echo base_url() ?>funnelreport">Funnel</a></li>
-                    <?php endif; ?>
-                    <?php if (in_array('createWonReport', $user_permission) || in_array('exportWonReport', $user_permission)): ?>
                     <li><a href="<?php echo base_url() ?>wonreport">Won</a></li>
-                    <?php endif; ?>
-                    <?php if (in_array('createLostReport', $user_permission) || in_array('exportLostReport', $user_permission)): ?>
                     <li><a href="<?php echo base_url() ?>lostreport">Lost</a></li>
-                    <?php endif; ?>
-                    <?php if (in_array('createCustomerReport', $user_permission) || in_array('exportCustomerReport', $user_permission)): ?>
                     <li><a href="<?php echo base_url() ?>customerreport">Customer</a></li>
-                    <?php endif; ?>
+
 
                     <!-- <li><a href="manage_appointment">Manage Appointment</a></li>  -->
                   </ul>
                 </li>
-                <?php endif; ?>
 
                 <!-- manage -->
                 <?php if (in_array('createLeadType', $user_permission) || in_array('editLeadType', $user_permission) || in_array('deleteLeadType', $user_permission) || in_array('createUser', $user_permission) || in_array('editUser', $user_permission) || in_array('deleteUser', $user_permission) || in_array('createDealer', $user_permission) || in_array(

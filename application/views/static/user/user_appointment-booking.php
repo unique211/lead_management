@@ -4,7 +4,10 @@
 
  <div class="container">
    <br>
+   <?php if ($user_permission){?>
+    <?php if (in_array('createAccount', $user_permission)) { ?>
    <button class="btn btn-primary pull-right btnhide"><i class="fa fa-plus"></i>Add</button>
+   <?php }?>
    <button class="btn btn-primary pull-right closehide" style="display:none">Close</button>
    <br>
    <h3 id="setaccounttext">All Account</h3>
@@ -225,6 +228,11 @@
      </div>
    </div>
  </div>
+ <script> 
+  var arrayFromPHP = <?php echo json_encode($user_permission); ?>;
+  console.log(arrayFromPHP);
+ </script>
+ <?php }?>
  <script src="assets/js/bootstrap-notify.js"></script>
  <script src="assets/js/bootstrap-notify.min.js"></script>
  

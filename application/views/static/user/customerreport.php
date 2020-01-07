@@ -1,4 +1,7 @@
+<?php if ($user_permission){?>
+    <?php if (in_array('exportCustomerReport', $user_permission)) { ?>
 <div class="container">
+
 <form method="post" action="<?php echo base_url(); ?>Customerreportexcle/action">
 <button type="submit" id="btnExport" name="btnExport" class="btn btn-primary pull-right">Export</button>
 </form>
@@ -6,6 +9,7 @@
     <input type="hidden" name="alert_msg" id='alert_msg' value="<?php echo $this->session->flashdata('msglp'); ?>">
 
 </div>
+<?php } }?>
 <div class="container">
 
     <input type="hidden" name="alert_msg" id='alert_msg' value="<?php echo $this->session->flashdata('msglp'); ?>">

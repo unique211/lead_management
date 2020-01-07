@@ -39,6 +39,7 @@
                     <th>Create</th>
                     <th>Edit</th>
                     <th>Delete</th>
+                    <th>Export</th>
                 </tr>
               </thead>
               <tbody>
@@ -58,6 +59,10 @@
                     <td><?php  if(in_array('deletePermissions', $user_permission)){?>
                       <input type="checkbox" name="permission[]" id="permission" value="delete<?php echo  $key['page_name']; ?>">
                       <?php } ?>
+                    </td>
+                    <td><?php ?>
+                      <input type="checkbox" name="permission[]" id="permission" value="export<?php echo  $key['page_name']; ?>">
+                      <?php //} ?>
                     </td>
                   </tr>
                 <?php 
@@ -83,6 +88,8 @@
           xmlhttp.open('GET', weblink+"edit_page_access/"+utype, false);
           xmlhttp.send(null); 
           str=xmlhttp.responseText;
+
+          //alert(str);
           str=str.replace(/^\s*([\S\s]*)\b\s*$/, '$1');
           //  alert(str);
             //var sp=$.parseJSON(str);

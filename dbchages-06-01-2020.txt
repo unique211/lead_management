@@ -2,3 +2,29 @@
 table name:new_account
 
 ALTER TABLE `new_account` ADD `address` VARCHAR(255) NOT NULL AFTER `no_of_employee`;
+
+
+
+page_names:-
+
+
+UPDATE `page_names` SET `page_name` = 'Account' WHERE `page_names`.`id` = 1;
+
+INSERT INTO `page_names` (`id`, `page_name`) VALUES ('9', 'Quotation'), ('10', 'Order');
+INSERT INTO `page_names` (`id`, `page_name`) VALUES ('11', 'Funnel'), ('12', 'Won');
+INSERT INTO `page_names` (`id`, `page_name`) VALUES ('13', 'Lost'), ('14', 'Customer')
+
+UPDATE `page_names` SET `page_name` = 'FunnelReport' WHERE `page_names`.`id` = 11;
+UPDATE `page_names` SET `page_name` = 'WonReport' WHERE `page_names`.`id` = 12;
+UPDATE `page_names` SET `page_name` = 'LostReport' WHERE `page_names`.`id` = 13;
+UPDATE `page_names` SET `page_name` = 'CustomerReport' WHERE `page_names`.`id` = 14;
+
+UPDATE `page_names` SET `id` = '13' WHERE `page_names`.`id` = 14;
+UPDATE `page_names` SET `id` = '12' WHERE `page_names`.`id` = 13;
+UPDATE `page_names` SET `id` = '11' WHERE `page_names`.`id` = 12;
+UPDATE `page_names` SET `id` = '10' WHERE `page_names`.`id` = 11;
+UPDATE `page_names` SET `id` = '9' WHERE `page_names`.`id` = 10;
+UPDATE `page_names` SET `id` = '8' WHERE `page_names`.`id` = 9;
+UPDATE `page_names` SET `id` = '7' WHERE `page_names`.`id` = 8;
+UPDATE `page_names` SET `id` = '6' WHERE `page_names`.`id` = 7;
+UPDATE `page_names` SET `id` = '5' WHERE `page_names`.`id` = 6;

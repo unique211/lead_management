@@ -1,5 +1,9 @@
 <div class="container">
+<?php if ($user_permission){?>
+    <?php if (in_array('createQuotation', $user_permission)) { ?>
 <button class="btn btn-primary pull-right btnhide"><i class="fa fa-plus"></i>Add</button>
+
+<?php }?>
 <button class="btn btn-primary pull-right closehide" style="display:none">Close</button>
    <h3>Quotation / Estimate</h3><br>
    
@@ -439,7 +443,11 @@
    </table>
 
 </div>
-
+<script> 
+  var arrayFromPHP = <?php echo json_encode($user_permission); ?>;
+  console.log(arrayFromPHP);
+ </script>
+<?php } ?>
    <!-- Delete Modal -->
    <div id="myModal1" class=" modal fade " role="dialog">
 
