@@ -1,6 +1,7 @@
 $(document).ready(function() {
     var table_name = "category_type";
     var validate = 0;
+    var Createflag = 0;
     /*---------insert data into area_master start-----------------*/
     $(document).on("submit", "#category_type", function(e) {
         e.preventDefault();
@@ -34,6 +35,10 @@ $(document).ready(function() {
 
                         form_clear();
                         show_master();
+                        if (Createflag != 1) {
+
+                            $("#btnsave").attr("disabled", "disabled");
+                        }
 
                     } else {
                         errorTost("Data Cannot Save");
@@ -50,6 +55,7 @@ $(document).ready(function() {
         }
 
     });
+
     /*---------insert data into area_master end-----------------*/
 
 
@@ -70,7 +76,11 @@ $(document).ready(function() {
             if (arrayFromPHP[j] == "deleteCategoryType") {
                 delflag = 1;
             }
+            if (arrayFromPHP[j] == "createCategoryType") {
+                Createflag = 1;
+            }
         }
+
 
         $.ajax({
             type: 'POST',
@@ -119,11 +129,13 @@ $(document).ready(function() {
 
                 html += '</tbody></table>';
                 $('#show_master').html(html);
-                $('#myTable').DataTable({});
+                //$('#myTable').DataTable({});
             }
 
         });
     }
+
+
 
     /*---------get data into area_master end-----------------*/
 
@@ -147,6 +159,10 @@ $(document).ready(function() {
         e.preventDefault();
 
         var id1 = $(this).attr('id');
+        if (Createflag != 1) {
+
+            $("#btnsave").removeAttr("disabled");
+        }
 
 
         var name = $('#name_' + id1).html();
@@ -159,7 +175,10 @@ $(document).ready(function() {
 
 
     });
+    if (Createflag != 1) {
 
+        $("#btnsave").attr("disabled", "disabled");
+    }
     /*---------get  area_master  end-----------------*/
     /*---------delete  area_master  start-----------------*/
 

@@ -29,7 +29,7 @@
                             </div>
                          </div>
                                            
-                        <tr><td><input type="submit" class="btn btn-primary" 
+                        <tr><td><input type="submit" id="btnsave"  class="btn btn-primary" 
                           name="submit" value="Save" ></td>
                           <td>
                             <input type="hidden" id="save_update" name="save_update" value="">
@@ -80,11 +80,12 @@
   </div>
 </div>
 </div>
-<?php } ?>
 <script> 
   var arrayFromPHP = <?php echo json_encode($user_permission); ?>;
   console.log(arrayFromPHP);
  </script>
+<?php } ?>
+
 
 
    <!--   <script src='https://code.jquery.com/jquery-1.12.4.min.js'></script>

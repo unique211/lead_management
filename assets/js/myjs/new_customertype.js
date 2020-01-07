@@ -40,6 +40,10 @@ $(document).ready(function() {
 
                         form_clear();
                         show_master();
+                        if (Createflag != 1) {
+
+                            $("#btnsave").attr("disabled", "disabled");
+                        }
 
                     } else {
                         errorTost("Data Cannot Save");
@@ -154,6 +158,11 @@ $(document).ready(function() {
 
         var id1 = $(this).attr('id');
 
+        if (Createflag != 1) {
+
+            $("#btnsave").removeAttr("disabled");
+        }
+
 
         var name = $('#name_' + id1).html();
 
@@ -212,7 +221,10 @@ $(document).ready(function() {
         });
 
     });
+    if (Createflag != 1) {
 
+        $("#btnsave").attr("disabled", "disabled");
+    }
     /*---------delete  area_master  end-----------------*/
 
     $(document).on('blur', '#customer', function() {
@@ -248,6 +260,8 @@ $(document).ready(function() {
             }
         });
     });
+
+
 
 
 });

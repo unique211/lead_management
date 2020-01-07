@@ -29,7 +29,7 @@
                             </div>
                          </div>
                         
-                        <tr><td><input type="submit" class="btn btn-primary" 
+                        <tr><td><input type="submit" id="btnsave" class="btn btn-primary" 
                           name="submit" value="Save" ></td>
                           <td>
                           <input type="hidden" id="save_update" name="save_update" value="">
