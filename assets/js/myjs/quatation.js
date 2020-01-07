@@ -927,8 +927,25 @@ $(document).ready(function() {
     });
 
     displayqutation();
+    var editflag = 0;
+    var delflag = 0;
+    var createorderflag = 0;
 
     function displayqutation() {
+
+        for (var j = 0; j < arrayFromPHP.length; j++) {
+
+            if (arrayFromPHP[j] == "editQuotation") {
+                editflag = 1;
+            }
+            if (arrayFromPHP[j] == "deleteQuotation") {
+                delflag = 1;
+            }
+            if (arrayFromPHP[j] == "createOrder") {
+                createorderflag = 1;
+            }
+
+        }
 
         $.ajax({
             type: 'POST',
@@ -1021,13 +1038,28 @@ $(document).ready(function() {
                     html += '< /td>';
 
                     if (data[i].quote_status == 1) {
-                        html += ' <td><button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="' + data[i].id + '"  ><i class="fa fa-edit"></i></button>&nbsp;<button name="delete" value="Delete" class="delete_data btn btn-xs btn-danger" id=' +
-                            data[i].id + '><i class="fa fa-trash"></i></button></td>';
-                    } else if (data[i].quote_status == 2) {
 
-                        html += '<td><button  class="getorder btn btn-sm  btn-xs  btn-primary" id="' + data[i].id + '"  ><i class="fa fa-shopping-cart"></i></button></td>';
+                        html += ' <td>';
+                        if (editflag == 1) {
+
+                            html += '<button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="' + data[i].id + '"  ><i class="fa fa-edit"></i></button>&nbsp;';
+                        }
+                        if (delflag == 1) {
+                            html += '<button name="delete" value="Delete" class="delete_data btn btn-xs btn-danger" id=' +
+                                data[i].id + '><i class="fa fa-trash"></i></button>';
+                        }
+                        html += '</td>';
+                    } else if (data[i].quote_status == 2) {
+                        if (createorderflag == 1) {
+                            html += '<td><button  class="getorder btn btn-sm  btn-xs  btn-primary" id="' + data[i].id + '"  ><i class="fa fa-shopping-cart"></i></button></td>';
+                        } else {
+                            html += "<td>-</td>";
+                        }
+
+
                     } else {
-                        html += "-";
+                        // html += "-";
+                        html += "<td>-</td>";
                     }
 
                     html += '</tr>';

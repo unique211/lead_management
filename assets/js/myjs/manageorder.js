@@ -869,8 +869,21 @@ $(document).ready(function() {
     });
 
     displayqutation();
+    var editflag = 0;
+    var delflag = 0;
 
     function displayqutation() {
+        for (var j = 0; j < arrayFromPHP.length; j++) {
+
+            if (arrayFromPHP[j] == "editOrder") {
+                editflag = 1;
+            }
+            if (arrayFromPHP[j] == "deleteOrder") {
+                delflag = 1;
+            }
+
+
+        }
 
         $.ajax({
             type: 'POST',
@@ -958,10 +971,19 @@ $(document).ready(function() {
                         '<td style="display:none;" id="salesrepresentative_' + data[i].id + '">' + data[i].salesrepresentative + '</td>' +
                         '<td style="display:none;" id="customerid_' + data[i].id + '">' + data[i].customer_id + '</td>' +
 
+                        '<td>';
+                    if (editflag == 1) {
+                        html += '<button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="edit_' + data[i].id + '"  ><i class="fa fa-edit"></i></button>&nbsp;';
+                    }
+                    if (delflag == 1) {
+                        html += '<button name="delete" value="Delete" class="delete_data btn btn-xs btn-danger" id=' + data[i].id + '><i class="fa fa-trash"></i></button>';
+                    }
+                    if (editflag != 1 && delflag != 1) {
 
+                        html += '-';
+                    }
 
-                        ' <td><button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="edit_' + data[i].id + '"  ><i class="fa fa-edit"></i></button>&nbsp;<button name="delete" value="Delete" class="delete_data btn btn-xs btn-danger" id=' +
-                        data[i].id + '><i class="fa fa-trash"></i></button></td>';
+                    html += '</td>';
 
 
 

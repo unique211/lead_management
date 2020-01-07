@@ -56,10 +56,21 @@ $(document).ready(function() {
     /*---------get data into area_master start-----------------*/
 
     show_master(); //call function show data table
-
+    var editflag = 0;
+    var delflag = 0;
 
     //	function show data table
     function show_master() {
+
+        for (var j = 0; j < arrayFromPHP.length; j++) {
+
+            if (arrayFromPHP[j] == "editCategoryType") {
+                editflag = 1;
+            }
+            if (arrayFromPHP[j] == "deleteCategoryType") {
+                delflag = 1;
+            }
+        }
 
         $.ajax({
             type: 'POST',
@@ -92,9 +103,18 @@ $(document).ready(function() {
                         '<td id="id_' + data[i].id + '">' + sr + '</td>' +
                         '<td id="name_' + data[i].id + '">' + data[i].category_type + '</td>' +
                         //'<td><button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="' + data[i].id + '" value="' + data[i].id + '" ><i class="fa fa-edit"></i></button></td>' +
-                        '<td><button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="' + data[i].id + '"  ><i class="fa fa-edit"></i></button>&nbsp;<button name="delete" value="Delete" class="delete_data btn btn-xs btn-danger" id=' +
-                        data[i].id + '><i class="fa fa-trash"></i></button></td>' +
-                        '</tr>';
+                        '<td>';
+                    if (editflag == 1) {
+                        html += ' <button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="' + data[i].id + '"  ><i class="fa fa-edit"></i></button>&nbsp;';
+                    }
+                    if (delflag == 1) {
+                        html += ' <button name="delete" value="Delete" class="delete_data btn btn-xs btn-danger" id=' +
+                            data[i].id + '><i class="fa fa-trash"></i></button>';
+                    }
+                    if (delflag != 1 && editflag != 1) {
+                        html += '-';
+                    }
+                    html += '</td></tr>';
                 }
 
                 html += '</tbody></table>';

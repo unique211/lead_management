@@ -166,6 +166,8 @@ $(document).ready(function() {
                         '<td style="display:none;" id="remark_' + data[i].id + '">' + data[i].remark + '</td>' +
 
                         //'<td><button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="' + data[i].id + '" value="' + data[i].id + '" ><i class="fa fa-edit"></i></button></td>' +
+
+
                         '<td><button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="' + data[i].id + '"  ><i class="fa fa-edit"></i></button>&nbsp;<button name="delete" value="Delete" class="delete_data btn btn-xs btn-danger" id=' +
                         data[i].id + '><i class="fa fa-trash"></i></button></td>' +
                         '</tr>';

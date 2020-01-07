@@ -108,18 +108,12 @@
                 <?php if (in_array('createFunnelReport', $user_permission) || in_array('exportFunnelReport', $user_permission) || in_array('createWonReport', $user_permission) || in_array('exportWonReport', $user_permission) || in_array('createLostReport', $user_permission) || in_array('exportLostReport', $user_permission) || in_array('createCustomerReport', $user_permission) || in_array('exportCustomerReport', $user_permission) )  : ?>
                 <li><a class="dropdown-toggle" data-toggle="dropdown" href="#">Report<span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                  <?php if (in_array('createFunnelReport', $user_permission) || in_array('exportFunnelReport', $user_permission)): ?>
+
                     <li><a href="<?php echo base_url() ?>funnelreport">Funnel</a></li>
-                    <?php endif; ?>
-                    <?php if (in_array('createWonReport', $user_permission) || in_array('exportWonReport', $user_permission)): ?>
                     <li><a href="<?php echo base_url() ?>wonreport">Won</a></li>
-                    <?php endif; ?>
-                    <?php if (in_array('createLostReport', $user_permission) || in_array('exportLostReport', $user_permission)): ?>
                     <li><a href="<?php echo base_url() ?>lostreport">Lost</a></li>
-                    <?php endif; ?>
-                    <?php if (in_array('createCustomerReport', $user_permission) || in_array('exportCustomerReport', $user_permission)): ?>
                     <li><a href="<?php echo base_url() ?>customerreport">Customer</a></li>
-                    <?php endif; ?>
+
 
                     <!-- <li><a href="manage_appointment">Manage Appointment</a></li>  -->
                   </ul>

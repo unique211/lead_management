@@ -39,7 +39,7 @@
                     <th>Create</th>
                     <th>Edit</th>
                     <th>Delete</th>
-                    <th>Import</th>
+                    <th>Export</th>
                 </tr>
               </thead>
               <tbody>
@@ -61,7 +61,7 @@
                       <?php } ?>
                     </td>
                     <td><?php ?>
-                      <input type="checkbox" name="permission[]" id="permission" value="import<?php echo  $key['page_name']; ?>">
+                      <input type="checkbox" name="permission[]" id="permission" value="export<?php echo  $key['page_name']; ?>">
                       <?php //} ?>
                     </td>
                   </tr>

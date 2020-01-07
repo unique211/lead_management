@@ -1,7 +1,7 @@
 <div class="container">
 <?php if ($user_permission){?>
-    <?php if (in_array('importFunnelReport', $user_permission)) { ?>
-   <button class="btn btn-primary pull-right btnhide"><i class="fa fa-plus"></i>Add</button>
+    <?php if (in_array('exportFunnelReport', $user_permission)) { ?>
+  
    
 <form method="post" action="<?php echo base_url(); ?>Export/action">
 <button type="submit" id="btnExport" name="btnExport" class="btn btn-primary pull-right">Export</button>
