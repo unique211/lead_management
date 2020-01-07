@@ -36,10 +36,10 @@
               <thead>
                 <tr>
                     <th>Page Name</th>
-                    <th>Create</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                    <th>Export</th>
+                    <th><input type="checkbox" id="createpermisson" class="selectall">  Create</th>
+                    <th><input type="checkbox" id="editpermission" class="selectall"> Edit</th>
+                    <th><input type="checkbox" id="deletepermission" class="selectall"> Delete</th>
+                    <th><input type="checkbox" id="exportpermission" class="selectall"> Export</th>
                 </tr>
               </thead>
               <tbody>
@@ -49,19 +49,19 @@
                   <tr>
                     <td><label><?php echo  $key['page_name']; ?></label></td>
                     <td><?php  if(in_array('createPermissions', $user_permission)){?>
-                      <input type="checkbox" style="" name="permission[]" id="permission" value="create<?php echo  $key['page_name']; ?>" >
+                      <input type="checkbox" class="createpermisson" style="" name="permission[]" id="permission" value="create<?php echo  $key['page_name']; ?>" >
                        <?php } ?>
                     </td>
                     <td><?php  if(in_array('editPermissions', $user_permission)){?>
-                      <input type="checkbox" name="permission[]" id="permission" value="edit<?php echo  $key['page_name']; ?>" >
+                      <input type="checkbox" class="editpermission" name="permission[]" id="permission" value="edit<?php echo  $key['page_name']; ?>" >
                       <?php } ?>
                     </td>
                     <td><?php  if(in_array('deletePermissions', $user_permission)){?>
-                      <input type="checkbox" name="permission[]" id="permission" value="delete<?php echo  $key['page_name']; ?>">
+                      <input type="checkbox" class="deletepermission" name="permission[]" id="permission" value="delete<?php echo  $key['page_name']; ?>">
                       <?php } ?>
                     </td>
                     <td><?php ?>
-                      <input type="checkbox" name="permission[]" id="permission" value="export<?php echo  $key['page_name']; ?>">
+                      <input type="checkbox" class="exportpermission" name="permission[]" id="permission" value="export<?php echo  $key['page_name']; ?>">
                       <?php //} ?>
                     </td>
                   </tr>
@@ -128,6 +128,24 @@
            /* var s=$.parseJSON(str);
             console.log(str);*/
         }
+        $(document).ready(function() {
+          //change event of checkbox
+
+          $(document).on('change', '.selectall', function() {
+           var id=  $(this).attr('id');
+           if($('#'+id).prop("checked") == true){
+            $('.'+id).prop('checked', true);
+           }else{
+            $('.'+id).prop('checked', false);
+           }
+          });
+
+
+});
+
+
+
+        
  
     </script>
          <script src="assets/js/bootstrap-notify.js"></script>
