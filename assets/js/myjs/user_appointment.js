@@ -112,7 +112,7 @@ $(document).ready(function() {
 
                         $.notify({
                             title: '',
-                            message: '<strong>Empty Row Found !!/strong>'
+                            message: '<strong>Atleast One Contact Information is Required!!</strong>'
                         }, {
                             type: 'success'
                         });
@@ -172,7 +172,7 @@ $(document).ready(function() {
                 } else {
                     $.notify({
                         title: '',
-                        message: '<strong> Mobile No OR Email OR Land line Already Exists</strong>'
+                        message: '<strong>Dublicate Mobile No OR Email OR Land line Already Exists In  </strong>'
                     }, {
                         type: 'success'
                     });
@@ -325,7 +325,7 @@ $(document).ready(function() {
 
 
 
-        $('#date').val('');
+        //$('#date').val('');
 
         $('#cname').val('');
         $('#customer_type').val('').trigger('change');
@@ -683,6 +683,8 @@ $(document).ready(function() {
                     }
                 }
             });
+        } else {
+            checkemail = 0;
         }
     });
 
@@ -716,6 +718,8 @@ $(document).ready(function() {
                     }
                 }
             });
+        } else {
+            checkmobile = 0;
         }
     });
 
@@ -749,6 +753,8 @@ $(document).ready(function() {
                     }
                 }
             });
+        } else {
+            checklandline = 0;
         }
     });
 

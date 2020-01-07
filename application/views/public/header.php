@@ -82,7 +82,7 @@
                       <?php endif; ?>
                       <?php if (in_array('editAppointment', $user_permission) || in_array('deleteAppointment', $user_permission)) : ?>
                         <li><a href="<?php echo base_url() ?>manage_appointment">Manage Appointment</a></li> <?php endif; ?>
-                       <?php if (in_array('createLead', $user_permission) || in_array('editLead', $user_permission) || in_array('deleteLead', $user_permission)) : ?> 
+                       <?php if (in_array('editAppointment', $user_permission) || in_array('deleteAppointment', $user_permission) || in_array('createAppointment', $user_permission)) : ?> 
                         <!--  <li class=""><a href="view_appointments">view appointments</a></li> -->
                         <li class=""><a href="<?php echo base_url() ?>google_appointments"> View Appointments</a></li>
                         <?php endif; ?>
