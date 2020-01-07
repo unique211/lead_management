@@ -1,6 +1,7 @@
 <div class="container">
 <?php if ($user_permission){?>
     <?php if (in_array('createQuotation', $user_permission)) { ?>
+      <br>
 <button class="btn btn-primary pull-right btnhide"><i class="fa fa-plus"></i>Add</button>
 
 <?php }?>

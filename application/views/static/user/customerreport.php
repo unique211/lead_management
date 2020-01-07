@@ -3,6 +3,7 @@
 <div class="container">
 
 <form method="post" action="<?php echo base_url(); ?>Customerreportexcle/action">
+<br>
 <button type="submit" id="btnExport" name="btnExport" class="btn btn-primary pull-right">Export</button>
 </form>
     <h3>Customer Report</h3><br>
