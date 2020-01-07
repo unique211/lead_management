@@ -4,6 +4,7 @@
   
    
 <form method="post" action="<?php echo base_url(); ?>Export/action">
+<br>
 <button type="submit" id="btnExport" name="btnExport" class="btn btn-primary pull-right">Export</button>
 </form>
 <?php } }?>

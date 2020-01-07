@@ -2,6 +2,7 @@
     <?php if (in_array('exportWonReport', $user_permission)) { ?>
 <div class="container">
 <form method="post" action="<?php echo base_url(); ?>Wonexportreport/action">
+<br>
 <button type="submit" id="btnExport" name="btnExport" class="btn btn-primary pull-right">Export</button>
 </form>
   <h3>Won Report</h3><br>

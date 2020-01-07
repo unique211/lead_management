@@ -1,6 +1,13 @@
 <?php if ($user_permission) : ?>
+<link rel="apple-touch-icon" sizes="180x180" href="<?php echo base_url() ?>assets/favicon_io/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="<?php echo base_url() ?>assets/favicon_io/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="<?php echo base_url() ?>assets/favicon_io/favicon-16x16.png">
+<link rel="manifest" href="<?php echo base_url() ?>assets/favicon_io/site.webmanifest">
+
   <div id="header-area" class="header_area">
+
   <div  align="center" class="header_bottom">
+  
    
     <a href="#" >
                 <span  ><img  src="<?php echo base_url(); ?>images/whitelogo.png" alt="" height="5%" width="9%" style="margin-top:20px;"  /></span>

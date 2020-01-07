@@ -1035,11 +1035,11 @@ $(document).ready(function() {
                     // }
 
                     if (data[i].quote_status == 1) {
-                        html += '<td> <button  class="btn btn-sm  btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '" style= " background-color:orange;"  >Pending</button>&nbsp;</td>';
+                        html += '<td> <button  class="btn btn-sm btn-warning  btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   >Pending</button>&nbsp;</td>';
                     } else if (data[i].quote_status == 2) {
-                        html += '<td> <button  class="btn btn-sm  btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '" style= " background-color:green;"  disabled >Confirm</button>&nbsp;</td>';
+                        html += '<td> <button  class="btn btn-sm btn-success  btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   disabled >Confirm</button>&nbsp;</td>';
                     } else {
-                        html += '<td> <button  class="btn btn-sm  btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '" style= " background-color:red;"  disabled>Cancle</button>&nbsp;</td>';
+                        html += '<td> <button  class="btn btn-sm btn-danger btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   disabled>Cancel</button>&nbsp;</td>';
                     }
 
 
