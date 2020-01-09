@@ -105,7 +105,7 @@
             name="c_name">
           </div>
           <div class="form-group">
-            <label for="recipient-name" class="col-form-label">DOB:</label>
+            <label for="recipient-name" class="col-form-label">Date Of Joining:</label>
             <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span><input id="dob" name="dob" placeholder="" class="form-control ap_date"  value="" type="date" ></div>
 
                <span class="ap_date1"></span>

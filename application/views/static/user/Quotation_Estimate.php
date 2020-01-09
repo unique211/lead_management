@@ -1,4 +1,8 @@
+
+<link href="<?php echo base_url(); ?>assets/js/select2.min.css" rel="stylesheet">
 <div class="container">
+
+
 <?php if ($user_permission){?>
     <?php if (in_array('createQuotation', $user_permission)) { ?>
       <br>
@@ -403,6 +407,7 @@
                   <input type="hidden" id="customerid" name="customerid" value="">
                   <input type="hidden" id="quatationno" name="quatationno" value="">
                   <input type="reset" id="reset" class="btn btn-danger" name="reset" value="Reset">
+                  <input type="button"  id="btnmailsend" name="btnmailsend"  class="btn  btn-success pull-left" value="send" style="display:none;">
                   <button type="button"  id="btnExport" name="btnExport"  class="btn btn-sm btn-info pull-right" style="display:none;">Excel</button>
                	<button type="submit" form="pdf" id="btnprint" name="btnprint" value="" class="btn btn-sm btn-info pull-right" style="display:none;">Print</button>
                </td>
@@ -524,8 +529,189 @@
                                     </form>
 </div>
 <!-- Change Status Modal -->
+
+</div>
+<div class="container" id="sendemail_div" style="display:none;">
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial;}
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+</style>
+</head>
+<body>
+
+
+
+<div class="tab">
+  <button id="tbcustomer" class="tablinks active" onclick="openCity(event, 'Customer')">Customer</button>
+  <button class="tablinks" onclick="openCity(event, 'SalesPerson')">SalesPerson</button>
+ 
 </div>
 
+<div id="Customer" class="tabcontent">
+         <div class="row">
+         <div class="col-md-6">
+              
+              <div class="form-group">
+               <label for="recipient-name" class="col-form-label">To:</label>
+               <input type="text" class="form-control" id="cto" 
+               name="cto">
+             </div>
+         </div>
+         </div>
+         <div class="row">
+         <div class="col-md-6">
+              
+              <div class="form-group">
+               <label for="recipient-name" class="col-form-label">CC:</label>
+               <select  name="customercc[]" multiple="multiple" id="customercc" style="width:100%" class="form-control select-box"></select>
+             </div>
+         </div>
+         </div>
+         <div class="row">
+         <div class="col-md-6">
+              
+              <div class="form-group">
+               <label for="recipient-name" class="col-form-label">Sub:</label>
+               <input type="text" class="form-control" id="cSubject" 
+               name="cSubject">
+             </div>
+         </div>
+         </div>
+         <div class="row">
+         <div class="col-md-6">
+              
+              <div class="form-group">
+               <label for="recipient-name" class="col-form-label">Message:</label>
+               <textarea type="text" class="form-control" id="cmsg" 
+               name="cmsg"></textarea>
+             </div>
+         </div>
+         </div>
+         <div class="row">
+         <div class="col-md-6">
+              
+              <div class="form-group pull-right">
+              <button class="btn btn-primary" id="csend">Send</button>
+             </div>
+         </div>
+         </div>
+         
+</div>
+
+<div id="SalesPerson" class="tabcontent">
+<div class="row">
+         <div class="col-md-6">
+              
+              <div class="form-group">
+               <label for="recipient-name" class="col-form-label">To:</label>
+               <input type="text" class="form-control" id="sto" 
+               name="sto">
+             </div>
+         </div>
+         </div>
+         <div class="row">
+         <div class="col-md-6">
+              
+              <div class="form-group">
+               <label for="recipient-name" class="col-form-label">CC:</label>
+               <select  name="scc[]" id="scc" multiple="multiple" style="width:100%" class="form-control select-box"></select>
+             </div>
+         </div>
+         </div>
+         <div class="row">
+         <div class="col-md-6">
+              
+              <div class="form-group">
+               <label for="recipient-name" class="col-form-label">Sub:</label>
+               <input type="text" class="form-control" id="sSubject" 
+               name="sSubject">
+             </div>
+         </div>
+         </div>
+         <div class="row">
+         <div class="col-md-6">
+              
+              <div class="form-group">
+               <label for="recipient-name" class="col-form-label">Message:</label>
+               <textarea type="text" class="form-control" id="smsg" 
+               name="smsg"></textarea>
+             </div>
+         </div>
+         </div>
+         <div class="row">
+         <div class="col-md-6">
+              
+              <div class="form-group pull-right">
+              <button class="btn btn-primary" id="ssend">Send</button>
+             </div>
+         </div>
+         </div>
+</div>
+
+
+
+<script>
+function openCity(evt, cityName) {
+  
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+ // $('#'+cityName).style.display = "block";
+ // evt.currentTarget.className += " active";
+}
+</script>
+   
+</body>
+</html> 
+
+</div>
 
 
 
@@ -533,6 +719,7 @@
 
 <!--  
     <script src='assets/src/tagcomplete.js'></script> -->
+    <script src='<?php echo base_url('assets/js/main.js') . APPVER; ?>'></script>
 
 <script src="<?php echo base_url(); ?>assets/js/myjs/quatation.js"></script>
 
@@ -543,12 +730,12 @@
 <!-- <script src="https://rawgit.com/unconditional/jquery-table2excel/master/src/jquery.table2excel.js"></script> -->
 <script src="assets/js/tabletoexcle.js"></script>
 <script src="assets/js/bootstrap-notify.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
 
 
 <script type="text/javascript">
    // Table Append 
-
+  
 
    var base_url = "<?php echo base_url(); ?>";
   
@@ -561,7 +748,7 @@
 
    $(document).ready(function() {
 
-
+      $('.select-box').select2();
 
    });
 </script>

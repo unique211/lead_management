@@ -345,6 +345,12 @@ class Quotation_order extends CI_Controller {
             $data=$this->quatation_ordermodel->updatordertatus($id,$data);
             echo json_encode($data);
         }
+        public function getorderemark(){
+            $id	= $this->input->post('id');
+            $data=$this->quatation_ordermodel->getorderemark($id);
+            echo json_encode($data);
+       
+        }
         
        
 

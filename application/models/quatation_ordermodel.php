@@ -454,6 +454,13 @@ public function updatordertatus($id,$data){
     $result = $this->db->update('order_master',$data);
     return $result;
 }
+public function getorderemark($id){
+    $this->db->select('*');    
+    $this->db->from('order_master');
+    $this->db->where('id',$id);
+    $hasil3=$this->db->get();
+    return $hasil3->result();
+}
 
 
 }

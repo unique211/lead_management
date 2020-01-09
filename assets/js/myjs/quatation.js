@@ -728,6 +728,9 @@ $(document).ready(function() {
                                 $('#btnExport').val(data);
                                 $('#btnprint').show();
                                 $('#btnExport').show();
+                                $('#btnmailsend').show();
+                                $('#tbcustomer').trigger('click');
+
                             } else {
                                 $('.btnhideshow').hide();
                                 $('.tablehideshow').show();
@@ -914,6 +917,7 @@ $(document).ready(function() {
     $(document).on('click', '.closehide', function(e) {
         e.preventDefault();
         $('.btnhideshow').hide();
+        $('#sendemail_div').hide();
         $('.btnhide').show();
         $('.tablehideshow').show();
         $('.closehide').hide();
@@ -1094,6 +1098,7 @@ $(document).ready(function() {
         $('.btnhideshow').show();
         $('.tablehideshow').hide();
         $('#searchversion').show();
+        $('#btnmailsend').show();
 
         $('.btnhide').hide();
 
@@ -1102,6 +1107,8 @@ $(document).ready(function() {
 
         $('#btnprint').show();
         $('#btnExport').show();
+
+        $('#tbcustomer').trigger('click');
 
         var customer_name = $('#customer_name_' + id1).html();
         var quotaion_no = $('#quotaion_no_' + id1).html();
@@ -2114,6 +2121,157 @@ $(document).ready(function() {
         });
 
     });
+
+    $(document).on('click', '#btnmailsend', function(e) {
+        e.preventDefault();
+        $('#sendemail_div').show();
+        $('.btnhideshow').hide();
+        var customerid = $('#customerid').val();
+
+
+        $.ajax({
+            type: "POST",
+            url: baseurl + "Quotation_Estimate/getcustomerdata",
+            data: {
+                customerid: customerid,
+
+            },
+            dataType: "JSON",
+            async: false,
+            success: function(data) {
+
+                var html = '';
+                for (i = 0; i < data.length; i++) {
+                    if (i == 0) {
+                        $('#cto').val(data[0].email_id)
+                    }
+
+                    if (i > 0) {
+                        name = data[i].contact_name;
+                        id = data[i].email_id;
+
+                        html += '<option selected value="' + id + '" >' + name + '</option>';
+                    }
+
+                }
+                $('#customercc').html(html);
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: baseurl + "Quotation_Estimate/getsalesperson",
+            data: {
+
+            },
+            dataType: "JSON",
+            async: false,
+            success: function(data) {
+
+                var html1 = '';
+                for (i = 0; i < data.length; i++) {
+                    if (i == 0) {
+                        $('#sto').val(data[0].email)
+                    }
+
+                    if (i > 0) {
+                        name = data[i].user_name;
+                        id = data[i].email;
+
+                        html1 += '<option selected value="' + id + '" >' + name + '</option>';
+                    }
+
+                }
+                $('#scc').html(html1);
+            }
+        });
+
+    });
+
+    $(document).on('click', '#csend', function(e) {
+        e.preventDefault();
+
+
+
+        var cto = $('#cto').val();
+        var customercc = $('#customercc').val();
+        var subject = $('#cSubject').val();
+        var msg = $('#cmsg').val();
+        var btnprin = $('#btnprint').val();
+
+
+
+        $.ajax({
+            type: "POST",
+            url: baseurl + "Quotation_Estimate/sendemailcustomer",
+            data: {
+                cto: cto,
+                customercc: customercc,
+                subject: subject,
+                msg: msg,
+                btnprin: btnprin,
+
+            },
+            dataType: "JSON",
+            async: false,
+            success: function(data) {
+                if (data == 1) {
+                    $.notify({
+                        title: '',
+                        message: '<strong>SuccessFully Send Email</strong>'
+                    }, {
+                        type: 'success'
+                    });
+                }
+            }
+        });
+
+
+    });
+
+    $(document).on('click', '#ssend', function(e) {
+        e.preventDefault();
+
+
+
+        var cto = $('#sto').val();
+        var customercc = $('#scc').val();
+        var subject = $('#sSubject').val();
+        var msg = $('#smsg').val();
+        var btnprin = $('#btnprint').val();
+
+
+
+        $.ajax({
+            type: "POST",
+            url: baseurl + "Quotation_Estimate/sendemailcustomer",
+            data: {
+                cto: cto,
+                customercc: customercc,
+                subject: subject,
+                msg: msg,
+                btnprin: btnprin,
+
+            },
+            dataType: "JSON",
+            async: false,
+            success: function(data) {
+                if (data == 1) {
+                    $.notify({
+                        title: '',
+                        message: '<strong>SuccessFully Send Email</strong>'
+                    }, {
+                        type: 'success'
+                    });
+                }
+            }
+        });
+
+
+    });
+
+
+
 
 
 });

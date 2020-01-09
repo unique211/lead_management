@@ -163,7 +163,7 @@
                             </div>
                          </div>
                          <div class="form-group">
-                            <label class="col-md-4 control-label">DOB</label>
+                            <label class="col-md-4 control-label">Date Of Joining</label>
                             <div class="col-md-6 inputGroupContainer">
                                <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span><input id="dob" name="dob" placeholder="" class="form-control ap_date"  value="" type="date" ></div>
 
