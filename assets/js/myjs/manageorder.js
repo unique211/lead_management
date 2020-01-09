@@ -940,6 +940,7 @@ $(document).ready(function() {
 
                     var ordstatus = "";
 
+
                     if (data[i].order_status == 1) {
                         ordstatus = "Waiting";
                     } else if (data[i].order_status == 2) {
@@ -978,9 +979,21 @@ $(document).ready(function() {
                         '<td style="display:none;" id="margin_' + data[i].id + '">' + data[i].margin + '</td>' +
                         '<td style="display:none;" id="qutone_no_' + data[i].id + '">' + data[i].qutone_no + '</td>' +
                         '<td style="display:none;" id="salesrepresentative_' + data[i].id + '">' + data[i].salesrepresentative + '</td>' +
-                        '<td style="display:none;" id="customerid_' + data[i].id + '">' + data[i].customer_id + '</td>' +
-                        '<td id="ordstatus_' + data[i].id + '">' + ordstatus + '</td>' +
-                        '<td>';
+                        '<td style="display:none;" id="customerid_' + data[i].id + '">' + data[i].customer_id + '</td>';
+                    if (data[i].order_status == 1) {
+
+                        html += '<td> <button  class="btn btn-sm btn-warning  btn-xs orderstatusinfo" id="quotestatus_' + data[i].id + '"   >' + ordstatus + '</button>&nbsp;</td>';
+
+                    } else
+                    if (data[i].order_status == 2) {
+                        html += '<td> <button  class="btn btn-sm btn-success  btn-xs orderstatusinfo" id="quotestatus_' + data[i].id + '"   >' + ordstatus + '</button>&nbsp;</td>';
+                    } else if (data[i].order_status == 3) {
+                        html += '<td> <button  class="btn btn-sm btn-danger  btn-xs orderstatusinfo" id="quotestatus_' + data[i].id + '"   >' + ordstatus + '</button>&nbsp;</td>';
+                    }
+
+
+
+                    html += '<td>';
                     if (editflag == 1) {
                         html += '<button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="edit_' + data[i].id + '"  ><i class="fa fa-edit"></i></button>&nbsp;';
                     }
@@ -1118,6 +1131,11 @@ $(document).ready(function() {
                     $('#remarkdiv').show();
                     $('#accepted').hide();
                     $('#rejected').hide();
+
+                    if (usertype != "Admin") {
+                        $('#btnsave').hide();
+                        $('#reset').hide();
+                    }
 
                     $('#remark').val(data1[0].remark);
                 }
@@ -1841,6 +1859,33 @@ $(document).ready(function() {
         });
     });
 
+    $(document).on('click', '.orderstatusinfo', function(e) {
+        e.preventDefault();
+        var id = $(this).attr('id');
+        id = id.split("_");
+        var text = $(this).text();
+        if (text != "Waiting") {
+            $('#myModal3').modal('show');
+            $.ajax({
+                type: "POST",
+                url: baseurl + "Quotation_order/getorderemark",
+                data: {
+                    id: id[1],
+
+                },
+                dataType: "JSON",
+                async: false,
+                success: function(data) {
+
+                    $('#statsusinforemark').val(data[0].remark)
+
+
+                }
+            });
+        }
+
+    });
+
 
     if (quatationid1 > 0) {
         $('#edit_' + quatationid1).trigger('click');
@@ -1895,6 +1940,8 @@ $(document).ready(function() {
         });
 
     }
+
+
 
 
 

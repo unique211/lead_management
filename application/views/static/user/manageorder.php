@@ -404,7 +404,7 @@
 
 
             <tr>
-               <td><input type="submit" class="btn btn-primary" name="submit" value="Save">
+               <td><input type="submit" class="btn btn-primary" id="btnsave" name="submit" value="Save">
               
                   <input type="hidden" id="save_update" name="save_update" value="">
                   <input type="hidden" id="quatationid" name="quatationid" value="">
@@ -526,6 +526,45 @@
 
       </div>
       </form>
+   </div>
+
+
+   <div id="myModal3" class=" modal fade " role="dialog">
+      
+      <div class="modal-dialog ">
+
+         <div class="modal-content">
+              <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"> Status Remark</h4>
+      </div>
+            <span id='cal_error'></span>
+
+         
+
+            <div class="modal-body">
+
+            <div class="col-md-12">
+                    
+                    <div class="form-group">
+                                <label class="col-sm-2"><b>Remark</b></label>
+                                <div class="col-md-8 inputGroupContainer">
+                                <textarea id="statsusinforemark" class="form-control" name="statsusinforemark" required></textarea>
+                                </div>
+                             </div>
+
+                 </div>
+              
+            </div>
+            <div class="modal-footer">
+               <!-- <button type="button" class="btn btn-primary" >OK</button> -->
+
+               <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+         </div>
+
+      </div>
+      
    </div>
 </div>
 <script> 

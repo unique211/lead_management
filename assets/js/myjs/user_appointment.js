@@ -37,6 +37,8 @@ $(document).ready(function() {
     $(document).on("submit", "#newaccountform", function(e) {
         e.preventDefault();
 
+
+
         if (checkemail == 0 && checkmobile == 0 && checklandline == 0) {
 
             var l_date = $('#date').val();
@@ -82,6 +84,7 @@ $(document).ready(function() {
 
                             student["contactname"] = contactname;
                             student["designation"] = designation;
+
                             student["email"] = email;
                             student["mobile"] = mobile;
                             student["landline"] = landline;
@@ -89,7 +92,11 @@ $(document).ready(function() {
                             for (var i = 0; i < studejsonObj.length; i++) {
 
                                 console.log("mobile" + mobile + "studejsonObj" + studejsonObj[i].mobile);
-                                if (mobile == studejsonObj[i].mobile || email == studejsonObj[i].email || landline == studejsonObj[i].landline) {
+                                // if (mobile == studejsonObj[i].mobile || email == studejsonObj[i].email || landline == studejsonObj[i].landline) {
+                                //     flag = 1;
+
+                                // }
+                                if (email == studejsonObj[i].email) {
                                     flag = 1;
 
                                 }
@@ -691,6 +698,7 @@ $(document).ready(function() {
     $(document).on("blur", ".phn", function(e) {
         e.preventDefault();
         var phn = $(this).val();
+        console.log(phn);
 
         var id = $('#save_update').val();
         if (phn != '') {
