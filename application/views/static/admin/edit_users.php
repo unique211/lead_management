@@ -104,6 +104,12 @@
             <input type="text" class="form-control" id="c_name" 
             name="c_name">
           </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">DOB:</label>
+            <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span><input id="dob" name="dob" placeholder="" class="form-control ap_date"  value="" type="date" ></div>
+
+               <span class="ap_date1"></span>
+          </div>
           
           
             </div>
@@ -299,6 +305,7 @@ $.ajax(
       $("#comments").val(l[0].comments);
       $("#address").val(l[0].address);
       $("#currentfcyearamt").val(l[0].finicialyear_amt);
+      $("#dob").val(l[0].dob);
   }
 
 

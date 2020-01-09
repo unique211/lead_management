@@ -3,11 +3,11 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class lead_management extends CI_Model
 {
 
-  function insert_user_data($user_id,$emp_id,$user_name,$fisrt_name,$last_name,$email,$password,$phone_number,$user_type,$gender,$google_id,$title,$department,$comments,$user_role,$region,$region_type,$company,$addr,$currentfcyearamt)
+  function insert_user_data($user_id,$emp_id,$user_name,$fisrt_name,$last_name,$email,$password,$phone_number,$user_type,$gender,$google_id,$title,$department,$comments,$user_role,$region,$region_type,$company,$addr,$currentfcyearamt,$dob)
   {
   	$s="INSERT into user_creation (user_id,emp_id,user_name,first_name,last_name,email,password,
-  		phone_num,user_type,gender,title,department,comments,google_calendar_id,user_role,region,region_type,company_name,address,finicialyear_amt) 
-		values('$user_id','$emp_id','$user_name','$fisrt_name','$last_name','$email','$password','$phone_number','$user_type','$gender','$title','$department','$comments','$google_id','$user_role','$region','$region_type','$company','$addr','$currentfcyearamt')";
+  		phone_num,user_type,gender,title,department,comments,google_calendar_id,user_role,region,region_type,company_name,address,finicialyear_amt,dob) 
+		values('$user_id','$emp_id','$user_name','$fisrt_name','$last_name','$email','$password','$phone_number','$user_type','$gender','$title','$department','$comments','$google_id','$user_role','$region','$region_type','$company','$addr','$currentfcyearamt','$dob')";
   $this->db->query($s);
   }
   function insert_dealer_data($user_id,$dealer_id,$d_first_name,$d_last_name,$d_email,$email,$d_phone_number,$d_company_name,$d_region,$d_region_type,$d_address)
@@ -38,9 +38,9 @@ class lead_management extends CI_Model
     return $q->result_array();
 
   }
-  function edit_sales_rep_data_code($id,$f_name,$l_name,$u_name,$email,$gender,$phone,$user_role,$c_name,$region,$region_type,$u_type,$cal_id,$u_title,$department,$comments,$address,$finicialamt)
+  function edit_sales_rep_data_code($id,$f_name,$l_name,$u_name,$email,$gender,$phone,$user_role,$c_name,$region,$region_type,$u_type,$cal_id,$u_title,$department,$comments,$address,$finicialamt,$dob)
   {
-    $s="UPDATE  user_creation SET first_name='$f_name',last_name='$l_name',email='$email',user_name='$u_name',phone_num='$phone',user_type='$u_type',gender='$gender',title='$u_title',department='$department',comments='$comments',google_calendar_id='$cal_id',user_role='$user_role',region='$region',region_type='$region_type',company_name='$c_name',address='$address',finicialyear_amt='$finicialamt' where emp_id='$id'";
+    $s="UPDATE  user_creation SET first_name='$f_name',last_name='$l_name',email='$email',user_name='$u_name',phone_num='$phone',user_type='$u_type',gender='$gender',title='$u_title',department='$department',comments='$comments',google_calendar_id='$cal_id',user_role='$user_role',region='$region',region_type='$region_type',company_name='$c_name',address='$address',finicialyear_amt='$finicialamt',dob='$dob' where emp_id='$id'";
     $this->db->query($s);
   }
   function delete_sales_rep_data_code($id)

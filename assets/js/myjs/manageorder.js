@@ -926,6 +926,7 @@ $(document).ready(function() {
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Sales Representative ID</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Customerid ID</th>' +
 
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Status</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Action</th>' +
                     '</tr>' +
                     '</thead>' +
@@ -937,7 +938,15 @@ $(document).ready(function() {
                     var date = "";
                     var odate = "";
 
+                    var ordstatus = "";
 
+                    if (data[i].order_status == 1) {
+                        ordstatus = "Waiting";
+                    } else if (data[i].order_status == 2) {
+                        ordstatus = "Accepted";
+                    } else if (data[i].order_status == 3) {
+                        ordstatus = "Rejected";
+                    }
 
                     var tdateAr = data[i].order_date.split('-');
                     date = tdateAr[2] + '/' + tdateAr[1] + '/' + tdateAr[0];
@@ -970,7 +979,7 @@ $(document).ready(function() {
                         '<td style="display:none;" id="qutone_no_' + data[i].id + '">' + data[i].qutone_no + '</td>' +
                         '<td style="display:none;" id="salesrepresentative_' + data[i].id + '">' + data[i].salesrepresentative + '</td>' +
                         '<td style="display:none;" id="customerid_' + data[i].id + '">' + data[i].customer_id + '</td>' +
-
+                        '<td id="ordstatus_' + data[i].id + '">' + ordstatus + '</td>' +
                         '<td>';
                     if (editflag == 1) {
                         html += '<button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="edit_' + data[i].id + '"  ><i class="fa fa-edit"></i></button>&nbsp;';
@@ -1046,6 +1055,10 @@ $(document).ready(function() {
         var salesrepresentivename = $('#salesrepresentivename_' + id1[1]).html();
         var customerid = $('#customerid_' + id1[1]).html();
 
+
+
+
+
         if (usertype == "SalesRepresentative" && userrole == "Sales") {
 
             $("#salesrepresentive1").val(salesrepresentivename);
@@ -1085,6 +1098,31 @@ $(document).ready(function() {
         // var html1 = '<option selected value="' + version_ + '" >' + version_ + '</option>';
         $('#search_version').text(version_);
         $('#quatation_no').text(quotation_no);
+
+        $.ajax({
+            type: "POST",
+            url: baseurl + "Quotation_order/getorderstatuscheck",
+            dataType: "JSON",
+            data: {
+                id: id1[1],
+
+            },
+            success: function(data1) {
+
+                if (data1 == '100') {
+
+                    $('#accepted').show();
+                    $('#rejected').show();
+                    $('#remarkdiv').hide();
+                } else {
+                    $('#remarkdiv').show();
+                    $('#accepted').hide();
+                    $('#rejected').hide();
+
+                    $('#remark').val(data1[0].remark);
+                }
+            }
+        });
 
 
 
@@ -1745,6 +1783,64 @@ $(document).ready(function() {
         //     }
         // });
     });
+
+    $(document).on('click', '.stausapproved', function(e) {
+        e.preventDefault();
+        var id = $(this).attr('id');
+        var status = 0;
+        if (id == "accepted") {
+            status = 2;
+        } else {
+            status = 3;
+        }
+        $('#status_hidden').val(status);
+        $('#myModal2').modal('show');
+        var saveid = $('#save_update').val();
+
+        $('#order_id_hidden').val(saveid);
+
+
+
+    });
+    //for change status by admin user
+
+    $(document).on('submit', '#changeststus_form', function(e) {
+        e.preventDefault();
+        var statusremark = $('#statsusremark').val();
+        var order_id = $('#order_id_hidden').val();
+        var status = $('#status_hidden').val();
+
+        $.ajax({
+            type: "POST",
+            url: baseurl + "Quotation_order/updateorderstatus",
+            data: {
+                id: order_id,
+                statusremark: statusremark,
+                status: status,
+            },
+            dataType: "JSON",
+            async: false,
+            success: function(data) {
+
+                if (data == true) {
+                    $.notify({
+                        title: '',
+                        message: '<strong>Change Status Success Fully  !!</strong>'
+                    }, {
+                        type: 'success'
+                    });
+                    $('#myModal2').modal('hide');
+                    displayqutation();
+                    $('#accepted').hide();
+                    $('#rejected').hide();
+                }
+
+
+
+            }
+        });
+    });
+
 
     if (quatationid1 > 0) {
         $('#edit_' + quatationid1).trigger('click');

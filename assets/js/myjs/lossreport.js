@@ -143,14 +143,20 @@ $(document).ready(function() {
                     } else {
                         statusinfo = 'Cancle';
                     }
+                    var totalordvalue = parseFloat(data[i].totalordvalue).toFixed(2);
+                    var magin = parseFloat(data[i].magin).toFixed(2);
+
+                    totalordvalue = (parseFloat(totalordvalue) / 100000).toFixed(2);
+                    magin = (parseFloat(magin) / 100000).toFixed(2);
+
                     html = '<tr id="lossrep_' + sr + '">' +
                         '<td  style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
                         '<td  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].customer_name + '</td>' +
                         '<td  style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
                         '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].product + '<button class="productinfo pull-right" name="' + sr + '" style="color:blue" id=' + data[i].qid1 + '>View More</button></td>' +
                         '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].orderdate + '</td>' +
-                        '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + parseFloat(data[i].totalordvalue).toFixed(2) + '</td>' +
-                        '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + parseFloat(data[i].magin).toFixed(2) + '</td>' +
+                        '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + totalordvalue + '</td>' +
+                        '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + magin + '</td>' +
                         '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].probability + '%</td>' +
                         '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].order_due_date + '</td>' +
                         '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + statusinfo + '</td>' +
@@ -161,6 +167,8 @@ $(document).ready(function() {
                     $("#loserep_tbody").append(html);
 
                 }
+                summargin = (parseFloat(summargin) / 100000).toFixed(2);
+                sumtop = (parseFloat(sumtop) / 100000).toFixed(2);
                 $('#totaltop').html(sumtop);
                 $('#totalmargin').html(summargin);
 
@@ -235,6 +243,15 @@ $(document).ready(function() {
 
 
                             var margin = parseFloat(totalordvalue) - parseFloat(totaltransforprice);
+
+                            totaltransforprice = (parseFloat(totaltransforprice) / 100000).toFixed(2);
+                            taxrs = (parseFloat(taxrs) / 100000).toFixed(2);
+                            totaltpricewithtax = (parseFloat(totaltpricewithtax) / 100000).toFixed(2);
+                            totalordvalue = (parseFloat(totalordvalue) / 100000).toFixed(2);
+                            otaxrs = (parseFloat(otaxrs) / 100000).toFixed(2);
+                            totalowithtax = (parseFloat(totalowithtax) / 100000).toFixed(2);
+                            margin = (parseFloat(margin) / 100000).toFixed(2);
+
 
                             html += '<tr><td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].product_name + '</td>' +
                                 '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].qty + '</td>' +

@@ -7,6 +7,22 @@ class Quatation_ordermodel extends CI_Model{
             $result = $this->db->insert($table,$data);
             $id=$this->db->insert_id();
 
+            $usertype=$this->session->userdata('user_type');
+          
+            if($usertype !="Admin"){
+                $data5 = array(
+                    'order_status'=>1,
+                );
+                $this->db->where('id',$id);
+                $result = $this->db->update('order_master',$data5);
+            }else{
+                $data5 = array(
+                    'order_status'=>2,
+                );
+                $this->db->where('id',$id);
+                $result = $this->db->update('order_master',$data5); 
+            }
+
         
             $data	= $this->input->post('studejsonObj');
 
@@ -260,6 +276,8 @@ function getall_order(){
             $quotation_no= $quatationdata['quotation_no'];
             $salesrepresentative= $quatationdata['salesrepresentative'];
             $customer_id= $quatationdata['customer_id'];
+            $remark= $quatationdata['remark'];
+            $order_status= $quatationdata['order_status'];
             $firstname='';
             $last_name='';
             $salesperson='';
@@ -304,7 +322,8 @@ function getall_order(){
                 'qutone_no'=>$qutone_no,
                 'quotation_no'=>$quotation_no,
                 'customer_id'=>$customer_id,
-
+                'remark'=>$remark,
+                'order_status'=>$order_status,
 
 
             );
@@ -395,6 +414,45 @@ function getquatationalldata($id){
     $this->db->where('id',$id);
     $hasil=$this->db->get();
     return $hasil->result();
+}
+function checkorderstatus($id){
+
+    $this->db->select('*');    
+    $this->db->from('order_master');
+    $this->db->where('order_status',1);
+    $this->db->where('id',$id);
+    $hasil=$this->db->get();
+    if($hasil->num_rows() >0){
+   foreach ($hasil->result_array() as $custdata) {
+       $id=$custdata['id'];
+       $user_id=$custdata['user_id'];
+
+
+    $this->db->select('*');    
+    $this->db->from('user_creation');
+    $this->db->where('id',$user_id);
+    $this->db->where('user_type !=','Admin');
+    $hasil2=$this->db->get();
+    if($hasil2->num_rows() >0){
+        return '100';
+    }
+     
+   }
+}else{
+    $this->db->select('*');    
+    $this->db->from('order_master');
+    $this->db->where('id',$id);
+    $hasil3=$this->db->get();
+    return $hasil3->result();
+}
+
+}
+
+
+public function updatordertatus($id,$data){
+    $this->db->where('id',$id);
+    $result = $this->db->update('order_master',$data);
+    return $result;
 }
 
 

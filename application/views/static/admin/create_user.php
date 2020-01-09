@@ -163,6 +163,14 @@
                             </div>
                          </div>
                          <div class="form-group">
+                            <label class="col-md-4 control-label">DOB</label>
+                            <div class="col-md-6 inputGroupContainer">
+                               <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span><input id="dob" name="dob" placeholder="" class="form-control ap_date"  value="" type="date" ></div>
+
+                               <span class="ap_date1"></span>
+                            </div>
+                         </div>
+                         <div class="form-group">
                             <label class="col-md-4 control-label">Comments</label>
                             <div class="col-md-6 inputGroupContainer">
                                <div class="input-group"><span class="input-group-addon"><i class="fa fa-comments"></i></span><textarea rows="4" cols="40" class="form-control" name="comments"> </textarea></div>
@@ -515,4 +523,19 @@ $("#currentfcyearamt").keypress(function (e) {
 	}
    });
 $("#currentfcyearamt").attr("placeholder", "Target for FY"+currentfbyear+"(in Lakhs)");
+
+var today = new Date();
+        var dd = today.getDate();
+
+        var mm = today.getMonth() + 1;
+        var yyyy = today.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+       var dob = yyyy + '-' + mm + '-' + dd;
+       $('#dob').val(dob);
 </script>

@@ -1,0 +1,16 @@
+
+
+
+
+table:user_creation
+
+ALTER TABLE `user_creation` ADD `dob` DATE NOT NULL AFTER `finicialyear_amt`;
+
+
+
+
+table:order_master
+
+
+
+ALTER TABLE `order_master` ADD `order_status` INT(1) NOT NULL COMMENT '1-waiting 2-Accepted 3-Rejected' AFTER `customer_id`, ADD `remark` VARCHAR(255) NOT NULL AFTER `order_status`;

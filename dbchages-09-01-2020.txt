@@ -1,0 +1,1 @@
+ALTER TABLE `user_creation` ADD `dob` DATE NOT NULL AFTER `finicialyear_amt`;
