@@ -127,6 +127,12 @@ $rowdata=0;
 
 $total=$total+$totalordvalue;
 $totalbottom=$totalbottom+$magin;
+
+$totalordvalue=$totalordvalue/1000000;
+$magin=$magin/1000000;
+
+$totalordvalue=round($totalordvalue,2);
+  $magin=round($magin,2);
    
     $objPHPExcel->getActiveSheet()->SetCellValue('E'.$count, $order_due_date);
     $objPHPExcel->getActiveSheet()->SetCellValue('F'.$count, $totalordvalue);
@@ -146,6 +152,10 @@ $totalbottom=$totalbottom+$magin;
   {
     $objPHPExcel->setActiveSheetIndex(0)->mergeCells($field."".$count.':'.$field."".$mergeid);
   }
+  $total=$total/1000000;
+  $totalbottom=$totalbottom/1000000;
+  $total=round($total,2);
+  $totalbottom=round($totalbottom,2);
   $objPHPExcel->getActiveSheet()->SetCellValue('F2',$total);
   $objPHPExcel->getActiveSheet()->SetCellValue('G2',$totalbottom);
  // $rowCount++;

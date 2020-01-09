@@ -68,6 +68,15 @@
                                  </div>
 
                            </div>
+                           <div class="form-group"  style="display:none;" id="remarkdiv">
+                                 <label class="col-md-4 control-label">Remark</label>
+
+                                 <div class="col-md-8 inputGroupContainer">
+                                 <div class="input-group"><span class="adj_size input-group-addon"><i class="fa fa-calendar" style="font-size:14px;"></i></span>
+                                       <textarea class="form-control" rows="5" id="remark" name="remark" disabled></textarea>
+                                    </div><span class="o_due_date"></span>
+                                 </div>
+                              </div>
                            </div>
 
                            <div class="col-md-6">
@@ -401,6 +410,11 @@
                   <input type="hidden" id="quatationid" name="quatationid" value="">
                   <input type="hidden" id="customerid" name="customerid" value="">
                   <input type="reset" id="reset" class="btn btn-danger" name="reset" value="Reset">
+                  
+                  <?php if($this->session->userdata('user_type')=="Admin"){?>
+                     <input type="button" class="btn btn-primary stausapproved" id="accepted" name="accepted" value="Accepted">
+                  <input type="button" id="rejected" class="btn btn-danger stausapproved" name="rejected" value="Rejected">
+                  <?php }?>
                   <button type="button"  id="btnExport" name="btnExport"  class="btn btn-sm btn-info pull-right" style="display:none;">Excel</button>
                	<button type="submit" form="pdf" id="btnprint" name="btnprint" value="" class="btn btn-sm btn-info pull-right" style="display:none;">Print</button>
                </td>
@@ -471,6 +485,47 @@
          </div>
 
       </div>
+   </div>
+
+
+   <!-- Delete Modal -->
+   <div id="myModal2" class=" modal fade " role="dialog">
+      <form id="changeststus_form" name="changeststus_form">
+      <div class="modal-dialog ">
+
+         <div class="modal-content">
+              <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Change Status</h4>
+      </div>
+            <span id='cal_error'></span>
+
+            <input type="hidden" name="order_id_hidden" id='order_id_hidden'>
+            <input type="hidden" name="status_hidden" id='status_hidden'>
+
+            <div class="modal-body">
+
+            <div class="col-md-12">
+                    
+                    <div class="form-group">
+                                <label class="col-sm-2"><b>Remark</b></label>
+                                <div class="col-md-8 inputGroupContainer">
+                                <textarea id="statsusremark" class="form-control" name="statsusremark" required></textarea>
+                                </div>
+                             </div>
+
+                 </div>
+              
+            </div>
+            <div class="modal-footer">
+               <button type="Submit" class="btn btn-primary" >OK</button>
+
+               <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+         </div>
+
+      </div>
+      </form>
    </div>
 </div>
 <script> 

@@ -86,6 +86,7 @@ class Quotation_order extends CI_Controller {
         $email=$this->session->userdata('email');
         $user_id=$this->user_model->user_id($email);
         $data ="";
+       
 
         $data = array(
             'customer_name' => $this->input->post('cus_name'),
@@ -323,6 +324,25 @@ class Quotation_order extends CI_Controller {
         }
         public function getallorder(){
             $data = $this->quatation_ordermodel->getall_order();
+            echo json_encode($data);
+        }
+        public function getorderstatuscheck(){
+            $id	= $this->input->post('id');
+          
+            $data = $this->quatation_ordermodel->checkorderstatus($id);
+            echo json_encode($data);
+        }
+        public function updateorderstatus(){
+            $id	= $this->input->post('id');
+       
+      
+            $data = array(
+                'order_status' =>  $this->input->post('status'),
+                'remark' => $this->input->post('statusremark')
+            );
+    
+    
+            $data=$this->quatation_ordermodel->updatordertatus($id,$data);
             echo json_encode($data);
         }
         
