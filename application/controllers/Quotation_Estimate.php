@@ -485,6 +485,8 @@ class Quotation_Estimate extends CI_Controller {
         }
         public function sendemailcustomer(){
             $to_email = $this->input->post('cto'); 
+
+           // echo $to_email;
             $customercc = $this->input->post('customercc'); 
             $subject = $this->input->post('subject'); 
             $cmsg = $this->input->post('msg'); 
@@ -672,8 +674,15 @@ class Quotation_Estimate extends CI_Controller {
             //$mail->addReplyTo('morvadiyasagar99@gmail.com', 'Wadhwa Group');
             
             // Add a recipient
-        
+           
+            //$this->email->to($to_email);
+
+            
+          
             $mail->addAddress($to_email);
+            
+            
+            //$mail->addAddress($to_email1);
             
             // Add cc or bcc 
             if($customercc !=""){
