@@ -643,7 +643,6 @@ class Quotation_Estimate extends CI_Controller {
            $random = rand();
 
         $root = $_SERVER['DOCUMENT_ROOT'] . "/lead_management/quatationpdf/invoice_" . $random . ".pdf";
-	chmod($root, 0755);
         $invoice->Output($root, "F");
           
            // $to_email ='smorvadiya931@rku.ac.in';
