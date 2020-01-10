@@ -676,9 +676,11 @@ class Quotation_Estimate extends CI_Controller {
             $mail->addAddress($to_email);
             
             // Add cc or bcc 
+            if($customercc !=""){
             foreach($customercc as $custdata){
                 $mail->addCC($custdata);
             }
+        }
            
         
             
