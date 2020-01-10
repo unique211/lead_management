@@ -2272,6 +2272,14 @@ $(document).ready(function() {
         var msg = $('#cmsg').val();
         var btnprin = $('#btnprint').val();
 
+        // cto = cto.split(",");
+        // studejsonObj = [];
+        // for (i = 0; i < cto.length; i++) {
+
+        //     studejsonObj.push(cto[i]);
+        // }
+        // console.log("studejsonObj" + studejsonObj);
+
 
 
 
@@ -2295,7 +2303,7 @@ $(document).ready(function() {
             dataType: "JSON",
             async: false,
             success: function(data) {
-                alert(data);
+
                 if (data != "") {
                     $.notify({
                         title: '',

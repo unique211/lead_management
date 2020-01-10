@@ -605,7 +605,7 @@
 
                <div class="form-group">
                   <label for="recipient-name" class="col-form-label">To:</label>
-                  <input type="text" class="form-control" id="cto" name="cto">
+                  <input type="text" class="form-control" id="cto" name="cto[]">
                </div>
             </div>
             <div class="col-md-3">
