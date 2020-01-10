@@ -40,7 +40,7 @@ body{font-family: 'Roboto', sans-serif;}
 /*=-====Main Menu=====*/
 .navbar-nav .open .dropdown-menu > li > a {padding: 16px 15px 16px 25px;
 }
-.header_bottom { background: #d2d6de; //#0071ba 
+.header_bottom { background: #000000; //#0071ba 
 }
 .header_area .header_bottom .mainmenu a , .navbar-default .navbar-nav > li > a {
     color: #fff;
