@@ -970,7 +970,7 @@ $(document).ready(function() {
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Sales Representative</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Ref Number</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Version</th>' +
-                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Order Date </th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Quotation Date </th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Order Due Date</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Description</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Contact Person</th>' +
@@ -2129,6 +2129,79 @@ $(document).ready(function() {
         var customerid = $('#customerid').val();
 
 
+        var cus_name = $('#cus_name').val();
+        var cotactperson = $('#cotactperson').val();
+        var phn = $('#phn').val();
+        var s_email = $('#s_email').val();
+        var bill_no = $('#bill_no').val();
+        var refno = $('#refno').val();
+        var Tax = $('#Tax').val();
+        var o_date = $('#o_date').val();
+        var o_due_date = $('#o_due_date').val();
+
+
+        var finalordervalue = $('#finalordvalue').val();
+
+
+        var salesrepresentive = $('#salesrepresentive option:selected').text();
+        var salesrepresentive1 = $('#salesrepresentive1').val();
+
+        var ptaxvalue = $('#P_Tax_Val_1').val();
+
+        if (usertype == "SalesRepresentative" && userrole == "Sales") {
+
+            $('#lblsalesrepresentative').text('Sales Representative:' + salesrepresentive1);
+        } else {
+            $('#lblsalesrepresentative').text('Sales Representative:' + salesrepresentive);
+        }
+
+        $('#lblcustfirstname').text('Customer Name:' + cus_name);
+        $('#lblQuotationno').text('Quotation Number:' + bill_no);
+
+        var id = $('#save_update').val();
+        var search_version = $('#search_version option:selected').text();
+
+        if (id == "") {
+            $('#lblversion').text('Version:' + 1);
+
+        } else {
+            $('#lblversion').text('Version:' + search_version);
+        }
+
+
+        $('#lblrefnumber').text('Ref Number:' + refno);
+        $('#lblorderduedate').text('Order Due Dater:' + o_due_date);
+        $('#lbltotalordervalue').text('Total Order Value :' + ptaxvalue);
+        $('#lblquotationdate').text('Quotation Date:' + o_date);
+
+        if (usertype == "SalesRepresentative" && userrole == "Sales") {
+
+            $('#lbl1salespr').text('Sales Representative:' + salesrepresentive1);
+        } else {
+            $('#lbl1salespr').text('Sales Representative:' + salesrepresentive);
+        }
+
+        $('#lbl1custnm').text('Customer Name:' + cus_name);
+        $('#lbl1quotationno').text('Quotation Number:' + bill_no);
+
+        var id = $('#save_update').val();
+        var search_version = $('#search_version option:selected').text();
+
+        if (id == "") {
+            $('#lbl1version').text('Version:' + 1);
+        } else {
+            $('#lbl1version').text('Version:' + search_version);
+        }
+
+
+        $('#lbl1refno').text('Ref Number:' + refno);
+        $('#lbl1orderduedate').text('Order Due Dater:' + o_due_date);
+        $('#lbl1totalordvalue').text('Total Order Value :' + ptaxvalue);
+        $('#lbl1quotationdate').text('Quotation Date:' + o_date);
+
+
+
+
         $.ajax({
             type: "POST",
             url: baseurl + "Quotation_Estimate/getcustomerdata",
@@ -2150,7 +2223,7 @@ $(document).ready(function() {
                         name = data[i].contact_name;
                         id = data[i].email_id;
 
-                        html += '<option selected value="' + id + '" >' + name + '</option>';
+                        html += '<option  value="' + id + '" >' + name + '</option>';
                     }
 
                 }
@@ -2178,7 +2251,7 @@ $(document).ready(function() {
                         name = data[i].user_name;
                         id = data[i].email;
 
-                        html1 += '<option selected value="' + id + '" >' + name + '</option>';
+                        html1 += '<option  value="' + id + '" >' + name + '</option>';
                     }
 
                 }
@@ -2201,6 +2274,13 @@ $(document).ready(function() {
 
 
 
+
+
+
+
+
+
+
         $.ajax({
             type: "POST",
             url: baseurl + "Quotation_Estimate/sendemailcustomer",
@@ -2215,7 +2295,8 @@ $(document).ready(function() {
             dataType: "JSON",
             async: false,
             success: function(data) {
-                if (data == 1) {
+                alert(data);
+                if (data != "") {
                     $.notify({
                         title: '',
                         message: '<strong>SuccessFully Send Email</strong>'
@@ -2242,6 +2323,9 @@ $(document).ready(function() {
 
 
 
+
+
+
         $.ajax({
             type: "POST",
             url: baseurl + "Quotation_Estimate/sendemailcustomer",
@@ -2256,6 +2340,7 @@ $(document).ready(function() {
             dataType: "JSON",
             async: false,
             success: function(data) {
+                alert(data);
                 if (data == 1) {
                     $.notify({
                         title: '',
