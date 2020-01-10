@@ -165,7 +165,7 @@
                          <div class="form-group">
                             <label class="col-md-4 control-label">Date Of Joining</label>
                             <div class="col-md-6 inputGroupContainer">
-                               <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span><input id="dob" name="dob" placeholder="" class="form-control ap_date"  value="" type="date" ></div>
+<div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span><input id="dob" name="dob" placeholder="" class="form-control ap_date"  value="" type="date" <? if($this->session->userdata('user_type') !="Admin"){ ?>disabled <?php } ?>></div>
 
                                <span class="ap_date1"></span>
                             </div>

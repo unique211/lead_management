@@ -10,7 +10,7 @@
   
    
     <a href="#" >
-                <span  ><img  src="<?php echo base_url(); ?>images/whitelogo.png" alt="" height="5%" width="9%" style="margin-top:20px;"  /></span>
+                <span  ><img  src="<?php echo base_url(); ?>images/logo.png" alt="" height="5%" width="9%" style="margin-top:20px;"  /></span>
                 <span class="text-toggle"> </span>
               </a><!-- /brand -->
 
