@@ -373,8 +373,17 @@ $result1[]=array(
  
 return $result1;
 }
+function getjoing_date($uid){
+    $this->db->select('*');    
+    $this->db->from('user_creation');
+    $this->db->where('id',$uid);
+    $hasil=$this->db->get();
+    return $hasil->result();
+    
+}
 
 }
+
 
 
 ?>

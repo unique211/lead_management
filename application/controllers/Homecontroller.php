@@ -108,4 +108,12 @@ class Homecontroller extends CI_Controller
         echo json_encode($data1); 
 
     }
+    public function getjoingdate(){
+        $uid	= $this->input->post('uid');
+     
+         $data1 = $this->homemodel->getjoing_date($uid);
+ 
+         echo json_encode($data1); 
+
+    }
 }
