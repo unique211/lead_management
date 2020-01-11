@@ -191,7 +191,7 @@ $(document).ready(function() {
                 $(selecter).html(html);
                 getfinicialamt(userid);
                 getfunalchart(userid);
-
+                getyearjoingdate(userid);
             }
         });
 
@@ -204,7 +204,7 @@ $(document).ready(function() {
 
         getfinicialamt(uid);
         getfunalchart(uid);
-
+        getyearjoingdate(uid);
 
     });
 
@@ -212,7 +212,7 @@ $(document).ready(function() {
         getfinicialamt(useruniqueid);
 
         getfunalchart(useruniqueid);
-
+        getyearjoingdate(useruniqueid);
 
         $.ajax({
             type: 'POST',
@@ -230,102 +230,6 @@ $(document).ready(function() {
     }
 
     function getfinicialamt(uid) {
-
-        var a = getyearjoingdate(uid);
-        console.log("asd" + a);
-
-        var today = new Date();
-
-        var Quatation = 0;
-        var ConformQuatation = 0;
-        var Order = 0;
-
-
-        var fyear = today.getFullYear().toString();
-        if ((today.getMonth() + 1) <= 3) {
-
-
-
-            fiscalyear = (parseInt(fyear) - parseInt(1)) + "-" + fyear;
-
-        } else {
-            fiscalyear = parseInt(fyear) + "-" + (parseInt(fyear) + parseInt(1));
-            //fiscalyear=  fiscalyear.toString().substr(-2);
-        }
-
-        fiscalyear = fiscalyear.split('-');
-        var statdate = fiscalyear[0] + "-" + "04" + "-" + "31";
-        var joingdate = '';
-        var trgetpr = [5, 8, 9, 8, 9, 8, 8, 9, 9, 9, 8, 10];
-        var newtrget = [];
-        var monthsum = 0;
-        var montharray = [4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3];
-        var totalmonth = 12;
-
-        $.ajax({
-            type: 'POST',
-            url: baseurl + "Homecontroller/getjoingdate",
-            async: false,
-            data: {
-                uid: uid,
-            },
-            dataType: 'json',
-            success: function(data) {
-
-                joingdate = data[0].dob;
-
-                if (Date.parse(joingdate) > Date.parse(statdate)) {
-
-                    var month = joingdate.split('-');
-                    count = 0;
-
-
-
-                    for (var i = 0; i < montharray.length; i++) {
-
-                        if (month[1] == montharray[i]) {
-
-                            break;
-                        }
-                        count++;
-                    }
-                    totalmonth = parseInt(totalmonth) - parseInt(count);
-
-
-                    for (var j = 0; j < count; j++) {
-                        monthsum = parseFloat(monthsum) + parseFloat(trgetpr[j]);
-                    }
-
-                    monthsum = (parseFloat(monthsum) / parseFloat(totalmonth)).toFixed(2);
-
-                    for (var k = 0; k < count; k++) {
-                        newtrget.push(0);
-                    }
-                    var sumtrget = 0;
-                    for (var i = count; i < trgetpr.length; i++) {
-                        var total = parseFloat(monthsum) + parseFloat(trgetpr[i]);
-
-
-
-                        if (i == (trgetpr.length - 1)) {
-                            total = (parseFloat(100) - parseFloat(sumtrget)).toFixed(2);
-                        }
-                        sumtrget = parseFloat(total) + parseFloat(sumtrget);
-
-                        newtrget.push(total);
-
-                    }
-                    console.log("newtrget" + newtrget)
-                    return newtrget;
-
-                } else {
-                    newtrget = [5, 8, 9, 8, 9, 8, 8, 9, 9, 9, 8, 10];
-
-                }
-            }
-        });
-
-
         $.ajax({
             type: "POST",
             url: base_url + "Homecontroller/getfinicialamtdata",
@@ -474,25 +378,10 @@ $(document).ready(function() {
 
                 var finicialyearamt = data[0].finicialyear_amt;
                 // if (finicialyearamt > 0) {
-
-                var q1tgtperinfo = (parseFloat(newtrget[0]) + parseFloat(newtrget[1]) + parseFloat(newtrget[2])).toFixed(2); ///last changes heres
-                var q2tgtperinfo = (parseFloat(newtrget[3]) + parseFloat(newtrget[4]) + parseFloat(newtrget[5])).toFixed(2); ///last changes heres
-                var q3tgtperinfo = (parseFloat(newtrget[6]) + parseFloat(newtrget[7]) + parseFloat(newtrget[8])).toFixed(2); ///last changes heres
-                var q4tgtperinfo = (parseFloat(newtrget[9]) + parseFloat(newtrget[10]) + parseFloat(newtrget[11])).toFixed(2); ///last changes heres
-
-                $('#q4tdtinfo').html('Q4 Tgt @' + q4tgtperinfo + '%')
-                $('#q3tgtinfo').html('Q3 Tgt @' + q3tgtperinfo + '%')
-                $('#q2tgtinfo').html('Q2 Tgt @' + q2tgtperinfo + '%')
-                $('#q1tgtinfo').html('Q1 Tgt @' + q1tgtperinfo + '%')
-
-                q1tgtperinfo = (parseFloat(q1tgtperinfo) / parseFloat(100)).toFixed(2);
-                q2tgtperinfo = (parseFloat(q2tgtperinfo) / parseFloat(100)).toFixed(2);
-                q3tgtperinfo = (parseFloat(q3tgtperinfo) / parseFloat(100)).toFixed(2);
-                q4tgtperinfo = (parseFloat(q4tgtperinfo) / parseFloat(100)).toFixed(2);
-                q1tgt = parseFloat(finicialyearamt) * parseFloat(q1tgtperinfo).toFixed(2);
-                q2target = parseFloat(finicialyearamt) * parseFloat(q2tgtperinfo).toFixed(2);
-                q3target = parseFloat(finicialyearamt) * parseFloat(q3tgtperinfo).toFixed(2);
-                q4target = parseFloat(finicialyearamt) * parseFloat(q4tgtperinfo).toFixed(2);
+                q1tgt = parseFloat(finicialyearamt) * parseFloat(0.22).toFixed(2);
+                q2target = parseFloat(finicialyearamt) * parseFloat(0.25).toFixed(2);
+                q3target = parseFloat(finicialyearamt) * parseFloat(0.26).toFixed(2);
+                q4target = parseFloat(finicialyearamt) * parseFloat(0.27).toFixed(2);
 
                 //Q1 Tgt @ 22% to Q4 Target @ 27%
                 $('#q1tgt').html(q1tgt.toFixed(2));
@@ -523,8 +412,6 @@ $(document).ready(function() {
                 $('#q3achd').html(q3achd.toFixed(2));
                 $('#q4achd').html(q4achd.toFixed(2));
 
-
-
                 //Q1 Excess to Q4 Excess
                 q1excess = parseFloat(q1tgt) - parseFloat(q1achd);
                 q2excess = parseFloat(q2task) - parseFloat(q2achd);
@@ -536,44 +423,13 @@ $(document).ready(function() {
                 $('#q3excess').html(q3excess.toFixed(2));
                 $('#q4excess').html(q4excess.toFixed(2));
 
-                if (parseFloat(q1achd) > parseFloat(q1tgt)) {
-                    $('#q1excess').addClass('btn-success');
-                } else if (parseFloat(q1achd) < parseFloat(q1tgt)) {
-                    $('#q1excess').addClass('btn-danger');
-                }
-
-                if (parseFloat(q2achd) > parseFloat(q2target)) {
-                    $('#q2excess').addClass('btn-success');
-                } else if (parseFloat(q2achd) < parseFloat(q2target)) {
-                    $('#q2excess').addClass('btn-danger');
-                }
-
-
-                if (parseFloat(q3achd) > parseFloat(q3target)) {
-                    $('#q3excess').addClass('btn-success');
-                } else if (parseFloat(q3achd) < parseFloat(q3target)) {
-                    $('#q3excess').addClass('btn-danger');
-                }
-
-                if (parseFloat(q4achd) > parseFloat(q4target)) {
-                    $('#q4excess').addClass('btn-success');
-                } else if (parseFloat(q4achd) < parseFloat(q4target)) {
-                    $('#q4excess').addClass('btn-danger');
-                }
-
                 //Q1  Achd % to Q4  Achd %
-                if (q1achd > 0) {
-                    q1achdper = (parseFloat(q1achd) / parseFloat(q1excess) * parseFloat(100)).toFixed(2);
-                }
-                if (q2achd > 0) {
-                    q2achdper = (parseFloat(q2achd) / parseFloat(q2excess) * parseFloat(100)).toFixed(2);
-                }
-                if (q3achd > 0) {
-                    q3achdper = (parseFloat(q3achd) / parseFloat(q3excess) * parseFloat(100)).toFixed(2);
-                }
-                if (q4achdper > 0) {
-                    q4achdper = (parseFloat(q4achd) / parseFloat(q4excess) * parseFloat(100)).toFixed(2);
-                }
+
+                q1achdper = (parseFloat(q1achd) / parseFloat(q1excess) * parseFloat(100)).toFixed(2);
+                q2achdper = (parseFloat(q2achd) / parseFloat(q2excess) * parseFloat(100)).toFixed(2);
+                q3achdper = (parseFloat(q3achd) / parseFloat(q3excess) * parseFloat(100)).toFixed(2);
+                q4achdper = (parseFloat(q4achd) / parseFloat(q4excess) * parseFloat(100)).toFixed(2);
+
                 $('#q1achdper').html(q1achdper + "%");
                 $('#q2achdper').html(q2achdper + "%");
                 $('#q3achdper').html(q3achdper + "%");
@@ -587,29 +443,17 @@ $(document).ready(function() {
                 //Q1 @ 22%April @ 5%
 
 
-                $('#aperilper').html('April @' + newtrget[0] + '%');
-                var q1perinfo = parseFloat(newtrget[0]) + parseFloat(newtrget[1]) + parseFloat(newtrget[2]);
-                $('#q1perinfo').html('Q1 @ ' + q1perinfo + '%')
-                var apirilperinfo = 0;
-                if (newtrget[0] > 0) {
-                    apirilperinfo = parseFloat(newtrget[0]) / parseFloat(100);
-                }
 
-                apriltarget = (parseFloat(finicialyearamt) * parseFloat(apirilperinfo)).toFixed(2);
+
+                apriltarget = (parseFloat(finicialyearamt) * parseFloat(0.05)).toFixed(2);
                 aprilexcess = (parseFloat(apriltarget)).toFixed(2);
-                if (aprilachieved > 0) {
-                    aprilachieveper = (parseFloat(aprilachieved) / parseFloat(apriltarget) * parseFloat(100)).toFixed(2);
-                }
+                aprilachieveper = (parseFloat(aprilachieved) / parseFloat(apriltarget) * parseFloat(100)).toFixed(2);
+
                 $('#apriltarget').html(apriltarget);
                 $('#apriltask').html(apriltarget);
                 $('#aprilacheive').html(aprilachieved);
                 $('#aprilexcess').html(apriltarget);
                 $('#aprilachieveper').html(aprilachieveper + "%");
-                if (parseFloat(aprilachieved) > parseFloat(apriltarget)) {
-                    $('#aprilexcess').addClass('btn-success');
-                } else if (parseFloat(aprilachieved) < parseFloat(apriltarget)) {
-                    $('#aprilexcess').addClass('btn-danger');
-                }
 
 
                 //Q1 @ 22%May @ 8%
@@ -619,25 +463,11 @@ $(document).ready(function() {
                 var mayexcess = 0;
                 var mayachieveper = 0;
 
-                $('#mayperinfo').html('May @' + newtrget[1] + '%');
-                var mayper = 0;
-
-                if (newtrget[1] > 0) {
-                    mayper = (parseFloat(newtrget[1]) / parseFloat(100));
-                }
-
-                maytarget = (parseFloat(finicialyearamt) * parseFloat(mayper)).toFixed(2);
+                maytarget = (parseFloat(finicialyearamt) * parseFloat(0.08)).toFixed(2);
                 maytask = (parseFloat(maytarget) + parseFloat(aprilexcess)).toFixed(2);
                 mayexcess = (parseFloat(maytask) - parseFloat(mayachieved)).toFixed(2);
-                if (mayachieved > 0) {
-                    mayachieveper = (parseFloat(mayachieved) / parseFloat(maytask) * parseFloat(100)).toFixed(2); ///last chanes
-                }
+                mayachieveper = (parseFloat(mayachieved) / parseFloat(maytask) * parseFloat(100)).toFixed(2); ///last chanes
 
-                if (parseFloat(mayachieved) > parseFloat(maytarget)) {
-                    $('#mayaccess').addClass('btn-success');
-                } else if (parseFloat(mayachieved) < parseFloat(maytarget)) {
-                    $('#mayaccess').addClass('btn-danger');
-                }
 
                 $('#maytarget').html(maytarget);
                 $('#maytask').html(maytask);
@@ -652,25 +482,12 @@ $(document).ready(function() {
 
                 var juneexcess = 0;
                 var juneachieveper = 0;
-                $('#juneperinfo').html('June @' + newtrget[2] + '%');
 
-                var juneperinfo = 0;
-                if (newtrget[2] > 0) {
-                    juneperinfo = parseFloat(newtrget[2]) / parseFloat(100);
-                }
-
-                junetarget = (parseFloat(finicialyearamt) * parseFloat(juneperinfo)).toFixed(2);
+                junetarget = (parseFloat(finicialyearamt) * parseFloat(0.09)).toFixed(2);
                 junetask = (parseFloat(junetarget) + parseFloat(mayexcess)).toFixed(2);
                 juneexcess = (parseFloat(junetask) - parseFloat(juneachieved)).toFixed(2);
-                if (juneachieved > 0) {
-                    juneachieveper = (parseFloat(juneachieved) / parseFloat(junetask) * parseFloat(100)).toFixed(2); ///last chanes
-                }
+                juneachieveper = (parseFloat(juneachieved) / parseFloat(junetask) * parseFloat(100)).toFixed(2); ///last chanes
 
-                if (parseFloat(juneachieved) > parseFloat(junetarget)) {
-                    $('#juneaccess').addClass('btn-success');
-                } else if (parseFloat(juneachieved) < parseFloat(junetarget)) {
-                    $('#juneaccess').addClass('btn-danger');
-                }
 
                 $('#junetarget').html(junetarget);
                 $('#junetask').html(junetask);
@@ -691,14 +508,7 @@ $(document).ready(function() {
                 overallq1task = junetask;
                 overallq1achieved = (parseFloat(aprilachieved) + parseFloat(mayachieved) + parseFloat(juneachieved)).toFixed(2);
                 overallq1excess = (parseFloat(overallq1task) - parseFloat(overallq1achieved));
-                if (overallq1achieved > 0) {
-                    overallq1achieveper = (parseFloat(overallq1achieved) / parseFloat(overallq1task) * parseFloat(100)).toFixed(2);
-                }
-                if (parseFloat(overallq1achieved) > parseFloat(overallq1target)) {
-                    $('#overallq1access').addClass('btn-success');
-                } else if (parseFloat(overallq1achieved) < parseFloat(overallq1target)) {
-                    $('#overallq1access').addClass('btn-danger');
-                }
+                overallq1achieveper = (parseFloat(overallq1achieved) / parseFloat(overallq1task) * parseFloat(100)).toFixed(2);
 
                 $('#overallq1target').html(overallq1target);
                 $('#overallq1task').html(overallq1task);
@@ -715,28 +525,10 @@ $(document).ready(function() {
                 var julyexcess = 0;
                 var julyachieveper = 0;
 
-                var q2perinfo = (parseFloat(newtrget[3]) + parseFloat(newtrget[4]) + parseFloat(newtrget[6])).toFixed(2);
-
-                $('#q2perinfo').html('Q2 @' + q2perinfo + '%');
-
-                $('#julyperinfo').html('July @' + newtrget[3] + '%');
-
-                var julyperinfo = 0;
-                if (newtrget[3] > 0) {
-                    julyperinfo = parseFloat(newtrget[3]) / parseFloat(100);
-                }
-
-                julytarget = (parseFloat(finicialyearamt) * parseFloat(julyperinfo)).toFixed(2);
+                julytarget = (parseFloat(finicialyearamt) * parseFloat(0.08)).toFixed(2);
                 julytask = (parseFloat(julytarget) + parseFloat(overallq1excess)).toFixed(2);
                 julyexcess = (parseFloat(julytask) - parseFloat(julyachieved)).toFixed(2);
-                if (julyachieveper > 0) {
-                    julyachieveper = (parseFloat(julyachieved) / parseFloat(julytask) * parseFloat(100)).toFixed(2); ///last chanes
-                }
-                if (parseFloat(julyachieved) > parseFloat(julytarget)) {
-                    $('#julyexcess').addClass('btn-success');
-                } else if (parseFloat(julyachieved) < parseFloat(julytarget)) {
-                    $('#julyexcess').addClass('btn-danger');
-                }
+                julyachieveper = (parseFloat(julyachieved) / parseFloat(julytask) * parseFloat(100)).toFixed(2); ///last chanes
 
                 $('#julytarget').html(julytarget);
                 $('#julytask').html(julytask);
@@ -752,23 +544,12 @@ $(document).ready(function() {
 
                 var augustexcess = 0;
                 var augustachieveper = 0;
-                $('#augustperinfo').html('August @' + newtrget[4] + '%');
-                var augustperinfo = 0;
-                if (newtrget[4] > 0) {
-                    augustperinfo = parseFloat(newtrget[4]) / parseFloat(100);
-                }
 
-                augusttarget = (parseFloat(finicialyearamt) * parseFloat(augustperinfo)).toFixed(2);
+                augusttarget = (parseFloat(finicialyearamt) * parseFloat(0.09)).toFixed(2);
                 augusttask = (parseFloat(augusttarget) + parseFloat(julyexcess)).toFixed(2);
                 augustexcess = (parseFloat(augusttask) - parseFloat(augustachieved)).toFixed(2);
-                if (augustachieved > 0) {
-                    augustachieveper = (parseFloat(augustachieved) / parseFloat(augusttask) * parseFloat(100)).toFixed(2); ///last chanes
-                }
-                if (parseFloat(augustachieved) > parseFloat(augusttarget)) {
-                    $('#augustexcess').addClass('btn-success');
-                } else if (parseFloat(augustachieved) < parseFloat(augusttarget)) {
-                    $('#augustexcess').addClass('btn-danger');
-                }
+                augustachieveper = (parseFloat(augustachieved) / parseFloat(augusttask) * parseFloat(100)).toFixed(2); ///last chanes
+
                 $('#augusttarget').html(augusttarget);
                 $('#augusttask').html(augusttask);
                 $('#augustachive').html(augustachieved);
@@ -783,29 +564,17 @@ $(document).ready(function() {
 
                 var septemberexcess = 0;
                 var septemberachieveper = 0;
-                $('#septemberinfo').html('September @' + newtrget[5] + '%');
-                septemberinfo = 0;
-                if (newtrget[5] > 0) {
-                    septemberinfo = parseFloat(newtrget[5]) / parseFloat(100);
-                }
 
-                septembertarget = (parseFloat(finicialyearamt) * parseFloat(septemberinfo)).toFixed(2);
+                septembertarget = (parseFloat(finicialyearamt) * parseFloat(0.08)).toFixed(2);
                 septembertask = (parseFloat(septembertarget) + parseFloat(augustexcess)).toFixed(2);
                 septemberexcess = (parseFloat(septembertask) - parseFloat(septemberachieved)).toFixed(2);
-                if (septemberachieved > 0) {
-                    septemberachieveper = (parseFloat(septemberachieved) / parseFloat(septembertask) * parseFloat(100)).toFixed(2); ///last chanes
-                }
+                septemberachieveper = (parseFloat(septemberachieved) / parseFloat(septembertask) * parseFloat(100)).toFixed(2); ///last chanes
+
                 $('#septembertarget').html(septembertarget);
                 $('#septembertask').html(septembertask);
                 $('#septemberachive').html(septemberachieved);
                 $('#septemberexcess').html(septemberexcess);
                 $('#septemberper').html(septemberachieveper + "%");
-
-                if (parseFloat(septemberachieved) > parseFloat(septembertarget)) {
-                    $('#septemberexcess').addClass('btn-success');
-                } else if (parseFloat(septemberachieved) < parseFloat(septembertarget)) {
-                    $('#septemberexcess').addClass('btn-danger');
-                }
 
 
                 // Over All Q2
@@ -821,24 +590,15 @@ $(document).ready(function() {
                 overallq2task = (parseFloat(overallq1target) + parseFloat(overallq2target)).toFixed(2);;
                 overallq2achieved = (parseFloat(septemberachieved) + parseFloat(augustachieved) + parseFloat(julyachieved)).toFixed(2);
                 overallq2excess = (parseFloat(overallq2task) - parseFloat(overallq2achieved)).toFixed(2);
-                if (overallq2achieved > 0) {
-                    overallq2achieveper = (parseFloat(overallq2achieved) / parseFloat(overallq2task) * parseFloat(100)).toFixed(2);
-                }
+                overallq2achieveper = (parseFloat(overallq2achieved) / parseFloat(overallq2task) * parseFloat(100)).toFixed(2);
+
                 $('#overallq2target').html(overallq2target);
                 $('#overallq2task').html(overallq2task);
                 $('#overallq2achive').html(overallq2achieved);
                 $('#overallq2access').html(overallq2excess);
                 $('#overallq2per').html(overallq2achieveper + "%");
 
-                if (parseFloat(overallq2achieved) > parseFloat(overallq2target)) {
-                    $('#overallq2access').addClass('btn-success');
-                } else if (parseFloat(overallq2achieved) < parseFloat(overallq2target)) {
-                    $('#overallq2access').addClass('btn-danger');
-                }
-
                 //for H1 @ 47%
-                var h1perinfo = (parseFloat(newtrget[1]) + parseFloat(newtrget[2]) + parseFloat(newtrget[3]) + parseFloat(newtrget[4]) + parseFloat(newtrget[5])).toFixed(2);
-                $('#h1perinfo').html('H1 @' + h1perinfo + '%');
 
                 var h1target = 0;
 
@@ -849,14 +609,8 @@ $(document).ready(function() {
                 h1target = (parseFloat(overallq2target) + parseFloat(overallq1target)).toFixed(2);
                 h1achieved = (parseFloat(overallq2achieved) + parseFloat(overallq1achieved)).toFixed(2);
                 h1excess = (parseFloat(h1target) - parseFloat(h1achieved)).toFixed(2);
-                if (h1achieved > 0) {
-                    h1achieveper = (parseFloat(h1achieved) / parseFloat(h1target) * parseFloat(100)).toFixed(2);
-                }
-                if (parseFloat(h1achieved) > parseFloat(h1target)) {
-                    $('#h1excess').addClass('btn-success');
-                } else if (parseFloat(h1achieved) < parseFloat(h1target)) {
-                    $('#h1excess').addClass('btn-danger');
-                }
+                h1achieveper = (parseFloat(h1achieved) / parseFloat(h1target) * parseFloat(100)).toFixed(2);
+
 
                 $('#h1target').html(h1target);
                 $('#h1task').html(h1target);
@@ -868,32 +622,16 @@ $(document).ready(function() {
                 //Q3 @ 26%
 
                 //for Octomber
-
-                var q3perinfo = (parseFloat(newtrget[6]) + parseFloat(newtrget[7]) + parseFloat(newtrget[8])).toFixed(2);
-                $('#q3perinfo').html('Q3 @' + q3perinfo + '%');
                 var octombertarget = 0;
                 var octombertask = 0;
-                $('#octoberperinfo').html('October @' + newtrget[6] + '%');
+
                 var octomberexcess = 0;
                 var octomberper = 0;
-                var octoberperinfo = 0;
 
-                if (newtrget[6] > 0) {
-                    octoberperinfo = parseFloat(newtrget[6]) / parseFloat(100);
-                }
-
-                octombertarget = (parseFloat(finicialyearamt) * parseFloat(octoberperinfo)).toFixed(2);
+                octombertarget = (parseFloat(finicialyearamt) * parseFloat(0.08)).toFixed(2);
                 octombertask = (parseFloat(octombertarget) + parseFloat(septemberexcess)).toFixed(2);
                 octomberexcess = (parseFloat(octombertask) - parseFloat(octomberachive)).toFixed(2);
-                if (octomberachive > 0) {
-                    octomberper = (parseFloat(octomberachive) / parseFloat(octombertask) * parseFloat(100)).toFixed(2); ///last chanes
-                }
-                if (parseFloat(octomberachive) > parseFloat(octombertarget)) {
-                    $('#octomberexcess').addClass('btn-success');
-                } else if (parseFloat(octomberachive) < parseFloat(octombertarget)) {
-                    $('#octomberexcess').addClass('btn-danger');
-                }
-
+                octomberper = (parseFloat(octomberachive) / parseFloat(octombertask) * parseFloat(100)).toFixed(2); ///last chanes
 
                 $('#octombertarget').html(octombertarget);
                 $('#octombertask').html(octombertask);
@@ -909,24 +647,11 @@ $(document).ready(function() {
                 var novemberexcess = 0;
                 var novemberper = 0;
 
-                $('#novemberperinfo').html('November @' + newtrget[7] + '%');
-                var novemberperinfo = 0;
-                if (newtrget[7] > 0) {
-                    novemberperinfo = parseFloat(newtrget[7]) / parseFloat(100);
-                }
-
-
-                novembertarget = (parseFloat(finicialyearamt) * parseFloat(novemberperinfo)).toFixed(2);
+                novembertarget = (parseFloat(finicialyearamt) * parseFloat(0.09)).toFixed(2);
                 novembertask = (parseFloat(novembertarget) + parseFloat(octomberexcess)).toFixed(2);
                 novemberexcess = (parseFloat(novembertask) - parseFloat(novemberachive)).toFixed(2);
-                if (novemberachive > 0) {
-                    novemberper = (parseFloat(novemberachive) / parseFloat(novembertask) * parseFloat(100)).toFixed(2); ///last chanes
-                }
-                if (parseFloat(novemberachive) > parseFloat(novembertarget)) {
-                    $('#novemberexcess').addClass('btn-success');
-                } else if (parseFloat(novemberachive) < parseFloat(novembertarget)) {
-                    $('#novemberexcess').addClass('btn-danger');
-                }
+                novemberper = (parseFloat(novemberachive) / parseFloat(novembertask) * parseFloat(100)).toFixed(2); ///last chanes
+
                 $('#novembertarget').html(novembertarget);
                 $('#novembertask').html(novembertask);
                 $('#novemberachive').html(novemberachive);
@@ -940,28 +665,17 @@ $(document).ready(function() {
 
                 var decemberexcess = 0;
                 var decemberper = 0;
-                $('#decemberperinfo').html('December @' + newtrget[8] + '%');
-                var decemberperinfo = 0;
-                if (newtrget[8] > 0) {
-                    decemberperinfo = parseFloat(newtrget[8]) / parseFloat(100);
-                }
 
-                decembertarget = (parseFloat(finicialyearamt) * parseFloat(decemberperinfo)).toFixed(2);
+                decembertarget = (parseFloat(finicialyearamt) * parseFloat(0.09)).toFixed(2);
                 decembertask = (parseFloat(decembertarget) + parseFloat(novemberexcess)).toFixed(2);
                 decemberexcess = (parseFloat(decembertask) - parseFloat(decemberachive)).toFixed(2);
-                if (decemberachive > 0) {
-                    decemberper = (parseFloat(decemberachive) / parseFloat(decembertask) * parseFloat(100)).toFixed(2); ///last chanes
-                }
+                decemberper = (parseFloat(decemberachive) / parseFloat(decembertask) * parseFloat(100)).toFixed(2); ///last chanes
+
                 $('#decembertarget').html(decembertarget);
                 $('#decembertask').html(decembertask);
                 $('#decemberachive').html(decemberachive);
                 $('#decemberexcess').html(decemberexcess);
                 $('#decemberper').html(decemberper + "%");
-                if (parseFloat(decemberachive) > parseFloat(decembertarget)) {
-                    $('#decemberexcess').addClass('btn-success');
-                } else if (parseFloat(decemberachive) < parseFloat(decembertarget)) {
-                    $('#decemberexcess').addClass('btn-danger');
-                }
 
 
 
@@ -978,38 +692,24 @@ $(document).ready(function() {
                 overallq3task = (parseFloat(overallq2task) + parseFloat(overallq3target)).toFixed(2);;
                 overallq3achieved = (parseFloat(decemberachive) + parseFloat(novemberachive) + parseFloat(octomberachive));
                 overallq3excess = (parseFloat(overallq3task) - parseFloat(overallq3achieved)).toFixed(2);
-                if (overallq3achieved > 0) {
-                    overallq3achieveper = (parseFloat(overallq3achieved) / parseFloat(overallq3task) * parseFloat(100)).toFixed(2);
-                }
+                overallq3achieveper = (parseFloat(overallq3achieved) / parseFloat(overallq3task) * parseFloat(100)).toFixed(2);
+
                 $('#overallq3target').html(overallq3target);
                 $('#overallq3task').html(overallq3task);
                 $('#overallq3achieved').html(overallq3achieved);
                 $('#overallq3excess').html(overallq3excess);
                 $('#overallq3achieveper').html(overallq3achieveper + "%");
-                if (parseFloat(overallq3achieved) > parseFloat(overallq3target)) {
-                    $('#overallq3excess').addClass('btn-success');
-                } else if (parseFloat(overallq3achieved) < parseFloat(overallq3target)) {
-                    $('#overallq3excess').addClass('btn-danger');
-                }
 
 
 
                 //for January @ 9%
-
-                var q4perinfo = (parseFloat(newtrget[9]) + parseFloat(newtrget[10]) + parseFloat(newtrget[11]));
-                $('#q4perinfo').html('Q4 @' + q4perinfo + '%');
                 var januarytarget = 0;
                 var januarytask = 0;
 
                 var januaryexcess = 0;
                 var januaryper = 0;
-                var januaryperinfo = 0;
-                $('#januaryperinfo').html('January @' + newtrget[9] + '%');
-                if (newtrget[9] > 0) {
-                    januaryperinfo = parseFloat(newtrget[9]) / parseFloat(100);
-                }
 
-                januarytarget = (parseFloat(finicialyearamt) * parseFloat(januaryperinfo)).toFixed(2);
+                januarytarget = (parseFloat(finicialyearamt) * parseFloat(0.09)).toFixed(2);
                 januarytask = (parseFloat(januarytarget) + parseFloat(overallq3excess)).toFixed(2);
                 januaryexcess = (parseFloat(januarytask) - parseFloat(januaryachive)).toFixed(2);
                 januaryper = (parseFloat(januaryachive) / parseFloat(januarytask) * parseFloat(100)).toFixed(2); ///last chanes
@@ -1020,14 +720,6 @@ $(document).ready(function() {
                 $('#januaryexcess').html(januaryexcess);
                 $('#januaryper').html(januaryper + "%");
 
-                if (parseFloat(januaryachive) > parseFloat(januarytarget)) {
-                    $('#januaryexcess').addClass('btn-success');
-
-                } else if (parseFloat(januaryachive) < parseFloat(januarytarget)) {
-
-                    $('#januaryexcess').addClass('btn-danger');
-                }
-
 
                 //for February @ 8%
                 var februarytarget = 0;
@@ -1036,13 +728,7 @@ $(document).ready(function() {
                 var februaryexcess = 0;
                 var februaryper = 0;
 
-                $('#februaryperinfo').html('February @' + newtrget[10] + '%');
-                var februaryperinfo = 0;
-                if (newtrget[10] > 0) {
-                    februaryperinfo = parseFloat(newtrget[10]) / parseFloat(100);
-                }
-
-                februarytarget = (parseFloat(finicialyearamt) * parseFloat(februaryperinfo)).toFixed(2);
+                februarytarget = (parseFloat(finicialyearamt) * parseFloat(0.08)).toFixed(2);
                 februarytask = (parseFloat(februarytarget) + parseFloat(januaryexcess)).toFixed(2);
                 februaryexcess = (parseFloat(februarytask) - parseFloat(februaryachive)).toFixed(2);
                 februaryper = (parseFloat(februaryachive) / parseFloat(februarytask) * parseFloat(100)).toFixed(2); ///last chanes
@@ -1052,12 +738,6 @@ $(document).ready(function() {
                 $('#februaryachive').html(februaryachive);
                 $('#februaryexcess').html(februaryexcess);
                 $('#februaryper').html(februaryper + "%");
-                if (parseFloat(februaryachive) > parseFloat(februarytarget)) {
-                    $('#februaryexcess').addClass('btn-success');
-                } else if (parseFloat(februaryachive) < parseFloat(februarytarget)) {
-                    $('#februaryexcess').addClass('btn-danger');
-
-                }
 
                 //for March @ 10%
 
@@ -1066,12 +746,8 @@ $(document).ready(function() {
 
                 var marchexcess = 0;
                 var marchyper = 0;
-                $('#marchperinfo').html('March @' + newtrget[11] + '%');
-                var marchperinfo = 0;
-                if (newtrget[11] > 0) {
-                    marchperinfo = parseFloat(newtrget[11]) / parseFloat(100);
-                }
-                marchtarget = (parseFloat(finicialyearamt) * parseFloat(marchperinfo)).toFixed(2);
+
+                marchtarget = (parseFloat(finicialyearamt) * parseFloat(0.10)).toFixed(2);
                 marchtask = (parseFloat(marchtarget) + parseFloat(februaryexcess)).toFixed(2);
                 marchexcess = (parseFloat(marchtask) - parseFloat(marchachive)).toFixed(2);
                 marchyper = (parseFloat(marchachive) / parseFloat(marchtask) * parseFloat(100)).toFixed(2); ///last chanes
@@ -1081,12 +757,6 @@ $(document).ready(function() {
                 $('#marchachive').html(marchachive);
                 $('#marchexcess').html(marchexcess);
                 $('#marchyper').html(marchyper + "%");
-                if (parseFloat(marchachive) > parseFloat(marchtarget)) {
-                    $('#marchexcess').addClass('btn-success');
-                } else if (parseFloat(marchachive) < parseFloat(marchtarget)) {
-                    $('#marchexcess').addClass('btn-danger');
-
-                }
 
 
                 // Over All Q4
@@ -1102,20 +772,13 @@ $(document).ready(function() {
                 overallq4task = (parseFloat(overallq3task) + parseFloat(overallq4target)).toFixed(2);;
                 overallq4achieved = (parseFloat(januaryachive) + parseFloat(februaryachive) + parseFloat(marchachive)).toFixed(2);
                 overallq4excess = (parseFloat(overallq4task) - parseFloat(overallq4achieved)).toFixed(2);
-                if (overallq4achieved > 0) {
-                    overallq4achieveper = (parseFloat(overallq4achieved) / parseFloat(overallq4task) * parseFloat(100)).toFixed(2);
-                }
+                overallq4achieveper = (parseFloat(overallq4achieved) / parseFloat(overallq4task) * parseFloat(100));
+
                 $('#overallq4target').html(overallq4target);
                 $('#overallq4task').html(overallq4task);
                 $('#overallq4achive').html(overallq4achieved);
                 $('#overallq4excess').html(overallq4excess);
                 $('#overallq4achieveper').html(overallq4achieveper + "%");
-                if (parseFloat(overallq4achieved) > parseFloat(overallq4target)) {
-                    $('#overallq4excess').addClass('btn-success');
-                } else if (parseFloat(overallq4achieved) < parseFloat(overallq4target)) {
-                    $('#overallq4excess').addClass('btn-danger');
-
-                }
 
                 //H2 @ 53%
                 var h2target = 0;
@@ -1124,9 +787,9 @@ $(document).ready(function() {
                 var h2excess = 0;
                 var h2achieveper = 0;
 
-                var h2perinfo = (parseFloat(newtrget[6]) + parseFloat(newtrget[7]) + parseFloat(newtrget[8]) + parseFloat(newtrget[9]) + parseFloat(newtrget[10]) + parseFloat(newtrget[11])).toFixed(2);
 
-                $('#h2perinfo').html('H2 @ ' + h2perinfo + '%');
+
+
 
 
                 h2target = (parseFloat(overallq3target) + parseFloat(overallq4target)).toFixed(2);
@@ -1134,20 +797,13 @@ $(document).ready(function() {
                 h2task = (parseFloat(h2target) + parseFloat(h1target)).toFixed(2);
                 h2achieved = (parseFloat(overallq4achieved) + parseFloat(overallq3achieved)).toFixed(2);
                 h2excess = (parseFloat(h2task) - parseFloat(h2achieved)).toFixed(2);
-                if (h2achieved > 0) {
-                    h2achieveper = (parseFloat(h2achieved) / parseFloat(h2excess) * parseFloat(100)).toFixed(2);
-                }
+                h2achieveper = (parseFloat(h2achieved) / parseFloat(h2excess) * parseFloat(100)).toFixed(2);
+
                 $('#h2target').html(h2target);
                 $('#h2task').html(h2task);
                 $('#h2achive').html(h2achieved);
                 $('#h2excess').html(h2excess);
                 $('#h2per').html(h2achieveper + "%");
-                if (parseFloat(h2achieved) > parseFloat(h2target)) {
-                    $('#h2excess').addClass('btn-success');
-                } else if (parseFloat(h2achieved) < parseFloat(h2target)) {
-                    $('#h2excess').addClass('btn-danger');
-
-                }
 
 
                 //Yearly 
@@ -1159,21 +815,15 @@ $(document).ready(function() {
 
                 yearachieved = (parseFloat(h2achieved) + parseFloat(h1achieved)).toFixed(2);
                 yearexcess = (parseFloat(finicialyearamt) - parseFloat(yearachieved)).toFixed(2);
-                if (yearachieved > 0) {
-                    yearachieveper = (parseFloat(yearachieved) / parseFloat(finicialyearamt) * parseFloat(100)).toFixed(2);
-                }
+                yearachieveper = (parseFloat(yearachieved) / parseFloat(finicialyearamt) * parseFloat(100)).toFixed(2);
+
                 $('#yeartarget').html(finicialyearamt);
                 $('#yeartask').html(finicialyearamt);
                 $('#yearacheive').html(yearachieved);
                 $('#yearexcess').html(yearexcess);
                 $('#yearper').html(yearachieveper);
 
-                if (parseFloat(yearachieved) > parseFloat(finicialyearamt)) {
-                    $('#yearexcess').addClass('btn-success');
-                } else if (parseFloat(yearachieved) < parseFloat(finicialyearamt)) {
-                    $('#yearexcess').addClass('btn-danger');
 
-                }
 
                 //   }
 
@@ -1237,9 +887,6 @@ $(document).ready(function() {
 
         fiscalyear = fiscalyear.split('-');
         var statdate = fiscalyear[0] + "-" + "04" + "-" + "01";
-
-
-        // alert(targetarray[1])
 
 
 
