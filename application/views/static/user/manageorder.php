@@ -382,7 +382,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                       <label class="col-sm-4"><b>MARGIN </b></label>
+                                       <label class="col-sm-4"><b>MARGIN(₹) </b></label>
                                        <div class="col-md-8 inputGroupContainer">
                                           <input type="number" style="text-align:right;" class="form-control " id="finalmargin" name="finalmargin">
                                        </div>
