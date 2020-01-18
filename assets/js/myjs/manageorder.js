@@ -1598,7 +1598,7 @@ $(document).ready(function() {
                         var html2 = '<tr>' +
                             '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
                             '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Total Order Value (without Tax):</td>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Total Order Value(Rs) (without Tax):</td>' +
                             '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + total_order_value + '</td>' +
 
 
@@ -1606,7 +1606,7 @@ $(document).ready(function() {
                             '<tr>' +
                             '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
                             '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Total Transfer Price (without Tax):</td>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Total Transfer Price(Rs) (without Tax):</td>' +
                             '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + total_trasfor_price + '</td>' +
 
 
@@ -1614,7 +1614,7 @@ $(document).ready(function() {
                             '<tr>' +
                             '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
                             '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Less Input Tax if CST:</td>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Less Input Tax if CST(Rs):</td>' +
                             '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + less_input_tax + '</td>' +
 
 
@@ -1622,7 +1622,7 @@ $(document).ready(function() {
                             '<tr>' +
                             '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
                             '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Less Transporation:</td>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Less Transporation(Rs):</td>' +
                             '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + less_trasportion + '</td>' +
 
 
@@ -1630,7 +1630,7 @@ $(document).ready(function() {
                             '<tr>' +
                             '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
                             '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Less BG/Insurance Cost:</td>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Less BG/Insurance Cost(Rs):</td>' +
                             '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + less_bg + '</td>' +
 
 
@@ -1638,7 +1638,7 @@ $(document).ready(function() {
                             '<tr>' +
                             '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
                             '<td colspan="2" style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Less others (if any):</td>' +
+                            '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">Less others(Rs) (if any):</td>' +
                             '<td colspan="2"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + less_others + '</td>' +
 
 

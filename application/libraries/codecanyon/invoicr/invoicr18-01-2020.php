@@ -12,8 +12,6 @@ class invoicr extends FPDF_rotation
 {
 
 	var $font = 'helvetica';
-
-	//var $font = 'dejavusans';
 	var $columnOpacity = 0.06;
 	var $columnSpacing = 0.3;
 	var $referenceformat = array('.',',');
@@ -42,23 +40,15 @@ class invoicr extends FPDF_rotation
 	*                               Public methods                                 *
 	*                                                                              *
 	*******************************************************************************/
-	function __construct($size='A4',$currency='',$language='en')
+	function __construct($size='A4',$currency='€',$language='en')
 	{
 		$this->columns = 5;
 		$this->items = array();
 		$this->totals = array();
 		$this->addText = array();
 		$this->firstColumnWidth = 70;
-		//$currency = '&#8377';
-		// $currency = iconv('UTF-8', 'UTF-8//IGNORE', $a);
-		// $currency = "₹";
+		//$currency= iconv('UTF-8', 'ASCII//TRANSLIT', utf8_encode($currency));
 		$this->currency = $currency;
-		// $currency= iconv('UTF-8', 'ASCII//TRANSLIT', utf8_encode($currency));
-		//$this->currency = htmlentities('');
-
-		// $text = mb_convert_encoding($currency, "UTF-8");
-		// $this->currency  = iconv("UTF-8", "UTF-8//IGNORE", $text);
-		
 		$this->maxImageDimensions = array(230,130);
 		
 		$this->setLanguage($language);
@@ -441,7 +431,7 @@ class invoicr extends FPDF_rotation
 				$this->Cell($width_other,$cHeight,iconv('UTF-8', 'windows-1252', $this->currency.' '.number_format($item['total'],2,$this->referenceformat[0],$this->referenceformat[1])),0,0,'C',1);
 
 				$this->Cell($this->columnSpacing,$cHeight,'',0,0,'L',0);
-				$this->Cell($width_other,$cHeight,iconv('UTF-8', 'windows-1252',$this->currency.' '.number_format($item['tax'],2,$this->referenceformat[0],$this->referenceformat[1])),0,0,'C',1);
+				$this->Cell($width_other,$cHeight,iconv('UTF-8', 'windows-1252', $this->currency.' '.number_format($item['tax'],2,$this->referenceformat[0],$this->referenceformat[1])),0,0,'C',1);
 
 				//$this->Cell($this->columnSpacing,$cHeight,'',0,0,'L',0);
 				//$this->Cell($width_other,$cHeight,iconv('UTF-8', 'windows-1252', $this->currency.' '.number_format($item['totaltax'],2,$this->referenceformat[0],$this->referenceformat[1])),0,0,'C',1);
