@@ -519,7 +519,7 @@ class Quotation_Estimate extends CI_Controller {
            $mobile_no='';
            $ref_number='';
            $contact_person='';
-           $symbol="$";
+           $symbol="Rs";
            $margin=0;
            $description="";
            $prderdate="";
