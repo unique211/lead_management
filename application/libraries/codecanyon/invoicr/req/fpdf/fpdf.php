@@ -522,7 +522,9 @@ function SetFont($family, $style='', $size=0)
 	{
 		// Test if one of the core fonts
 		if($family=='arial')
+	
 			$family = 'helvetica';
+			//$family='dejavusans';
 		if(in_array($family,$this->CoreFonts))
 		{
 			if($family=='symbol' || $family=='zapfdingbats')
@@ -1193,6 +1195,7 @@ function _UTF8toUTF16($s)
 		{
 			// Single-byte character
 			$res .= "\0".chr($c1);
+			
 		}
 	}
 	return $res;

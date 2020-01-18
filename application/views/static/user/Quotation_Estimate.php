@@ -337,28 +337,28 @@
         </div></br></br> -->
 
                                        <div class="form-group">
-                                          <label class="col-sm-4"><b>Total Order Value (without Tax) </b></label>
+                                          <label class="col-sm-4"><b>Total Order Value(₹) (without Tax) </b></label>
                                           <div class="col-md-8 inputGroupContainer">
                                              <input type="number" style="text-align:right;" class="form-control getmargindata" id="finalordvalue" name="finalordvalue">
                                           </div>
                                        </div>
 
                                        <div class="form-group">
-                                          <label class="col-sm-4"><b>Total Transfer Price (without Tax) </b></label>
+                                          <label class="col-sm-4"><b>Total Transfer Price(₹) (without Tax) </b></label>
                                           <div class="col-md-8 inputGroupContainer">
                                              <input type="number" style="text-align:right;" class="form-control getmargindata" id="finaltrasforprice" name="finaltrasforprice">
                                           </div>
                                        </div>
 
                                        <div class="form-group">
-                                          <label class="col-sm-4"><b>Less Input Tax if CST </b></label>
+                                          <label class="col-sm-4"><b>Less Input Tax if CST(₹) </b></label>
                                           <div class="col-md-8 inputGroupContainer">
                                              <input type="number" style="text-align:right;" class="form-control getmargindata" id="lesstaxcst" name="lesstaxcst">
                                           </div>
                                        </div>
 
                                        <div class="form-group">
-                                          <label class="col-sm-4"><b>Less Transporation </b></label>
+                                          <label class="col-sm-4"><b>Less Transporation(₹) </b></label>
                                           <div class="col-md-8 inputGroupContainer">
                                              <input type="number" style="text-align:right;" class="form-control getmargindata" id="lesstrasporation" name="lesstrasporation">
                                           </div>
@@ -366,21 +366,21 @@
 
 
                                        <div class="form-group">
-                                          <label class="col-sm-4"><b> Less BG/Insurance Cost </b></label>
+                                          <label class="col-sm-4"><b> Less BG/Insurance Cost(₹) </b></label>
                                           <div class="col-md-8 inputGroupContainer">
                                              <input type="number" style="text-align:right;" class="form-control getmargindata" id="lessbg" name="lessbg">
                                           </div>
                                        </div>
 
                                        <div class="form-group">
-                                          <label class="col-sm-4"><b>Less others (if any) </b></label>
+                                          <label class="col-sm-4"><b>Less others(₹) (if any) </b></label>
                                           <div class="col-md-8 inputGroupContainer">
                                              <input type="number" style="text-align:right;" class="form-control getmargindata" id="lessother" name="lessother">
                                           </div>
                                        </div>
 
                                        <div class="form-group">
-                                          <label class="col-sm-4"><b>MARGIN </b></label>
+                                          <label class="col-sm-4"><b>MARGIN(₹) </b></label>
                                           <div class="col-md-8 inputGroupContainer">
                                              <input type="number" style="text-align:right;" class="form-control " id="finalmargin" name="finalmargin">
                                           </div>
