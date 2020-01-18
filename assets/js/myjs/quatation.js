@@ -2283,10 +2283,11 @@ $(document).ready(function() {
 
 
 
+        $('#csend').attr('disabled', true);
 
 
-
-
+        $('#lblcsend').text('Sending Mail ');
+        $('#lblcsend').css('display', 'block');
 
 
         $.ajax({
@@ -2300,11 +2301,14 @@ $(document).ready(function() {
                 btnprin: btnprin,
 
             },
-            dataType: "JSON",
+            // dataType: "JSON",
             async: false,
             success: function(data) {
+                console.log('for mail customer test');
 
                 if (data != "") {
+                    $('#csend').attr('disabled', false);
+                    $('#lblcsend').css('display', 'none');
                     $.notify({
                         title: '',
                         message: '<strong>SuccessFully Send Email</strong>'
@@ -2312,6 +2316,11 @@ $(document).ready(function() {
                         type: 'success'
                     });
                 }
+            },
+            error: function(error) {
+                alert('error; ' + eval(error));
+                console.log('error');
+                console.log(error);
             }
         });
 
@@ -2345,10 +2354,10 @@ $(document).ready(function() {
                 btnprin: btnprin,
 
             },
-            dataType: "JSON",
+            //dataType: "JSON",
             async: false,
             success: function(data) {
-                alert(data);
+                console.log('for mail sale test');
                 if (data == 1) {
                     $.notify({
                         title: '',

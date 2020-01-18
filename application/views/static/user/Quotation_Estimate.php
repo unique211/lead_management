@@ -689,6 +689,7 @@
 
                <div class="form-group pull-right">
                   <button class="btn btn-primary" id="csend">Send</button>
+                  <label id="lblcsend" class="col-form-label" style="display:none;"></label>
                </div>
             </div>
          </div>
