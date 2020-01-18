@@ -2287,7 +2287,7 @@ $(document).ready(function() {
 
 
         $('#lblcsend').text('Sending Mail ');
-        $('#lblcsend').css('display', 'block');
+        // $('#lblcsend').css('display','');
 
 
         $.ajax({
@@ -2308,7 +2308,8 @@ $(document).ready(function() {
 
                 if (data != "") {
                     $('#csend').attr('disabled', false);
-                    $('#lblcsend').css('display', 'none');
+                    $('#lblcsend').text('');
+                    // $('#lblcsend').css('display', 'none');
                     $.notify({
                         title: '',
                         message: '<strong>SuccessFully Send Email</strong>'

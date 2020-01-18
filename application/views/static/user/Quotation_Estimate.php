@@ -576,7 +576,8 @@
 
          /* Create an active/current tablink class */
          .tab button.active {
-            background-color: #0071ba;
+            background-color: #000000;
+            color: #fff;
          }
 
          /* Style the tab content */
@@ -602,22 +603,95 @@
       <div id="Customer" class="tabcontent">
          <div class="row">
             <div class="col-md-6">
-
-               <div class="form-group">
-                  <label for="recipient-name" class="col-form-label">To:</label>
-                  <input type="text" class="form-control" id="cto" name="cto[]">
+               <div class="row">
+                  <div class="col-md-12">
+                     <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">To:</label>
+                        <input type="text" class="form-control" id="cto" name="cto[]">
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-md-12">
+                     <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">CC(Select Customer From Dropdown):</label>
+                        <select name="customercc[]" multiple="multiple" id="customercc" style="width:100%" class="form-control select-box"></select>
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-md-12">
+                     <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Sub:</label>
+                        <input type="text" class="form-control" id="cSubject" name="cSubject">
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-md-6">
+                     <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Message:</label>
+                        <textarea type="text" class="form-control" id="cmsg" name="cmsg"></textarea>
+                     </div>
+                  </div>
                </div>
             </div>
-            <div class="col-md-3">
-               <div class="form-group">
-                  <br>
-                  <label id="lbl1custnm" class="col-form-label">Customer Name:</label>
+            <div class="col-md-6">
+               <div class="row">
+                  <div class="col-md-6">
+                     <div class="form-group">
+                        <br>
+                        <label id="lbl1custnm" class="col-form-label">Customer Name:</label>
+                     </div>
+                  </div>
+                  <div class="col-md-6">
+                     <div class="form-group">
+                        <br>
+                        <label id="lbl1quotationno" class="col-form-label">Quotation Number:</label>
+                     </div>
+                  </div>
                </div>
-            </div>
-            <div class="col-md-3">
-               <div class="form-group">
-               <br>
-                  <label id="lbl1quotationno" class="col-form-label">Quotation Number:</label>
+               <div class="row">
+                  <div class="col-md-6">
+                     <div class="form-group">
+                        <br>
+                        <label id="lbl1salespr" class="col-form-label">Sales Representative:</label>
+                     </div>
+                  </div>
+                  <div class="col-md-6">
+                     <div class="form-group">
+                        <br>
+                        <label id="lbl1refno" class="col-form-label">Ref Number:</label>
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-md-6">
+                     <div class="form-group">
+                        <br>
+                        <label id="lbl1version" class="col-form-label">Version:</label>
+                     </div>
+                  </div>
+                  <div class="col-md-6">
+                     <div class="form-group">
+                        <br>
+                        <label id="lbl1quotationdate" class="col-form-label">Quotation Date:</label>
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-md-6">
+                     <div class="form-group">
+                     <br>
+                        <label id="lbl1orderduedate" class="col-form-label">Order Due Date:</label>
+                     </div>
+                  </div>
+                  <div class="col-md-6">
+                     <div class="form-group">
+                     <br>
+                        <label id="lbl1totalordvalue" class="col-form-label">Total Order Value :</label>
+                     </div>
+                  </div>
                </div>
             </div>
          </div>
@@ -625,71 +699,14 @@
             <div class="col-md-6">
 
                <div class="form-group">
-                  <label for="recipient-name" class="col-form-label">CC(Select Customer From Dropdown):</label>
-                  <select name="customercc[]" multiple="multiple" id="customercc" style="width:100%" class="form-control select-box"></select>
-               </div>
-            </div>
-            <div class="col-md-3">
-               <div class="form-group">
-               <br>
-                  <label id="lbl1salespr" class="col-form-label">Sales Representative:</label>
-               </div>
-            </div>
-            <div class="col-md-3">
-               <div class="form-group">
-               <br>
-                  <label id="lbl1refno" class="col-form-label">Ref Number:</label>
-               </div>
-            </div>
-         </div>
-         <div class="row">
-            <div class="col-md-6">
-
-               <div class="form-group">
-                  <label for="recipient-name" class="col-form-label">Sub:</label>
-                  <input type="text" class="form-control" id="cSubject" name="cSubject">
-               </div>
-            </div>
-            <div class="col-md-3">
-               <div class="form-group">
-               <br>
-                  <label id="lbl1version" class="col-form-label">Version:</label>
-               </div>
-            </div>
-            <div class="col-md-3">
-               <div class="form-group">
-               <br>
-                  <label id="lbl1quotationdate" class="col-form-label">Quotation Date:</label>
-               </div>
-            </div>
-         </div>
-         <div class="row">
-            <div class="col-md-6">
-
-               <div class="form-group">
-                  <label for="recipient-name" class="col-form-label">Message:</label>
-                  <textarea type="text" class="form-control" id="cmsg" name="cmsg"></textarea>
-               </div>
-            </div>
-            <div class="col-md-3">
-               <div class="form-group">
-               <br>
-                  <label id="lbl1orderduedate" class="col-form-label">Order Due Date:</label>
-               </div>
-            </div>
-            <div class="col-md-3">
-               <div class="form-group">
-               <br>
-                  <label id="lbl1totalordvalue" class="col-form-label">Total Order Value :</label>
-               </div>
-            </div>
-         </div>
-         <div class="row">
-            <div class="col-md-6">
-
-               <div class="form-group pull-right">
                   <button class="btn btn-primary" id="csend">Send</button>
-                  <label id="lblcsend" class="col-form-label" style="display:none;"></label>
+               </div>
+            </div>
+            <div class="col-md-6">
+
+               <div class="form-group">
+                  
+                  <label id="lblcsend" class="col-form-label"></label>
                </div>
             </div>
          </div>
