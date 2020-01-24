@@ -2286,7 +2286,7 @@ $(document).ready(function() {
         $('#csend').attr('disabled', true);
 
 
-        $('#lblcsend').text('Sending Mail ');
+        $('#lblcsend').html('Sending Mail ... ');
         // $('#lblcsend').css('display','');
 
 
