@@ -87,34 +87,64 @@ class Quotation_order extends CI_Controller {
         $user_id=$this->user_model->user_id($email);
         $data ="";
        
-
-        $data = array(
-            'customer_name' => $this->input->post('cus_name'),
-            'contact_person' =>$this->input->post('cotactperson'),
-          
-            'mobile_no' => $this->input->post('phn'),
-            'ref_number' => $this->input->post('refno'),
-            'email_id' =>  $this->input->post('s_email'),
-            'order_no' => $this->input->post('bill_no'),
-            'order_date' =>$this->input->post('o_date'),
-            'order_due_date' =>  $this->input->post('o_due_date'),
-            'description' =>  $this->input->post('description'),
-            'total_order_value' =>  $this->input->post('finalordervalue'),
-            'total_trasfor_price' =>  $this->input->post('finaltrasforprice'),
-            'less_input_tax' =>  $this->input->post('lesstaxcst'),
-            'less_trasportion' =>  $this->input->post('lesstrasporation'),
-            'less_bg' =>  $this->input->post('lessbg'),
-            'less_others' =>  $this->input->post('lessother'),
-            'margin' =>  $this->input->post('finalmargin'),
-            'quote_lock_version' =>  $this->input->post('search_version'),
-            'qutone_no' =>  $this->input->post('quatationidno'),
-            'quotation_no' =>  $this->input->post('quatation_no'),
-            'salesrepresentative' =>  $this->input->post('salesrepresentive'),
-            'customer_id' =>  $this->input->post('customerid'),
-            'user_id'=> $user_id,
-            
-       
-        );
+        if( $id >0){
+            $data = array(
+                'customer_name' => $this->input->post('cus_name'),
+                'contact_person' =>$this->input->post('cotactperson'),
+              
+                'mobile_no' => $this->input->post('phn'),
+                'ref_number' => $this->input->post('refno'),
+                'email_id' =>  $this->input->post('s_email'),
+                'order_no' => $this->input->post('bill_no'),
+                'order_date' =>$this->input->post('o_date'),
+                'order_due_date' =>  $this->input->post('o_due_date'),
+                'description' =>  $this->input->post('description'),
+                'total_order_value' =>  $this->input->post('finalordervalue'),
+                'total_trasfor_price' =>  $this->input->post('finaltrasforprice'),
+                'less_input_tax' =>  $this->input->post('lesstaxcst'),
+                'less_trasportion' =>  $this->input->post('lesstrasporation'),
+                'less_bg' =>  $this->input->post('lessbg'),
+                'less_others' =>  $this->input->post('lessother'),
+                'margin' =>  $this->input->post('finalmargin'),
+                'quote_lock_version' =>  $this->input->post('search_version'),
+                'qutone_no' =>  $this->input->post('quatationidno'),
+                'quotation_no' =>  $this->input->post('quatation_no'),
+                'salesrepresentative' =>  $this->input->post('salesrepresentive'),
+                'customer_id' =>  $this->input->post('customerid'),
+                //'user_id'=> $user_id,
+                
+           
+            );
+        }else{
+            $data = array(
+                'customer_name' => $this->input->post('cus_name'),
+                'contact_person' =>$this->input->post('cotactperson'),
+              
+                'mobile_no' => $this->input->post('phn'),
+                'ref_number' => $this->input->post('refno'),
+                'email_id' =>  $this->input->post('s_email'),
+                'order_no' => $this->input->post('bill_no'),
+                'order_date' =>$this->input->post('o_date'),
+                'order_due_date' =>  $this->input->post('o_due_date'),
+                'description' =>  $this->input->post('description'),
+                'total_order_value' =>  $this->input->post('finalordervalue'),
+                'total_trasfor_price' =>  $this->input->post('finaltrasforprice'),
+                'less_input_tax' =>  $this->input->post('lesstaxcst'),
+                'less_trasportion' =>  $this->input->post('lesstrasporation'),
+                'less_bg' =>  $this->input->post('lessbg'),
+                'less_others' =>  $this->input->post('lessother'),
+                'margin' =>  $this->input->post('finalmargin'),
+                'quote_lock_version' =>  $this->input->post('search_version'),
+                'qutone_no' =>  $this->input->post('quatationidno'),
+                'quotation_no' =>  $this->input->post('quatation_no'),
+                'salesrepresentative' =>  $this->input->post('salesrepresentive'),
+                'customer_id' =>  $this->input->post('customerid'),
+                'user_id'=> $user_id,
+                
+           
+            );
+        }
+        
 
         if ($id == "") {
 

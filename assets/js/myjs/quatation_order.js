@@ -537,6 +537,7 @@ $(document).ready(function() {
     $(document).on("submit", "#order_form", function(e) {
         e.preventDefault();
 
+
         var cus_name = $('#cus_name').val();
         var cotactperson = $('#cotactperson').val();
         var phn = $('#phn').val();
@@ -650,6 +651,7 @@ $(document).ready(function() {
 
 
             if (flag == 0) {
+
                 $.ajax({
                     type: "POST",
                     url: baseurl + "Quotation_order/save_settings",
@@ -683,6 +685,7 @@ $(document).ready(function() {
 
                     },
                     success: function(data) {
+
                         console.log(data);
 
                         if (data > 0) {
@@ -692,8 +695,12 @@ $(document).ready(function() {
                             $('#save_update').val(data);
                             $('#btnprint').val(data);
                             $('#btnExport').val(data);
-                            $('#btnprint').show();
-                            $('#btnExport').show();
+
+                            if (usertype == "Admin" || usertype == "Secretary") {
+
+                                $('#btnprint').show();
+                                $('#btnExport').show();
+                            }
 
                             $.notify({
                                 title: '',

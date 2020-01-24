@@ -530,7 +530,7 @@ $(document).ready(function() {
     /*---------insert data into area_master start-----------------*/
     $(document).on("submit", "#order_form", function(e) {
         e.preventDefault();
-
+        //alert('hii1');
         var cus_name = $('#cus_name').val();
         var cotactperson = $('#cotactperson').val();
         var phn = $('#phn').val();
@@ -871,6 +871,7 @@ $(document).ready(function() {
     displayqutation();
     var editflag = 0;
     var delflag = 0;
+    var exportflag = 0;
 
     function displayqutation() {
         for (var j = 0; j < arrayFromPHP.length; j++) {
@@ -881,6 +882,8 @@ $(document).ready(function() {
             if (arrayFromPHP[j] == "deleteOrder") {
                 delflag = 1;
             }
+
+
 
 
         }
@@ -995,7 +998,7 @@ $(document).ready(function() {
 
                     html += '<td>';
                     if (editflag == 1) {
-                        html += '<button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="edit_' + data[i].id + '"  ><i class="fa fa-edit"></i></button>&nbsp;';
+                        html += '<button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="edit_' + data[i].id + '"  name="' + data[i].order_status + '" ><i class="fa fa-edit"></i></button>&nbsp;';
                     }
                     if (delflag == 1) {
                         html += '<button name="delete" value="Delete" class="delete_data btn btn-xs btn-danger" id=' + data[i].id + '><i class="fa fa-trash"></i></button>';
@@ -1030,6 +1033,7 @@ $(document).ready(function() {
 
         var id1 = $(this).attr('id');
         id1 = id1.split("_");
+        var orderstatus = $(this).attr('name');
         var html1 = '';
 
 
@@ -1041,9 +1045,27 @@ $(document).ready(function() {
 
         $('.closehide').show();
 
+        for (var j = 0; j < arrayFromPHP.length; j++) {
 
-        $('#btnprint').show();
-        $('#btnExport').show();
+
+            if (arrayFromPHP[j] == "exportOrder") {
+
+                exportflag = 1;
+
+            }
+
+
+
+        }
+
+        if (orderstatus == "2" && exportflag == 1 && usertype == "SalesRepresentative" && userrole == "Sales") {
+
+            $('#btnprint').show();
+            $('#btnExport').show();
+        } else if (usertype == "Admin") {
+            $('#btnprint').show();
+            $('#btnExport').show();
+        }
 
         var customer_name = $('#customer_name_' + id1[1]).html();
         var order_no_ = $('#order_no_' + id1[1]).html();
