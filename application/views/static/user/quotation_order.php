@@ -399,8 +399,11 @@
                   <input type="hidden" id="quatationid" name="quatationid" value="">
                   <input type="hidden" id="customerid" name="customerid" value="">
                   <input type="reset" id="reset" class="btn btn-danger" name="reset" value="Reset">
+                  <?php if ($user_permission){?>
+                     <?php if (in_array('exportOrder', $user_permission)) { ?>
                   <button type="button"  id="btnExport" name="btnExport"  class="btn btn-sm btn-info pull-right" style="display:none;">Excel</button>
                	<button type="submit" form="pdf" id="btnprint" name="btnprint" value="" class="btn btn-sm btn-info pull-right" style="display:none;">Print</button>
+                  <?php } }?>
                </td>
                <td>
               
@@ -497,7 +500,7 @@
 
 <script type="text/javascript">
    // Table Append 
-
+                       
 
    var base_url = "<?php echo base_url(); ?>";
   

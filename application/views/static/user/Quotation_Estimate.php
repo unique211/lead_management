@@ -409,8 +409,11 @@
                      <input type="hidden" id="quatationno" name="quatationno" value="">
                      <input type="reset" id="reset" class="btn btn-danger" name="reset" value="Reset">
                      <input type="button" id="btnmailsend" name="btnmailsend" class="btn  btn-success pull-left" value="send" style="display:none;">
+                     <?php if ($user_permission){?>
+                     <?php if (in_array('exportQuotation', $user_permission)) { ?>
                      <button type="button" id="btnExport" name="btnExport" class="btn btn-sm btn-info pull-right" style="display:none;">Excel</button>
                      <button type="submit" form="pdf" id="btnprint" name="btnprint" value="" class="btn btn-sm btn-info pull-right" style="display:none;">Print</button>
+                     <?php } }?>
                   </td>
                   <td>
 
