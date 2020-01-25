@@ -1,113 +1,11 @@
 <div class="container">
    <!-- <button class="btn btn-primary pull-right btnhide"><i class="fa fa-plus"></i>Add</button> -->
    <?php if ($user_permission) { ?>
-      <button class="btn btn-primary pull-right closehide" style="display:none;margin-top:10px;">Close</button>
+      <button class="btn btn-primary pull-right closehide" style="display:none">Close</button>
       <h3> Manage Order </h3><br>
-      <link href="<?php echo base_url(); ?>assets/css/bootstrap-toggle.min.css" rel="stylesheet">
-      <style>   
-      @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
-    @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
-    p:not(:last-child) {
-        margin: 0 0 20px;
-    }
-
-    section {
-        display: none;
-        padding: 20px 0 0;
-        border-top: 1px solid #abc;
-    }
-
-    #tab1,
-    #tab2,
-    #tab3,
-    #tab4,
-    #tab5,
-    #tab6,
-    #tab7 {
-        display: none;
-    }
-
-    label.lbl {
-        display: inline-block;
-        margin: 0 0 -1px;
-        padding: 15px 25px;
-        font-weight: 600;
-        text-align: center;
-        color: #abc;
-        border: 1px solid transparent;
-    }
-
-    label.lbl:before {
-        font-family: fontawesome;
-        font-weight: normal;
-        margin-right: 10px;
-    }
-
-    /* label[for*='1']:before {
-        content: '\f007';
-    }
-
-    label[for*='2']:before {
-        content: '\f02d';
-    } */
-
-    label[for*='3']:before {
-        content: '\f21b';
-    }
-
-    label[for*='4']:before {
-        content: '\f19c';
-    }
-
-    label[for*='5']:before {
-        content: '\f15c';
-    }
-
-    label[for*='6']:before {
-        content: '\f023';
-    }
-
-    label[for*='7']:before {
-        content: '\f21b';
-    }
-
-
-
-    label:hover {
-        color: #789;
-        cursor: pointer;
-    }
-
-    input:checked+label {
-        color: #1caf9a;
-        border: 1px solid #abc;
-        border-top: 2px solid #1caf9a;
-        border-bottom: 1px solid #fff;
-    }
-
-    #tab1:checked~#content1,
-    #tab2:checked~#content2,
-    #tab3:checked~#content3,
-    #tab4:checked~#content4,
-    #tab5:checked~#content5,
-    #tab6:checked~#content6,
-    #tab7:checked~#content7 {
-        display: block;
-    }
-
-   
-</style>
 
       <div class="btnhideshow" style="display:none;">
-      <div class="col-lg-12">
-                                                        <input id="tab1" class="stages" type="radio" name="tabs" checked>
-                                                        <label class="lbl" for="tab1">Order</label>
-                                                        <input id="tab2" class="stages" type="radio" name="tabs" disabled>
-                                                        <label class="lbl" for="tab2">Payment Info</label>
-   
-
-      <section id="content1">
 
          <table id="btntable" class="table table-striped">
             <tbody>
@@ -547,46 +445,6 @@
                </tr>
             </tbody>
          </table>
-         </section>
-         <section id="content2">
-            <input type="hidden" id="paymentid" name="paymentid" value="0">
-            <div class="row">
-               
-                                            <div class="col-md-2">
-                                                <input type="hidden" id="statusinfo" name="statusinfo" value="">
-                                                <input type="checkbox" name="amountinfo" id="amountinfo" checked data-toggle="toggle"    data-on="Amount" data-off="Percentage"  data-onstyle="success" data-offstyle="danger"  >
-                                               
-                                            </div>
-                                            <div class="col-md-10">
-                                            <button type="button" class="btn btn-primary pull-right" id="add_payment">Add Payment Milestone</button>
-                                               
-                                            </div>
-                                        </div>
-
-         
-            <table id="paymenttb" class="table table-striped">
-            <div id="wait1" style="width:100px;height:100px;position:absolute;top:;left:45%;padding:2px;display:none;"><img src="<?php echo base_url('assets/images/loader.gif'); ?>" width="100" height="100" /><br>
-                                             <center>
-                                                <h5>Please Wait...</h5>
-                                             </center>
-                                          </div>
-               <thead>
-                  <tr>
-                     <th>Payment Description</th>
-                     <th>Milestone</th>
-                     <th>Action</th>
-                  </tr>
-               </thead>
-               <tbody id="paymenttbody">
-
-               </tbody>
-
-            </table>
-            <div class="row">
-            <button type="button" class="btn btn-info pull-right" id="savemilestone">Save Milestone</button>
-            </div>
-         </section>
-      </div>
       </div>
 </div>
 <div class="container">
@@ -746,15 +604,10 @@
 <script src='<?php echo base_url(); ?>assets/js/bootstrap-notify.min.js'></script>
 
 <script src="<?php echo base_url(); ?>assets/js/myjs/manageorder.js"></script>
- <!-- toggle button -->
- <script src="<?php echo base_url(); ?>assets/js/bootstrap-toggle.min.js"></script>
 
 <script type="text/javascript">
    // Table Append 
-   $('#amountinfo').bootstrapToggle({
-                on: 'Percentage',
-                off: 'Amount'
-                });
+
 
    var base_url = "<?php echo base_url(); ?>";
 

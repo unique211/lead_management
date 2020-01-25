@@ -557,6 +557,10 @@ $(document).ready(function() {
     $(document).on("submit", "#quotation_form", function(e) {
         e.preventDefault();
 
+        $('#btn_submit_quotation').attr('disabled', true);
+        $('#wait').show();
+
+
         var cus_name = $('#cus_name').val();
         var cotactperson = $('#cotactperson').val();
         var phn = $('#phn').val();
@@ -715,6 +719,8 @@ $(document).ready(function() {
                     },
                     success: function(data) {
                         console.log(data);
+                        $('#btn_submit_quotation').attr('disabled', false);
+                        $('#wait').hide();
                         if (data > 0) {
                             $.notify({
                                 title: '',
@@ -2082,6 +2088,9 @@ $(document).ready(function() {
 
     $(document).on('click', '#changestatuainfo', function(e) {
         e.preventDefault();
+
+        $('#changestatuainfo').attr('disabled', true);
+        $('#wait1').show();
         var id = $('#status_id').val();
         var status = $('#quote_status').val();
         id = id.split("_");
@@ -2103,7 +2112,8 @@ $(document).ready(function() {
             dataType: "JSON",
             async: false,
             success: function(data) {
-
+                $('#changestatuainfo').attr('disabled', false);
+                $('#wait1').hide();
                 if (data == true) {
                     $.notify({
                         title: '',
@@ -2259,6 +2269,37 @@ $(document).ready(function() {
             }
         });
 
+        var btnprin = $('#btnprint').val();
+
+        $.ajax({
+            type: "POST",
+            url: baseurl + "Quotation_Estimate/getfilenameinfo",
+            data: {
+
+                btnprin: btnprin,
+
+            },
+            dataType: "html",
+            async: false,
+            success: function(data) {
+
+                var filenm = data.split("EOF");
+                var trimStr = $.trim(filenm[1]);
+                $('#btnfilenmshow1').val(base_url + "quatationpdf/quotation_" + trimStr + ".pdf");
+                $('#btnfilenmshow2').val(base_url + "quatationpdf/quotation_" + trimStr + ".pdf");
+                $('#filenamepdf1').text('quotation_' + trimStr + ".pdf");
+                $('#filenamepdf2').text('quotation_' + trimStr + ".pdf");
+                //$("#getdfieename").attr("href", base_url + "quatationpdf/invoice_" + filenm[1] + ".pdf")
+
+            }
+        });
+
+    });
+
+    $(document).on('click', '.btnfilenmshow', function(e) {
+        e.preventDefault();
+        var value = $(this).val();
+        window.open(value, '_blank');
     });
 
     $(document).on('click', '#csend', function(e) {
@@ -2271,6 +2312,10 @@ $(document).ready(function() {
         var subject = $('#cSubject').val();
         var msg = $('#cmsg').val();
         var btnprin = $('#btnprint').val();
+        var attachment = $('#btnfilenmshow1').val();
+        var filenamepdf = $('#filenamepdf1').text();
+
+        $('#wait3').show();
 
         // cto = cto.split(",");
         // studejsonObj = [];
@@ -2299,6 +2344,8 @@ $(document).ready(function() {
                 subject: subject,
                 msg: msg,
                 btnprin: btnprin,
+                attachment: attachment,
+                filenamepdf: filenamepdf,
 
             },
             // dataType: "JSON",
@@ -2307,6 +2354,7 @@ $(document).ready(function() {
                 console.log('for mail customer test');
 
                 if (data != "") {
+                    $('#wait3').hide();
                     $('#csend').attr('disabled', false);
                     $('#lblcsend').css('display', 'none');
                     $.notify({
@@ -2318,7 +2366,7 @@ $(document).ready(function() {
                 }
             },
             error: function(error) {
-                alert('error; ' + eval(error));
+
                 console.log('error');
                 console.log(error);
             }
@@ -2331,17 +2379,19 @@ $(document).ready(function() {
         e.preventDefault();
 
 
+        $('#wait4').show();
 
         var cto = $('#sto').val();
         var customercc = $('#scc').val();
         var subject = $('#sSubject').val();
         var msg = $('#smsg').val();
         var btnprin = $('#btnprint').val();
+        var attachment = $('#btnfilenmshow1').val();
+        var filenamepdf = $('#filenamepdf1').text();
 
 
 
-
-
+        $('#ssend').attr('disabled', true);
 
         $.ajax({
             type: "POST",
@@ -2352,13 +2402,16 @@ $(document).ready(function() {
                 subject: subject,
                 msg: msg,
                 btnprin: btnprin,
+                filenamepdf: filenamepdf,
 
             },
             //dataType: "JSON",
             async: false,
             success: function(data) {
                 console.log('for mail sale test');
-                if (data == 1) {
+                $('#ssend').attr('disabled', false);
+                $('#wait4').hide();
+                if (data != "") {
                     $.notify({
                         title: '',
                         message: '<strong>SuccessFully Send Email</strong>'

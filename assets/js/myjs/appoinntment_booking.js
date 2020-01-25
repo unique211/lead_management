@@ -358,6 +358,7 @@ $(document).ready(function() {
                 table_name: table_name,
             },
             success: function(data) {
+                alert(data);
                 if (data == "100") {
                     validate = 1;
 
