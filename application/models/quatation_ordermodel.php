@@ -461,6 +461,59 @@ public function getorderemark($id){
     $hasil3=$this->db->get();
     return $hasil3->result();
 }
+public function checkquotationno($id){
+
+    $this->db->select('*');    
+    $this->db->from('order_master');
+    $this->db->where('qutone_no',$id);
+    $hasil3=$this->db->get();
+    
+    if ($hasil3->num_rows() > 0)
+    {
+        return '100';
+    }else{
+        return '0';
+    }
+}
+public function save_insertpayment(){
+  
+
+  $result=0;
+  $id=$this->input->post('id');
+  $data	= $this->input->post('studejsonObj');
+  
+  $this->db->select('*');    
+  $this->db->from('payment_master');
+  $this->db->where('order_id',$id);
+  $hasil3=$this->db->get();
+  
+  if ($hasil3->num_rows() > 0)
+  {
+    $this->db->where('order_id', $id);
+    $this->db->delete('payment_master');
+  }
+  
+
+    foreach($data as $studentinfo){
+        $data1 = array(
+            'order_id' =>$id,
+            'payment_description' =>$studentinfo['paymentname'] ,
+            'amount' =>$studentinfo['amount'],
+            'paymenttype' =>$studentinfo['amt'],
+          
+
+        );
+        $result=$this->db->insert('payment_master',$data1);
+    }
+    return $result;
+}
+function getmilestoneinfo($id){
+    $this->db->select('*');    
+    $this->db->from('payment_master');
+    $this->db->where('order_id',$id);
+    $hasil3=$this->db->get();
+    return $hasil3->result();
+}
 
 
 }

@@ -381,6 +381,23 @@ class Quotation_order extends CI_Controller {
             echo json_encode($data);
        
         }
+        public function checkqutationorder(){
+            $id	= $this->input->post('quatationid');
+            $data=$this->quatation_ordermodel->checkquotationno($id);
+            echo json_encode($data);
+       
+        }
+        public function save_payment(){
+          
+           
+            $data=$this->quatation_ordermodel->save_insertpayment();
+            echo json_encode($data);
+        }
+        public function getmilestoneinfo(){
+            $id	= $this->input->post('id');
+            $data=$this->quatation_ordermodel->getmilestoneinfo($id);
+            echo json_encode($data);
+        }
         
        
 

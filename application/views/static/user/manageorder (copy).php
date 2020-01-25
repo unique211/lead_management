@@ -1,19 +1,8 @@
-<link href="<?php echo base_url(); ?>assets/js/select2.min.css" rel="stylesheet">
 <div class="container">
-<style>
-    textarea {
-        resize: none;
-    }
-</style>
-
+   <!-- <button class="btn btn-primary pull-right btnhide"><i class="fa fa-plus"></i>Add</button> -->
    <?php if ($user_permission) { ?>
-      <?php if (in_array('createQuotation', $user_permission)) { ?>
-         <br>
-         <button class="btn btn-primary pull-right btnhide"><i class="fa fa-plus"></i>Add</button>
-
-      <?php } ?>
       <button class="btn btn-primary pull-right closehide" style="display:none">Close</button>
-      <h3>Quotation / Estimate</h3><br>
+      <h3> Manage Order </h3><br>
 
 
       <div class="btnhideshow" style="display:none;">
@@ -22,13 +11,11 @@
             <tbody>
                <tr>
                   <td colspan="1">
-                     <form class="form-horizontal" id="quotation_form" name="quotation_form" method="POST">
+                     <form class="form-horizontal" id="order_form" name="order_form" method="POST">
                         <fieldset>
 
                            <div class="row">
-                         
                               <div class="col-md-6">
-
 
                                  <div class="form-group">
                                     <label class="col-md-4 control-label">Customer Name</label>
@@ -62,7 +49,6 @@
                                        <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span><input id="s_email" name="s_email" placeholder="Email" class="form-control s_email" value="" type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"></div><span class="email1"></span>
                                     </div>
                                  </div>
-
                                  <div class="form-group">
                                     <label class="col-md-4 control-label">Sales Representative</label>
 
@@ -80,17 +66,26 @@
                                        <?php } ?>
 
                                     </div>
-                                 </div>
 
+                                 </div>
+                                 <div class="form-group" style="display:none;" id="remarkdiv">
+                                    <label class="col-md-4 control-label">Remark</label>
+
+                                    <div class="col-md-8 inputGroupContainer">
+                                       <div class="input-group"><span class="adj_size input-group-addon"><i class="fa fa-calendar" style="font-size:14px;"></i></span>
+                                          <textarea class="form-control" rows="5" id="remark" name="remark" disabled></textarea>
+                                       </div><span class="o_due_date"></span>
+                                    </div>
+                                 </div>
                               </div>
 
                               <div class="col-md-6">
 
                                  <div class="form-group">
 
-                                    <label class="col-md-4 control-label">Quatation Number</label>
+                                    <label class="col-md-4 control-label">Order Number</label>
                                     <div class="col-md-8 inputGroupContainer">
-                                       <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input id="bill_no" name="bill_no" placeholder="Quatation Number" class="form-control " required="true" maxlength="20" type="text" readonly>
+                                       <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input id="orderno" name="orderno" placeholder="Quatation Number" class="form-control " required="true" maxlength="20" type="text">
 
                                        </div><span class="Bill_No"></span>
                                     </div>
@@ -106,10 +101,10 @@
                                  </div>
 
                                  <div class="form-group">
-                                    <label class="col-md-4 control-label">Quotation Date</label>
+                                    <label class="col-md-4 control-label">Order Date</label>
                                     <div class="col-md-8 inputGroupContainer">
                                        <div class="input-group"><span class="adj_size input-group-addon"><i class="fa fa-calendar" style="font-size:14px;"></i></span>
-                                          <input type="date" id="o_date" name="o_date" class="form-control o_date" disabled></div><span class="o_date"></span>
+                                          <input type="date" id="o_date" name="o_date" class="form-control o_date"></div><span class="o_date"></span>
                                     </div>
                                  </div>
                                  <!-- 
@@ -154,13 +149,14 @@
                                     <thead>
                                        <tr style="display:none;" id="searchversion">
 
-                                          <th>Version</th>
-                                          <th colspan="12">
-                                             <div class="input-group"><span class="input-group-addon"><i class="fa fa-life-ring"></i></span><select name="search_version" id="search_version" class="form-control">
-                                                   <option value="">Select</option>
+                                          <th colspan="2"><label>Quotation Number:</label></th>
+                                          <th colspan="3"><br><br><label name="quatation_no" id="quatation_no">
+                                          <th colspan="4"></th>
+                                          <th><label>Version:</label></th>
+                                          <th colspan="3"><br><br><label name="search_version" id="search_version">
 
-                                                </select></div>
-                                          </th>
+
+                                             </label></th>
 
                                        </tr>
                                        <tr>
@@ -282,7 +278,7 @@
                                              <input type="number" style="text-align:right;" value="" class="form-control" name="totaltrasnforprice" id="totaltrasnforprice" placeholder="Total Transfer Price">
                                           </td>
 
-                                       
+
 
 
 
@@ -327,18 +323,18 @@
 
 
                                     <div class="col-sm-5 col-md-7">
-                                    <div id="wait" style="width:100px;height:100px;position:absolute;top:;left:45%;padding:2px;display:none;"><img src="<?php echo base_url('assets/images/loader.gif'); ?>" width="100" height="100" /><br>
-									<center>
-										<h5>Please Wait...</h5>
-									</center>
-								</div>
+                                       <div id="wait" style="width:100px;height:100px;position:absolute;top:;left:45%;padding:2px;display:none;"><img src="<?php echo base_url('assets/images/loader.gif'); ?>" width="100" height="100" /><br>
+                                          <center>
+                                             <h5>Please Wait...</h5>
+                                          </center>
+                                       </div>
                                     </div>
 
 
 
                                     <div class="col-sm-5 col-sm-offset-2 col-md-5 col-md-offset-0">
 
-                           
+
 
                                        <!-- <div class="form-inline">
 		<label class="col-sm-5"><b>Total Tax : </b></label>
@@ -397,7 +393,7 @@
                                        </div>
 
 
-                                      
+
 
 
 
@@ -412,18 +408,23 @@
 
 
                <tr>
-                  <td><input id="btn_submit_quotation" type="submit" class="btn btn-primary" name="submit" value="Save">
+                  <td><input type="submit" class="btn btn-primary" id="btnsave" name="submit" value="Save">
 
                      <input type="hidden" id="save_update" name="save_update" value="">
+                     <input type="hidden" id="quatationid" name="quatationid" value="">
                      <input type="hidden" id="customerid" name="customerid" value="">
-                     <input type="hidden" id="quatationno" name="quatationno" value="">
                      <input type="reset" id="reset" class="btn btn-danger" name="reset" value="Reset">
-                     <input type="button" id="btnmailsend" name="btnmailsend" class="btn  btn-success pull-left" value="send" style="display:none;">
-                     <?php if ($user_permission){?>
-                     <?php if (in_array('exportQuotation', $user_permission)) { ?>
-                     <button type="button" id="btnExport" name="btnExport" class="btn btn-sm btn-info pull-right" style="display:none;">Excel</button>
-                     <button type="submit" form="pdf" id="btnprint" name="btnprint" value="" class="btn btn-sm btn-info pull-right" style="display:none;">Print</button>
-                     <?php } }?>
+
+                     <?php if ($this->session->userdata('user_type') == "Admin") { ?>
+                        <input type="button" class="btn btn-primary stausapproved" id="accepted" name="accepted" value="Accepted">
+                        <input type="button" id="rejected" class="btn btn-danger stausapproved" name="rejected" value="Rejected">
+                     <?php } ?>
+                     <?php if ($user_permission) { ?>
+                        <?php if (in_array('exportOrder', $user_permission)) { ?>
+                           <button type="button" id="btnExport" name="btnExport" class="btn btn-sm btn-info pull-right" style="display:none;">Excel</button>
+                           <button type="submit" form="pdf" id="btnprint" name="btnprint" value="" class="btn btn-sm btn-info pull-right" style="display:none;">Print</button>
+                     <?php }
+                        } ?>
                   </td>
                   <td>
 
@@ -439,7 +440,7 @@
 
                </fieldset>
                </form>
-               <form name="pdf" id="pdf" method="POST" action="<?php echo base_url('Quotation_Estimate/print_pdf'); ?>" target="_blank"></form>
+               <form name="pdf" id="pdf" method="POST" action="<?php echo base_url('Quotation_order/print_pdf'); ?>" target="_blank"></form>
                </td>
                </tr>
             </tbody>
@@ -458,86 +459,107 @@
          <thead>
             <tr>
                <th colspan="4">Customer Info</th>
-               <th colspan="4">Quatation Info</th>
+               <th colspan="4">Invoice Info</th>
             </tr>
          </thead>
          <tbody id="tblexporttbl"></tbody>
       </table>
 
    </div>
-   <script>
-      var arrayFromPHP = <?php echo json_encode($user_permission); ?>;
-      console.log(arrayFromPHP);
-   </script>
-<?php } ?>
-<!-- Delete Modal -->
-<div id="myModal1" class=" modal fade " role="dialog">
 
-   <div class="modal-dialog ">
+   <!-- Delete Modal -->
+   <div id="myModal1" class=" modal fade " role="dialog">
 
-      <div class="modal-content">
-         <!--   <div class="modal-header">
+      <div class="modal-dialog ">
+
+         <div class="modal-content">
+            <!--   <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Delete</h4>
       </div> -->
-         <span id='cal_error'></span>
+            <span id='cal_error'></span>
 
-         <input type="hidden" name="del_id" id='del_id'>
+            <input type="hidden" name="del_id" id='del_id'>
 
-         <div class="modal-body">
+            <div class="modal-body">
 
-            <h5>Are You Sure You Want To Delete</h5>
-            <button type="button" class="close" style="margin-top: -1.5em;" data-dismiss="modal" aria-label="Close">
-               <span aria-hidden="true">&times;</span>
+               <h5>Are You Sure You Want To Delete</h5>
+               <button type="button" class="close" style="margin-top: -1.5em;" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+            </div>
+            <div class="modal-footer">
+               <button class="btn btn-primary" id="delete">OK</button>
+
+               <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
          </div>
-         <div class="modal-footer">
-            <button class="btn btn-primary" id="delete">OK</button>
 
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-         </div>
       </div>
-
    </div>
-</div>
 
-<!-- Delete Modal -->
 
-<!-- Change Status Modal -->
-<div id="myModal2" class=" modal fade " role="dialog">
-   <form id="form_changestatus" name="form_changestatus">
+   <!-- Delete Modal -->
+   <div id="myModal2" class=" modal fade " role="dialog">
+      <form id="changeststus_form" name="changeststus_form">
+         <div class="modal-dialog ">
+
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Change Status</h4>
+               </div>
+               <span id='cal_error'></span>
+
+               <input type="hidden" name="order_id_hidden" id='order_id_hidden'>
+               <input type="hidden" name="status_hidden" id='status_hidden'>
+
+               <div class="modal-body">
+
+                  <div class="col-md-12">
+
+                     <div class="form-group">
+                        <label class="col-sm-2"><b>Remark</b></label>
+                        <div class="col-md-8 inputGroupContainer">
+                           <textarea id="statsusremark" class="form-control" name="statsusremark" required></textarea>
+                        </div>
+                     </div>
+
+                  </div>
+
+               </div>
+               <div class="modal-footer">
+                  <button type="Submit" class="btn btn-primary">OK</button>
+
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+               </div>
+            </div>
+
+         </div>
+      </form>
+   </div>
+
+
+   <div id="myModal3" class=" modal fade " role="dialog">
+
       <div class="modal-dialog ">
 
          <div class="modal-content">
             <div class="modal-header">
-          
-            <div id="wait1" style="width:100px;height:100px;position:absolute;top:;left:45%;padding:2px;display:none;"><img src="<?php echo base_url('assets/images/loader.gif'); ?>" width="100" height="100" /><br>
-									<center>
-										<h5>Please Wait...</h5>
-									</center>
-								</div>
-
-               <h4 class="modal-title">Change Status</h4>
-               <button type="button" class="close" style="margin-top: -1.5em;" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
+               <button type="button" class="close" data-dismiss="modal">&times;</button>
+               <h4 class="modal-title"> Status Remark</h4>
             </div>
             <span id='cal_error'></span>
 
-            <input type="hidden" name="status_id" id='status_id'>
+
 
             <div class="modal-body">
 
                <div class="col-md-12">
 
-               
                   <div class="form-group">
-                     <label class="col-sm-4"><b>Status </b></label>
-                     <div class="col-md-6 inputGroupContainer">
-                        <select name="quote_status" id="quote_status" class="form-control">
-                           <option disabled>select</option>
-                           <option value="1">Pending</option>
-                           <option value="2" selected>Confirm</option>
-                           <option value="3">Cancel</option>
-                        </select>
+                     <label class="col-sm-2"><b>Remark</b></label>
+                     <div class="col-md-8 inputGroupContainer">
+                        <textarea id="statsusinforemark" class="form-control" name="statsusinforemark" required></textarea>
                      </div>
                   </div>
 
@@ -545,413 +567,43 @@
 
             </div>
             <div class="modal-footer">
-               <button class="btn btn-primary" id="changestatuainfo">OK</button>
+               <!-- <button type="button" class="btn btn-primary" >OK</button> -->
 
                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
             </div>
          </div>
 
       </div>
-   </form>
+
+   </div>
 </div>
-<!-- Change Status Modal -->
-
-</div>
-<div class="container" id="sendemail_div" style="display:none;">
-   <!DOCTYPE html>
-   <html>
-
-   <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <style>
-         body {
-            font-family: Arial;
-         }
-
-         /* Style the tab */
-         .tab {
-            overflow: hidden;
-            border: 1px solid #ccc;
-            background-color: #f1f1f1;
-         }
-
-         /* Style the buttons inside the tab */
-         .tab button {
-            background-color: inherit;
-            float: left;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            padding: 14px 16px;
-            transition: 0.3s;
-            font-size: 17px;
-         }
-
-         /* Change background color of buttons on hover */
-         .tab button:hover {
-            background-color: #ddd;
-         }
-
-         /* Create an active/current tablink class */
-         .tab button.active {
-            background-color: #000000;
-            color: #fff;
-         }
-
-         /* Style the tab content */
-         .tabcontent {
-            display: none;
-            padding: 6px 12px;
-            border: 1px solid #ccc;
-            border-top: none;
-         }
-      </style>
-   </head>
-
-   <body>
-
-
-
-      <div class="tab">
-         <button id="tbcustomer" class="tablinks active" onclick="openCity(event, 'Customer')">Customer</button>
-         <button id="tbsalesperson" class="tablinks" onclick="openCity(event, 'SalesPerson')">SalesRepresentative</button>
-
-      </div>
-
-      <div id="Customer" class="tabcontent">
-         <div class="row">
-            <div class="col-md-6">
-               <div class="row">
-                  <div class="col-md-12">
-                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">To:</label>
-                        <input type="text" class="form-control" id="cto" name="cto[]">
-                     </div>
-                  </div>
-
-               </div>
-               <div class="row">
-                  <div class="col-md-12">
-                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">CC(Select Customer From Dropdown):</label>
-                        <select name="customercc[]" multiple="multiple" id="customercc" style="width:100%" class="form-control select-box"></select>
-                     </div>
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="col-md-12">
-                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Sub:</label>
-                        <input type="text" class="form-control" id="cSubject" name="cSubject">
-                     </div>
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="col-md-12">
-                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Message:</label>
-                        <textarea type="text" class="form-control" id="cmsg" name="cmsg"></textarea>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <div class="col-md-6">
-               <div class="row">
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <br>
-                        <label id="lbl1custnm" class="col-form-label">Customer Name:</label>
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <br>
-                        <label id="lbl1quotationno" class="col-form-label">Quotation Number:</label>
-
-                     </div>
-                  </div>
-               </div>
-               <div class="row">
-
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <br>
-                        <label id="lbl1salespr" class="col-form-label">Sales Representative:</label>
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <br>
-                        <label id="lbl1refno" class="col-form-label">Ref Number:</label>
-
-                     </div>
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="col-md-6">
-                     <div class="form-group">
-
-                        <br>
-                        <label id="lbl1version" class="col-form-label">Version:</label>
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <br>
-                        <label id="lbl1quotationdate" class="col-form-label">Quotation Date:</label>
-                     </div>
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="col-md-6">
-                     <div class="form-group">
-                     <br>
-                        <label id="lbl1orderduedate" class="col-form-label">Order Due Date:</label>
-
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="form-group">
-
-                     <br>
-                        <label id="lbl1totalordvalue" class="col-form-label">Total Order Value :</label>
-
-                     </div>
-                  </div>
-               </div>
-               <div class="row">
-
-               <div class="col-md-6">
-               <button class="btn btn-info btnfilenmshow" id="btnfilenmshow1"> <a  id="getdfieename" href=""><i class="fa fa-paperclip"></i></a></button><label id="filenamepdf1">Qutation.pdf</label>
-               </div>
-
-               </div>
-            </div>
-         </div>
-         <div class="row">
-         <div id="wait3" style="width:100px;height:100px;position:absolute;top:;left:45%;padding:2px;display:none;"><img src="<?php echo base_url('assets/images/loader.gif'); ?>" width="100" height="100" /><br>
-									<center>
-										<h5>Please Wait...</h5>
-									</center>
-								</div>
-            <div class="col-md-6">
-
-               <div class="form-group">
-                  <button class="btn btn-primary" id="csend">Send</button>
-               </div>
-            </div>
-            <div class="col-md-6">
-
-               <div class="form-group">
-                  
-                  <label id="lblcsend" class="col-form-label"></label>
-               </div>
-            </div>
-         </div>
-
-      </div>
-
-      <div id="SalesPerson" class="tabcontent">
-         <div class="row">
-            <div class="col-md-6">
-
-               <div class="form-group">
-                  <label for="recipient-name" class="col-form-label">To:</label>
-                  <input type="text" class="form-control" id="sto" name="sto">
-               </div>
-            </div>
-            <div class="col-md-3">
-               
-               <div class="form-group">
-               <br>
-                  <label id="lblcustfirstname" class="col-form-label">Customer Name:</label>
-               </div>
-            </div>
-
-
-
-            <div class="col-md-3">
-           
-               <div class="form-group">
-               <br>
-                  <label id="lblQuotationno" class="col-form-label">Quotation Number:</label>
-               </div>
-            </div>
-         </div>
-         <div class="row">
-            <div class="col-md-6">
-
-               <div class="form-group">
-                  <label for="recipient-name" class="col-form-label">CC(Select SalesRepresentative From Dropdown):</label>
-                  <select name="scc[]" id="scc" multiple="multiple" style="width:100%" class="form-control select-box"></select>
-               </div>
-            </div>
-            <div class="col-md-3">
-               <div class="form-group">
-               <br>
-                  <label id="lblsalesrepresentative" class="col-form-label">Sales Representative:</label>
-               </div>
-            </div>
-            <div class="col-md-3">
-            <br>
-               <div class="form-group">
-               <br>
-                  <label id="lblrefnumber" class="col-form-label">Ref Number:</label>
-               </div>
-            </div>
-         </div>
-         <div class="row">
-            <div class="col-md-6">
-
-               <div class="form-group">
-                  
-                  <label for="recipient-name" class="col-form-label">Sub:</label>
-                  <input type="text" class="form-control" id="sSubject" name="sSubject">
-               </div>
-            </div>
-            <div class="col-md-3">
-           
-               <div class="form-group">
-               <br>
-                  <label id="lblversion" class="col-form-label">Version:</label>
-               </div>
-            </div>
-            <div class="col-md-3">
-          
-               <div class="form-group">
-               <br>
-                  <label id="lblquotationdate" class="col-form-label">Quotation Date:</label>
-               </div>
-            </div>
-         </div>
-         <div class="row">
-            <div class="col-md-6">
-
-               <div class="form-group">
-                  <label for="recipient-name" class="col-form-label">Message:</label>
-                  <textarea type="text" class="form-control" id="smsg" name="smsg"></textarea>
-               </div>
-            </div>
-            <div class="col-md-3">
-           
-               <div class="form-group">
-               <br>
-                  <label id="lblorderduedate" class="col-form-label">Order Due Date:</label>
-               </div>
-            </div>
-            <div class="col-md-3">
-          
-               <div class="form-group">
-               <br>
-                  <label id="lbltotalordervalue" class="col-form-label">Total Order Value:</label>
-               </div>
-            </div>
-         </div>
-         <div class="row">
-         <div class="col-md-6"></div>
-               <div class="col-md-6">
-               <button class="btn btn-info btnfilenmshow" id="btnfilenmshow2"> <a  id="getdfieename" href=""><i class="fa fa-paperclip"></i></a></button><label id="filenamepdf2">Qutation.pdf</label>
-               </div>
-               </div>
-         <div class="row">
-         <div id="wait4" style="width:100px;height:100px;position:absolute;top:;left:45%;padding:2px;display:none;"><img src="<?php echo base_url('assets/images/loader.gif'); ?>" width="100" height="100" /><br>
-									<center>
-										<h5>Please Wait...</h5>
-									</center>
-								</div>
-            <div class="col-md-6">
-
-               <div class="form-group right">
-                  <button class="btn btn-primary" id="ssend">Send</button>
-               </div>
-            </div>
-         </div>
-      </div>
-      </div>
-      <script>
-function openCity(evt, cityName) {
- 
-   
-  var i, tabcontent, tablinks;
-
-  tabcontent = document.getElementsByClassName("tabcontent");
-  
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-  document.getElementById(cityName).style.display = "block";
-  
- 
-  
-  if(cityName=="SalesPerson"){
-  
-  
-   $('#tbsalesperson').addClass("active");
-  }else{
-  
-   $('#tbcustomer').addClass("active");
-  }
-  //evt.currentTarget.className += " active";
-
-}
+<script>
+   var arrayFromPHP = <?php echo json_encode($user_permission); ?>;
+   console.log(arrayFromPHP);
 </script>
-
-
-      <!-- <script>
-        
-    function openCity(evt, cityName) {
-
-var i, tabcontent, tablinks;
-if (cityName == "Customer") {
-    $("#tbcustomer").css({ "background-color": "0071ba" });
-    $("#tbsalesperson").css({ "background-color": "" });
-} else {
-    $("#tbsalesperson").css({ "background-color": "0071ba" });
-    $("#tbcustomer").css({ "background-color": "" });
-}
-tabcontent = document.getElementsByClassName("tabcontent");
-for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-}
-tablinks = document.getElementsByClassName("tablinks");
-for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-}
-document.getElementById(cityName).style.display = "block";
- $('#'+cityName).style.display = "block";
- evt.currentTarget.className += " active";
-}
-      </script> -->
-
-   </body>
-
-   </html>
-
-</div>
-
+<?php } ?>
+<!-- Delete Modal -->
 
 
 
 
 <!--  
     <script src='assets/src/tagcomplete.js'></script> -->
-<script src='<?php echo base_url('assets/js/main.js') . APPVER; ?>'></script>
 
-<script src="<?php echo base_url(); ?>assets/js/myjs/quatation.js"></script>
+
+
 
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 <!-- jQuery UI library -->
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <!-- <script src="https://rawgit.com/unconditional/jquery-table2excel/master/src/jquery.table2excel.js"></script> -->
-<script src="assets/js/tabletoexcle.js"></script>
-<script src="assets/js/bootstrap-notify.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
+<!-- <script src="assets/js/tabletoexcle.js"></script>
+<script src="assets/js/bootstrap-notify.min.js"></script> -->
+<script src='<?php echo base_url(); ?>assets/js/tabletoexcle.js'></script>
+<script src='<?php echo base_url(); ?>assets/js/bootstrap-notify.min.js'></script>
 
+<script src="<?php echo base_url(); ?>assets/js/myjs/manageorder.js"></script>
 
 <script type="text/javascript">
    // Table Append 
@@ -959,22 +611,12 @@ document.getElementById(cityName).style.display = "block";
 
    var base_url = "<?php echo base_url(); ?>";
 
+
+
+   var quatationid1 = "<?php if (isset($quotatopnid))  echo $quotatopnid; ?>";
+   var quatationid = "";
+
    var usertype = "<?php echo $this->session->userdata('user_type') ?>";
    var userrole = "<?php echo $this->session->userdata('userrole') ?>";
    var useruniqueid = "<?php echo $this->session->userdata('useruniqueid') ?>";
-
-
-
-
-   $(document).ready(function() {
-
-      $('.select-box').select2();
-
-   });
-</script>
-
-
-<script>
-
-
 </script>

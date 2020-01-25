@@ -1,10 +1,6 @@
 <link href="<?php echo base_url(); ?>assets/js/select2.min.css" rel="stylesheet">
 <div class="container">
-<style>
-    textarea {
-        resize: none;
-    }
-</style>
+
 
    <?php if ($user_permission) { ?>
       <?php if (in_array('createQuotation', $user_permission)) { ?>
@@ -628,7 +624,6 @@
                         <input type="text" class="form-control" id="cto" name="cto[]">
                      </div>
                   </div>
-
                </div>
                <div class="row">
                   <div class="col-md-12">
@@ -647,7 +642,7 @@
                   </div>
                </div>
                <div class="row">
-                  <div class="col-md-12">
+                  <div class="col-md-6">
                      <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Message:</label>
                         <textarea type="text" class="form-control" id="cmsg" name="cmsg"></textarea>
@@ -667,12 +662,10 @@
                      <div class="form-group">
                         <br>
                         <label id="lbl1quotationno" class="col-form-label">Quotation Number:</label>
-
                      </div>
                   </div>
                </div>
                <div class="row">
-
                   <div class="col-md-6">
                      <div class="form-group">
                         <br>
@@ -683,14 +676,12 @@
                      <div class="form-group">
                         <br>
                         <label id="lbl1refno" class="col-form-label">Ref Number:</label>
-
                      </div>
                   </div>
                </div>
                <div class="row">
                   <div class="col-md-6">
                      <div class="form-group">
-
                         <br>
                         <label id="lbl1version" class="col-form-label">Version:</label>
                      </div>
@@ -707,33 +698,23 @@
                      <div class="form-group">
                      <br>
                         <label id="lbl1orderduedate" class="col-form-label">Order Due Date:</label>
-
                      </div>
                   </div>
                   <div class="col-md-6">
                      <div class="form-group">
-
                      <br>
                         <label id="lbl1totalordvalue" class="col-form-label">Total Order Value :</label>
-
                      </div>
                   </div>
                </div>
                <div class="row">
-
                <div class="col-md-6">
                <button class="btn btn-info btnfilenmshow" id="btnfilenmshow1"> <a  id="getdfieename" href=""><i class="fa fa-paperclip"></i></a></button><label id="filenamepdf1">Qutation.pdf</label>
                </div>
-
                </div>
             </div>
          </div>
          <div class="row">
-         <div id="wait3" style="width:100px;height:100px;position:absolute;top:;left:45%;padding:2px;display:none;"><img src="<?php echo base_url('assets/images/loader.gif'); ?>" width="100" height="100" /><br>
-									<center>
-										<h5>Please Wait...</h5>
-									</center>
-								</div>
             <div class="col-md-6">
 
                <div class="form-group">
@@ -854,14 +835,9 @@
                </div>
                </div>
          <div class="row">
-         <div id="wait4" style="width:100px;height:100px;position:absolute;top:;left:45%;padding:2px;display:none;"><img src="<?php echo base_url('assets/images/loader.gif'); ?>" width="100" height="100" /><br>
-									<center>
-										<h5>Please Wait...</h5>
-									</center>
-								</div>
             <div class="col-md-6">
 
-               <div class="form-group right">
+               <div class="form-group pull-right">
                   <button class="btn btn-primary" id="ssend">Send</button>
                </div>
             </div>

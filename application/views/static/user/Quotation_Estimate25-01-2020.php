@@ -1,10 +1,6 @@
 <link href="<?php echo base_url(); ?>assets/js/select2.min.css" rel="stylesheet">
 <div class="container">
-<style>
-    textarea {
-        resize: none;
-    }
-</style>
+
 
    <?php if ($user_permission) { ?>
       <?php if (in_array('createQuotation', $user_permission)) { ?>
@@ -26,9 +22,7 @@
                         <fieldset>
 
                            <div class="row">
-                         
                               <div class="col-md-6">
-
 
                                  <div class="form-group">
                                     <label class="col-md-4 control-label">Customer Name</label>
@@ -282,7 +276,7 @@
                                              <input type="number" style="text-align:right;" value="" class="form-control" name="totaltrasnforprice" id="totaltrasnforprice" placeholder="Total Transfer Price">
                                           </td>
 
-                                       
+
 
 
 
@@ -327,18 +321,14 @@
 
 
                                     <div class="col-sm-5 col-md-7">
-                                    <div id="wait" style="width:100px;height:100px;position:absolute;top:;left:45%;padding:2px;display:none;"><img src="<?php echo base_url('assets/images/loader.gif'); ?>" width="100" height="100" /><br>
-									<center>
-										<h5>Please Wait...</h5>
-									</center>
-								</div>
+
                                     </div>
 
 
 
                                     <div class="col-sm-5 col-sm-offset-2 col-md-5 col-md-offset-0">
 
-                           
+
 
                                        <!-- <div class="form-inline">
 		<label class="col-sm-5"><b>Total Tax : </b></label>
@@ -397,7 +387,7 @@
                                        </div>
 
 
-                                      
+
 
 
 
@@ -412,7 +402,7 @@
 
 
                <tr>
-                  <td><input id="btn_submit_quotation" type="submit" class="btn btn-primary" name="submit" value="Save">
+                  <td><input type="submit" class="btn btn-primary" name="submit" value="Save">
 
                      <input type="hidden" id="save_update" name="save_update" value="">
                      <input type="hidden" id="customerid" name="customerid" value="">
@@ -509,12 +499,8 @@
 
          <div class="modal-content">
             <div class="modal-header">
-          
-            <div id="wait1" style="width:100px;height:100px;position:absolute;top:;left:45%;padding:2px;display:none;"><img src="<?php echo base_url('assets/images/loader.gif'); ?>" width="100" height="100" /><br>
-									<center>
-										<h5>Please Wait...</h5>
-									</center>
-								</div>
+
+
 
                <h4 class="modal-title">Change Status</h4>
                <button type="button" class="close" style="margin-top: -1.5em;" data-dismiss="modal" aria-label="Close">
@@ -528,7 +514,6 @@
 
                <div class="col-md-12">
 
-               
                   <div class="form-group">
                      <label class="col-sm-4"><b>Status </b></label>
                      <div class="col-md-6 inputGroupContainer">
@@ -594,8 +579,7 @@
 
          /* Create an active/current tablink class */
          .tab button.active {
-            background-color: #000000;
-            color: #fff;
+            background-color: #0071ba;
          }
 
          /* Style the tab content */
@@ -621,130 +605,94 @@
       <div id="Customer" class="tabcontent">
          <div class="row">
             <div class="col-md-6">
-               <div class="row">
-                  <div class="col-md-12">
-                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">To:</label>
-                        <input type="text" class="form-control" id="cto" name="cto[]">
-                     </div>
-                  </div>
 
-               </div>
-               <div class="row">
-                  <div class="col-md-12">
-                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">CC(Select Customer From Dropdown):</label>
-                        <select name="customercc[]" multiple="multiple" id="customercc" style="width:100%" class="form-control select-box"></select>
-                     </div>
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="col-md-12">
-                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Sub:</label>
-                        <input type="text" class="form-control" id="cSubject" name="cSubject">
-                     </div>
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="col-md-12">
-                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Message:</label>
-                        <textarea type="text" class="form-control" id="cmsg" name="cmsg"></textarea>
-                     </div>
-                  </div>
+               <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">To:</label>
+                  <input type="text" class="form-control" id="cto" name="cto[]">
                </div>
             </div>
-            <div class="col-md-6">
-               <div class="row">
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <br>
-                        <label id="lbl1custnm" class="col-form-label">Customer Name:</label>
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <br>
-                        <label id="lbl1quotationno" class="col-form-label">Quotation Number:</label>
-
-                     </div>
-                  </div>
+            <div class="col-md-3">
+               <div class="form-group">
+                  <br>
+                  <label id="lbl1custnm" class="col-form-label">Customer Name:</label>
                </div>
-               <div class="row">
-
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <br>
-                        <label id="lbl1salespr" class="col-form-label">Sales Representative:</label>
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <br>
-                        <label id="lbl1refno" class="col-form-label">Ref Number:</label>
-
-                     </div>
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="col-md-6">
-                     <div class="form-group">
-
-                        <br>
-                        <label id="lbl1version" class="col-form-label">Version:</label>
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <br>
-                        <label id="lbl1quotationdate" class="col-form-label">Quotation Date:</label>
-                     </div>
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="col-md-6">
-                     <div class="form-group">
-                     <br>
-                        <label id="lbl1orderduedate" class="col-form-label">Order Due Date:</label>
-
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="form-group">
-
-                     <br>
-                        <label id="lbl1totalordvalue" class="col-form-label">Total Order Value :</label>
-
-                     </div>
-                  </div>
-               </div>
-               <div class="row">
-
-               <div class="col-md-6">
-               <button class="btn btn-info btnfilenmshow" id="btnfilenmshow1"> <a  id="getdfieename" href=""><i class="fa fa-paperclip"></i></a></button><label id="filenamepdf1">Qutation.pdf</label>
-               </div>
-
+            </div>
+            <div class="col-md-3">
+               <div class="form-group">
+               <br>
+                  <label id="lbl1quotationno" class="col-form-label">Quotation Number:</label>
                </div>
             </div>
          </div>
          <div class="row">
-         <div id="wait3" style="width:100px;height:100px;position:absolute;top:;left:45%;padding:2px;display:none;"><img src="<?php echo base_url('assets/images/loader.gif'); ?>" width="100" height="100" /><br>
-									<center>
-										<h5>Please Wait...</h5>
-									</center>
-								</div>
             <div class="col-md-6">
 
                <div class="form-group">
-                  <button class="btn btn-primary" id="csend">Send</button>
+                  <label for="recipient-name" class="col-form-label">CC(Select Customer From Dropdown):</label>
+                  <select name="customercc[]" multiple="multiple" id="customercc" style="width:100%" class="form-control select-box"></select>
                </div>
             </div>
+            <div class="col-md-3">
+               <div class="form-group">
+               <br>
+                  <label id="lbl1salespr" class="col-form-label">Sales Representative:</label>
+               </div>
+            </div>
+            <div class="col-md-3">
+               <div class="form-group">
+               <br>
+                  <label id="lbl1refno" class="col-form-label">Ref Number:</label>
+               </div>
+            </div>
+         </div>
+         <div class="row">
             <div class="col-md-6">
 
                <div class="form-group">
-                  
-                  <label id="lblcsend" class="col-form-label"></label>
+                  <label for="recipient-name" class="col-form-label">Sub:</label>
+                  <input type="text" class="form-control" id="cSubject" name="cSubject">
+               </div>
+            </div>
+            <div class="col-md-3">
+               <div class="form-group">
+               <br>
+                  <label id="lbl1version" class="col-form-label">Version:</label>
+               </div>
+            </div>
+            <div class="col-md-3">
+               <div class="form-group">
+               <br>
+                  <label id="lbl1quotationdate" class="col-form-label">Quotation Date:</label>
+               </div>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-md-6">
+
+               <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Message:</label>
+                  <textarea type="text" class="form-control" id="cmsg" name="cmsg"></textarea>
+               </div>
+            </div>
+            <div class="col-md-3">
+               <div class="form-group">
+               <br>
+                  <label id="lbl1orderduedate" class="col-form-label">Order Due Date:</label>
+               </div>
+            </div>
+            <div class="col-md-3">
+               <div class="form-group">
+               <br>
+                  <label id="lbl1totalordvalue" class="col-form-label">Total Order Value :</label>
+               </div>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-md-6">
+
+               <div class="form-group pull-right">
+                  <button class="btn btn-primary" id="csend">Send</button>
+                  <label id="lblcsend" class="col-form-label" style="display:none;"></label>
                </div>
             </div>
          </div>
@@ -848,20 +796,9 @@
             </div>
          </div>
          <div class="row">
-         <div class="col-md-6"></div>
-               <div class="col-md-6">
-               <button class="btn btn-info btnfilenmshow" id="btnfilenmshow2"> <a  id="getdfieename" href=""><i class="fa fa-paperclip"></i></a></button><label id="filenamepdf2">Qutation.pdf</label>
-               </div>
-               </div>
-         <div class="row">
-         <div id="wait4" style="width:100px;height:100px;position:absolute;top:;left:45%;padding:2px;display:none;"><img src="<?php echo base_url('assets/images/loader.gif'); ?>" width="100" height="100" /><br>
-									<center>
-										<h5>Please Wait...</h5>
-									</center>
-								</div>
             <div class="col-md-6">
 
-               <div class="form-group right">
+               <div class="form-group pull-right">
                   <button class="btn btn-primary" id="ssend">Send</button>
                </div>
             </div>

@@ -537,6 +537,8 @@ $(document).ready(function() {
     $(document).on("submit", "#order_form", function(e) {
         e.preventDefault();
 
+        $('#wait').show();
+
 
         var cus_name = $('#cus_name').val();
         var cotactperson = $('#cotactperson').val();
@@ -687,10 +689,11 @@ $(document).ready(function() {
                     success: function(data) {
 
                         console.log(data);
-
+                        $('#wait').hide();
                         if (data > 0) {
 
-
+                            $("#tab2").prop('disabled', false);
+                            $("#tab2").trigger('click');
 
                             $('#save_update').val(data);
                             $('#btnprint').val(data);
@@ -873,7 +876,28 @@ $(document).ready(function() {
         $('.tablehideshow').show();
         $('.closehide').hide();
 
-        location.href = baseurl + "quotation";
+
+
+        $.ajax({
+            type: 'POST',
+            url: baseurl + "Quotation_order/checkqutationorder",
+            async: false,
+            data: {
+                quatationid: quatationid,
+
+            },
+            dataType: 'json',
+            success: function(data) {
+
+                if (data == '100') {
+                    location.href = baseurl + "manageorder";
+                } else {
+                    location.href = baseurl + "quotation";
+                }
+            }
+        });
+
+
         form_clear();
 
     });
@@ -1959,6 +1983,176 @@ $(document).ready(function() {
         });
 
     }
+    addpaymentinfo();
+
+    function addpaymentinfo() {
+
+        var row_id = $('#paymentid').val();
+        row_id = parseInt(row_id) + 1;
+
+        markup = '<tr  class="paymentdatadata" id="paymentdata_' + row_id + '" >' +
+            '<td   id="expeid_' + row_id + '">' +
+            '<input type="text" id="paymentname_' + row_id + '" name="paymentname_' + row_id + '"  class="form-control" placeholder="Payment Description">' +
+            '</td>' +
+
+
+            '<td>' +
+            '<input type="number" id="amount_' + row_id + '" name="amount_' + row_id + '"  class="form-control checkmilestone" value="0" placeholder="Milestone">' +
+
+            '</td>' +
+            '<td>&nbsp;<button  class="regional_delete_data1 btn btn-xs btn-danger"   id="paymentdata_' + row_id + '"  ><i class="fa fa-trash"></i></button>' +
+            '</tr>';
+        $("#paymenttbody").prepend(markup);
+        $('#paymentid').val(row_id);
+
+
+    }
+    $(document).on('click', '#add_payment', function(e) {
+        addpaymentinfo();
+    });
+
+    $(document).on('click', '.regional_delete_data1', function(e) {
+        e.preventDefault();
+        var save_update = $(this).attr('id');
+        save_update = save_update.split("_")[1];
+
+        var rowCount = $('#paymenttb >tbody >tr').length;
+
+        if (rowCount > 1) {
+            console.log(save_update);
+            if (save_update != "") {
+                $("#paymentdata_" + save_update).remove();
+                console.log("#paymentdata_" + save_update);
+
+            }
+        } else {
+            $.notify({
+                title: '',
+                message: '<strong>One Payment is Required !!</strong>'
+            }, {
+                type: 'success'
+            });
+        }
+        getamountmilestone();
+
+    });
+    $(document).on('blur', '.checkmilestone', function(e) {
+        e.preventDefault();
+        getamountmilestone();
+    });
+
+
+
+    function getamountmilestone() {
+        var amt = 0;
+        if ($('#amountinfo').is(":checked")) {
+
+            amt = 1;
+        } else {
+            amt = 0;
+        }
+        var finalorder = $('#finalordvalue').val();
+        var perinfo = 0;
+        $(".paymentdatadata").each(function() {
+            var id = $(this).attr('id');
+            id = id.split("_");
+
+            var newamt = $('#amount_' + id[1]).val();
+            perinfo = parseFloat(perinfo) + parseFloat(newamt);
+
+
+        });
+
+        if (amt == 1) {
+            if (perinfo > 100) {
+                $.notify({
+                    title: '',
+                    message: '<strong>Milestone Not Grather than 100% !!</strong>'
+                }, {
+                    type: 'success'
+                });
+                $('#savemilestone').attr('disabled', true)
+            } else {
+                $('#savemilestone').attr('disabled', false)
+            }
+        } else if (amt == 0) {
+            if (perinfo > finalorder) {
+                $.notify({
+                    title: '',
+                    message: '<strong>Milestone Not Grather than Total Order Value !!</strong>'
+                }, {
+                    type: 'success'
+                });
+                $('#savemilestone').attr('disabled', true)
+            } else {
+                $('#savemilestone').attr('disabled', false)
+            }
+        }
+
+    }
+    $(document).on('click', '#savemilestone', function(e) {
+        e.preventDefault();
+
+        studejsonObj = [];
+        var amt = 0;
+        var id = $('#save_update').val();
+        $('#wait1').show();
+
+        $('#savemilestone').attr('disabled', true);
+        if ($('#amountinfo').is(":checked")) {
+
+            amt = 1;
+        } else {
+            amt = 0;
+        }
+
+        $(".paymentdatadata").each(function() {
+            var id1 = $(this).attr('id');
+            console.log(id1);
+
+            id1 = id1.split("_");
+
+
+            student = {};
+
+            var paymentname_ = $('#paymentname_' + id1[1]).val();
+            var amount_ = $('#amount_' + id1[1]).val();
+
+
+            student["paymentname"] = paymentname_;
+            student["amount"] = amount_;
+            student["amt"] = amt;
+
+            studejsonObj.push(student);
+
+
+        });
+        console.log("studejsonObj" + studejsonObj);
+
+        $.ajax({
+            type: "POST",
+            url: baseurl + "Quotation_order/save_payment",
+            dataType: "JSON",
+            async: false,
+            data: {
+                id: id,
+                studejsonObj: studejsonObj,
+            },
+            success: function(data) {
+                $('#wait1').hide();
+                $('#savemilestone').attr('disabled', false);
+                $.notify({
+                    title: '',
+                    message: '<strong>Milestone Save SucessFully !!</strong>'
+                }, {
+                    type: 'success'
+                });
+            }
+        });
+
+
+    });
+
 
 
 });
