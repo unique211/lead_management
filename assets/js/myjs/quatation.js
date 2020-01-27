@@ -739,7 +739,7 @@ $(document).ready(function() {
                                 type: 'success'
                             });
                             if (id == "") {
-                                $('#bill_no').val(data);
+
                                 $('#save_update').val(data);
                                 $('#btnprint').val(data);
                                 $('#btnExport').val(data);
@@ -747,6 +747,21 @@ $(document).ready(function() {
                                 $('#btnExport').show();
                                 $('#btnmailsend').show();
                                 $('#tbcustomer').trigger('click');
+                                var qid = data;
+                                $.ajax({
+                                    type: "POST",
+                                    url: baseurl + "Quotation_Estimate/getquotationnodata",
+                                    dataType: "JSON",
+                                    data: {
+                                        id: qid,
+
+                                    },
+                                    success: function(data1) {
+                                        $('#bill_no').val(data1[0].quotaion_no);
+                                    }
+                                });
+
+
 
                             } else {
                                 $('.btnhideshow').hide();

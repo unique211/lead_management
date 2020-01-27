@@ -164,11 +164,9 @@ class Quotation_Estimate extends CI_Controller {
 		// 	$data1 = $this->quatationmodel->data_update($data,$tablename, "id", $id);
         // }
         
-            if($id==""){
-                echo json_encode($quotationno);
-            }else{
+           
                 echo json_encode($data1);
-            }
+            
 
       
     
@@ -909,6 +907,12 @@ class Quotation_Estimate extends CI_Controller {
          
             $data = $this->quatationmodel->getsearchwisefilter($status);
             echo json_encode($data);
+        }
+        public  function getquotationnodata(){
+            $id	= $this->input->post('id');
+         
+            $data = $this->quatationmodel->getquotationdata($id);
+            echo json_encode($data);  
         }
        
 
