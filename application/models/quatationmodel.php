@@ -151,10 +151,7 @@ class Quatationmodel extends CI_Model{
             ); 
             $this->db->insert('quotation_log',$data3);
         }
-        $saveid	= $this->input->post('id');
-            if( $saveid==""){
-
-            }
+       
             return $id;
         
         
@@ -1004,6 +1001,13 @@ function getsearchwisefilter($qsstatus){
 
 
 return $result1;
+}
+public function getquotationdata($id){
+    $this->db->select('quotaion_no');
+    $this->db->from('quotation_master');
+    $this->db->where('id',$id);
+     $hasil=$this->db->get();
+    return $hasil->result();
 }
 
 }
