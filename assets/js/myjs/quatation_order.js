@@ -699,6 +699,59 @@ $(document).ready(function() {
                             $('#btnprint').val(data);
                             $('#btnExport').val(data);
 
+                            var id = $('#save_update').val();
+                            if ($('#amountinfo').is(":checked")) {
+
+                                amt = 1;
+                            } else {
+                                amt = 0;
+                            }
+                            studejsonObj1 = [];
+                            $(".paymentdatadata").each(function() {
+                                var id1 = $(this).attr('id');
+                                console.log(id1);
+
+                                id1 = id1.split("_");
+
+
+                                student = {};
+
+                                var paymentname_ = $('#paymentname_' + id1[1]).val();
+                                var amount_ = $('#amount_' + id1[1]).val();
+                                if (paymentname_ != "" && amount_ > 0) {
+
+                                    student["paymentname"] = paymentname_;
+                                    student["amount"] = amount_;
+                                    student["amt"] = amt;
+
+                                    studejsonObj1.push(student);
+                                }
+
+
+                            });
+                            console.log("studejsonObj" + studejsonObj);
+
+                            $.ajax({
+                                type: "POST",
+                                url: baseurl + "Quotation_order/save_payment",
+                                dataType: "JSON",
+                                async: false,
+                                data: {
+                                    id: id,
+                                    studejsonObj: studejsonObj1,
+                                },
+                                success: function(data) {
+                                    $('#wait1').hide();
+                                    $('#savemilestone').attr('disabled', false);
+                                    $.notify({
+                                        title: '',
+                                        message: '<strong>Milestone Save SucessFully !!</strong>'
+                                    }, {
+                                        type: 'success'
+                                    });
+                                }
+                            });
+
                             if (usertype == "Admin" || usertype == "Secretary") {
 
                                 $('#btnprint').show();
@@ -2071,9 +2124,9 @@ $(document).ready(function() {
                 }, {
                     type: 'success'
                 });
-                $('#savemilestone').attr('disabled', true)
+                $('#btnsaveinfo').attr('disabled', true)
             } else {
-                $('#savemilestone').attr('disabled', false)
+                $('#btnsaveinfo').attr('disabled', false)
             }
         } else if (amt == 0) {
             if (perinfo > finalorder) {
@@ -2083,9 +2136,9 @@ $(document).ready(function() {
                 }, {
                     type: 'success'
                 });
-                $('#savemilestone').attr('disabled', true)
+                $('#btnsaveinfo').attr('disabled', true)
             } else {
-                $('#savemilestone').attr('disabled', false)
+                $('#btnsaveinfo').attr('disabled', false)
             }
         }
 
