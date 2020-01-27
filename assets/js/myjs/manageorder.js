@@ -2360,7 +2360,7 @@ $(document).ready(function() {
 
                 html += '</tbody></table>';
                 $('#show_master').html(html);
-                $('#mytable').DataTable({});
+                //  $('#mytable').DataTable({});
             }
         });
         getallversion();

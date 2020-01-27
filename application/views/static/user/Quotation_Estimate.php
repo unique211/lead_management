@@ -349,7 +349,7 @@
                                        <div class="form-group">
                                           <label class="col-sm-4"><b>Total Order Value(₹) (without Tax) </b></label>
                                           <div class="col-md-8 inputGroupContainer">
-                                             <input type="number" style="text-align:right;" class="form-control getmargindata" id="finalordvalue" name="finalordvalue">
+                                             <input type="number" style="text-align:right;" class="form-control getmargindata"  id="finalordvalue" name="finalordvalue">
                                           </div>
                                        </div>
 
@@ -363,14 +363,14 @@
                                        <div class="form-group">
                                           <label class="col-sm-4"><b>Less Input Tax if CST(₹) </b></label>
                                           <div class="col-md-8 inputGroupContainer">
-                                             <input type="number" style="text-align:right;" class="form-control getmargindata" id="lesstaxcst" name="lesstaxcst">
+                                             <input type="number" style="text-align:right;" class="form-control getmargindata" value="0" id="lesstaxcst" name="lesstaxcst">
                                           </div>
                                        </div>
 
                                        <div class="form-group">
                                           <label class="col-sm-4"><b>Less Transporation(₹) </b></label>
                                           <div class="col-md-8 inputGroupContainer">
-                                             <input type="number" style="text-align:right;" class="form-control getmargindata" id="lesstrasporation" name="lesstrasporation">
+                                             <input type="number" style="text-align:right;" class="form-control getmargindata"  value="0"  id="lesstrasporation" name="lesstrasporation">
                                           </div>
                                        </div>
 
@@ -392,7 +392,7 @@
                                        <div class="form-group">
                                           <label class="col-sm-4"><b>MARGIN(₹) </b></label>
                                           <div class="col-md-8 inputGroupContainer">
-                                             <input type="number" style="text-align:right;" class="form-control " id="finalmargin" name="finalmargin">
+                                             <input type="number" style="text-align:right;"  value="0"  class="form-control " id="finalmargin" name="finalmargin">
                                           </div>
                                        </div>
 

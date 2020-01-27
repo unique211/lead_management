@@ -503,16 +503,24 @@ $(document).ready(function() {
                             },
                             dataType: 'json',
                             success: function(data) {
+                                alert(data);
                                 if (data == "0") {
                                     $('#cotactperson').val('');
                                     $('#phn').val('');
                                     $('#s_email').val('');
                                     $('#customerid').val('');
+                                } else if (data > 0) {
+                                    $('#cotactperson').val('');
+                                    $('#phn').val('');
+                                    $('#s_email').val('');
+                                    $('#customerid').val(data);
                                 } else {
+
                                     $('#customerid').val(data[0].account_id);
                                     $('#cotactperson').val(data[0].contact_name);
                                     $('#phn').val(data[0].mobile_no);
                                     $('#s_email').val(data[0].email_id);
+
                                 }
                             }
                         });
@@ -560,207 +568,221 @@ $(document).ready(function() {
         $('#btn_submit_quotation').attr('disabled', true);
         $('#wait').show();
 
+        var TodayDate = new Date();
+        var endDate = new Date(Date.parse($("#o_due_date").val()));
 
-        var cus_name = $('#cus_name').val();
-        var cotactperson = $('#cotactperson').val();
-        var phn = $('#phn').val();
-        var s_email = $('#s_email').val();
-        var bill_no = $('#bill_no').val();
-        var refno = $('#refno').val();
-        var Tax = $('#Tax').val();
-        var o_date = $('#o_date').val();
-        var o_due_date = $('#o_due_date').val();
-        var description = $('#description').val();
-
-        var finalordervalue = $('#finalordvalue').val();
-        var finaltrasforprice = $('#finaltrasforprice').val();
-        var lesstaxcst = $('#lesstaxcst').val();
-        var lesstrasporation = $('#lesstrasporation').val();
-        var lessbg = $('#lessbg').val();
-        var lessother = $('#lessother').val();
-        var finalmargin = $('#finalmargin').val();
-        var salesrepresentive = $('#salesrepresentive').val();
-        var customerid = $('#customerid').val();
-
-        console.log(customerid);
+        if (endDate > TodayDate) {
 
 
-        if (usertype == "SalesRepresentative" && userrole == "Sales") {
-            salesrepresentive = useruniqueid;
-        }
+            var cus_name = $('#cus_name').val();
+            var cotactperson = $('#cotactperson').val();
+            var phn = $('#phn').val();
+            var s_email = $('#s_email').val();
+            var bill_no = $('#bill_no').val();
+            var refno = $('#refno').val();
+            var Tax = $('#Tax').val();
+            var o_date = $('#o_date').val();
+            var o_due_date = $('#o_due_date').val();
+            var description = $('#description').val();
 
-        var flag = 0;
+            var finalordervalue = $('#finalordvalue').val();
+            var finaltrasforprice = $('#finaltrasforprice').val();
+            var lesstaxcst = $('#lesstaxcst').val();
+            var lesstrasporation = $('#lesstrasporation').val();
+            var lessbg = $('#lessbg').val();
+            var lessother = $('#lessother').val();
+            var finalmargin = $('#finalmargin').val();
+            var salesrepresentive = $('#salesrepresentive').val();
+            var customerid = $('#customerid').val();
 
-        var today = new Date();
-        var dd = today.getDate();
-
-        var mm = today.getMonth() + 1;
-        var yyyy = today.getFullYear();
-        if (dd < 10) {
-            dd = '0' + dd;
-        }
-
-        if (mm < 10) {
-            mm = '0' + mm;
-        }
-        o_date = yyyy + '-' + mm + '-' + dd;
+            console.log(customerid);
 
 
+            if (usertype == "SalesRepresentative" && userrole == "Sales") {
+                salesrepresentive = useruniqueid;
+            }
 
-        var id = $('#save_update').val();
+            var flag = 0;
 
+            var today = new Date();
+            var dd = today.getDate();
 
-        var l1 = $('table#product_table').find('tbody').find('tr');
-        var r = l1.length;
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            o_date = yyyy + '-' + mm + '-' + dd;
 
 
 
-        if (r > 0) {
-
-            studejsonObj = [];
-            $(".producttbrow").each(function() {
-                var id1 = $(this).attr('id');
-                console.log(id1);
-
-                id1 = id1.split("_");
+            var id = $('#save_update').val();
 
 
-                student = {};
-
-                var productname = $('#pid_' + id1[1]).val();
-                var qty = $('#qty_' + id1[1]).val();
-                var unitprice = $('#unitprice_' + id1[1]).val();
-                var taxper = $('#taxper_' + id1[1]).val();
-                var unitordvalue = $('#unitordvalue_' + id1[1]).val();
-                var ptax = $('#ptax_' + id1[1]).val();
-                var margin = $('#margin_' + id1[1]).val();
+            var l1 = $('table#product_table').find('tbody').find('tr');
+            var r = l1.length;
 
 
 
+            if (r > 0) {
+
+                studejsonObj = [];
+                $(".producttbrow").each(function() {
+                    var id1 = $(this).attr('id');
+                    console.log(id1);
+
+                    id1 = id1.split("_");
+
+
+                    student = {};
+
+                    var productname = $('#pid_' + id1[1]).val();
+                    var qty = $('#qty_' + id1[1]).val();
+                    var unitprice = $('#unitprice_' + id1[1]).val();
+                    var taxper = $('#taxper_' + id1[1]).val();
+                    var unitordvalue = $('#unitordvalue_' + id1[1]).val();
+                    var ptax = $('#ptax_' + id1[1]).val();
+                    var margin = $('#margin_' + id1[1]).val();
 
 
 
-                if (productname != "" && qty != "" && unitprice != "" && taxper != "" && unitordvalue != "" && ptax != "") {
 
 
 
-                    student["productname"] = productname;
-                    student["qty"] = qty;
-                    student["unitprice"] = unitprice;
-                    student["unittaxper"] = taxper;
-                    student["orderunitvalue"] = unitordvalue;
-                    student["ordertax"] = ptax;
-                    student["margin"] = margin;
-
-                    for (var i = 0; i < studejsonObj.length; i++) {
+                    if (productname != "" && qty != "" && unitprice != "" && taxper != "" && unitordvalue != "" && ptax != "") {
 
 
-                        if (productname == studejsonObj[i].productname) {
-                            flag = 1;
 
+                        student["productname"] = productname;
+                        student["qty"] = qty;
+                        student["unitprice"] = unitprice;
+                        student["unittaxper"] = taxper;
+                        student["orderunitvalue"] = unitordvalue;
+                        student["ordertax"] = ptax;
+                        student["margin"] = margin;
+
+                        for (var i = 0; i < studejsonObj.length; i++) {
+
+
+                            if (productname == studejsonObj[i].productname) {
+                                flag = 1;
+
+                            }
                         }
+
+
+
+
+
+
+                    } else {
+
+                        $.notify({
+                            title: '',
+                            message: '<strong>Empty Row Found !!/strong>'
+                        }, {
+                            type: 'success'
+                        });
+                    }
+                    if (flag == 1) {
+
+
+                    } else {
+                        studejsonObj.push(student);
                     }
 
+                });
 
 
 
+                if (flag == 0) {
+                    $.ajax({
+                        type: "POST",
+                        url: baseurl + "Quotation_Estimate/save_settings",
+                        dataType: "JSON",
+                        async: false,
+                        data: {
+                            id: id,
+                            cus_name: cus_name,
+                            cotactperson: cotactperson,
+                            phn: phn,
+                            s_email: s_email,
+                            bill_no: bill_no,
+                            refno: refno,
+                            o_date: o_date,
+                            o_due_date: o_due_date,
+                            description: description,
+                            studejsonObj: studejsonObj,
+
+                            finalordervalue: finalordervalue,
+                            finaltrasforprice: finaltrasforprice,
+                            lesstaxcst: lesstaxcst,
+                            lesstrasporation: lesstrasporation,
+                            lessbg: lessbg,
+                            lessother: lessother,
+                            finalmargin: finalmargin,
+                            table_name: table_name,
+                            salesrepresentive: salesrepresentive,
+                            customerid: customerid,
+
+                        },
+                        success: function(data) {
+                            console.log(data);
+                            $('#btn_submit_quotation').attr('disabled', false);
+                            $('#wait').hide();
+                            if (data > 0) {
+                                $.notify({
+                                    title: '',
+                                    message: '<strong>Data saved successfully</strong>'
+                                }, {
+                                    type: 'success'
+                                });
+                                if (id == "") {
+                                    $('#bill_no').val(data);
+                                    $('#save_update').val(data);
+                                    $('#btnprint').val(data);
+                                    $('#btnExport').val(data);
+                                    $('#btnprint').show();
+                                    $('#btnExport').show();
+                                    $('#btnmailsend').show();
+                                    $('#tbcustomer').trigger('click');
+
+                                } else {
+                                    $('.btnhideshow').hide();
+                                    $('.tablehideshow').show();
+                                    $('.btnhide').show();
+                                    $('.closehide').hide();
+                                    form_clear();
+                                }
+
+                                //$('.btnhideshow').hide();
+                                //$('.tablehideshow').show();
+
+                                // form_clear();
+                                displayqutation();
 
 
+                            } else {
+                                errorTost("Data Cannot Save");
+                            }
+                        }
+                    });
                 } else {
-
                     $.notify({
                         title: '',
-                        message: '<strong>Empty Row Found !!/strong>'
+                        message: '<strong>Same Product Exists Please Select Another Product !!! </strong>'
                     }, {
                         type: 'success'
                     });
                 }
-                if (flag == 1) {
-
-
-                } else {
-                    studejsonObj.push(student);
-                }
-
-            });
-
-
-
-            if (flag == 0) {
-                $.ajax({
-                    type: "POST",
-                    url: baseurl + "Quotation_Estimate/save_settings",
-                    dataType: "JSON",
-                    async: false,
-                    data: {
-                        id: id,
-                        cus_name: cus_name,
-                        cotactperson: cotactperson,
-                        phn: phn,
-                        s_email: s_email,
-                        bill_no: bill_no,
-                        refno: refno,
-                        o_date: o_date,
-                        o_due_date: o_due_date,
-                        description: description,
-                        studejsonObj: studejsonObj,
-
-                        finalordervalue: finalordervalue,
-                        finaltrasforprice: finaltrasforprice,
-                        lesstaxcst: lesstaxcst,
-                        lesstrasporation: lesstrasporation,
-                        lessbg: lessbg,
-                        lessother: lessother,
-                        finalmargin: finalmargin,
-                        table_name: table_name,
-                        salesrepresentive: salesrepresentive,
-                        customerid: customerid,
-
-                    },
-                    success: function(data) {
-                        console.log(data);
-                        $('#btn_submit_quotation').attr('disabled', false);
-                        $('#wait').hide();
-                        if (data > 0) {
-                            $.notify({
-                                title: '',
-                                message: '<strong>Data saved successfully</strong>'
-                            }, {
-                                type: 'success'
-                            });
-                            if (id == "") {
-                                $('#save_update').val(data);
-                                $('#btnprint').val(data);
-                                $('#btnExport').val(data);
-                                $('#btnprint').show();
-                                $('#btnExport').show();
-                                $('#btnmailsend').show();
-                                $('#tbcustomer').trigger('click');
-
-                            } else {
-                                $('.btnhideshow').hide();
-                                $('.tablehideshow').show();
-                                $('.btnhide').show();
-                                $('.closehide').hide();
-                                form_clear();
-                            }
-
-                            //$('.btnhideshow').hide();
-                            //$('.tablehideshow').show();
-
-                            // form_clear();
-                            displayqutation();
-
-
-                        } else {
-                            errorTost("Data Cannot Save");
-                        }
-                    }
-                });
             } else {
                 $.notify({
                     title: '',
-                    message: '<strong>Same Product Exists Please Select Another Product !!! </strong>'
+                    message: '<strong>Please Add Atleast One Product !!!</strong>'
                 }, {
                     type: 'success'
                 });
@@ -768,7 +790,7 @@ $(document).ready(function() {
         } else {
             $.notify({
                 title: '',
-                message: '<strong>Please Add Atleast One Product !!!</strong>'
+                message: '<strong>Order Due Date Grather than Order Date !!!</strong>'
             }, {
                 type: 'success'
             });
@@ -869,11 +891,11 @@ $(document).ready(function() {
 
         $('#finalordvalue').val('');
         $('#finaltrasforprice').val('');
-        $('#lesstaxcst').val('');
-        $('#lesstrasporation').val('');
-        $('#lessbg').val('');
-        $('#lessother').val('');
-        $('#finalmargin').val('');
+        $('#lesstaxcst').val('0');
+        $('#lesstrasporation').val('0');
+        $('#lessbg').val('0');
+        $('#lessother').val('0');
+        $('#finalmargin').val('0');
         $("#product_table tbody").html('');
         addproduct();
         $('#save_update').val('');
@@ -916,6 +938,19 @@ $(document).ready(function() {
         $('.btnhide').hide();
 
         form_clear();
+        var dtToday = new Date();
+
+        var month = dtToday.getMonth() + 1;
+        var day = dtToday.getDate();
+        var year = dtToday.getFullYear();
+        if (month < 10)
+            month = '0' + month.toString();
+        if (day < 10)
+            day = '0' + day.toString();
+
+        var minDate = year + '-' + month + '-' + day;
+
+        $('#o_due_date').attr('min', minDate);
         getqutationno();
 
     });
@@ -2065,7 +2100,7 @@ $(document).ready(function() {
                 async: false,
                 success: function(data) {
 
-                    $('#bill_no').val(data);
+                    // $('#bill_no').val(data);
                 }
             });
         }

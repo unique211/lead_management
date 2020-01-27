@@ -1,7 +1,7 @@
 <?php 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Quatationmodel extends CI_Model{
-    function data_insert($data,$table){
+    function data_insert($data,$table,$quotationno){
       
       
             $result = $this->db->insert($table,$data);
@@ -14,7 +14,33 @@ class Quatationmodel extends CI_Model{
             $hasil5=$this->db->get(); 
              $num2 = $hasil5->num_rows();
              if($num2 > 0){
+                $custid='';
+                 foreach($hasil5->result_array() as $condata){
+                    $custid=$condata['id'];
+                 }
                
+                $this->db->select('*');    
+                 $this->db->from('contact_information');
+                $this->db->where('email_id',$this->input->post('cus_name'));
+                $this->db->where('mobile_no',$this->input->post('mobile_no'));
+                $this->db->where('account_id',$custid);
+                $hasil6=$this->db->get(); 
+                 $num3 = $hasil6->num_rows();
+                 if($num3 >0){
+
+                 }else{
+                    $data2 = array(
+                        'account_id' =>$custid,
+                        'contact_name' =>$this->input->post('cotactperson') ,
+                        'designation' => '',
+                        'email_id' =>$this->input->post('s_email'),
+                        'mobile_no' =>$this->input->post('phn'),
+                        'lead_line' =>'',
+            
+                    );
+                    $this->db->insert('contact_information',$data2);
+                 }
+
 
              }else{
 
@@ -97,7 +123,7 @@ class Quatationmodel extends CI_Model{
 
             $this->db->select_max('version');
         $this->db->from('quotation_master');
-        $this->db->where('quotaion_no',$this->input->post('bill_no'));
+        $this->db->where('quotaion_no',$quotationno);
         $hasil1 = $this->db->get(); 
         if($hasil1->num_rows()>0){
         foreach($hasil1->result_array() as $quotationdata){
@@ -125,6 +151,10 @@ class Quatationmodel extends CI_Model{
             ); 
             $this->db->insert('quotation_log',$data3);
         }
+        $saveid	= $this->input->post('id');
+            if( $saveid==""){
+
+            }
             return $id;
         
         
@@ -342,7 +372,11 @@ function get_customer_detalis($customer){
             $this->db->order_by("id", "asc");
             $this->db->limit(1);
             $hasil1=$this->db->get();
+            if($hasil1->num_rows()>0){
             return $hasil1->result();
+            }else{
+                return $custid;
+            }
         }
     }else{
         return '0';
