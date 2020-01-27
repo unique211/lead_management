@@ -894,6 +894,13 @@ class Quotation_Estimate extends CI_Controller {
 
             echo $random;
         }
+
+        public function getsearchfilter(){
+            $status	= $this->input->post('status');
+         
+            $data = $this->quatationmodel->getsearchwisefilter($status);
+            echo json_encode($data);
+        }
        
 
 

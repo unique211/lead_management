@@ -1087,7 +1087,12 @@ $(document).ready(function() {
 
                 html += '</tbody></table>';
                 $('#show_master').html(html);
-                // $('#mytable').DataTable({});
+                // $('#mytable').DataTable({
+                //     "fnDrawCallback": function() { //for display for bootstraptoggle button
+                //         // jQuery('#mytable .latestversion').dropdown();
+                //         responsive: true;
+                //     }
+                // });
             }
         });
         getallversion();
@@ -2425,7 +2430,172 @@ $(document).ready(function() {
 
     });
 
+    $(document).on('click', '#searchfilter', function(e) {
+        e.preventDefault();
 
+        var status = $('#quotation_status_info').val();
+        $('#wait6').show();
+
+        for (var j = 0; j < arrayFromPHP.length; j++) {
+
+            if (arrayFromPHP[j] == "editQuotation") {
+                editflag = 1;
+            }
+            if (arrayFromPHP[j] == "deleteQuotation") {
+                delflag = 1;
+            }
+            if (arrayFromPHP[j] == "createOrder") {
+                createorderflag = 1;
+            }
+
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: baseurl + "Quotation_Estimate/getsearchfilter",
+            async: false,
+            data: {
+
+                status: status,
+            },
+            dataType: 'json',
+            success: function(data) {
+                var html = '';
+                $('#wait6').hide();
+                html += '<table id="mytable" class="table table-striped">' +
+                    '<thead>' +
+                    '<tr>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Customer Name</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Quotation Number</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Sales Representative</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Ref Number</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Version</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Quotation Date </th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Order Due Date</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Description</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Contact Person</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Mobile No</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Email</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Total Order Value (without Tax)</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Total Transfer Price (without Tax)</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Less Input Tax if CST</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Less Transporation</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Less BG/Insurance Cost</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Less others (if any)</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">MARGIN</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Order Date</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Order Due Date</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Order Due Date</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Customer Id</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Status</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Action</th>' +
+                    '</tr>' +
+                    '</thead>' +
+                    '<tbody>';
+
+                for (i = 0; i < data.length; i++) {
+                    var sr = i + 1;
+                    var status = "";
+                    var date = "";
+                    var odate = "";
+
+
+
+                    var tdateAr = data[i].order_date.split('-');
+                    date = tdateAr[2] + '/' + tdateAr[1] + '/' + tdateAr[0];
+
+                    var tdateAr = data[i].order_due_date.split('-');
+                    odate = tdateAr[2] + '/' + tdateAr[1] + '/' + tdateAr[0];
+                    html += '<tr>' +
+                        '<td id="customer_name_' + data[i].id + '">' + data[i].customer_name + '</td>' +
+                        '<td class="quotationnoversion" id="quotaion_no_' + data[i].id + '">' + data[i].quotaion_no + '</td>' +
+                        '<td id="salesrepresent_' + data[i].id + '">' + data[i].firstname + "" + data[i].last_name + '</td>' +
+                        '<td id="ref_number_' + data[i].id + '">' + data[i].ref_number + '</td>' +
+                        '<td> <select name="latestversion_' + data[i].id + '" id="latestversion_' + data[i].id + '" class="form-control latestversion"></select></td>' +
+                        '<td  id="date_' + data[i].id + '">' + date + '</td>' +
+                        '<td id="odate_' + data[i].id + '">' + odate + '</td>' +
+                        '<td style="display:none;" id="contact_person_' + data[i].id + '">' + data[i].contact_person + '</td>' +
+                        '<td style="display:none;" id="mobile_no_' + data[i].id + '">' + data[i].mobile_no + '</td>' +
+                        '<td style="display:none;" id="email_id_' + data[i].id + '">' + data[i].email_id + '</td>' +
+                        '<td style="display:none;" id="order_date_' + data[i].id + '">' + data[i].order_date + '</td>' +
+                        '<td style="display:none;" id="order_due_date_' + data[i].id + '">' + data[i].order_due_date + '</td>' +
+                        '<td style="display:none;" id="description_' + data[i].id + '">' + data[i].description + '</td>' +
+                        '<td style="display:none;" id="total_order_value_' + data[i].id + '">' + data[i].total_order_value + '</td>' +
+                        '<td style="display:none;" id="total_trasfor_price_' + data[i].id + '">' + data[i].total_trasfor_price + '</td>' +
+                        '<td style="display:none;" id="less_input_tax_' + data[i].id + '">' + data[i].less_input_tax + '</td>' +
+                        '<td style="display:none;" id="less_trasportion_' + data[i].id + '">' + data[i].less_trasportion + '</td>' +
+                        '<td style="display:none;" id="less_bg_' + data[i].id + '">' + data[i].less_bg + '</td>' +
+                        '<td style="display:none;" id="less_others_' + data[i].id + '">' + data[i].less_others + '</td>' +
+                        '<td style="display:none;" id="margin_' + data[i].id + '">' + data[i].margin + '</td>' +
+                        '<td style="display:none;" id="salesperson_' + data[i].id + '">' + data[i].salesperson + '</td>' +
+                        '<td style="display:none;" id="customer_id_' + data[i].id + '">' + data[i].customer_id + '</td>';
+
+                    // if (data[i].quote_status == 1) {
+                    //     html += '<td> <select name="quotestatus_' + data[i].id + '" id="quotestatus_' + data[i].id + '" class="form-control quotestatus"><option disabled>select</option><option value="1" selected>Pending</option><option value="2">Confirm</option><option value="3">Cancel</option></select</td>';
+                    // } else if (data[i].quote_status == 2) {
+                    //     html += '<td> <select disabled name="quotestatus_' + data[i].id + '" id="quotestatus_' + data[i].id + '" class="form-control quotestatus"><option disabled>select</option><option value="1">Pending</option><option value="2" selected>Confirm</option><option value="3">Cancel</option></select</td>';
+                    // } else {
+                    //     html += '<td> <select disabled name="quotestatus_' + data[i].id + '" id="quotestatus_' + data[i].id + '" class="form-control quotestatus"><option disabled>select</option><option value="1">Pending</option><option value="2">Confirm</option><option value="3" selected>Cancel</option></select</td>';
+                    // }
+
+                    if (data[i].quote_status == 1) {
+                        html += '<td> <button  class="btn btn-sm btn-warning  btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   >Pending</button>&nbsp;</td>';
+                    } else if (data[i].quote_status == 2) {
+                        html += '<td> <button  class="btn btn-sm btn-success  btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   disabled >Confirm</button>&nbsp;</td>';
+                    } else {
+                        html += '<td> <button  class="btn btn-sm btn-danger btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   disabled>Cancel</button>&nbsp;</td>';
+                    }
+
+
+                    // html += '< /td>';
+
+                    if (data[i].quote_status == 1) {
+
+                        html += ' <td>';
+                        if (editflag == 1) {
+
+                            html += '<button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="' + data[i].id + '"  ><i class="fa fa-edit"></i></button>&nbsp;';
+                        }
+                        if (delflag == 1) {
+                            html += '<button name="delete" value="Delete" class="delete_data btn btn-xs btn-danger" id=' +
+                                data[i].id + '><i class="fa fa-trash"></i></button>';
+                        }
+                        html += '</td>';
+                    } else if (data[i].quote_status == 2) {
+                        if (createorderflag == 1) {
+                            html += '<td><button  class="getorder btn btn-sm  btn-xs  btn-primary" id="' + data[i].id + '"  ><i class="fa fa-shopping-cart"></i></button></td>';
+                        } else {
+                            html += "<td>-</td>";
+                        }
+
+
+                    } else {
+                        // html += "-";
+                        html += "<td>-</td>";
+                    }
+
+                    html += '</tr>';
+
+
+                }
+
+                html += '</tbody></table>';
+                $('#show_master').html(html);
+                $('#mytable').DataTable({
+                    //deferRender: true
+
+                    // "fnDrawCallback": function() { //for display for bootstraptoggle button
+                    //     //jQuery('#mytable .latestversion').dropdown();
+                    //     $(".latestversion select").select2();
+
+                    // }
+                });
+            }
+        });
+        getallversion();
+
+
+    });
 
 
 

@@ -398,6 +398,14 @@ class Quotation_order extends CI_Controller {
             $data=$this->quatation_ordermodel->getmilestoneinfo($id);
             echo json_encode($data);
         }
+        public function getfilterinfo(){
+            $fromdate	= $this->input->post('fromdate');
+            $to_o_due_date	= $this->input->post('to_o_due_date');
+            $order_status_info	= $this->input->post('order_status_info');
+
+            $data=$this->quatation_ordermodel->getfileterinformation($fromdate,$to_o_due_date,$order_status_info);
+            echo json_encode($data);
+        }
         
        
 

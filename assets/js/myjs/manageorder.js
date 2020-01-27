@@ -905,6 +905,8 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(data) {
 
+                var table = $('#myTable').DataTable();
+                table.destroy();
                 var html = '';
                 html += '<table id="mytable" class="table table-striped">' +
                     '<thead>' +
@@ -1007,7 +1009,11 @@ $(document).ready(function() {
                         html += '<button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="edit_' + data[i].id + '"  name="' + data[i].order_status + '" ><i class="fa fa-edit"></i></button>&nbsp;';
                     }
                     if (delflag == 1) {
-                        html += '<button name="delete" value="Delete" class="delete_data btn btn-xs btn-danger" id=' + data[i].id + '><i class="fa fa-trash"></i></button>';
+                        if (data[i].order_status == "2") {
+
+                        } else {
+                            html += '<button name="delete" value="Delete" class="delete_data btn btn-xs btn-danger" id=' + data[i].id + '><i class="fa fa-trash"></i></button>';
+                        }
                     }
                     if (editflag != 1 && delflag != 1) {
 
@@ -2198,6 +2204,168 @@ $(document).ready(function() {
 
     });
 
+
+
+    $(document).on('click', '#searchfilter', function(e) {
+        e.preventDefault();
+        for (var j = 0; j < arrayFromPHP.length; j++) {
+
+            if (arrayFromPHP[j] == "editOrder") {
+                editflag = 1;
+            }
+            if (arrayFromPHP[j] == "deleteOrder") {
+                delflag = 1;
+            }
+        }
+
+
+        var fromdate = $('#from_o_due_date').val();
+        var to_o_due_date = $('#to_o_due_date').val();
+        var order_status_info = $('#order_status_info').val();
+
+        $.ajax({
+            type: "POST",
+            url: baseurl + "Quotation_order/getfilterinfo",
+            dataType: "JSON",
+            async: false,
+            data: {
+                fromdate: fromdate,
+                to_o_due_date: to_o_due_date,
+                order_status_info: order_status_info,
+            },
+            success: function(data) {
+                var table = $('#myTable').DataTable();
+                table.destroy();
+
+                var html = '';
+                html += '<table id="mytable" class="table table-striped">' +
+                    '<thead>' +
+                    '<tr>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Customer Name</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Quotation No</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Sales Representative	</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Version</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Order No</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Ref. Number</th>' +
+
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Order Date </th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Order Due Date</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Description</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Contact Person</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Mobile No</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Email</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Total Order Value (without Tax)</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Total Transfer Price (without Tax)</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Less Input Tax if CST</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Less Transporation</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Less BG/Insurance Cost</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Less others (if any)</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">MARGIN</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Order Date</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Order Due Date</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Quoteno</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Sales Representative ID</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Customerid ID</th>' +
+
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Status</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Action</th>' +
+                    '</tr>' +
+                    '</thead>' +
+                    '<tbody>';
+
+                for (i = 0; i < data.length; i++) {
+                    var sr = i + 1;
+                    var status = "";
+                    var date = "";
+                    var odate = "";
+
+                    var ordstatus = "";
+
+
+                    if (data[i].order_status == 1) {
+                        ordstatus = "Waiting";
+                    } else if (data[i].order_status == 2) {
+                        ordstatus = "Accepted";
+                    } else if (data[i].order_status == 3) {
+                        ordstatus = "Rejected";
+                    }
+
+                    var tdateAr = data[i].order_date.split('-');
+                    date = tdateAr[2] + '/' + tdateAr[1] + '/' + tdateAr[0];
+
+                    var tdateAr = data[i].order_due_date.split('-');
+                    odate = tdateAr[2] + '/' + tdateAr[1] + '/' + tdateAr[0];
+                    html += '<tr>' +
+                        '<td id="customer_name_' + data[i].id + '">' + data[i].customer_name + '</td>' +
+                        '<td id="quotation_no_' + data[i].id + '">' + data[i].quotation_no + '</td>' +
+                        '<td id="salesrepresentivename_' + data[i].id + '">' + data[i].firstname + "" + data[i].last_name + '</td>' +
+                        '<td  id="version_' + data[i].id + '">' + data[i].quote_lock_version + '</td>' +
+                        '<td id="order_no_' + data[i].id + '">' + data[i].order_no + '</td>' +
+                        '<td id="ref_number_' + data[i].id + '">' + data[i].ref_number + '</td>' +
+
+                        '<td  id="date_' + data[i].id + '">' + date + '</td>' +
+                        '<td id="odate_' + data[i].id + '">' + odate + '</td>' +
+                        '<td style="display:none;" id="contact_person_' + data[i].id + '">' + data[i].contact_person + '</td>' +
+                        '<td style="display:none;" id="mobile_no_' + data[i].id + '">' + data[i].mobile_no + '</td>' +
+                        '<td style="display:none;" id="email_id_' + data[i].id + '">' + data[i].email_id + '</td>' +
+                        '<td style="display:none;" id="order_date_' + data[i].id + '">' + data[i].order_date + '</td>' +
+                        '<td style="display:none;" id="order_due_date_' + data[i].id + '">' + data[i].order_due_date + '</td>' +
+                        '<td style="display:none;" id="description_' + data[i].id + '">' + data[i].description + '</td>' +
+                        '<td style="display:none;" id="total_order_value_' + data[i].id + '">' + data[i].total_order_value + '</td>' +
+                        '<td style="display:none;" id="total_trasfor_price_' + data[i].id + '">' + data[i].total_trasfor_price + '</td>' +
+                        '<td style="display:none;" id="less_input_tax_' + data[i].id + '">' + data[i].less_input_tax + '</td>' +
+                        '<td style="display:none;" id="less_trasportion_' + data[i].id + '">' + data[i].less_trasportion + '</td>' +
+                        '<td style="display:none;" id="less_bg_' + data[i].id + '">' + data[i].less_bg + '</td>' +
+                        '<td style="display:none;" id="less_others_' + data[i].id + '">' + data[i].less_others + '</td>' +
+                        '<td style="display:none;" id="margin_' + data[i].id + '">' + data[i].margin + '</td>' +
+                        '<td style="display:none;" id="qutone_no_' + data[i].id + '">' + data[i].qutone_no + '</td>' +
+                        '<td style="display:none;" id="salesrepresentative_' + data[i].id + '">' + data[i].salesrepresentative + '</td>' +
+                        '<td style="display:none;" id="customerid_' + data[i].id + '">' + data[i].customer_id + '</td>';
+                    if (data[i].order_status == 1) {
+
+                        html += '<td> <button  class="btn btn-sm btn-warning  btn-xs orderstatusinfo" id="quotestatus_' + data[i].id + '"   >' + ordstatus + '</button>&nbsp;</td>';
+
+                    } else
+                    if (data[i].order_status == 2) {
+                        html += '<td> <button  class="btn btn-sm btn-success  btn-xs orderstatusinfo" id="quotestatus_' + data[i].id + '"   >' + ordstatus + '</button>&nbsp;</td>';
+                    } else if (data[i].order_status == 3) {
+                        html += '<td> <button  class="btn btn-sm btn-danger  btn-xs orderstatusinfo" id="quotestatus_' + data[i].id + '"   >' + ordstatus + '</button>&nbsp;</td>';
+                    }
+
+
+
+                    html += '<td>';
+                    if (editflag == 1) {
+                        html += '<button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="edit_' + data[i].id + '"  name="' + data[i].order_status + '" ><i class="fa fa-edit"></i></button>&nbsp;';
+                    }
+                    if (delflag == 1) {
+                        html += '<button name="delete" value="Delete" class="delete_data btn btn-xs btn-danger" id=' + data[i].id + '><i class="fa fa-trash"></i></button>';
+                    }
+                    if (editflag != 1 && delflag != 1) {
+
+                        html += '-';
+                    }
+
+                    html += '</td>';
+
+
+
+
+
+
+                    html += '</tr>';
+
+
+                }
+
+                html += '</tbody></table>';
+                $('#show_master').html(html);
+                $('#mytable').DataTable({});
+            }
+        });
+        getallversion();
+
+    });
 
 
 
