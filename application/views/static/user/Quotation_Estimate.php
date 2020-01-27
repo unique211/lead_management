@@ -31,9 +31,9 @@
 
 
                                  <div class="form-group">
-                                    <label class="col-md-4 control-label">Customer Name</label>
+                                    <label class="col-md-4 control-label">Customer Name*</label>
                                     <div class="col-md-8 inputGroupContainer">
-                                       <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input id="cus_name" name="cus_name" placeholder="Customer Name" class="form-control " required="true" maxlength="20" type="text">
+                                       <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input id="cus_name" name="cus_name" placeholder="Customer Name" class="form-control " required="true" maxlength="20" type="text" >
 
                                        </div><span class="lname1"></span>
                                     </div>
@@ -97,7 +97,7 @@
                                  </div>
 
                                  <div class="form-group">
-                                    <label class="col-md-4 control-label"> Ref Number</label>
+                                    <label class="col-md-4 control-label"> Ref Number*</label>
                                     <div class="col-md-8 inputGroupContainer">
                                        <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input id="refno" name="refno" placeholder="Ref Number" class="form-control " required="true" maxlength="20" type="text">
 
@@ -125,10 +125,10 @@
                     </div> -->
 
                                  <div class="form-group">
-                                    <label class="col-md-4 control-label">Order Due Date</label>
+                                    <label class="col-md-4 control-label">Order Due Date*</label>
                                     <div class="col-md-8 inputGroupContainer">
                                        <div class="input-group"><span class="adj_size input-group-addon"><i class="fa fa-calendar" style="font-size:14px;"></i></span>
-                                          <input type="date" id="o_due_date" name="o_due_date" class="form-control o_date"></div><span class="o_date"></span>
+                                          <input type="date" id="o_due_date" name="o_due_date" required="true" class="form-control o_date"></div><span class="o_date"></span>
                                     </div>
                                  </div>
 
@@ -349,7 +349,7 @@
                                        <div class="form-group">
                                           <label class="col-sm-4"><b>Total Order Value(₹) (without Tax) </b></label>
                                           <div class="col-md-8 inputGroupContainer">
-                                             <input type="number" style="text-align:right;" class="form-control getmargindata" id="finalordvalue" name="finalordvalue">
+                                             <input type="number" style="text-align:right;" class="form-control getmargindata"  id="finalordvalue" name="finalordvalue">
                                           </div>
                                        </div>
 
@@ -363,14 +363,14 @@
                                        <div class="form-group">
                                           <label class="col-sm-4"><b>Less Input Tax if CST(₹) </b></label>
                                           <div class="col-md-8 inputGroupContainer">
-                                             <input type="number" style="text-align:right;" class="form-control getmargindata" id="lesstaxcst" name="lesstaxcst">
+                                             <input type="number" style="text-align:right;" class="form-control getmargindata" value="0" id="lesstaxcst" name="lesstaxcst">
                                           </div>
                                        </div>
 
                                        <div class="form-group">
                                           <label class="col-sm-4"><b>Less Transporation(₹) </b></label>
                                           <div class="col-md-8 inputGroupContainer">
-                                             <input type="number" style="text-align:right;" class="form-control getmargindata" id="lesstrasporation" name="lesstrasporation">
+                                             <input type="number" style="text-align:right;" class="form-control getmargindata"  value="0"  id="lesstrasporation" name="lesstrasporation">
                                           </div>
                                        </div>
 
@@ -392,7 +392,7 @@
                                        <div class="form-group">
                                           <label class="col-sm-4"><b>MARGIN(₹) </b></label>
                                           <div class="col-md-8 inputGroupContainer">
-                                             <input type="number" style="text-align:right;" class="form-control " id="finalmargin" name="finalmargin">
+                                             <input type="number" style="text-align:right;"  value="0"  class="form-control " id="finalmargin" name="finalmargin">
                                           </div>
                                        </div>
 
@@ -449,6 +449,33 @@
 <div class="container">
 
    <input type="hidden" name="alert_msg" id='alert_msg' value="<?php echo $this->session->flashdata('msglp'); ?>">
+   <div class="col-md-12">
+   <div id="wait6" style="width:100px;height:100px;position:absolute;top:;left:45%;padding:2px;display:none;"><img src="<?php echo base_url('assets/images/loader.gif'); ?>" width="100" height="100" /><br>
+									<center>
+										<h5>Please Wait...</h5>
+									</center>
+								</div>
+      <div class="row tablehideshow">
+      <div class="col-md-2">
+            <label>Status</label>
+            <div class=" inputGroupContainer">
+            <select name="quotation_status_info" id="quotation_status_info" class="form-control" >
+                   <option value="">Select</option>
+                   <option selected value="All">All</option>
+                   <option value="1">Pending</option>
+                   <option value="2">Confirm</option>
+                   <option value="3">Cancel</option>
+            </select>
+            </div>
+         </div>
+         <div class="col-md-1">
+           <br>
+            <div class=" inputGroupContainer">
+            <button type="button" class="btn btn-info pull-right" id="searchfilter">Search</button>
+            </div>
+         </div>
+      </div>
+    </div>
    <div class="row tablehideshow" id="show_master">
 
    </div>
@@ -951,7 +978,18 @@ document.getElementById(cityName).style.display = "block";
 <script src="assets/js/tabletoexcle.js"></script>
 <script src="assets/js/bootstrap-notify.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
-
+<link type="text/css" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" rel="stylesheet">
+<link type="text/css" href="https://cdn.datatables.net/buttons/1.1.2/css/buttons.dataTables.min.css" rel="stylesheet">
+<script type="text/javascript" src="https://cdn.datatables.net/tabletools/2.2.4/js/dataTables.tableTools.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/tabletools/2.2.2/swf/copy_csv_xls_pdf.swf"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.1.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.flash.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.print.min.js"></script>
 
 <script type="text/javascript">
    // Table Append 

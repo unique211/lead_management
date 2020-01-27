@@ -85,8 +85,9 @@ class Quotation_Estimate extends CI_Controller {
         $email=$this->session->userdata('email');
         $user_id=$this->user_model->user_id($email);
         $data ="";
-
+        $quotationno=$this->quatationmodel->getquatationno();
         if($id==""){
+           
         $data = array(
             'customer_name' => $this->input->post('cus_name'),
             'contact_person' =>$this->input->post('cotactperson'),
@@ -94,7 +95,7 @@ class Quotation_Estimate extends CI_Controller {
             'mobile_no' => $this->input->post('phn'),
             'ref_number' => $this->input->post('refno'),
             'email_id' =>  $this->input->post('s_email'),
-            'quotaion_no' => $this->input->post('bill_no'),
+            'quotaion_no' => $quotationno,
             'order_date' =>$this->input->post('o_date'),
             'order_due_date' =>  $this->input->post('o_due_date'),
             'description' =>  $this->input->post('description'),
@@ -154,16 +155,22 @@ class Quotation_Estimate extends CI_Controller {
        // if ($id == "") {
 
 
-            $data1 = $this->quatationmodel->data_insert($data,$tablename);
+            $data1 = $this->quatationmodel->data_insert($data,$tablename,$quotationno);
             
            
 
 
 		// } else {
 		// 	$data1 = $this->quatationmodel->data_update($data,$tablename, "id", $id);
-		// }
+        // }
+        
+            if($id==""){
+                echo json_encode($quotationno);
+            }else{
+                echo json_encode($data1);
+            }
 
-        echo json_encode($data1);
+      
     
     
     }
@@ -889,10 +896,19 @@ class Quotation_Estimate extends CI_Controller {
            $invoice->render('Envato.pdf','I');
            $random = rand();
 
+           $url= base_url();
+
         $root = $_SERVER['DOCUMENT_ROOT'] . "/lead_management/quatationpdf/quotation_" . $random . ".pdf";
         $invoice->Output($root, "F");
 
             echo $random;
+        }
+
+        public function getsearchfilter(){
+            $status	= $this->input->post('status');
+         
+            $data = $this->quatationmodel->getsearchwisefilter($status);
+            echo json_encode($data);
         }
        
 

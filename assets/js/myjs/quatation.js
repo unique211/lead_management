@@ -503,16 +503,24 @@ $(document).ready(function() {
                             },
                             dataType: 'json',
                             success: function(data) {
+                                alert(data);
                                 if (data == "0") {
                                     $('#cotactperson').val('');
                                     $('#phn').val('');
                                     $('#s_email').val('');
                                     $('#customerid').val('');
+                                } else if (data > 0) {
+                                    $('#cotactperson').val('');
+                                    $('#phn').val('');
+                                    $('#s_email').val('');
+                                    $('#customerid').val(data);
                                 } else {
+
                                     $('#customerid').val(data[0].account_id);
                                     $('#cotactperson').val(data[0].contact_name);
                                     $('#phn').val(data[0].mobile_no);
                                     $('#s_email').val(data[0].email_id);
+
                                 }
                             }
                         });
@@ -560,207 +568,221 @@ $(document).ready(function() {
         $('#btn_submit_quotation').attr('disabled', true);
         $('#wait').show();
 
+        var TodayDate = new Date();
+        var endDate = new Date(Date.parse($("#o_due_date").val()));
 
-        var cus_name = $('#cus_name').val();
-        var cotactperson = $('#cotactperson').val();
-        var phn = $('#phn').val();
-        var s_email = $('#s_email').val();
-        var bill_no = $('#bill_no').val();
-        var refno = $('#refno').val();
-        var Tax = $('#Tax').val();
-        var o_date = $('#o_date').val();
-        var o_due_date = $('#o_due_date').val();
-        var description = $('#description').val();
-
-        var finalordervalue = $('#finalordvalue').val();
-        var finaltrasforprice = $('#finaltrasforprice').val();
-        var lesstaxcst = $('#lesstaxcst').val();
-        var lesstrasporation = $('#lesstrasporation').val();
-        var lessbg = $('#lessbg').val();
-        var lessother = $('#lessother').val();
-        var finalmargin = $('#finalmargin').val();
-        var salesrepresentive = $('#salesrepresentive').val();
-        var customerid = $('#customerid').val();
-
-        console.log(customerid);
+        if (endDate > TodayDate) {
 
 
-        if (usertype == "SalesRepresentative" && userrole == "Sales") {
-            salesrepresentive = useruniqueid;
-        }
+            var cus_name = $('#cus_name').val();
+            var cotactperson = $('#cotactperson').val();
+            var phn = $('#phn').val();
+            var s_email = $('#s_email').val();
+            var bill_no = $('#bill_no').val();
+            var refno = $('#refno').val();
+            var Tax = $('#Tax').val();
+            var o_date = $('#o_date').val();
+            var o_due_date = $('#o_due_date').val();
+            var description = $('#description').val();
 
-        var flag = 0;
+            var finalordervalue = $('#finalordvalue').val();
+            var finaltrasforprice = $('#finaltrasforprice').val();
+            var lesstaxcst = $('#lesstaxcst').val();
+            var lesstrasporation = $('#lesstrasporation').val();
+            var lessbg = $('#lessbg').val();
+            var lessother = $('#lessother').val();
+            var finalmargin = $('#finalmargin').val();
+            var salesrepresentive = $('#salesrepresentive').val();
+            var customerid = $('#customerid').val();
 
-        var today = new Date();
-        var dd = today.getDate();
-
-        var mm = today.getMonth() + 1;
-        var yyyy = today.getFullYear();
-        if (dd < 10) {
-            dd = '0' + dd;
-        }
-
-        if (mm < 10) {
-            mm = '0' + mm;
-        }
-        o_date = yyyy + '-' + mm + '-' + dd;
+            console.log(customerid);
 
 
+            if (usertype == "SalesRepresentative" && userrole == "Sales") {
+                salesrepresentive = useruniqueid;
+            }
 
-        var id = $('#save_update').val();
+            var flag = 0;
 
+            var today = new Date();
+            var dd = today.getDate();
 
-        var l1 = $('table#product_table').find('tbody').find('tr');
-        var r = l1.length;
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            o_date = yyyy + '-' + mm + '-' + dd;
 
 
 
-        if (r > 0) {
-
-            studejsonObj = [];
-            $(".producttbrow").each(function() {
-                var id1 = $(this).attr('id');
-                console.log(id1);
-
-                id1 = id1.split("_");
+            var id = $('#save_update').val();
 
 
-                student = {};
-
-                var productname = $('#pid_' + id1[1]).val();
-                var qty = $('#qty_' + id1[1]).val();
-                var unitprice = $('#unitprice_' + id1[1]).val();
-                var taxper = $('#taxper_' + id1[1]).val();
-                var unitordvalue = $('#unitordvalue_' + id1[1]).val();
-                var ptax = $('#ptax_' + id1[1]).val();
-                var margin = $('#margin_' + id1[1]).val();
+            var l1 = $('table#product_table').find('tbody').find('tr');
+            var r = l1.length;
 
 
 
+            if (r > 0) {
+
+                studejsonObj = [];
+                $(".producttbrow").each(function() {
+                    var id1 = $(this).attr('id');
+                    console.log(id1);
+
+                    id1 = id1.split("_");
+
+
+                    student = {};
+
+                    var productname = $('#pid_' + id1[1]).val();
+                    var qty = $('#qty_' + id1[1]).val();
+                    var unitprice = $('#unitprice_' + id1[1]).val();
+                    var taxper = $('#taxper_' + id1[1]).val();
+                    var unitordvalue = $('#unitordvalue_' + id1[1]).val();
+                    var ptax = $('#ptax_' + id1[1]).val();
+                    var margin = $('#margin_' + id1[1]).val();
 
 
 
-                if (productname != "" && qty != "" && unitprice != "" && taxper != "" && unitordvalue != "" && ptax != "") {
 
 
 
-                    student["productname"] = productname;
-                    student["qty"] = qty;
-                    student["unitprice"] = unitprice;
-                    student["unittaxper"] = taxper;
-                    student["orderunitvalue"] = unitordvalue;
-                    student["ordertax"] = ptax;
-                    student["margin"] = margin;
-
-                    for (var i = 0; i < studejsonObj.length; i++) {
+                    if (productname != "" && qty != "" && unitprice != "" && taxper != "" && unitordvalue != "" && ptax != "") {
 
 
-                        if (productname == studejsonObj[i].productname) {
-                            flag = 1;
 
+                        student["productname"] = productname;
+                        student["qty"] = qty;
+                        student["unitprice"] = unitprice;
+                        student["unittaxper"] = taxper;
+                        student["orderunitvalue"] = unitordvalue;
+                        student["ordertax"] = ptax;
+                        student["margin"] = margin;
+
+                        for (var i = 0; i < studejsonObj.length; i++) {
+
+
+                            if (productname == studejsonObj[i].productname) {
+                                flag = 1;
+
+                            }
                         }
+
+
+
+
+
+
+                    } else {
+
+                        $.notify({
+                            title: '',
+                            message: '<strong>Empty Row Found !!/strong>'
+                        }, {
+                            type: 'success'
+                        });
+                    }
+                    if (flag == 1) {
+
+
+                    } else {
+                        studejsonObj.push(student);
                     }
 
+                });
 
 
 
+                if (flag == 0) {
+                    $.ajax({
+                        type: "POST",
+                        url: baseurl + "Quotation_Estimate/save_settings",
+                        dataType: "JSON",
+                        async: false,
+                        data: {
+                            id: id,
+                            cus_name: cus_name,
+                            cotactperson: cotactperson,
+                            phn: phn,
+                            s_email: s_email,
+                            bill_no: bill_no,
+                            refno: refno,
+                            o_date: o_date,
+                            o_due_date: o_due_date,
+                            description: description,
+                            studejsonObj: studejsonObj,
+
+                            finalordervalue: finalordervalue,
+                            finaltrasforprice: finaltrasforprice,
+                            lesstaxcst: lesstaxcst,
+                            lesstrasporation: lesstrasporation,
+                            lessbg: lessbg,
+                            lessother: lessother,
+                            finalmargin: finalmargin,
+                            table_name: table_name,
+                            salesrepresentive: salesrepresentive,
+                            customerid: customerid,
+
+                        },
+                        success: function(data) {
+                            console.log(data);
+                            $('#btn_submit_quotation').attr('disabled', false);
+                            $('#wait').hide();
+                            if (data > 0) {
+                                $.notify({
+                                    title: '',
+                                    message: '<strong>Data saved successfully</strong>'
+                                }, {
+                                    type: 'success'
+                                });
+                                if (id == "") {
+                                    $('#bill_no').val(data);
+                                    $('#save_update').val(data);
+                                    $('#btnprint').val(data);
+                                    $('#btnExport').val(data);
+                                    $('#btnprint').show();
+                                    $('#btnExport').show();
+                                    $('#btnmailsend').show();
+                                    $('#tbcustomer').trigger('click');
+
+                                } else {
+                                    $('.btnhideshow').hide();
+                                    $('.tablehideshow').show();
+                                    $('.btnhide').show();
+                                    $('.closehide').hide();
+                                    form_clear();
+                                }
+
+                                //$('.btnhideshow').hide();
+                                //$('.tablehideshow').show();
+
+                                // form_clear();
+                                displayqutation();
 
 
+                            } else {
+                                errorTost("Data Cannot Save");
+                            }
+                        }
+                    });
                 } else {
-
                     $.notify({
                         title: '',
-                        message: '<strong>Empty Row Found !!/strong>'
+                        message: '<strong>Same Product Exists Please Select Another Product !!! </strong>'
                     }, {
                         type: 'success'
                     });
                 }
-                if (flag == 1) {
-
-
-                } else {
-                    studejsonObj.push(student);
-                }
-
-            });
-
-
-
-            if (flag == 0) {
-                $.ajax({
-                    type: "POST",
-                    url: baseurl + "Quotation_Estimate/save_settings",
-                    dataType: "JSON",
-                    async: false,
-                    data: {
-                        id: id,
-                        cus_name: cus_name,
-                        cotactperson: cotactperson,
-                        phn: phn,
-                        s_email: s_email,
-                        bill_no: bill_no,
-                        refno: refno,
-                        o_date: o_date,
-                        o_due_date: o_due_date,
-                        description: description,
-                        studejsonObj: studejsonObj,
-
-                        finalordervalue: finalordervalue,
-                        finaltrasforprice: finaltrasforprice,
-                        lesstaxcst: lesstaxcst,
-                        lesstrasporation: lesstrasporation,
-                        lessbg: lessbg,
-                        lessother: lessother,
-                        finalmargin: finalmargin,
-                        table_name: table_name,
-                        salesrepresentive: salesrepresentive,
-                        customerid: customerid,
-
-                    },
-                    success: function(data) {
-                        console.log(data);
-                        $('#btn_submit_quotation').attr('disabled', false);
-                        $('#wait').hide();
-                        if (data > 0) {
-                            $.notify({
-                                title: '',
-                                message: '<strong>Data saved successfully</strong>'
-                            }, {
-                                type: 'success'
-                            });
-                            if (id == "") {
-                                $('#save_update').val(data);
-                                $('#btnprint').val(data);
-                                $('#btnExport').val(data);
-                                $('#btnprint').show();
-                                $('#btnExport').show();
-                                $('#btnmailsend').show();
-                                $('#tbcustomer').trigger('click');
-
-                            } else {
-                                $('.btnhideshow').hide();
-                                $('.tablehideshow').show();
-                                $('.btnhide').show();
-                                $('.closehide').hide();
-                                form_clear();
-                            }
-
-                            //$('.btnhideshow').hide();
-                            //$('.tablehideshow').show();
-
-                            // form_clear();
-                            displayqutation();
-
-
-                        } else {
-                            errorTost("Data Cannot Save");
-                        }
-                    }
-                });
             } else {
                 $.notify({
                     title: '',
-                    message: '<strong>Same Product Exists Please Select Another Product !!! </strong>'
+                    message: '<strong>Please Add Atleast One Product !!!</strong>'
                 }, {
                     type: 'success'
                 });
@@ -768,7 +790,7 @@ $(document).ready(function() {
         } else {
             $.notify({
                 title: '',
-                message: '<strong>Please Add Atleast One Product !!!</strong>'
+                message: '<strong>Order Due Date Grather than Order Date !!!</strong>'
             }, {
                 type: 'success'
             });
@@ -869,11 +891,11 @@ $(document).ready(function() {
 
         $('#finalordvalue').val('');
         $('#finaltrasforprice').val('');
-        $('#lesstaxcst').val('');
-        $('#lesstrasporation').val('');
-        $('#lessbg').val('');
-        $('#lessother').val('');
-        $('#finalmargin').val('');
+        $('#lesstaxcst').val('0');
+        $('#lesstrasporation').val('0');
+        $('#lessbg').val('0');
+        $('#lessother').val('0');
+        $('#finalmargin').val('0');
         $("#product_table tbody").html('');
         addproduct();
         $('#save_update').val('');
@@ -916,6 +938,19 @@ $(document).ready(function() {
         $('.btnhide').hide();
 
         form_clear();
+        var dtToday = new Date();
+
+        var month = dtToday.getMonth() + 1;
+        var day = dtToday.getDate();
+        var year = dtToday.getFullYear();
+        if (month < 10)
+            month = '0' + month.toString();
+        if (day < 10)
+            day = '0' + day.toString();
+
+        var minDate = year + '-' + month + '-' + day;
+
+        $('#o_due_date').attr('min', minDate);
         getqutationno();
 
     });
@@ -1087,7 +1122,12 @@ $(document).ready(function() {
 
                 html += '</tbody></table>';
                 $('#show_master').html(html);
-                // $('#mytable').DataTable({});
+                // $('#mytable').DataTable({
+                //     "fnDrawCallback": function() { //for display for bootstraptoggle button
+                //         // jQuery('#mytable .latestversion').dropdown();
+                //         responsive: true;
+                //     }
+                // });
             }
         });
         getallversion();
@@ -2060,7 +2100,7 @@ $(document).ready(function() {
                 async: false,
                 success: function(data) {
 
-                    $('#bill_no').val(data);
+                    // $('#bill_no').val(data);
                 }
             });
         }
@@ -2426,7 +2466,172 @@ $(document).ready(function() {
 
     });
 
+    $(document).on('click', '#searchfilter', function(e) {
+        e.preventDefault();
 
+        var status = $('#quotation_status_info').val();
+        $('#wait6').show();
+
+        for (var j = 0; j < arrayFromPHP.length; j++) {
+
+            if (arrayFromPHP[j] == "editQuotation") {
+                editflag = 1;
+            }
+            if (arrayFromPHP[j] == "deleteQuotation") {
+                delflag = 1;
+            }
+            if (arrayFromPHP[j] == "createOrder") {
+                createorderflag = 1;
+            }
+
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: baseurl + "Quotation_Estimate/getsearchfilter",
+            async: false,
+            data: {
+
+                status: status,
+            },
+            dataType: 'json',
+            success: function(data) {
+                var html = '';
+                $('#wait6').hide();
+                html += '<table id="mytable" class="table table-striped">' +
+                    '<thead>' +
+                    '<tr>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Customer Name</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Quotation Number</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Sales Representative</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Ref Number</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Version</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Quotation Date </th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Order Due Date</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Description</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Contact Person</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Mobile No</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Email</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Total Order Value (without Tax)</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Total Transfer Price (without Tax)</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Less Input Tax if CST</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Less Transporation</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Less BG/Insurance Cost</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Less others (if any)</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">MARGIN</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Order Date</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Order Due Date</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Order Due Date</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Customer Id</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Status</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Action</th>' +
+                    '</tr>' +
+                    '</thead>' +
+                    '<tbody>';
+
+                for (i = 0; i < data.length; i++) {
+                    var sr = i + 1;
+                    var status = "";
+                    var date = "";
+                    var odate = "";
+
+
+
+                    var tdateAr = data[i].order_date.split('-');
+                    date = tdateAr[2] + '/' + tdateAr[1] + '/' + tdateAr[0];
+
+                    var tdateAr = data[i].order_due_date.split('-');
+                    odate = tdateAr[2] + '/' + tdateAr[1] + '/' + tdateAr[0];
+                    html += '<tr>' +
+                        '<td id="customer_name_' + data[i].id + '">' + data[i].customer_name + '</td>' +
+                        '<td class="quotationnoversion" id="quotaion_no_' + data[i].id + '">' + data[i].quotaion_no + '</td>' +
+                        '<td id="salesrepresent_' + data[i].id + '">' + data[i].firstname + "" + data[i].last_name + '</td>' +
+                        '<td id="ref_number_' + data[i].id + '">' + data[i].ref_number + '</td>' +
+                        '<td> <select name="latestversion_' + data[i].id + '" id="latestversion_' + data[i].id + '" class="form-control latestversion"></select></td>' +
+                        '<td  id="date_' + data[i].id + '">' + date + '</td>' +
+                        '<td id="odate_' + data[i].id + '">' + odate + '</td>' +
+                        '<td style="display:none;" id="contact_person_' + data[i].id + '">' + data[i].contact_person + '</td>' +
+                        '<td style="display:none;" id="mobile_no_' + data[i].id + '">' + data[i].mobile_no + '</td>' +
+                        '<td style="display:none;" id="email_id_' + data[i].id + '">' + data[i].email_id + '</td>' +
+                        '<td style="display:none;" id="order_date_' + data[i].id + '">' + data[i].order_date + '</td>' +
+                        '<td style="display:none;" id="order_due_date_' + data[i].id + '">' + data[i].order_due_date + '</td>' +
+                        '<td style="display:none;" id="description_' + data[i].id + '">' + data[i].description + '</td>' +
+                        '<td style="display:none;" id="total_order_value_' + data[i].id + '">' + data[i].total_order_value + '</td>' +
+                        '<td style="display:none;" id="total_trasfor_price_' + data[i].id + '">' + data[i].total_trasfor_price + '</td>' +
+                        '<td style="display:none;" id="less_input_tax_' + data[i].id + '">' + data[i].less_input_tax + '</td>' +
+                        '<td style="display:none;" id="less_trasportion_' + data[i].id + '">' + data[i].less_trasportion + '</td>' +
+                        '<td style="display:none;" id="less_bg_' + data[i].id + '">' + data[i].less_bg + '</td>' +
+                        '<td style="display:none;" id="less_others_' + data[i].id + '">' + data[i].less_others + '</td>' +
+                        '<td style="display:none;" id="margin_' + data[i].id + '">' + data[i].margin + '</td>' +
+                        '<td style="display:none;" id="salesperson_' + data[i].id + '">' + data[i].salesperson + '</td>' +
+                        '<td style="display:none;" id="customer_id_' + data[i].id + '">' + data[i].customer_id + '</td>';
+
+                    // if (data[i].quote_status == 1) {
+                    //     html += '<td> <select name="quotestatus_' + data[i].id + '" id="quotestatus_' + data[i].id + '" class="form-control quotestatus"><option disabled>select</option><option value="1" selected>Pending</option><option value="2">Confirm</option><option value="3">Cancel</option></select</td>';
+                    // } else if (data[i].quote_status == 2) {
+                    //     html += '<td> <select disabled name="quotestatus_' + data[i].id + '" id="quotestatus_' + data[i].id + '" class="form-control quotestatus"><option disabled>select</option><option value="1">Pending</option><option value="2" selected>Confirm</option><option value="3">Cancel</option></select</td>';
+                    // } else {
+                    //     html += '<td> <select disabled name="quotestatus_' + data[i].id + '" id="quotestatus_' + data[i].id + '" class="form-control quotestatus"><option disabled>select</option><option value="1">Pending</option><option value="2">Confirm</option><option value="3" selected>Cancel</option></select</td>';
+                    // }
+
+                    if (data[i].quote_status == 1) {
+                        html += '<td> <button  class="btn btn-sm btn-warning  btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   >Pending</button>&nbsp;</td>';
+                    } else if (data[i].quote_status == 2) {
+                        html += '<td> <button  class="btn btn-sm btn-success  btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   disabled >Confirm</button>&nbsp;</td>';
+                    } else {
+                        html += '<td> <button  class="btn btn-sm btn-danger btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   disabled>Cancel</button>&nbsp;</td>';
+                    }
+
+
+                    // html += '< /td>';
+
+                    if (data[i].quote_status == 1) {
+
+                        html += ' <td>';
+                        if (editflag == 1) {
+
+                            html += '<button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="' + data[i].id + '"  ><i class="fa fa-edit"></i></button>&nbsp;';
+                        }
+                        if (delflag == 1) {
+                            html += '<button name="delete" value="Delete" class="delete_data btn btn-xs btn-danger" id=' +
+                                data[i].id + '><i class="fa fa-trash"></i></button>';
+                        }
+                        html += '</td>';
+                    } else if (data[i].quote_status == 2) {
+                        if (createorderflag == 1) {
+                            html += '<td><button  class="getorder btn btn-sm  btn-xs  btn-primary" id="' + data[i].id + '"  ><i class="fa fa-shopping-cart"></i></button></td>';
+                        } else {
+                            html += "<td>-</td>";
+                        }
+
+
+                    } else {
+                        // html += "-";
+                        html += "<td>-</td>";
+                    }
+
+                    html += '</tr>';
+
+
+                }
+
+                html += '</tbody></table>';
+                $('#show_master').html(html);
+                $('#mytable').DataTable({
+                    //deferRender: true
+
+                    // "fnDrawCallback": function() { //for display for bootstraptoggle button
+                    //     //jQuery('#mytable .latestversion').dropdown();
+                    //     $(".latestversion select").select2();
+
+                    // }
+                });
+            }
+        });
+        getallversion();
+
+
+    });
 
 
 
