@@ -503,7 +503,7 @@ $(document).ready(function() {
                             },
                             dataType: 'json',
                             success: function(data) {
-                                alert(data);
+
                                 if (data == "0") {
                                     $('#cotactperson').val('');
                                     $('#phn').val('');
