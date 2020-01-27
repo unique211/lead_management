@@ -2253,7 +2253,8 @@ $(document).ready(function() {
         if (id == "") {
 
         } else {
-            if (search_version == "") {
+
+            if (search_version == "Select") {
                 $('#lbl1version').text('Version:' + 1);
             } else {
                 $('#lbl1version').text('Version:' + search_version);
