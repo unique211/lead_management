@@ -104,14 +104,14 @@
             <input id="tab2" class="stages" type="radio" name="tabs" disabled>
             <label class="lbl" for="tab2">Payment Info</label>
 
-
+         
             <section id="content1">
-
+            <form class="form-horizontal" id="order_form" name="order_form" method="POST">
                <table id="btntable" class="table table-striped">
                   <tbody>
                      <tr>
                         <td colspan="1">
-                           <form class="form-horizontal" id="order_form" name="order_form" method="POST">
+                        
                               <fieldset>
 
                                  <div class="row">
@@ -510,23 +510,7 @@
 
 
                      <tr>
-                        <td><input type="submit" class="btn btn-primary" id="btnsave" name="submit" value="Save">
-
-                           <input type="hidden" id="save_update" name="save_update" value="">
-                           <input type="hidden" id="quatationid" name="quatationid" value="">
-                           <input type="hidden" id="customerid" name="customerid" value="">
-                           <input type="reset" id="reset" class="btn btn-danger" name="reset" value="Reset">
-
-                           <?php if ($this->session->userdata('user_type') == "Admin") { ?>
-                              <input type="button" class="btn btn-primary stausapproved" id="accepted" name="accepted" value="Accepted">
-                              <input type="button" id="rejected" class="btn btn-danger stausapproved" name="rejected" value="Rejected">
-                           <?php } ?>
-                           <?php if ($user_permission) { ?>
-                              <?php if (in_array('exportOrder', $user_permission)) { ?>
-                                 <button type="button" id="btnExport" name="btnExport" class="btn btn-sm btn-info pull-right" style="display:none;">Excel</button>
-                                 <button type="submit" form="pdf" id="btnprint" name="btnprint" value="" class="btn btn-sm btn-info pull-right" style="display:none;">Print</button>
-                           <?php }
-                              } ?>
+                        <td>
                         </td>
                         <td>
 
@@ -541,8 +525,8 @@
 
 
                      </fieldset>
-                     </form>
-                     <form name="pdf" id="pdf" method="POST" action="<?php echo base_url('Quotation_order/print_pdf'); ?>" target="_blank"></form>
+                     
+                    
                      </td>
                      </tr>
                   </tbody>
@@ -587,6 +571,27 @@
                   <!-- <button type="button" class="btn btn-info pull-right" id="savemilestone">Save Milestone</button> -->
                </div>
             </section>
+            <div class="row">
+            <input type="submit" class="btn btn-primary" id="btnsave" name="submit" value="Save">
+
+                           <input type="hidden" id="save_update" name="save_update" value="">
+                           <input type="hidden" id="quatationid" name="quatationid" value="">
+                           <input type="hidden" id="customerid" name="customerid" value="">
+                           <input type="reset" id="reset" class="btn btn-danger" name="reset" value="Reset">
+
+                           <?php if ($this->session->userdata('user_type') == "Admin") { ?>
+                              <input type="button" class="btn btn-primary stausapproved" id="accepted" name="accepted" value="Accepted">
+                              <input type="button" id="rejected" class="btn btn-danger stausapproved" name="rejected" value="Rejected">
+                           <?php } ?>
+                           <?php if ($user_permission) { ?>
+                              <?php if (in_array('exportOrder', $user_permission)) { ?>
+                                 <button type="button" id="btnExport" name="btnExport" class="btn btn-sm btn-info pull-right" style="display:none;">Excel</button>
+                                 <button type="submit" form="pdf" id="btnprint" name="btnprint" value="" class="btn btn-sm btn-info pull-right" style="display:none;">Print</button>
+                           <?php }
+                              } ?>
+            </div>
+            </form>
+            <form name="pdf" id="pdf" method="POST" action="<?php echo base_url('Quotation_order/print_pdf'); ?>" target="_blank"></form>
          </div>
       </div>
 </div>
