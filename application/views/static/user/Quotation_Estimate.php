@@ -460,7 +460,7 @@
             <label>Status</label>
             <div class=" inputGroupContainer">
             <select name="quotation_status_info" id="quotation_status_info" class="form-control" >
-                   <option value="">Select</option>
+                   <!-- <option value="">Select</option> -->
                    <option selected value="All">All</option>
                    <option value="1">Pending</option>
                    <option value="2">Confirm</option>

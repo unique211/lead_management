@@ -1006,7 +1006,12 @@ $(document).ready(function() {
 
                     html += '<td>';
                     if (editflag == 1) {
-                        html += '<button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="edit_' + data[i].id + '"  name="' + data[i].order_status + '" ><i class="fa fa-edit"></i></button>&nbsp;';
+                        if (data[i].order_status == "2") {
+                            html += '<button  class="edit_data btn btn-sm  btn-xs  btn-info" id="edit_' + data[i].id + '"  name="' + data[i].order_status + '" ><i class="fa fa-eye"></i></button>&nbsp;';
+                        } else {
+                            html += '<button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="edit_' + data[i].id + '"  name="' + data[i].order_status + '" ><i class="fa fa-edit"></i></button>&nbsp;';
+                        }
+
                     }
                     if (delflag == 1) {
                         if (data[i].order_status == "2") {
@@ -1048,6 +1053,9 @@ $(document).ready(function() {
         var orderstatus = $(this).attr('name');
         var html1 = '';
 
+
+        $("#tab2").prop('disabled', false);
+        //   $("#tab2").trigger('click');
 
         $('.btnhideshow').show();
         $('.tablehideshow').hide();
@@ -2168,13 +2176,14 @@ $(document).ready(function() {
 
             var paymentname_ = $('#paymentname_' + id1[1]).val();
             var amount_ = $('#amount_' + id1[1]).val();
+            if (paymentname_ != "" && amount_ > 0) {
 
+                student["paymentname"] = paymentname_;
+                student["amount"] = amount_;
+                student["amt"] = amt;
 
-            student["paymentname"] = paymentname_;
-            student["amount"] = amount_;
-            student["amt"] = amt;
-
-            studejsonObj.push(student);
+                studejsonObj.push(student);
+            }
 
 
         });
@@ -2336,10 +2345,17 @@ $(document).ready(function() {
 
                     html += '<td>';
                     if (editflag == 1) {
-                        html += '<button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="edit_' + data[i].id + '"  name="' + data[i].order_status + '" ><i class="fa fa-edit"></i></button>&nbsp;';
+
+                        if (data[i].order_status == "2") {
+                            html += '<button  class="edit_data btn btn-sm  btn-xs  btn-info" id="edit_' + data[i].id + '"  name="' + data[i].order_status + '" ><i class="fa fa-eye"></i></button>&nbsp;';
+                        } {
+                            html += '<button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="edit_' + data[i].id + '"  name="' + data[i].order_status + '" ><i class="fa fa-edit"></i></button>&nbsp;';
+                        }
                     }
                     if (delflag == 1) {
-                        html += '<button name="delete" value="Delete" class="delete_data btn btn-xs btn-danger" id=' + data[i].id + '><i class="fa fa-trash"></i></button>';
+                        if (data[i].order_status == "2") {} else {
+                            html += '<button name="delete" value="Delete" class="delete_data btn btn-xs btn-danger" id=' + data[i].id + '><i class="fa fa-trash"></i></button>';
+                        }
                     }
                     if (editflag != 1 && delflag != 1) {
 
@@ -2360,7 +2376,7 @@ $(document).ready(function() {
 
                 html += '</tbody></table>';
                 $('#show_master').html(html);
-                //  $('#mytable').DataTable({});
+                $('#mytable').DataTable({});
             }
         });
         getallversion();
