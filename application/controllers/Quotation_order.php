@@ -86,6 +86,22 @@ class Quotation_order extends CI_Controller {
         $email=$this->session->userdata('email');
         $user_id=$this->user_model->user_id($email);
         $data ="";
+        $ostatus='';
+        if($this->session->userdata('user_type')=="Admin"){
+            $ostatus=$this->input->post('rejectorderstatus');
+            if($ostatus==3){
+                $ostatus=2;
+            }else{
+                $ostatus=1;  
+            }
+
+        }elseif($this->session->userdata('user_type')=="SalesRepresentative"){
+            if($ostatus==3){
+                $ostatus=1;
+            }else{
+                $ostatus=1;  
+            }
+        }
        
         if( $id >0){
             $data = array(
@@ -111,6 +127,7 @@ class Quotation_order extends CI_Controller {
                 'quotation_no' =>  $this->input->post('quatation_no'),
                 'salesrepresentative' =>  $this->input->post('salesrepresentive'),
                 'customer_id' =>  $this->input->post('customerid'),
+                'order_status'=> $ostatus,
                 //'user_id'=> $user_id,
                 
            
