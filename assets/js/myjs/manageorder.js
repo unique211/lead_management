@@ -686,13 +686,66 @@ $(document).ready(function() {
 
 
 
+
                             // $('#save_update').val(data);
                             // $('#btnprint').val(data);
                             // $('#btnExport').val(data);
                             // $('#btnprint').show();
                             // $('#btnExport').show();
-                            $("#tab2").prop('disabled', false);
-                            $("#tab2").trigger('click');
+
+                            var id = $('#save_update').val();
+                            if ($('#amountinfo').is(":checked")) {
+
+                                amt = 1;
+                            } else {
+                                amt = 0;
+                            }
+                            studejsonObj1 = [];
+                            $(".paymentdatadata").each(function() {
+                                var id1 = $(this).attr('id');
+                                console.log(id1);
+
+                                id1 = id1.split("_");
+
+
+                                student = {};
+
+                                var paymentname_ = $('#paymentname_' + id1[1]).val();
+                                var amount_ = $('#amount_' + id1[1]).val();
+                                if (paymentname_ != "" && amount_ > 0) {
+
+                                    student["paymentname"] = paymentname_;
+                                    student["amount"] = amount_;
+                                    student["amt"] = amt;
+
+                                    studejsonObj1.push(student);
+                                }
+
+
+                            });
+                            console.log("studejsonObj" + studejsonObj1);
+
+                            $.ajax({
+                                type: "POST",
+                                url: baseurl + "Quotation_order/save_payment",
+                                dataType: "JSON",
+                                async: false,
+                                data: {
+                                    id: id,
+                                    studejsonObj: studejsonObj1,
+                                },
+                                success: function(data) {
+                                    $('#wait1').hide();
+                                    $('#savemilestone').attr('disabled', false);
+                                    // $.notify({
+                                    //     title: '',
+                                    //     message: '<strong>Milestone Save SucessFully !!</strong>'
+                                    // }, {
+                                    //     type: 'success'
+                                    // });
+                                }
+                            });
+
 
 
                             $.notify({
@@ -1952,8 +2005,17 @@ $(document).ready(function() {
                     });
                     $('#myModal2').modal('hide');
                     displayqutation();
-                    $('#accepted').hide();
-                    $('#rejected').hide();
+                    if (status_hidden == "3") {
+                        $('#accepted').hide();
+                        $('#rejected').hide();
+
+
+                    } else {
+                        $('#accepted').hide();
+                        $('#rejected').hide();
+                        $('#btnsave').hide();
+                        $('#reset').hide();
+                    }
                 }
 
 
@@ -1979,6 +2041,8 @@ $(document).ready(function() {
                 dataType: "JSON",
                 async: false,
                 success: function(data) {
+
+
 
                     $('#statsusinforemark').val(data[0].remark)
 
@@ -2130,9 +2194,9 @@ $(document).ready(function() {
                 }, {
                     type: 'success'
                 });
-                $('#savemilestone').attr('disabled', true)
+                $('#btnsave').attr('disabled', true)
             } else {
-                $('#savemilestone').attr('disabled', false)
+                $('#btnsave').attr('disabled', false)
             }
         } else if (amt == 0) {
             if (perinfo > finalorder) {
@@ -2142,9 +2206,9 @@ $(document).ready(function() {
                 }, {
                     type: 'success'
                 });
-                $('#savemilestone').attr('disabled', true)
+                $('#btnsave').attr('disabled', true)
             } else {
-                $('#savemilestone').attr('disabled', false)
+                $('#btnsave').attr('disabled', false)
             }
         }
 
@@ -2348,12 +2412,14 @@ $(document).ready(function() {
 
                         if (data[i].order_status == "2") {
                             html += '<button  class="edit_data btn btn-sm  btn-xs  btn-info" id="edit_' + data[i].id + '"  name="' + data[i].order_status + '" ><i class="fa fa-eye"></i></button>&nbsp;';
-                        } {
+                        } else {
                             html += '<button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="edit_' + data[i].id + '"  name="' + data[i].order_status + '" ><i class="fa fa-edit"></i></button>&nbsp;';
                         }
                     }
                     if (delflag == 1) {
-                        if (data[i].order_status == "2") {} else {
+                        if (data[i].order_status == "2") {
+
+                        } else {
                             html += '<button name="delete" value="Delete" class="delete_data btn btn-xs btn-danger" id=' + data[i].id + '><i class="fa fa-trash"></i></button>';
                         }
                     }

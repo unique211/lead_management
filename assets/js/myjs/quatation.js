@@ -2163,7 +2163,7 @@ $(document).ready(function() {
                 if (data == true) {
                     $.notify({
                         title: '',
-                        message: '<strong>Change Status Success Fully  !!</strong>'
+                        message: '<strong>Change Status SuccessFully  !!</strong>'
                     }, {
                         type: 'success'
                     });

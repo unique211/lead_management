@@ -583,7 +583,7 @@
 
                </table>
                <div class="row">
-                  <button type="button" class="btn btn-info pull-right" id="savemilestone">Save Milestone</button>
+                  <!-- <button type="button" class="btn btn-info pull-right" id="savemilestone">Save Milestone</button> -->
                </div>
             </section>
          </div>

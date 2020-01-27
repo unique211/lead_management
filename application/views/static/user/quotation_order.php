@@ -105,7 +105,7 @@
       <div class="col-lg-12">
          <input id="tab1" class="stages" type="radio" name="tabs" checked>
          <label class="lbl" for="tab1">Order</label>
-         <input id="tab2" class="stages" type="radio" name="tabs" disabled>
+         <input id="tab2" class="stages" type="radio" name="tabs" >
          <label class="lbl" for="tab2">Payment Info</label>
 
 
@@ -501,7 +501,7 @@
 
 
                   <tr>
-                     <td><input type="submit" class="btn btn-primary" name="submit" value="Save">
+                     <td><input type="submit" class="btn btn-primary" id="btnsaveinfo" name="submit" value="Save">
 
                         <input type="hidden" id="save_update" name="save_update" value="">
                         <input type="hidden" id="quatationid" name="quatationid" value="">
@@ -569,7 +569,7 @@
             </table>
             <div class="row">
             
-            <button type="button" class="btn btn-info pull-right" id="savemilestone">Save Milestone</button>
+            <!-- <button type="button" class="btn btn-info pull-right" id="savemilestone">Save Milestone</button> -->
             </div>
          </section>
       </div>
