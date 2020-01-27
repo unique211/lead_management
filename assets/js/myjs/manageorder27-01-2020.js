@@ -2177,22 +2177,21 @@ $(document).ready(function() {
 
         var rowCount = $('#paymenttb >tbody >tr').length;
 
-        if (rowCount > 0) {
+        if (rowCount > 1) {
             console.log(save_update);
             if (save_update != "") {
                 $("#paymentdata_" + save_update).remove();
                 console.log("#paymentdata_" + save_update);
 
             }
-        } 
-		// else {
-            // $.notify({
-                // title: '',
-                // message: '<strong>One Payment is Required !!</strong>'
-            // }, {
-                // type: 'success'
-            // });
-        // }
+        } else {
+            $.notify({
+                title: '',
+                message: '<strong>One Payment is Required !!</strong>'
+            }, {
+                type: 'success'
+            });
+        }
         getamountmilestone();
 
     });
@@ -2205,7 +2204,6 @@ $(document).ready(function() {
 
     function getamountmilestone() {
         var amt = 0;
-		var cnt = 0;
         if ($('#amountinfo').is(":checked")) {
 
             amt = 1;
@@ -2215,7 +2213,6 @@ $(document).ready(function() {
         var finalorder = $('#P_Tax_Val_1').val();
         var perinfo = 0;
         $(".paymentdatadata").each(function() {
-			cnt++;
             var id = $(this).attr('id');
             id = id.split("_");
 
@@ -2226,7 +2223,7 @@ $(document).ready(function() {
         });
 
         if (amt == 1) {
-            if (cnt>0 && (perinfo > 100 || perinfo < 100)) {
+            if (perinfo > 100 || perinfo < 100) {
                 $.notify({
                     title: '',
                     message: '<strong>Milestone Percentage Should be 100% Only!!</strong>'
@@ -2238,7 +2235,7 @@ $(document).ready(function() {
                 $('#btnsave').attr('disabled', false)
             }
         } else if (amt == 0) {
-            if (cnt>0 && (perinfo > finalorder || perinfo > finalorder)) {
+            if (perinfo > finalorder || perinfo > finalorder) {
                 $.notify({
                     title: '',
                     message: '<strong>Milestone Amount Should Be Equal To Total Amount !!</strong>'

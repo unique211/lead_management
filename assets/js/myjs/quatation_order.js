@@ -2129,6 +2129,7 @@ $(document).ready(function() {
 
     function getamountmilestone() {
         var amt = 0;
+        var cnt = 0;
         if ($('#amountinfo').is(":checked")) {
 
             amt = 1;
@@ -2148,7 +2149,7 @@ $(document).ready(function() {
         });
 
         if (amt == 1) {
-            if (perinfo > 100 || perinfo < 100) {
+            if (cnt > 0 && (perinfo > 100 || perinfo < 100)) {
                 $.notify({
                     title: '',
                     message: '<strong>Milestone Percentage Should be 100% Only!!</strong>'
@@ -2160,7 +2161,7 @@ $(document).ready(function() {
                 $('#btnsaveinfo').attr('disabled', false)
             }
         } else if (amt == 0) {
-            if (perinfo > finalorder || perinfo < finalorder) {
+            if (cnt > 0 && (perinfo > finalorder || perinfo > finalorder)) {
                 $.notify({
                     title: '',
                     message: '<strong>Milestone Amount Should Be Equal To Total Amount !!</strong>'

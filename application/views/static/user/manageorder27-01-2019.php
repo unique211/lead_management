@@ -618,6 +618,7 @@
             <label>Status</label>
             <div class=" inputGroupContainer">
             <select name="order_status_info" id="order_status_info" class="form-control" >
+                   <option value="">Select</option>
                    <option value="All">All</option>
                    <option value="1">Waiting</option>
                    <option value="2">Accepted</option>
