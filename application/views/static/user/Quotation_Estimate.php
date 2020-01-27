@@ -51,7 +51,7 @@
                                  <div class="form-group">
                                     <label class="col-md-4 control-label">Mobile No</label>
                                     <div class="col-md-8 inputGroupContainer">
-                                       <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span><input id="phn" name="phn" placeholder="Phone Number" class="form-control phn small-input" required pattern="[0-9]{10}" type="number" onkeypress="preventNonNumericalInput(event)"></div><span class="phn1"></span>
+                                       <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span><input id="phn" name="phn" placeholder="Phone Number" class="form-control phn small-input" required pattern="[0-9]{10}" type="number" ></div><span class="phn1"></span>
                                     </div>
                                  </div>
 

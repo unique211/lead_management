@@ -936,6 +936,7 @@ $(document).ready(function() {
         $('.closehide').show();
         $('.tablehideshow').hide();
         $('.btnhide').hide();
+        $('#btnmailsend').hide();
 
         form_clear();
         var dtToday = new Date();
@@ -2616,15 +2617,15 @@ $(document).ready(function() {
 
                 html += '</tbody></table>';
                 $('#show_master').html(html);
-                $('#mytable').DataTable({
-                    //deferRender: true
+                // $('#mytable').DataTable({
+                //     //deferRender: true
 
-                    // "fnDrawCallback": function() { //for display for bootstraptoggle button
-                    //     //jQuery('#mytable .latestversion').dropdown();
-                    //     $(".latestversion select").select2();
+                //     // "fnDrawCallback": function() { //for display for bootstraptoggle button
+                //     //     //jQuery('#mytable .latestversion').dropdown();
+                //     //     $(".latestversion select").select2();
 
-                    // }
-                });
+                //     // }
+                // });
             }
         });
         getallversion();
