@@ -1933,7 +1933,7 @@ $(document).ready(function() {
                 if (data == true) {
                     $.notify({
                         title: '',
-                        message: '<strong>Change Status Success Fully  !!</strong>'
+                        message: '<strong>Change Status SuccessFully  !!</strong>'
                     }, {
                         type: 'success'
                     });
@@ -2249,10 +2249,15 @@ $(document).ready(function() {
         var id = $('#save_update').val();
         var search_version = $('#search_version option:selected').text();
 
+
         if (id == "") {
-            $('#lbl1version').text('Version:' + 1);
+
         } else {
-            $('#lbl1version').text('Version:' + search_version);
+            if (search_version == "") {
+                $('#lbl1version').text('Version:' + 1);
+            } else {
+                $('#lbl1version').text('Version:' + search_version);
+            }
         }
 
 
