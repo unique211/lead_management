@@ -583,6 +583,7 @@
 
                </table>
                <div class="row">
+                  <input type="hidden" id="rejectorderstatus"  name="rejectorderstatus" value="">
                   <!-- <button type="button" class="btn btn-info pull-right" id="savemilestone">Save Milestone</button> -->
                </div>
             </section>

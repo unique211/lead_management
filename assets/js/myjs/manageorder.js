@@ -557,6 +557,7 @@ $(document).ready(function() {
         var quatation_no = $('#quatation_no').text();
         var quatationidno = $('#quatationid').val();
         var customerid = $('#customerid').val();
+        rejectorderstatus = $('#rejectorderstatus').val();
         var flag = 0;
 
         var salesrepresentive = $('#salesrepresentive').val();
@@ -676,6 +677,7 @@ $(document).ready(function() {
                         quatation_no: quatation_no,
                         salesrepresentive: salesrepresentive,
                         customerid: customerid,
+                        rejectorderstatus: rejectorderstatus,
                     },
                     success: function(data) {
                         console.log(data);
@@ -1106,6 +1108,8 @@ $(document).ready(function() {
         var orderstatus = $(this).attr('name');
         var html1 = '';
 
+        $('#rejectorderstatus').val(orderstatus);
+
 
         $("#tab2").prop('disabled', false);
         //   $("#tab2").trigger('click');
@@ -1246,6 +1250,10 @@ $(document).ready(function() {
                         if (usertype == "Admin") {
                             $('#accepted').show();
                             $('#rejected').show();
+                        }
+                        if (data1[0].order_status == "3") {
+                            $('#accepted').hide();
+                            $('#rejected').hide();
                         }
                     }
 
