@@ -27,7 +27,7 @@
 		                            <label class="col-md-4 control-label">User Name</label>
 		                            <div class="col-md-6 inputGroupContainer">
 		                               <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-		                                <input id="user_name" name="user_name" placeholder="User Name" class="form-control user_name" required="true" value="" type="text" onkeypress="return restrict_name(event)" maxlength="15"></div><span class="user_name1"></span>
+		                                <input id="user_name" name="user_name" placeholder="User Name" class="form-control user_name"  value="" type="text"  readonly maxlength="15"></div><span class="user_name1"></span>
 		                            </div>
 		                         </div>
                          			<div class="form-group">
@@ -98,7 +98,7 @@
                             <div class="col-md-6 inputGroupContainer">
                                <div class="input-group"><span class="input-group-addon"><i class="fa fa-globe"></i></span>
                                 <input id="demo" name="d_region" placeholder="Region"
-                                 class="tags_input form-control region" required="true" value="" type="text" required></div>
+                                 class="tags_input form-control region" required="true" value=""   type="text"  required></div>
                             </div><span class="user_type2"></span>
                          </div>
                          <div class="form-group">
@@ -133,9 +133,9 @@
                                 <span class="input-group-addon"> <i class="fa fa-user-circle"></i><!-- <img src="lead_type.jpg"> --></span>
                                 <select class=" form-control user_type" id='user_type' name="user_type">
                                      <option value="">--Select--</option>
-                                  <option selected value="SalesRepresentative">Sales Representative</option>
+                                  <option selected value="SalesRepresentative">Sales Team</option>
                                   <option value="Admin">Admin</option>
-                                  <option value="Tele-caller"> Tele-caller</option>
+                                  <option value="Tele-caller">BU Heads</option>
                                  
                                   </select>
                                </div><span class="user_type1"></span>
@@ -178,7 +178,7 @@
                          </div>
 
                          <div class="form-group">
-                            <label class="col-md-4 control-label">Address</label>
+                            <label class="col-md-4 control-label">Residence Address</label>
                             <div class="col-md-6 inputGroupContainer">
                                <div class="input-group"><span class="input-group-addon"><i class="fa fa-map-marker"></i></span><textarea rows="4" cols="40" class="form-control" name="d_address"> </textarea></div>
                             </div>
@@ -308,6 +308,8 @@ function validate_data()
         $(".user_type2").css("color","red");
         $(".region").focus();
         return false;
+  }else{
+     
   }
   return true;
 }
@@ -366,6 +368,8 @@ function validate_data()
         }
 
       });
+
+     
      $(document).on('keyup','.phn',function()
     {
        var v=$(this).val();
@@ -432,6 +436,7 @@ function validate_data()
       else
       {
         $(".email1").text("");
+        $('#user_name').val(v);
       }
 
       });
@@ -482,6 +487,12 @@ function validate_data()
           }
         
       }
+    });
+   
+    $( "#demo" ).focusout(function() {
+
+    
+       
     });
   });
    function preventNonNumericalInput(e) {
@@ -538,4 +549,6 @@ var today = new Date();
         }
        var dob = yyyy + '-' + mm + '-' + dd;
        $('#dob').val(dob);
+      
+      
 </script>

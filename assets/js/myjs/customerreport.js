@@ -109,13 +109,15 @@ $(document).ready(function() {
                 var sr = 0;
                 for (i = 0; i < data.length; i++) {
                     sr = sr + 1;
-
+                    flag = 0;
+                    html = '<tr>' +
+                        '<td  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + sr + '</td>' +
+                        '<td  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].custname + '</td>' +
+                        '<td  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].customertype + '</td>' +
+                        '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].no_of_employee + '</td>';
                     if (data[i].contactdata.length > 0) {
-                        html = '<tr>' +
-                            '<td  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + sr + '</td>' +
-                            '<td  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].custname + '</td>' +
-                            '<td  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].customertype + '</td>' +
-                            '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].no_of_employee + '</td>';
+
+
                     }
                     for (j = 0; j < data[i].contactdata.length; j++) {
                         if (j > 0) {
@@ -126,8 +128,21 @@ $(document).ready(function() {
                             '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].contactdata[j].email_id + '</td>' +
                             '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].contactdata[j].mobile_no + '</td>';
                         if (data[i].contactdata.length > 0) {
+
                             html += '<td  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].remark + '</td>';
+                            if (flag == 0) {
+                                html += '<td  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].qutationcount + '</td>' +
+
+                                    '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].ordercount + '</td>' +
+                                    '<td  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].qutationamt + '</td>' +
+                                    '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].orderamt + '</td>';
+                                flag = 1;
+                            } else {
+                                html += '<td colspan="4"  style="white-space:nowrap;text-align:center;padding:10px 10px;">-</td>';
+                            }
                             html += '</tr>';
+
+
                         }
 
                     }

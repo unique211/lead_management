@@ -2102,21 +2102,22 @@ $(document).ready(function() {
 
         var rowCount = $('#paymenttb >tbody >tr').length;
 
-        if (rowCount > 1) {
+        if (rowCount > 0) {
             console.log(save_update);
             if (save_update != "") {
                 $("#paymentdata_" + save_update).remove();
                 console.log("#paymentdata_" + save_update);
 
             }
-        } else {
-            $.notify({
-                title: '',
-                message: '<strong>One Payment is Required !!</strong>'
-            }, {
-                type: 'success'
-            });
         }
+        //else {
+        //     // $.notify({
+        //     //     title: '',
+        //     //     message: '<strong>One Payment is Required !!</strong>'
+        //     // }, {
+        //     //     type: 'success'
+        //     // });
+        // }
         getamountmilestone();
 
     });

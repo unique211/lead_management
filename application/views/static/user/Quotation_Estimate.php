@@ -462,9 +462,14 @@
             <select name="quotation_status_info" id="quotation_status_info" class="form-control" >
                    <!-- <option value="">Select</option> -->
                    <option selected value="All">All</option>
-                   <option value="1">Pending</option>
-                   <option value="2">Confirm</option>
-                   <option value="3">Cancel</option>
+                
+                           <option value="1">Identified</option>
+                           <option value="2" >Order Won</option>
+                           <option value="3">Order Lost</option>
+                           <option value="4">Quoted</option>
+                           <option value="5">Qualified</option>
+                           <option value="6">Negotiation</option>
+                           <option value="7">Opportunity Dropped</option>
             </select>
             </div>
          </div>
@@ -552,27 +557,52 @@
             <input type="hidden" name="status_id" id='status_id'>
 
             <div class="modal-body">
-
+                
                <div class="col-md-12">
 
                
                   <div class="form-group">
-                     <label class="col-sm-4"><b>Status </b></label>
-                     <div class="col-md-6 inputGroupContainer">
-                        <select name="quote_status" id="quote_status" class="form-control">
+                     <label class="col-sm-2"><b>Status </b></label>
+                     <div class="col-md-8 inputGroupContainer">
+                        <select name="quote_status" id="quote_status" class="form-control" required>
                            <option disabled>select</option>
-                           <option value="1">Pending</option>
-                           <option value="2" selected>Confirm</option>
-                           <option value="3">Cancel</option>
+                           <option value="1">Identified</option>
+                           <option value="2" >Order Won</option>
+                           <option value="3">Order Lost</option>
+                           <option value="4">Quoted</option>
+                           <option value="5">Qualified</option>
+                           <option value="6">Negotiation</option>
+                           <option value="7">Opportunity Dropped</option>
                         </select>
+                     </div>
+                  </div>
+                        <br>
+                  <div class="form-group">
+                     <label class="col-sm-2"><b>Remark </b></label>
+                     <div class="col-md-8 inputGroupContainer">
+                        <textarea id="stutusremark" name="stutusremark" class="form-control" required></textarea>
                      </div>
                   </div>
 
                </div>
+               <div class="col-md-12">
+                  <table class="table table-striped" id="salesnotes">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Stutus</th>
+                        <th>Remark</th>
+                        <th>User</th>
+                      </tr>
+                    </thead>
+                    <tbody id="ac_notes_tbody"></tbody>
+                  </table>
+
+          </div>
 
             </div>
             <div class="modal-footer">
-               <button class="btn btn-primary" id="changestatuainfo">OK</button>
+               <button class="btn btn-primary" type="submit" id="changestatuainfo">OK</button>
 
                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
             </div>

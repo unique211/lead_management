@@ -45,7 +45,10 @@
                     <td> </td>
                     <td> </td>
                     <td> </td>
-
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
                 </tr>
 
                 <tr>
@@ -55,6 +58,10 @@
 
                     <td style="text-align:center;" colspan="2">Total Customers Met so far</td>
 
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
                     <td> </td>
                     <td> </td>
                     <td> </td>
@@ -71,6 +78,10 @@
                     <td>Email id</td>
                     <td>Mobile no </td>
                     <td>Remarks </td>
+                    <td>No Of Quotation </td>
+                    <td>No Of Order </td>
+                    <td>Quotation Amount </td>
+                    <td>Order Amount </td>
 
                 </tr>
             </thead>
