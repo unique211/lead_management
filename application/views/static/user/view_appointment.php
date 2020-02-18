@@ -34,9 +34,13 @@
            <option>s2</option>
          </select> -->
       </div>
-      <div class="col-md-2">
-        <button  class="btn btn-primary" style="margin-top: 2em;margin-left: 5em" onclick='check_authentication()'>Synchronize</button>
+      <div class="col-md-1">
+        <button  class="btn btn-primary" style="margin-top: 2em;" onclick='check_authentication()'>Synchronize</button>
       </div>
+      <div class="col-md-1">
+      <button  type="submit" form="manageappement" class="btn btn-info" style="margin-top: 2em;">Book Appointment</button>
+      </div>
+      <form action="<?php echo base_url() ?>appointment" id="manageappement" name="manageappement"></form>
     </div>
    <br>
      <form action="filter_appointments" method="POST">
@@ -319,23 +323,7 @@
             <input type="text" class="form-control" id="set" 
             name="set" maxlength="20">
           </div>
-           <div class="form-group" id="custom-search-input">
-            <label for="recipient-name" class="col-form-label"> Address:</label>
-          
-            <textarea class="form-control" id="app_addr" 
-            name="app_addr"></textarea>
-                    <input type="hidden" name="lat">
-                    <input type="hidden" name="long">
-
-          </div>
-          <div class="form-group" id="">
-            <label for="recipient-name" class="col-form-label"> Note:</label>
-          
-            <textarea class="form-control" id="note" 
-            name="note"></textarea>
-                  
-
-          </div>
+           
 
           </div>
           <div class="col-md-6">
@@ -366,7 +354,39 @@
                             </select>
 
           </div>
+          <div class="form-group" id="custom-search-input">
+            <label for="recipient-name" class="col-form-label"> Address:</label>
+          
+            <textarea class="form-control" id="app_addr" 
+            name="app_addr"></textarea>
+                    <input type="hidden" name="lat">
+                    <input type="hidden" name="long">
+
+          </div>
           <div class="form-group" id="">
+            <label for="recipient-name" class="col-form-label"> Note:</label>
+          
+            <textarea class="form-control" id="note" 
+            name="note"></textarea>
+                  
+
+          </div>
+          
+          <!-- <div class="form-group" id="">
+            <label for="recipient-name" class="col-form-label">Demo/Sale Notes:</label>
+          
+            <textarea class="form-control" id="demo_note" 
+            name="demo_note"></textarea>
+                  
+
+          </div> -->
+
+          </div>
+          
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+              <div class="form-group" id="">
             <label for="recipient-name" class="col-form-label">Demo/Sale Notes:</label>
           
             <textarea class="form-control" id="demo_note" 
@@ -374,10 +394,32 @@
                   
 
           </div>
+          </div>
+          <div class="col-md-1">
+            <br>
+            <br>
+          <button type="button" id="add_btnnotes" class="btn btn-primary"><span class="fa fa-plus"></span></button>
+        </div>
 
           </div>
-        </div>
+          <div class="row">
+          <div class="col-md-12">
+                  <table class="table table-striped" id="salesnotes">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Demo Sale Notes</th>
+                        <th>User</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="ac_notes_tbody"></tbody>
+                  </table>
+
+          </div>
+          </div>
           <div class="modal-footer">
+            <input type="hidden" name="save_update" id="save_update" value="">
           <input type="submit" class="btn btn-primary" name="app_update"
          value="Update">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -395,7 +437,9 @@
  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClQAfOY3OpWLwnkhhLlfhOPFVil7Br5PQ&amp;libraries=places"></script>
    <script src="assets/js/bootstrap-notify.js"></script>
   <script src="assets/js/bootstrap-notify.min.js"></script>
+ 
 <script type="text/javascript">
+
  var x=document.getElementById('alert_msg').value;
 
  if(x!='')
@@ -425,6 +469,8 @@ $.notify({
   }
 </script>
 <script>
+
+  var editid='';
   function check_users()
   {
    // alert('hi');
@@ -540,7 +586,7 @@ $.notify({
     
   function check_authentication()
   {
-    //alert('hi');
+  
     var access="<?php echo $this->session->userdata('is_authenticate_user'); ?>";
     var user_type="<?php echo $this->session->userdata('user_type'); ?>";
 // alert(access);
@@ -601,7 +647,7 @@ $.notify({
     //alert('id'+id);
     /*if(access)
     {*/
-
+      editid=id;
      $.ajax(
     {
       url:"get_appointment_record/"+id,
@@ -777,6 +823,4 @@ window.location.reload();
   });
 });
 </script>
-  <script type="text/javascript">
-
-  </script>
+   <script src="<?php echo base_url(); ?>assets/js/myjs/viewappoiment.js"></script>

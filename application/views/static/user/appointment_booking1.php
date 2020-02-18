@@ -96,10 +96,10 @@
                             <div class="col-md-4 inputGroupContainer">
                                <div class="input-group"><span class="input-group-addon"><i class="glyphicon " style=" width: 14px;"></i></span> 
                                 <input type="text" list="customer" id="lead" name="lead" class="form-control" style="border-top-right-radius: 5px; border-bottom-right-radius: 5px;" autocomplete="off">
-                                <datalist id="customer">
+                                <datalist id="customer" class="customernm">
                                    <?php  foreach ($customer as $key => $value) {
                                ?>
-                               <option value="<?php echo $value['customer_name']; ?>"><?php echo $value['customer_name']; ?></option>
+                               <option value="<?php echo $value['customer_name']?>" id="<?php echo $value['id']?>"><?php echo $value['customer_name']?></option>
                                <?php
                               } ?>
                                 </datalist>
@@ -127,14 +127,20 @@
                                <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                                 <input id="demo_dealer" name="demo_dealer" class="form-control demo_dealer" autocomplete="off" list="salesreprentative">
 								<datalist id="salesreprentative">
-								<?php 
+								<?php
                                 foreach($salesreprentative as $key => $value)
                                 {
 
                                 ?>
-                                <option value="<?php echo 
+                                <?php  if($this->session->userdata('user_type')=="SalesRepresentative"){ ?>
+                                  
+                              <option value="<?php echo 
+                                $value['first_name']; ?>" <?php echo "selected";  ?> ><?php echo $value['first_name']; ?></option>
+                                <?php }else{ ?>
+                                  <option value="<?php echo 
                                 $value['first_name']; ?>"><?php echo $value['first_name']; ?></option>
-   
+                                <?php } ?>
+
             <?php } ?>
 								</datalist>
                 
@@ -181,7 +187,7 @@
                          </div>
 
                           <div class="form-group">
-                            <label class="col-md-4 control-label">Status</label>
+                            <label class="col-md-4 control-label"> Order status</label>
                             <div class="col-md-4 inputGroupContainer">
                                  <div class="input-group" ><span class="input-group-addon" ><i class="glyphicon" style=" width: 14px;" ></i></span>
 								 
@@ -195,11 +201,13 @@
 								 </datalist>-->
 								  <select class="form-control status" id="status" name="status">
                               <option value="">Select</option>
-                              <option value="Pending">Pending</option>
-                              <option value="Rescheduled">Rescheduled</option>
-                              <option value="Demo">Demo</option>
-                              <option value="Cancelled">Cancelled</option>
-                              <option value="Sale">Sale</option>
+                              <option value="Identified">Identified</option>
+                              <option value="Quoted">Quoted</option>
+                              <option value="Qualified">Qualified</option>
+                              <option value="Negotiation">Negotiation</option>
+                              <option value="OrderWon"> Order Won</option>
+                              <option value="OrderLost">Order Lost</option>
+                              <option value="OpportunityDropped">Opportunity Dropped</option>
                             </select>
                                </div><span class="status1"></span>
                             
@@ -229,11 +237,11 @@
                             </div>
                          </div> -->
                              <div class="form-group">
-                            <label class="col-md-4 control-label">Demo/Sale Notes</label>
+                            <!-- <label class="col-md-4 control-label">Demo/Sale Notes</label>
                             <div class="col-md-4 inputGroupContainer">
                                <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span><textarea rows="4" cols="50" class="form-control demo_notes" id="demo_notes" name="demo_notes" placeholder="Notes"> </textarea>
                                 </div><span class="demo_notes1"></span>
-                            </div>
+                            </div> -->
                          </div> 
                          <div class="form-group">
                             <label class="col-md-4 control-label">Appointment Notes</label>
@@ -276,6 +284,8 @@
          <script src="assets/js/bootstrap-notify.js"></script>
   <script src="assets/js/bootstrap-notify.min.js"></script>
 <script>
+
+  
   google.maps.event.addDomListener(window, 'load', initialize);
     function initialize() {
       var input = document.getElementById('ap_addr');
@@ -390,7 +400,7 @@ else {
 
    $(document).ready(function()
   {
-   
+  
    $("#lead").on('change', function () {
     var val = this.value;
      var lead_dealer='';
@@ -411,7 +421,8 @@ else {
           lead_dealer=record[0].lead_dealer;
 		  var d="<option value='"+record[0].lead_dealer+"'>"+record[0].lead_dealer+"</option>";
           var lead=record[0].user_address;
-		  $("#demo_dealer").val(lead_dealer);
+       
+          $("#demo_dealer").val(lead_dealer);
 		  $("#d_dealer").append(lead_dealer);
 		  //$("#demo_dealer").
           $("#ap_addr").val(lead);
@@ -547,4 +558,70 @@ var access="<?php echo $this->session->userdata('is_authenticate_user'); ?>";
  }
  }
 //getcal_list();
+
+var today = new Date();
+                var dd = today.getDate();
+
+                var mm = today.getMonth() + 1;
+                var yyyy = today.getFullYear();
+                if (dd < 10) {
+                    dd = '0' + dd;
+                }
+
+                if (mm < 10) {
+                    mm = '0' + mm;
+                }
+                today = yyyy + '-' + mm + '-' + dd;
+
+                $('#ap_date').val(today);
+            
+
+                var dt = new Date();
+var time = dt.getHours() + ":" + dt.getMinutes();
+$('#ap_stime').val(time);
+</script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script>
+ $(document).on('change','#lead',function()
+    {
+      var val =$(this).val();
+      var c_id=0;
+    
+
+
+c_id= $('#customer').find('option[value="' +val + '"]').attr('id');
+   
+   
+    
+    
+
+      $.ajax({
+                type: "POST",
+                url: baseurl + "NewAccountcontroller/getaccountaddress",
+                dataType: "JSON",
+                async: false,
+                data: {
+                    id: c_id,
+                    
+                },
+                success: function(data) {
+                  if(data.length >0){
+                    $('#ap_addr').val(data[0].address);
+                  }
+                   
+                  
+                }
+              });
+    
+    });
+
+    var userid="<?php echo $this->session->userdata('useruniqueid') ?>"; 
+    var userrole="<?php echo $this->session->userdata('user_type') ?>";  
+    var first_name="<?php echo $this->session->userdata('first_name') ?>";  
+    
+    if(userrole=="SalesRepresentative"){
+      $('#demo_dealer').val(first_name).trigger('change');
+    }
+
 </script>

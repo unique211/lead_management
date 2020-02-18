@@ -248,6 +248,14 @@ function checklandline($id,$landline){
     return '0';
    }
 }
+function getac_addresss($nm){
+   
+        $this->db->select('*');    
+    $this->db->from('new_account');
+    $this->db->where('id',$nm);
+    $hasil=$this->db->get(); 
+   return $hasil->result();
+}
 
 }
 ?>

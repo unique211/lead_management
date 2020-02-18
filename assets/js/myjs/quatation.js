@@ -1086,17 +1086,25 @@ $(document).ready(function() {
                     // }
 
                     if (data[i].quote_status == 1) {
-                        html += '<td> <button  class="btn btn-sm btn-warning  btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   >Pending</button>&nbsp;</td>';
+                        html += '<td> <button  class="btn btn-sm btn-warning  btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   >Identified</button>&nbsp;</td>';
                     } else if (data[i].quote_status == 2) {
-                        html += '<td> <button  class="btn btn-sm btn-success  btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   disabled >Confirm</button>&nbsp;</td>';
-                    } else {
-                        html += '<td> <button  class="btn btn-sm btn-danger btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   disabled>Cancel</button>&nbsp;</td>';
+                        html += '<td> <button  class="btn btn-sm btn-success  btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   disabled >Order Won</button>&nbsp;</td>';
+                    } else if (data[i].quote_status == 3) {
+                        html += '<td> <button  class="btn btn-sm btn-danger btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   disabled>Order Lost</button>&nbsp;</td>';
+                    } else if (data[i].quote_status == 4) {
+                        html += '<td> <button  class="btn btn-sm btn-info btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   >Quoted</button>&nbsp;</td>';
+                    } else if (data[i].quote_status == 5) {
+                        html += '<td> <button  class="btn btn-sm btn-primary btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   >Qualified</button>&nbsp;</td>';
+                    } else if (data[i].quote_status == 6) {
+                        html += '<td> <button  class="btn btn-sm btn-primary btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   >Negotiation</button>&nbsp;</td>';
+                    } else if (data[i].quote_status == 7) {
+                        html += '<td> <button  class="btn btn-sm btn-danger btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   >Opportunity Dropped</button>&nbsp;</td>';
                     }
 
 
                     // html += '< /td>';
 
-                    if (data[i].quote_status == 1) {
+                    if (data[i].quote_status == 1 || data[i].quote_status == 4 || data[i].quote_status == 5 || data[i].quote_status == 6) {
 
                         html += ' <td>';
                         if (editflag == 1) {
@@ -2117,33 +2125,95 @@ $(document).ready(function() {
     $(document).on('click', '.changestatusmodel', function(e) {
         e.preventDefault();
         $('#myModal2').modal('show');
+        $('#stutusremark').val('');
         var statusid = $(this).attr('id');
-        var statusval = $(this).val();
+        var statusval = $(this).text();
         var status = 0;
-        if (statusval == "Pending") {
+
+        if (statusval == "Identified") {
             status = 1;
-        } else if (statusval == "Confirm") {
+        } else if (statusval == "Order Won") {
             status = 2;
-        } else if (statusval == "Cancle") {
+        } else if (statusval == "Order Lost") {
             status = 3;
+        } else if (statusval == "Quoted") {
+            status = 4;
+        } else if (statusval == "Qualified") {
+            status = 5;
+        } else if (statusval == "Negotiation") {
+            status = 6;
+        } else if (statusval == "Opportunity Dropped") {
+            status = 7;
         }
         $('#quote_status').val(status).trigger('change');
         $('#status_id').val(statusid);
+        var id = statusid.split("_");
+        var qnoid = $('#quotaion_no_' + id[1]).html();
+
+        $.ajax({
+            type: "POST",
+            url: baseurl + "Quotation_Estimate/getqutation_status_info",
+            data: {
+                qid: qnoid,
+
+            },
+            dataType: "JSON",
+            async: false,
+            success: function(data) {
+                var html = '';
+
+                for (i = 0; i < data.length; i++) {
+
+
+                    var date = data[i].created_at;
+                    var fdateslt = date.split('-');
+                    var time = fdateslt[2].split(' ');
+                    var checkintime = time[0] + '/' + fdateslt[1] + '/' + fdateslt[0];
+                    var stustus = '';
+                    if (data[i].quote_status == 1) {
+                        stustus = "Identified";
+                    } else if (data[i].quote_status == 2) {
+                        stustus = "Order Won";
+                    } else if (data[i].quote_status == 3) {
+                        stustus = "Order Lost";
+                    } else if (data[i].quote_status == 4) {
+                        stustus = "Quoted";
+                    } else if (data[i].quote_status == 5) {
+                        stustus = "Qualified";
+                    } else if (data[i].quote_status == 6) {
+                        stustus = "Negotiation";
+                    } else if (data[i].quote_status == 7) {
+                        stustus = "Opportunity Dropped";
+                    }
+
+                    html += '<tr>' +
+                        '<td  id="date_' + data[i].id + '"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + checkintime + '</td>' +
+                        '<td  id="notes_' + data[i].id + '"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].remark + '</td>' +
+                        '<td  id="userid_' + data[i].id + '"   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + stustus + '</td>' +
+                        '<td  id="userid_' + data[i].id + '"   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].first_name + '' + data[i].last_name + '</td>' +
+                        '</tr>';
+                }
+
+                $('#ac_notes_tbody').html(html);
+            }
+        });
 
     });
 
-    $(document).on('click', '#changestatuainfo', function(e) {
+    $(document).on('submit', '#form_changestatus', function(e) {
         e.preventDefault();
 
-        $('#changestatuainfo').attr('disabled', true);
-        $('#wait1').show();
+
         var id = $('#status_id').val();
         var status = $('#quote_status').val();
+        var stutusremark = $('#stutusremark').val();
         id = id.split("_");
         var qnoid = $('#quotaion_no_' + id[1]).html();
 
         var lversion = $('#latestversion_' + id[1]).val();
 
+        $('#wait1').show();
+        $('#changestatuainfo').attr('disabled', true);
 
 
         $.ajax({
@@ -2154,6 +2224,7 @@ $(document).ready(function() {
                 lversion: lversion,
                 status: status,
                 qnoid: qnoid,
+                stutusremark: stutusremark,
             },
             dataType: "JSON",
             async: false,
@@ -2592,19 +2663,34 @@ $(document).ready(function() {
                     //     html += '<td> <select disabled name="quotestatus_' + data[i].id + '" id="quotestatus_' + data[i].id + '" class="form-control quotestatus"><option disabled>select</option><option value="1">Pending</option><option value="2">Confirm</option><option value="3" selected>Cancel</option></select</td>';
                     // }
 
+                    // if (data[i].quote_status == 1) {
+                    //     html += '<td> <button  class="btn btn-sm btn-warning  btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   >Pending</button>&nbsp;</td>';
+                    // } else if (data[i].quote_status == 2) {
+                    //     html += '<td> <button  class="btn btn-sm btn-success  btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   disabled >Confirm</button>&nbsp;</td>';
+                    // } else {
+                    //     html += '<td> <button  class="btn btn-sm btn-danger btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   disabled>Cancel</button>&nbsp;</td>';
+                    // }
+
                     if (data[i].quote_status == 1) {
-                        html += '<td> <button  class="btn btn-sm btn-warning  btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   >Pending</button>&nbsp;</td>';
+                        html += '<td> <button  class="btn btn-sm btn-warning  btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   >Identified</button>&nbsp;</td>';
                     } else if (data[i].quote_status == 2) {
-                        html += '<td> <button  class="btn btn-sm btn-success  btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   disabled >Confirm</button>&nbsp;</td>';
-                    } else {
-                        html += '<td> <button  class="btn btn-sm btn-danger btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   disabled>Cancel</button>&nbsp;</td>';
+                        html += '<td> <button  class="btn btn-sm btn-success  btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   disabled >Order Won</button>&nbsp;</td>';
+                    } else if (data[i].quote_status == 3) {
+                        html += '<td> <button  class="btn btn-sm btn-danger btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   disabled>Order Lost</button>&nbsp;</td>';
+                    } else if (data[i].quote_status == 4) {
+                        html += '<td> <button  class="btn btn-sm btn-info btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   >Quoted</button>&nbsp;</td>';
+                    } else if (data[i].quote_status == 5) {
+                        html += '<td> <button  class="btn btn-sm btn-primary btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   >Qualified</button>&nbsp;</td>';
+                    } else if (data[i].quote_status == 6) {
+                        html += '<td> <button  class="btn btn-sm btn-primary btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   >Negotiation</button>&nbsp;</td>';
+                    } else if (data[i].quote_status == 7) {
+                        html += '<td> <button  class="btn btn-sm btn-danger btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   disabled> Opportunity Dropped</button>&nbsp;</td>';
                     }
 
 
                     // html += '< /td>';
 
-                    if (data[i].quote_status == 1) {
-
+                    if (data[i].quote_status == 1 || data[i].quote_status == 4 || data[i].quote_status == 5 || data[i].quote_status == 6) {
                         html += ' <td>';
                         if (editflag == 1) {
 

@@ -129,4 +129,12 @@ class NewAccountcontroller extends CI_Controller
 
         echo json_encode($data1);
     }
+    public function getaccountaddress(){
+        $val	= $this->input->post('id');
+     
+      
+        $data1 = $this->newaccountmodel->getac_addresss($val);
+
+        echo json_encode($data1); 
+    }
 }

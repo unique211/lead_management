@@ -61,12 +61,17 @@ $objPHPExcel->getActiveSheet()->SetCellValue('F3', 'Designation');
 $objPHPExcel->getActiveSheet()->SetCellValue('G3', 'Email id');
 $objPHPExcel->getActiveSheet()->SetCellValue('H3', 'Mobile no');
 $objPHPExcel->getActiveSheet()->SetCellValue('I3', 'Remarks');
+$objPHPExcel->getActiveSheet()->SetCellValue('J3', 'No Of Quotation');
+$objPHPExcel->getActiveSheet()->SetCellValue('K3', 'No Of Order');
+$objPHPExcel->getActiveSheet()->SetCellValue('L3', 'Quotation Amount');
+$objPHPExcel->getActiveSheet()->SetCellValue('M3', 'Order Amount');
 
-$objPHPExcel->getActiveSheet()->getStyle("A3:K3")->getFont()->setBold(true);
+$objPHPExcel->getActiveSheet()->getStyle("A3:M3")->getFont()->setBold(true);
 
  //$employee_data = $this->funnelreportmodel->fetch_data();
- $table_columns1 = array('A3', 'B3','C3','D3','E3','F3','G3','H3','I3');
+ $table_columns1 = array('A3', 'B3','C3','D3','E3','F3','G3','H3','I3','J3','K3','L3','M3');
  foreach($table_columns1 as $cl){
+
  $objPHPExcel->getActiveSheet()->getStyle($cl)->getFill()->applyFromArray(array('type' => PHPExcel_Style_Fill::FILL_SOLID,'startcolor' => array('rgb' =>'40A756')));
 }
  
@@ -86,7 +91,11 @@ $sr=0;
     $customer_type=$row['customer_type'];
     $customertype=$row['customertype'];
     $remark=$row['remark'];
-  
+    $qutationcount=$row['qutationcount'];
+    $ordercount=$row['ordercount'];
+    $orderamt=$row['orderamt'];
+    $qutationamt=$row['qutationamt'];
+    $flag=0;
   
     $count= $rowCount;
 
@@ -101,20 +110,31 @@ $sr=0;
     $objPHPExcel->getActiveSheet()->SetCellValue('C'.$count, $customertype);
     $objPHPExcel->getActiveSheet()->SetCellValue('D'.$count, $no_of_employee);
     
-   
+    
  
     foreach($row['contactdata'] as $contactdata){
       
+
         $objPHPExcel->getActiveSheet()->SetCellValue('E'.$rowCount, $contactdata['contact_name']);
         $objPHPExcel->getActiveSheet()->SetCellValue('F'.$rowCount, $contactdata['designation']);
         $objPHPExcel->getActiveSheet()->SetCellValue('G'.$rowCount, $contactdata['email_id']);
         $objPHPExcel->getActiveSheet()->SetCellValue('H'.$rowCount, $contactdata['mobile_no']);
+        if($flag==0){
+            $objPHPExcel->getActiveSheet()->SetCellValue('I'.$count, $remark);
+            $objPHPExcel->getActiveSheet()->SetCellValue('J'.$count, $qutationcount);
+            $objPHPExcel->getActiveSheet()->SetCellValue('K'.$count, $ordercount);
+            $objPHPExcel->getActiveSheet()->SetCellValue('L'.$count, $qutationamt);
+            $objPHPExcel->getActiveSheet()->SetCellValue('M'.$count, $orderamt);
+            $flag=1;
+        }
         $rowCount++;
     }
 
 
    
-    $objPHPExcel->getActiveSheet()->SetCellValue('I'.$count, $remark);
+   
+  
+
    
    
    

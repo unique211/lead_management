@@ -115,6 +115,7 @@ class Quotation_Estimate extends CI_Controller {
 
 
     }else{
+        $quotationno=$this->input->post('bill_no');
         $this->db->select_max('version');
         $this->db->from('quotation_master');
         $this->db->where('quotaion_no',$this->input->post('bill_no'));
@@ -912,6 +913,12 @@ class Quotation_Estimate extends CI_Controller {
             $id	= $this->input->post('id');
          
             $data = $this->quatationmodel->getquotationdata($id);
+            echo json_encode($data);  
+        }
+        public function getqutation_status_info(){
+            $id	= $this->input->post('qid');
+         
+            $data = $this->quatationmodel->getqutation_status_information($id);
             echo json_encode($data);  
         }
        

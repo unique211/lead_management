@@ -121,7 +121,7 @@ class Quatationmodel extends CI_Model{
 
             }
 
-            $this->db->select_max('version');
+        $this->db->select_max('version');
         $this->db->from('quotation_master');
         $this->db->where('quotaion_no',$quotationno);
         $hasil1 = $this->db->get(); 
@@ -150,6 +150,19 @@ class Quatationmodel extends CI_Model{
              
             ); 
             $this->db->insert('quotation_log',$data3);
+
+            date_default_timezone_set('Asia/Kolkata');
+            $date= date('Y-m-d h:i:s');
+            $data3 = array(
+                   
+                'qid' =>$id ,
+                'remark'=>'',
+                'quote_status' =>1,
+                'userid' =>$this->session->userdata('useruniqueid'),
+                'created_at'=>$date
+             
+            ); 
+            $this->db->insert('quotation_status',$data3);
         }
        
             return $id;
@@ -666,6 +679,19 @@ function updatequotestatus($id,$data){
        
     ); 
     $this->db->insert('quotation_log',$data3);
+
+    date_default_timezone_set('Asia/Kolkata');
+    $date= date('Y-m-d h:i:s');
+    $data3 = array(
+           
+        'qid' =>$id ,
+        'remark'=>$this->input->post('stutusremark'),
+        'quote_status' =>$this->input->post('status'),
+        'user_id' =>$this->session->userdata('useruniqueid'),
+        'created_at'=>$date
+     
+    ); 
+    $this->db->insert('quotation_status',$data3);
     return $result;
 }
 function getqutationversioninfo($id){
@@ -1007,6 +1033,16 @@ public function getquotationdata($id){
     $this->db->from('quotation_master');
     $this->db->where('id',$id);
      $hasil=$this->db->get();
+    return $hasil->result();
+}
+public function getqutation_status_information($id){
+    $this->db->select('quotation_status.*,user_creation.first_name,user_creation.last_name');    
+    $this->db->from('quotation_status');
+    $this->db->join('user_creation', 'user_creation.id = quotation_status.user_id');
+    $this->db->where('quotation_status.qid',$id);
+    $this->db->order_by("quotation_status.id", "desc");
+    $hasil=$this->db->get();
+   // echo $this->db->last_query();
     return $hasil->result();
 }
 
