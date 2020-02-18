@@ -685,6 +685,7 @@
                         <input type="text" class="form-control" id="cto" name="cto[]">
                      </div>
                   </div>
+
                </div>
                <div class="row">
                   <div class="col-md-12">
@@ -723,10 +724,12 @@
                      <div class="form-group">
                         <br>
                         <label id="lbl1quotationno" class="col-form-label">Quotation Number:</label>
+
                      </div>
                   </div>
                </div>
                <div class="row">
+
                   <div class="col-md-6">
                      <div class="form-group">
                         <br>
@@ -737,12 +740,14 @@
                      <div class="form-group">
                         <br>
                         <label id="lbl1refno" class="col-form-label">Ref Number:</label>
+
                      </div>
                   </div>
                </div>
                <div class="row">
                   <div class="col-md-6">
                      <div class="form-group">
+
                         <br>
                         <label id="lbl1version" class="col-form-label">Version:</label>
                      </div>
@@ -759,19 +764,24 @@
                      <div class="form-group">
                      <br>
                         <label id="lbl1orderduedate" class="col-form-label">Order Due Date:</label>
+
                      </div>
                   </div>
                   <div class="col-md-6">
                      <div class="form-group">
+
                      <br>
                         <label id="lbl1totalordvalue" class="col-form-label">Total Order Value :</label>
+
                      </div>
                   </div>
                </div>
                <div class="row">
+
                <div class="col-md-6">
                <button class="btn btn-info btnfilenmshow" id="btnfilenmshow1"> <a  id="getdfieename" href=""><i class="fa fa-paperclip"></i></a></button><label id="filenamepdf1">Qutation.pdf</label>
                </div>
+
                </div>
             </div>
          </div>
