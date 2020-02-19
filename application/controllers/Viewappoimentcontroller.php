@@ -17,13 +17,7 @@ class Viewappoimentcontroller extends CI_Controller
 		// $this->load->model('Settingsmodel');
     }
 
-    public function index()
-	{   
-                       
-       
-      
-		
-    }
+   
     public function save_notes(){
         $id	= $this->input->post('id');  
         $editid	= $this->input->post('editid');
