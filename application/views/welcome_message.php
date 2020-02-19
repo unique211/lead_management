@@ -31,7 +31,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
 
-  <script src="assets/js/dt.js"></script>
+  <script src="<?php echo base_url() ?>assets/js/dt.js"></script>
 
 <!--  <script src="assets/js/jquery.tag-editor.min.js"></script>
   <script src="assets/js/tagcomplete.js"></script> -->
@@ -39,9 +39,9 @@
 	<script type="text/javascript">var weblink = "<?php echo base_url();?>";</script>
   
 
-  <script src="assets/js/jquery.tag-editor.min.js"></script>
-  <script src="assets/js/tagcomplete.js"></script>
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+  <script src="<?php echo base_url() ?>assets/js/jquery.tag-editor.min.js"></script>
+  <script src="<?php echo base_url() ?>assets/js/tagcomplete.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
   
 </head>
 <body>
