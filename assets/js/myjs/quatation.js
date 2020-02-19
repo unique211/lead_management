@@ -1034,6 +1034,7 @@ $(document).ready(function() {
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Order Due Date</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Order Due Date</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;display:none;">Customer Id</th>' +
+                    '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Remark</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Status</th>' +
                     '<th style="white-space:nowrap;text-align:left;padding:10px 10px;">Action</th>' +
                     '</tr>' +
@@ -1075,7 +1076,8 @@ $(document).ready(function() {
                         '<td style="display:none;" id="less_others_' + data[i].id + '">' + data[i].less_others + '</td>' +
                         '<td style="display:none;" id="margin_' + data[i].id + '">' + data[i].margin + '</td>' +
                         '<td style="display:none;" id="salesperson_' + data[i].id + '">' + data[i].salesperson + '</td>' +
-                        '<td style="display:none;" id="customer_id_' + data[i].id + '">' + data[i].customer_id + '</td>';
+                        '<td style="display:none;" id="customer_id_' + data[i].id + '">' + data[i].customer_id + '</td>' +
+                        '<td id="remark_' + data[i].id + '">' + data[i].remark + '</td>';
 
                     // if (data[i].quote_status == 1) {
                     //     html += '<td> <select name="quotestatus_' + data[i].id + '" id="quotestatus_' + data[i].id + '" class="form-control quotestatus"><option disabled>select</option><option value="1" selected>Pending</option><option value="2">Confirm</option><option value="3">Cancel</option></select</td>';
@@ -1088,9 +1090,9 @@ $(document).ready(function() {
                     if (data[i].quote_status == 1) {
                         html += '<td> <button  class="btn btn-sm btn-warning  btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   >Identified</button>&nbsp;</td>';
                     } else if (data[i].quote_status == 2) {
-                        html += '<td> <button  class="btn btn-sm btn-success  btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   disabled >Order Won</button>&nbsp;</td>';
+                        html += '<td> <button  class="btn btn-sm btn-success  btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"    >Order Won</button>&nbsp;</td>';
                     } else if (data[i].quote_status == 3) {
-                        html += '<td> <button  class="btn btn-sm btn-danger btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   disabled>Order Lost</button>&nbsp;</td>';
+                        html += '<td> <button  class="btn btn-sm btn-danger btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   >Order Lost</button>&nbsp;</td>';
                     } else if (data[i].quote_status == 4) {
                         html += '<td> <button  class="btn btn-sm btn-info btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   >Quoted</button>&nbsp;</td>';
                     } else if (data[i].quote_status == 5) {
@@ -2132,10 +2134,13 @@ $(document).ready(function() {
 
         if (statusval == "Identified") {
             status = 1;
+
         } else if (statusval == "Order Won") {
             status = 2;
+            $('.statushidefrom').hide();
         } else if (statusval == "Order Lost") {
             status = 3;
+
         } else if (statusval == "Quoted") {
             status = 4;
         } else if (statusval == "Qualified") {
@@ -2144,6 +2149,11 @@ $(document).ready(function() {
             status = 6;
         } else if (statusval == "Opportunity Dropped") {
             status = 7;
+        }
+        if (status == 2 || status == 3) {
+            $('.statushidefrom').hide();
+        } else {
+            $('.statushidefrom').show();
         }
         $('#quote_status').val(status).trigger('change');
         $('#status_id').val(statusid);
@@ -2674,9 +2684,9 @@ $(document).ready(function() {
                     if (data[i].quote_status == 1) {
                         html += '<td> <button  class="btn btn-sm btn-warning  btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   >Identified</button>&nbsp;</td>';
                     } else if (data[i].quote_status == 2) {
-                        html += '<td> <button  class="btn btn-sm btn-success  btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   disabled >Order Won</button>&nbsp;</td>';
+                        html += '<td> <button  class="btn btn-sm btn-success  btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"    >Order Won</button>&nbsp;</td>';
                     } else if (data[i].quote_status == 3) {
-                        html += '<td> <button  class="btn btn-sm btn-danger btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   disabled>Order Lost</button>&nbsp;</td>';
+                        html += '<td> <button  class="btn btn-sm btn-danger btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   >Order Lost</button>&nbsp;</td>';
                     } else if (data[i].quote_status == 4) {
                         html += '<td> <button  class="btn btn-sm btn-info btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   >Quoted</button>&nbsp;</td>';
                     } else if (data[i].quote_status == 5) {
@@ -2684,7 +2694,7 @@ $(document).ready(function() {
                     } else if (data[i].quote_status == 6) {
                         html += '<td> <button  class="btn btn-sm btn-primary btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   >Negotiation</button>&nbsp;</td>';
                     } else if (data[i].quote_status == 7) {
-                        html += '<td> <button  class="btn btn-sm btn-danger btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   disabled> Opportunity Dropped</button>&nbsp;</td>';
+                        html += '<td> <button  class="btn btn-sm btn-danger btn-xs  changestatusmodel" id="quotestatus_' + data[i].id + '"   > Opportunity Dropped</button>&nbsp;</td>';
                     }
 
 

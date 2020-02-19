@@ -134,8 +134,8 @@ $(document).ready(function() {
                                 html += '<td  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].qutationcount + '</td>' +
 
                                     '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].ordercount + '</td>' +
-                                    '<td  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].qutationamt + '</td>' +
-                                    '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].orderamt + '</td>';
+                                    '<td  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + parseInt(data[i].qutationamt) + '</td>' +
+                                    '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + parseInt(data[i].orderamt) + '</td>';
                                 flag = 1;
                             } else {
                                 html += '<td colspan="4"  style="white-space:nowrap;text-align:center;padding:10px 10px;">-</td>';

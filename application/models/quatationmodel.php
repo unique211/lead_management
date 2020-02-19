@@ -409,6 +409,7 @@ function getall_quotation(){
     }
     $this->db->where('status',1);
     $this->db->group_by('quotaion_no');
+    $this->db->order_by("id", "desc");
     $hasil1=$this->db->get();
 
     if($hasil1->num_rows()>0){
@@ -420,6 +421,7 @@ function getall_quotation(){
            $this->db->from('quotation_master');
            $this->db->where('quotaion_no',$qutationno);
            $this->db->where('quote_lock_version >',0);
+          
            $hasil8 = $this->db->get(); 
            if($hasil8->num_rows() >0){
             foreach($hasil8->result_array() as $quotationdata1){
@@ -467,7 +469,19 @@ function getall_quotation(){
                             $firstname=$quatationdata['first_name'];
                             $last_name=$quatationdata['last_name'];
                             $salesperson=$quatationdata['salesrepresentative'];
-                            
+                            $remark='';
+
+                             $this->db->select('*');
+                            $this->db->from('quotation_status');
+                            $this->db->where('qid',$quotaion_no);
+                            $this->db->where('quote_status',$quote_status);
+                            $hasil9 = $this->db->get(); 
+                            if($hasil9->num_rows > 0){
+                                foreach($hasil9->result_array() as $quotestatus){
+                                  $remark= $quotestatus['remark'];
+                                }
+                            }
+                         
                             $result1[]=array(
                                 'id'=>$id,
                                 'customer_name'=>$customer_name,
@@ -494,6 +508,7 @@ function getall_quotation(){
                                 'last_name'=>$last_name,
                                 'salesperson'=>$salesperson,
                                 'customer_id'=>$customer_id,
+                                'remark'=>$remark,
                 
                 
                 
@@ -508,6 +523,7 @@ function getall_quotation(){
                 $this->db->select_max('id');
                 $this->db->from('quotation_master');
                 $this->db->where('quotaion_no',$qutationno);
+               
                 $hasil1 = $this->db->get(); 
                 foreach($hasil1->result_array() as $quotationdata){
                     $id1=$quotationdata['id'];
@@ -549,6 +565,17 @@ function getall_quotation(){
                         $firstname=$quatationdata['first_name'];
                         $last_name=$quatationdata['last_name'];
                         $salesperson=$quatationdata['salesrepresentative'];
+                        $remark='';
+                        $this->db->select('*');
+                        $this->db->from('quotation_status');
+                        $this->db->where('qid',$quotaion_no);
+                        $this->db->where('quote_status',$quote_status);
+                        $hasil9 = $this->db->get(); 
+                        if($hasil9->num_rows > 0){
+                            foreach($hasil9->result_array() as $quotestatus){
+                              $remark= $quotestatus['remark'];
+                            }
+                        }
                        
                         $result1[]=array(
                             'id'=>$id,
@@ -576,7 +603,7 @@ function getall_quotation(){
                             'last_name'=>$last_name,
                             'salesperson'=>$salesperson,
                             'customer_id'=>$customer_id,
-            
+                            'remark'=>$remark,
             
             
                         );
@@ -838,6 +865,7 @@ function getsearchwisefilter($qsstatus){
     
     $this->db->where('status',1);
     $this->db->group_by('quotaion_no');
+    $this->db->order_by("id", "desc");
     $hasil1=$this->db->get();
 
     if($hasil1->num_rows()>0){
@@ -852,7 +880,7 @@ function getsearchwisefilter($qsstatus){
            if($qsstatus >0){
             $this->db->where('quote_status',$qsstatus);  
         }
-      
+       
            $hasil8 = $this->db->get(); 
            if($hasil8->num_rows() >0){
             foreach($hasil8->result_array() as $quotationdata1){
@@ -900,6 +928,19 @@ function getsearchwisefilter($qsstatus){
                             $firstname=$quatationdata['first_name'];
                             $last_name=$quatationdata['last_name'];
                             $salesperson=$quatationdata['salesrepresentative'];
+
+                            $remark='';
+
+                             $this->db->select('*');
+                            $this->db->from('quotation_status');
+                            $this->db->where('qid',$quotaion_no);
+                            $this->db->where('quote_status',$quote_status);
+                            $hasil9 = $this->db->get(); 
+                            if($hasil9->num_rows > 0){
+                                foreach($hasil9->result_array() as $quotestatus){
+                                  $remark= $quotestatus['remark'];
+                                }
+                            }
                             
                             $result1[]=array(
                                 'id'=>$id,
@@ -927,6 +968,7 @@ function getsearchwisefilter($qsstatus){
                                 'last_name'=>$last_name,
                                 'salesperson'=>$salesperson,
                                 'customer_id'=>$customer_id,
+                                'remark'=>$remark,
                 
                 
                 
@@ -944,7 +986,7 @@ function getsearchwisefilter($qsstatus){
                 if($qsstatus >0){
                     $this->db->where('quote_status',$qsstatus);  
                 }
-              
+                $this->db->order_by("id", "desc");
                 $hasil1 = $this->db->get(); 
                 foreach($hasil1->result_array() as $quotationdata){
                     $id1=$quotationdata['id'];
@@ -986,6 +1028,19 @@ function getsearchwisefilter($qsstatus){
                         $firstname=$quatationdata['first_name'];
                         $last_name=$quatationdata['last_name'];
                         $salesperson=$quatationdata['salesrepresentative'];
+
+                        $remark='';
+
+                        $this->db->select('*');
+                       $this->db->from('quotation_status');
+                       $this->db->where('qid',$quotaion_no);
+                       $this->db->where('quote_status',$quote_status);
+                       $hasil9 = $this->db->get(); 
+                       if($hasil9->num_rows > 0){
+                           foreach($hasil9->result_array() as $quotestatus){
+                             $remark= $quotestatus['remark'];
+                           }
+                       }
                        
                         $result1[]=array(
                             'id'=>$id,
@@ -1013,7 +1068,7 @@ function getsearchwisefilter($qsstatus){
                             'last_name'=>$last_name,
                             'salesperson'=>$salesperson,
                             'customer_id'=>$customer_id,
-            
+                            'remark'=>$remark,
             
             
                         );

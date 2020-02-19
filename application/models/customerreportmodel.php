@@ -84,9 +84,9 @@ function getcustomerdata($salesid){
                     $this->db->from('quotation_master');
                     $this->db->where('salesrepresentative',$salesid);
                     $this->db->where('customer_id',$id);
-                    $this->db->where('quote_status != ',2);
                     $this->db->where('order_date >=',$stratdate);
                     $this->db->where('order_date <=', date('Y-m-d'));
+                    $this->db->group_by('quotaion_no'); 
                     $hasil=$this->db->get();
                     $qutationcount=$hasil->num_rows();
 
@@ -100,15 +100,56 @@ function getcustomerdata($salesid){
                     $hasil1=$this->db->get();
                     $ordercount=$hasil1->num_rows();
 
-                    $this->db->select('SUM(total_order_value) AS total_order_value');
-                   
+                    $this->db->select('*');
                     $this->db->where('salesrepresentative',$salesid);
                     $this->db->where('customer_id',$id);
                     $this->db->where('order_date >=',$stratdate);
                     $this->db->where('order_date <=', date('Y-m-d'));
+                    $this->db->group_by('quotaion_no'); 
                     $qwer = $this->db->get('quotation_master');
                     foreach($qwer->result_array() as $sumamt){
-                        $qutationamt=$sumamt['total_order_value'];
+                        $quotationno=$sumamt['quotaion_no'];
+
+                        $this->db->select('*');
+                        $this->db->from('quotation_master');
+                        $this->db->where('quotaion_no',$quotationno);
+                        $this->db->where('quote_lock_version >',0);
+                        $this->db->where('quote_status',2);
+                        $qwer1 = $this->db->get();
+                        $qutacmt=$qwer1->num_rows();
+                        if($qutacmt >0){
+                            foreach($qwer1->result_array() as $quotationdata){
+                                $quoteid=$quotationdata['id'];
+                                $this->db->select('SUM(total_order_value) AS total_order_value');
+                                $this->db->where('id',$quoteid);
+                                $hasil3=$this->db->get('quotation_master');
+                                foreach($hasil3->result_array() as $sumamt2){
+                                    $qutationamt=$qutationamt+$sumamt2['total_order_value'];
+                                }
+                            }
+                         
+                        }else{
+                            $this->db->select('max(version)as version,max(id) as id');
+                            $this->db->from('quotation_master');
+                            $this->db->where('quotaion_no',$quotationno);
+                            $hasil1 = $this->db->get(); 
+                            foreach($hasil1->result_array() as $quotationdata1){
+                                $version=$quotationdata1['version'];
+                                $id=$quotationdata1['id'];
+
+                               
+                                $this->db->select('SUM(total_order_value) AS total_order_value');
+                                $this->db->where('version',$version);
+                                $this->db->where('quotaion_no',$quotationno);
+                                $hasil3=$this->db->get('quotation_master');
+                                foreach($hasil3->result_array() as $sumamt3){
+                                    $qutationamt=$qutationamt+$sumamt3['total_order_value'];
+                                }
+                            }
+
+                        }
+
+
                     }
 
                     $this->db->select('SUM(total_order_value) AS total_order_value');
@@ -127,6 +168,7 @@ function getcustomerdata($salesid){
                     if($qutationamt ==null){
                         $qutationamt=0; 
                     } 
+                  
                 }
                 $result[]=array(
                     'custname'=>$custname,
