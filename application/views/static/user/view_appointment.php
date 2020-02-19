@@ -38,7 +38,7 @@
         <button  class="btn btn-primary" style="margin-top: 2em;" onclick='check_authentication()'>Synchronize</button>
       </div>
       <div class="col-md-1">
-      <button  type="submit" form="manageappement" class="btn btn-info" style="margin-top: 2em;">Book Appointment</button>
+      <button  type="submit" form="manageappement" class="btn btn-info" style="margin-top: 2em;margin-left:5px;">Book Appointment</button>
       </div>
       <form action="<?php echo base_url() ?>appointment" id="manageappement" name="manageappement"></form>
     </div>

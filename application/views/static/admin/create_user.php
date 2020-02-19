@@ -98,7 +98,7 @@
                             <div class="col-md-6 inputGroupContainer">
                                <div class="input-group"><span class="input-group-addon"><i class="fa fa-globe"></i></span>
                                 <input id="demo" name="d_region" placeholder="Region"
-                                 class="tags_input form-control region" required="true" value=""   type="text"  required></div>
+                                 class="tags_input form-control region"    type="text"   required></div>
                             </div><span class="user_type2"></span>
                          </div>
                          <div class="form-group">
@@ -232,6 +232,7 @@
         autocomplete: {
           data: data
         }
+       
     });
 });
  var x=document.getElementById('alert_msg').value;
@@ -305,17 +306,19 @@ function validate_data()
 
   if(demo==""){
    $(".user_type2").text("This field is required");
-        $(".user_type2").css("color","red");
-        $(".region").focus();
-        return false;
+       $(".user_type2").css("color","red");
+       $(".region").focus();
+       return false;
   }else{
-     
+   $(".user_type2").text("");
   }
   return true;
 }
   $(document).ready(function()
   {
-  
+     var pass='Qwerty@123';
+  $('#password').val(pass);
+  $('#cpassword').val(pass);
     $(document).on('change','#emp_id',function()
     {
        var v=$(this).val();
@@ -411,6 +414,20 @@ function validate_data()
       }
 
       });
+      $(document).on('blur','.tags_input',function()
+    {
+       var v=$(this).val();
+      
+      if(v !=""){
+        
+         $(".user_type2").text("This field is required");
+          $(".user_type2").css("color","red");
+          $(".region").focus();
+      }else{
+         $(".user_type2").text(" ");
+      }
+    });
+
      $(document).on('change','#fisrt_name',function()
     {
        var v=$(this).val();
@@ -437,8 +454,13 @@ function validate_data()
       {
         $(".email1").text("");
         $('#user_name').val(v);
+      
       }
 
+      });
+      $('#email').keyup(function(event) { 
+         var v=$(this).val();
+         $('#google_id').val(v);
       });
      $(document).on('change','#user_type',function()
     {
@@ -489,11 +511,10 @@ function validate_data()
       }
     });
    
-    $( "#demo" ).focusout(function() {
 
     
-       
-    });
+   
+   
   });
    function preventNonNumericalInput(e) {
   e = e || window.event;
@@ -503,6 +524,8 @@ function validate_data()
   if (!charStr.match(/^[0-9]+$/))
     e.preventDefault();
 }
+
+
 function getCurrentFinancialYear() {
   var fiscalyear = "";
   var today = new Date();
@@ -533,6 +556,7 @@ $("#currentfcyearamt").keypress(function (e) {
 		$("#errmsg").hide();
 	}
    });
+
 $("#currentfcyearamt").attr("placeholder", "Target for FY"+currentfbyear+"(in Lakhs)");
 
 var today = new Date();

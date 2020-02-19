@@ -24,19 +24,19 @@
   <section class="showcase">
     <div class="container">
          <div class="row">
-      <div class="pb-2 mt-4 mb-2 border-bottom col-md-8">
+      <div class="pb-2 mt-4 mb-2 border-bottom col-md-6">
         <h2> <span id='msg'> </span></h2>
       </div>
       <div class="col-md-1" style="margin-top: 2em"><label style="display: none" id="cal-l">Calendar :</label></div>
       <div class="pb-2 mt-4 mb-2 border-bottom col-md-3" style="margin-top: 1.6em">
         <div class="cal_id"> <select id="show_cal" name="show_cal" class="form-control"  onchange="getcalendar(this.value)">
         </select></div>
-          <div >
-            <div  class="col-md-3">
-         <button class="btn btn-primary"  id="link" data-toggle='modal' data-target='#myModal' style="display: none">Google Appointments</button>
-</div><div  class="col-md-3" >
-         <button style="margin-right:10%;" class="btn btn-info  " type="submit" form="manageappement"  id="link">Manage Appointment</button>
-          </div>
+         
+            <div  class="col-md-1">
+         <button class="btn btn-primary"   id="link" data-toggle='modal' data-target='#myModal' style="display: none">Google Appointments</button>
+        </div><div  class="col-md-1 pull-right" >
+         <button  class="btn btn-info  " type="submit" form="manageappement"  id="link">Manage Appointment</button>
+          
         </div>
         </div>
       <form action="<?php echo base_url() ?>manage_appointment" id="manageappement" name="manageappement"></form>
