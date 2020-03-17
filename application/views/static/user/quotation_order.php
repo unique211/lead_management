@@ -256,6 +256,7 @@
                                           <tr>
 
                                              <th>Description</th>
+                                             <th>OVM</th>
                                              <th>Qty</th>
                                              <th>UnitTransfer Price</th>
                                              <th>Total Transfer Price</th>

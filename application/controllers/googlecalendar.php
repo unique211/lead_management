@@ -923,7 +923,7 @@ class Googlecalendar extends CI_Controller
              
             $calendar_id = $this->input->post('ap_cal_id');
             $calendar_id1 = $this->input->post('show_cal');
-
+            $ride[]=array();
          
             if (($calendar_id == '--' && $calendar_id1 == '') || ($calendar_id == '' && $calendar_id1 == '--')) {
               //  $lead = $this->input->post('lead');
@@ -934,18 +934,30 @@ class Googlecalendar extends CI_Controller
                // $gift = $this->input->post('gift');//change by sagar
                 $demo_dealer = $this->input->post('demo_dealer');
                 $ride = $this->input->post('ride');
-                $setby = $this->input->post('setby');
+             //   $setby = $this->input->post('setby');
                 $addr = $this->input->post('ap_addr');
                 $notes = $this->input->post('ap_notes');
                 $add_url = $this->input->post('add_url');
                 $status = $this->input->post('status');
-                $assistant = $this->input->post('assistant');
-                $supervisor = $this->input->post('supervisor');
+                //$assistant = $this->input->post('assistant');
+               // $supervisor = $this->input->post('supervisor');
                 $demo_notes = $this->input->post('demo_notes');
                 //   $summary=$this->input->post('ap_summary');
                 $summary = 'appointment';
                 $email = $this->session->userdata('email');
                 $user_id = $this->user_model->user_id($email);
+                $ride = implode(",", $ride);
+
+               
+                // $rideinfo=array();
+                // foreach($ride as $ridedata){
+                //     array_push($rideinfo,$ridedata);
+                // }
+             
+
+                    
+              
+
                 $reg = array(
                     'user_id'       => $user_id,
                     'calendar_id' => '--',
@@ -956,7 +968,7 @@ class Googlecalendar extends CI_Controller
                    // 'gift'      => '',////change by sagar
                     'demo_dealer' => $demo_dealer,
                     'ride_along' => $ride,
-                    'set_by'        => $setby,
+                    'set_by'        => '',
                     'appointment_address'       => $addr,
                     'appointment_notes' => $notes,
                     'event_id' => '-----',//change by sagar
@@ -964,8 +976,8 @@ class Googlecalendar extends CI_Controller
                     'add_url' => $add_url,
                     'appointment_status' => $status,
                     'demo_notes' => $demo_notes,
-                    'assistant' => $assistant,
-                    'supervisor' => $supervisor,
+                    'assistant' => '',
+                    'supervisor' => '',
 
                 );
                 $result = $this->user_model->app_info_insert($reg);
@@ -1057,20 +1069,20 @@ class Googlecalendar extends CI_Controller
                    // $gift = $this->input->post('gift');//change by sagar
                     $demo_dealer = $this->input->post('demo_dealer');
                     $ride = $this->input->post('ride');
-                    $setby = $this->input->post('setby');
+                  // $setby = $this->input->post('setby');
                     $addr = $this->input->post('ap_addr');
                     $notes = $this->input->post('ap_notes');
                     $add_url = $this->input->post('add_url');
                     $status = $this->input->post('status');
                     $demo_notes = $this->input->post('demo_notes');
-                    $assistant = $this->input->post('assistant');
-                    $supervisor = $this->input->post('supervisor');
+                   // $assistant = $this->input->post('assistant');
+                   // $supervisor = $this->input->post('supervisor');
                     // $add_url=str_replace(' ', '', $add_url);
                     $adr = str_replace(' ', '', $add_url);
                     $summary = 'Appointment';
                     $email = $this->session->userdata('email');
                     $user_id = $this->user_model->user_id($email);
-
+                    $ride = implode(",", $ride);
                     $event = array(
                         'summary'     => 'Appointment with ' . ucfirst($demo_dealer) . ' and ' . ucfirst($ride),
                         'start'       => $date . 'T' . $start_time . ':00',
@@ -1092,7 +1104,7 @@ class Googlecalendar extends CI_Controller
                         //'gift'      => $gift,
                         'demo_dealer' => $demo_dealer,
                         'ride_along' => $ride,
-                        'set_by'        => $setby,
+                        'set_by'        => '',
                         'appointment_address'       => $addr,
                         'appointment_notes' => $notes,
                        // 'event_id' => $data['id'],//change by sagar
@@ -1101,8 +1113,8 @@ class Googlecalendar extends CI_Controller
                         'add_url' => $add_url,
                         'appointment_status' => $status,
                         'demo_notes' => $demo_notes,
-                        'assistant' => $assistant,
-                        'supervisor' => $supervisor,
+                        'assistant' => '',
+                        'supervisor' => '',
                         'sequence' => 0
                     );
                     $result = $this->user_model->app_info_insert($reg);
@@ -1121,7 +1133,8 @@ class Googlecalendar extends CI_Controller
             $gift = $this->input->post('gift');
             $demo_dealer = $this->input->post('demo_dealer');
             $ride = $this->input->post('ride');
-            $setby = $this->input->post('set');
+            $ride = implode(",", $ride);
+          $setby = $this->input->post('set');
             $addr = $this->input->post('app_addr');
             $notes = $this->input->post('note');
             $app_id = $this->input->post('app_id');

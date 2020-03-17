@@ -12,8 +12,71 @@
 <?php } }?>
 <div class="container">
 
+
   <input type="hidden" name="alert_msg" id='alert_msg' value="<?php echo $this->session->flashdata('msglp'); ?>">
   <div class="row" id="show_master">
+  <form id="funnel_form" name="funnel_form">
+  <div class="col-md-12">
+  <label class="control-label col-md-2">Sales Representative</label>
+
+  <div class="col-md-2 inputGroupContainer">
+ 
+              <?php if (($this->session->userdata('user_type') == "SalesRepresentative") && ($this->session->userdata('userrole') == "Sales")) { ?>
+                <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input id="salesrepresentive1" name="salesrepresentive1" placeholder="Sales Person" class="form-control " maxlength="20" type="text">
+
+                </div><span class="s_lname1"></span>
+              <?php } else { ?>
+                <div class="input-group"><span class="input-group-addon"><i class="fa fa-life-ring"></i></span><select name="salesrepresentive" id="salesrepresentive" class="form-control" required>
+                    <option value="">Select</option>
+
+                  </select></div>
+              <?php } ?>
+
+            </div>
+            <label class="control-label col-md-2">OEM</label>
+            <div class="col-md-2 inputGroupContainer">
+        
+          <div class="input-group"><span class="input-group-addon"><i class="fa fa-life-ring"></i></span><select name="ovmnm" id="ovmnm" class="form-control" required>
+                    <option value="">Select</option>
+
+                  </select></div>
+            </div>
+            <label class="control-label col-md-2">Product</label>
+            <div class="col-md-2 inputGroupContainer">
+        
+          <div class="input-group"><span class="input-group-addon"><i class="fa fa-life-ring"></i></span><select name="productnm" id="productnm" class="form-control" required>
+                    <option value="">Select</option>
+
+                  </select></div>
+            </div>
+            
+  </div>
+  <div class="col-md-12">
+    <br>
+  <label class="control-label col-md-2">Order From Date</label>
+  <div class="col-md-2 inputGroupContainer">
+        
+          <div >
+                                       <div class="input-group">
+                                          <input type="date" id="fromdate" name="fromdate" class="form-control o_date" ></div><span ></span>
+                                    </div>
+            </div>
+            <label class="control-label col-md-2">Order To Date</label>
+
+            <div class="col-md-2 inputGroupContainer">
+        
+                                       <div class="input-group">
+                                          <input type="date" id="to_date" name="to_date" class="form-control o_date" ></div><span ></span>
+                                  
+            </div>
+  
+            <div class="col-md-1 inputGroupContainer">
+            <button type="submit" id="search" class="btn btn-primary" >Search</button>
+
+            </div>
+            <br>
+  </div>
+  </form>
     <table id="wonreport_tb" class="table table-striped table-bordered" style="width:100%">
       <thead>
 
@@ -24,19 +87,6 @@
           <td colspan="3" style="text-align: center;width:30%">
 
 
-            <div class="col-md-8 inputGroupContainer">
-              <?php if (($this->session->userdata('user_type') == "SalesRepresentative") && ($this->session->userdata('userrole') == "Sales")) { ?>
-                <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input id="salesrepresentive1" name="salesrepresentive1" placeholder="Sales Person" class="form-control " maxlength="20" type="text">
-
-                </div><span class="s_lname1"></span>
-              <?php } else { ?>
-                <div class="input-group"><span class="input-group-addon"><i class="fa fa-life-ring"></i></span><select name="salesrepresentive" id="salesrepresentive" class="form-control">
-                    <option value="">Select</option>
-
-                  </select></div>
-              <?php } ?>
-
-            </div>
           </td>
           <td></td>
           <td></td>

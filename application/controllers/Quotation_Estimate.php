@@ -921,6 +921,10 @@ class Quotation_Estimate extends CI_Controller {
             $data = $this->quatationmodel->getqutation_status_information($id);
             echo json_encode($data);  
         }
+        public function get_master_ovm(){
+            $data = $this->quatationmodel->getovm_detalis();
+            echo json_encode($data);  
+        }
        
 
 

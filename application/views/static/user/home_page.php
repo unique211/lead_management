@@ -73,7 +73,7 @@
 						<th colspan="8" style="text-align: center;width:100%"></th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody style="display:none;">
 					<tr>
 						<td style="width:15%" id="q1tgtinfo" >Q1 Tgt @ 22%</td>
 						<td style="width:10%;text-align:center" id="q1tgt">7.70</td>

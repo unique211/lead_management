@@ -65,9 +65,9 @@ $(document).ready(function() {
                         '<td  id="notes_' + data[i].id + '"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].notes + '</td>' +
                         '<td  id="userid_' + data[i].id + '"   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].first_name + '' + data[i].last_name + '</td>';
                     if (data[i].status == 0) {
-                        html += "<td>-</td>"
+                        //  html += "<td>-</td>"
                     } else {
-                        html += '<td> <button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="' + data[i].id + '"  ><i class="fa fa-edit"></i></button>&nbsp;<button name="delete" value="Delete" class="delete_data btn btn-xs btn-danger" id=' + data[i].id + '><i class="fa fa-trash"></i></button></td>';
+                        //  html += '<td> <button  class="edit_data btn btn-sm  btn-xs  btn-primary" id="' + data[i].id + '"  ><i class="fa fa-edit"></i></button>&nbsp;<button name="delete" value="Delete" class="delete_data btn btn-xs btn-danger" id=' + data[i].id + '><i class="fa fa-trash"></i></button></td>';
                     }
 
                     '</tr>';
@@ -77,6 +77,36 @@ $(document).ready(function() {
 
 
             }
+        });
+        $.ajax({
+            type: "POST",
+            url: baseurl + "Viewappoimentcontroller/get_master1",
+            dataType: "JSON",
+            async: false,
+            data: {
+                editid: editid,
+                table_name: "resechedul_appoiment",
+            },
+            success: function(data) {
+                var html = '';
+
+
+                for (i = 0; i < data.length; i++) {
+                    var date = data[i].r_date;
+                    var tdateAr = date.split('-');
+                    date = tdateAr[2] + '/' + tdateAr[1] + '/' + tdateAr[0];
+                    html += '<tr>' +
+                        '<td  id="date_' + data[i].id + '"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + date + '</td>' +
+                        '<td  id="notes_' + data[i].id + '"  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].r_time + '</td>';
+
+
+
+                    '</tr>';
+                }
+                $('#rescheduletb_tbody').html(html);
+
+            }
+
         });
 
     }

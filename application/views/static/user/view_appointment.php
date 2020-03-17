@@ -57,13 +57,15 @@
       <tr>
         <th><input type="checkbox" id="masterCheckbox"></th>
         <th>Serial No</th>
+        <th>Customer name</th>
     <!--    <th>User Id</th> -->
         <th>Appointment Date</th>
+        <?php if( $this->session->userdata('user_type') !="SalesRepresentative"){ ?>
         <th>Sales Representative</th>
-
+        <?php }?>
         <th>Appointment Address</th>
         <!-- <th>Gift</th> change by sagar-->
-        <th>Status</th>
+        <th>Cal Status</th>
 
         <th>Action</th>
         <th></th>
@@ -89,9 +91,14 @@
         }
        
         echo "<td>".$s++."</td>";
+       
+
+        echo "<td>".$row['lead_id']."</td>";
       /*  echo "<td>".$row['user_id']."</td>";*/
         echo "<td>".$row['start_date']."</td>";
+        if( $this->session->userdata('user_type') !="SalesRepresentative"){
         echo "<td>".$row['demo_dealer']."</td>";
+        }
         echo "<td>".$row['appointment_address']."</td>";
         // echo "<td>".$row['gift']."</td>"; change by sagar
         
@@ -293,12 +300,12 @@
           </div>
            <div class="form-group">
             <label for="recipient-name" class="col-form-label">Appointment Date:</label>
-            <input type="date" class="form-control " id="app_date" name="app_date">
+            <input type="date" class="form-control " id="app_date" name="app_date" readonly>
 
           </div>
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Time:</label>
-            <input type="time" class="form-control " id="app_time" name="app_time">
+            <input type="time" class="form-control " id="app_time" name="app_time" readonly>
             
           </div>
           <!-- <div class="form-group">
@@ -308,31 +315,25 @@
                             </select>
             
           </div> -->
-           <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Sales Representative:</label>
-            <input type="text" class="form-control" id="demo_dealer" 
-            name="demo_dealer" maxlength="20">
-          </div>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Ride Along:</label>
-            <input type="text" class="form-control" id="ride" 
-            name="ride" maxlength="20">
-          </div>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Set By:</label>
-            <input type="text" class="form-control" id="set" 
-            name="set" maxlength="20">
-          </div>
+          
            
 
           </div>
+
           <div class="col-md-6">
-         <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Select Account:</label>
-            <input type="text" class="form-control" id="lead" 
-            name="lead" maxlength="20">
+       
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Re-scheduling Date:</label>
+            <input type="date" class="form-control " id="reschedulingdate" name="reschedulingdate">
+
           </div>
           <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Re-scheduling Time:</label>
+            <input type="time" class="form-control " id="reschedulingtime" name="reschedulingtime">
+            
+          </div>
+       
+          <!-- <div class="form-group">
             <label for="recipient-name" class="col-form-label">Assistant:</label>
             <input type="text" class="form-control" id="assistant" 
             name="assistant" maxlength="20">
@@ -341,36 +342,29 @@
             <label for="recipient-name" class="col-form-label">Supervisor:</label>
             <input type="text" class="form-control" id="supervisor" 
             name="supervisor" maxlength="20">
-          </div>
+          </div> -->
            <div class="form-group" id="custom-search-input">
-            <label for="recipient-name" class="col-form-label"> Status:</label>
+            <label for="recipient-name" class="col-form-label">Order Status:</label>
           <select class="form-control status" id="status" name="status">
-                              <option value="">Select</option>
+                              <!-- <option value="">Select</option>
                               <option value="Pending">Pending</option>
                               <option value="Rescheduled">Rescheduled</option>
                               <option value="Demo">Demo</option>
                               <option value="Cancelled">Cancelled</option>
-                              <option value="Sale">Sale</option>
+                              <option value="Sale">Sale</option> -->
+                                 <option value="">Select</option>
+                              <option value="Pre-sales">Pre-sales</option>
+                              <option value="Identified">Identified</option>
+                              <option value="Quoted">Quoted</option>
+                              <option value="Qualified">Qualified</option>
+                              <option value="Negotiation">Negotiation</option>
+                              <option value="OrderWon"> Order Won</option>
+                              <option value="OrderLost">Order Lost</option>
+                              <option value="OpportunityDropped">Opportunity Dropped</option>
                             </select>
 
           </div>
-          <div class="form-group" id="custom-search-input">
-            <label for="recipient-name" class="col-form-label"> Address:</label>
           
-            <textarea class="form-control" id="app_addr" 
-            name="app_addr"></textarea>
-                    <input type="hidden" name="lat">
-                    <input type="hidden" name="long">
-
-          </div>
-          <div class="form-group" id="">
-            <label for="recipient-name" class="col-form-label"> Note:</label>
-          
-            <textarea class="form-control" id="note" 
-            name="note"></textarea>
-                  
-
-          </div>
           
           <!-- <div class="form-group" id="">
             <label for="recipient-name" class="col-form-label">Demo/Sale Notes:</label>
@@ -385,20 +379,82 @@
           
         </div>
         <div class="row">
+        
+          <div class="col-md-12">
+          <div class="form-group" id="">
+          <label for="recipient-name" class="col-form-label">Reschedule Detalis:</label>
+        </div>
+          <hr>
+                  <table class="table table-striped" id="reschediledetalis">
+                    <thead>
+                      <tr>
+                        <th>Reschedule Date</th>
+                        <th>Reschedule Time</th>
+                        <!-- <th>User</th> -->
+                        <!-- <th>Action</th> -->
+                      </tr>
+                    </thead>
+                    <tbody id="rescheduletb_tbody"></tbody>
+                  </table>
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Sales Representative:</label>
+            <input type="text" class="form-control" id="demo_dealer" 
+            name="demo_dealer" maxlength="20">
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Ride Along:</label>
+            <input type="text" class="form-control" id="ride" 
+            name="ride" maxlength="20">
+          </div>
+          <!-- <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Set By:</label>
+            <input type="text" class="form-control" id="set" 
+            name="set" maxlength="20">
+          </div> -->
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Select Account:</label>
+            <input type="text" class="form-control" id="lead" 
+            name="lead" maxlength="20">
+          </div>
+          </div>
+          <div class="col-md-6">
+          <div class="form-group" id="custom-search-input">
+            <label for="recipient-name" class="col-form-label"> Address:</label>
+          
+            <textarea class="form-control" id="app_addr" 
+            name="app_addr"></textarea>
+                    <input type="hidden" name="lat">
+                    <input type="hidden" name="long">
+
+          </div>
+          
+          </div>
+        </div>
+        <div class="row">
+          <hr>
           <div class="col-md-6">
               <div class="form-group" id="">
-            <label for="recipient-name" class="col-form-label">Demo/Sale Notes:</label>
+            <label for="recipient-name" class="col-form-label">Appointment Notes Detalis:</label>
           
-            <textarea class="form-control" id="demo_note" 
-            name="demo_note"></textarea>
+            <textarea class="form-control" id="note" 
+            name="note"></textarea>
+            <div class="form-group" id="">
+            
                   
+
+          </div>
 
           </div>
           </div>
           <div class="col-md-1">
             <br>
             <br>
-          <button type="button" id="add_btnnotes" class="btn btn-primary"><span class="fa fa-plus"></span></button>
+          <!-- <button type="button" id="add_btnnotes" class="btn btn-primary"><span class="fa fa-plus"></span></button> -->
         </div>
 
           </div>
@@ -410,7 +466,7 @@
                         <th>Date</th>
                         <th>Demo Sale Notes</th>
                         <th>User</th>
-                        <th>Action</th>
+                        <!-- <th>Action</th> -->
                       </tr>
                     </thead>
                     <tbody id="ac_notes_tbody"></tbody>
@@ -671,7 +727,7 @@ $.notify({
          $("#gift").val(l[0].gift);
          $("#ride").val(l[0].ride_along);
          $("#set").val(l[0].set_by);
-         $("#note").val(l[0].appointment_notes);
+        // $("#note").val(l[0].appointment_notes);
          $("#event_id").val(l[0].event_id);
          $("#lead").val(l[0].lead_id);
          $("#assistant").val(l[0].assistant);

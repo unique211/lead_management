@@ -32,10 +32,23 @@ function action()
  
  $where=$this->input->post('btnExport');
 
+
+
      $where = explode('_', $where); 
           $uid=$where[0];
           $statdate=$where[1];
-         
+          $ovmnm=$where[2];
+          $productnm=$where[3];
+          $fromdate=$where[4];
+          $to_date=$where[5];
+
+          if($fromdate==1){
+            $fromdate="";
+          }
+          if($to_date==1){
+            $to_date="";
+          }
+          
 
  $objPHPExcel->setActiveSheetIndex(0);
 
@@ -69,14 +82,15 @@ $objPHPExcel->getActiveSheet()->SetCellValue('J3', 'Current Status');
 $objPHPExcel->getActiveSheet()->SetCellValue('K3', 'Remarks');
 $objPHPExcel->getActiveSheet()->getStyle("A3:K3")->getFont()->setBold(true);
 
- //$employee_data = $this->funnelreportmodel->fetch_data();
+ 
  $table_columns1 = array('A3', 'B3','C3','D3','E3','F3','G3','H3','I3','J3','K3');
  foreach($table_columns1 as $cl){
  $objPHPExcel->getActiveSheet()->getStyle($cl)->getFill()->applyFromArray(array('type' => PHPExcel_Style_Fill::FILL_SOLID,'startcolor' => array('rgb' =>'40A756')));
 }
  
- $employee_data = $this->wonreportmodel->getlossreport($uid,$statdate);
 
+ $employee_data = $this->wonreportmodel->getlossreport1($uid,$statdate,$ovmnm,$productnm, $fromdate,$to_date);
+ 
  $rowCount = 4;
 
 

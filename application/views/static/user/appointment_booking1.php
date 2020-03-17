@@ -8,6 +8,8 @@
     background-color: #eee;
 }
  </style> -->
+ <link rel="stylesheet" href="<?php echo base_url(); ?>assets/multiselect/bootstrap-multiselect.css" type="text/css">
+
  <div id="myModal" class=" modal fade" role="dialog">
   <form action="">
   <div class="modal-dialog ">
@@ -151,8 +153,8 @@
                             <label class="col-md-4 control-label">Ride Along</label>
                             <div class="col-md-4 inputGroupContainer">
                                <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                <select id="ride" name="ride" class="form-control ride">
-                                  <option value="">Select</option>
+                                <select id="ride" multiple name="ride[]" class="form-control ride">
+                                  <!-- <option value="">Select</option> -->
                                   <?php  foreach ($leads as $key => $value) {
                                ?>
                                <option value="<?php echo $value['first_name']; ?>"><?php echo $value['first_name']; ?></option>
@@ -162,7 +164,7 @@
                               <!--   <input type="text" class="form-control ride"id="ride" name="ride" maxlength="20"> --></div><span class="ride1"></span>
                             </div>
                          </div>
-                               <div class="form-group">
+                               <!-- <div class="form-group">
                             <label class="col-md-4 control-label">Assistant</label>
                             <div class="col-md-4 inputGroupContainer">
                                <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input type="text" class="form-control assistant" id="assistant" name="assistant" list="dealers" autocomplete="off" >
@@ -170,21 +172,21 @@
                                   
                                 </datalist></div><span class="assistant1"></span>
                             </div>
-                         </div>
-                               <div class="form-group">
+                         </div> -->
+                               <!-- <div class="form-group">
                             <label class="col-md-4 control-label">Supervisor</label>
                             <div class="col-md-4 inputGroupContainer">
                                <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input type="text" class="form-control supervisor"id="supervisor" autocomplete="off" name="supervisor" list="dealers">
                                <datalist id="dealers">                       
                                 </datalist></div><span class="supervisor1"></span>
                             </div>
-                         </div>
-                         <div class="form-group">
+                         </div> -->
+                         <!-- <div class="form-group">
                             <label class="col-md-4 control-label">Set By</label>
                             <div class="col-md-4 inputGroupContainer">
                                <div class="input-group"><span class="input-group-addon"><i class="fa fa-cog"></i></span><input type="text" class="form-control setby" name="setby" id="setby" maxlength="20"></div><div class="col-md-3"></div><span class="setby1"></span>
                             </div>
-                         </div>
+                         </div> -->
 
                           <div class="form-group">
                             <label class="col-md-4 control-label"> Order status</label>
@@ -201,6 +203,7 @@
 								 </datalist>-->
 								  <select class="form-control status" id="status" name="status">
                               <option value="">Select</option>
+                              <option value="Pre-sales">Pre-sales</option>
                               <option value="Identified">Identified</option>
                               <option value="Quoted">Quoted</option>
                               <option value="Qualified">Qualified</option>
@@ -582,7 +585,14 @@ $('#ap_stime').val(time);
 </script>
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/multiselect/bootstrap-multiselect.js"></script>
 <script>
+  	$('.ride').multiselect({
+			enableFiltering: true,
+		
+			includeSelectAllOption: false,
+			buttonWidth: '100%'
+		});
  $(document).on('change','#lead',function()
     {
       var val =$(this).val();

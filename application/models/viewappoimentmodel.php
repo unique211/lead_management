@@ -48,6 +48,15 @@ function data_get($table,$editid){
    // $this->db->join('customer_type', 'customer_type.id = new_account.customer_type');
   
 }
+public function data_get_resdata($table,$eid){
+    $this->db->select('*');    
+    $this->db->from('resechedul_appoiment');
+    $this->db->where('appid',$eid);
+    $hasil4=$this->db->get(); 
+    return $hasil4->result();
+
+
+}
 function deletedata($id,$table){
     $data=array(
         'status'=>0,

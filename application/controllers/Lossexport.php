@@ -32,8 +32,21 @@ function action()
  $where=$this->input->post('btnExport');
 
      $where = explode('_', $where); 
+        //   $uid=$where[0];
+        //   $statdate=$where[1];
           $uid=$where[0];
           $statdate=$where[1];
+          $ovmnm=$where[2];
+          $productnm=$where[3];
+          $fromdate=$where[4];
+          $to_date=$where[5];
+
+          if($fromdate=="1"){
+            $fromdate="";
+          }
+          if($to_date=="1"){
+            $to_date="";
+          }
          
 
  $objPHPExcel->setActiveSheetIndex(0);
@@ -74,7 +87,9 @@ $objPHPExcel->getActiveSheet()->getStyle("A3:K3")->getFont()->setBold(true);
  $objPHPExcel->getActiveSheet()->getStyle($cl)->getFill()->applyFromArray(array('type' => PHPExcel_Style_Fill::FILL_SOLID,'startcolor' => array('rgb' =>'40A756')));
 }
  
- $employee_data = $this->wonreportmodel->getlossreport($uid,$statdate);
+ //$employee_data = $this->wonreportmodel->getlossreport($uid,$statdate);
+ $employee_data = $this->wonreportmodel->getlossreport1($uid,$statdate,$ovmnm,$productnm, $fromdate,$to_date);
+
 
  $rowCount = 4;
 

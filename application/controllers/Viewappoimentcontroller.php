@@ -60,6 +60,14 @@ class Viewappoimentcontroller extends CI_Controller
 		$data = $this->viewappoimentmodel->data_get($table_name,$editid);
 		echo json_encode($data);
     }
+    public function get_master1()
+	{
+		//$table_name="project_master";
+		$table_name	= $this->input->post('table_name');
+		$editid	= $this->input->post('editid');
+		$data = $this->viewappoimentmodel->data_get_resdata($table_name,$editid);
+		echo json_encode($data);
+    }
     public function delete_master(){
         $id	= $this->input->post('id');
         $table_name	= $this->input->post('table_name');
