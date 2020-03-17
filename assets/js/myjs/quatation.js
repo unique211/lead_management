@@ -51,6 +51,7 @@ $(document).ready(function() {
 
             '<td><input type="text" placeholder="Product Name" name="P_Id[]" id="pid_' + row_id + '" class="form-control product_name"></td>' +
 
+            '<td><input type="text" placeholder="OEM" name="P_Id[]" id="ovm_' + row_id + '" class="form-control ovmnm"></td>' +
 
             '<td><input type="text" placeholder="Qty" name="P_Id[]" id="qty_' + row_id + '" value="1" class="form-control totalprice"></td>' +
 
@@ -97,6 +98,7 @@ $(document).ready(function() {
 
 
         getallproduct();
+        getallovm();
     }
 
 
@@ -233,7 +235,42 @@ $(document).ready(function() {
 
         });
     }
+    getallovm();
 
+    function getallovm() {
+        $.ajax({
+            type: 'POST',
+            url: baseurl + "Quotation_Estimate/get_master_ovm",
+            async: false,
+            data: {
+
+            },
+            dataType: 'json',
+            success: function(data) {
+
+                var product = [];
+                for (var i = 0; i < data.length; i++) {
+                    productnm = data[i].ovmname;
+
+                    product.push(productnm);
+                }
+
+                // $(".product_name").autocomplete({
+                //     source: ["PHP", "JQuery", "JavaScript", "HTML", "ASP", "Perl", "MySQL", "Access", "Excel", "Dot Net"],
+                //     autoFocus: true
+                // });
+
+                console.log(product);
+                $(".ovmnm").autocomplete({
+                    source: product,
+                    autoFocus: true,
+
+
+                });
+            }
+
+        });
+    }
 
     $(document).on("blur", ".product_name", function(e) {
         e.preventDefault();
@@ -639,6 +676,8 @@ $(document).ready(function() {
 
                 var productname = $('#pid_' + id1[1]).val();
                 var qty = $('#qty_' + id1[1]).val();
+
+                var ovm = $('#ovm_' + id1[1]).val();
                 var unitprice = $('#unitprice_' + id1[1]).val();
                 var taxper = $('#taxper_' + id1[1]).val();
                 var unitordvalue = $('#unitordvalue_' + id1[1]).val();
@@ -661,6 +700,7 @@ $(document).ready(function() {
                     student["orderunitvalue"] = unitordvalue;
                     student["ordertax"] = ptax;
                     student["margin"] = margin;
+                    student["ovmname"] = ovm;
 
                     for (var i = 0; i < studejsonObj.length; i++) {
 
@@ -1275,6 +1315,7 @@ $(document).ready(function() {
 
                             '<td><input type="text" placeholder="Product Name" name="P_Id[]" id="pid_' + row_id + '"  value="' + data[i].product_name + '" class="form-control product_name"></td>' +
 
+                            '<td><input type="text" placeholder="OEM" name="P_Id[]" id="ovm_' + row_id + '" class="form-control ovmnm" value="' + data[i].ovmnm + '"></td>' +
 
                             '<td><input type="text" placeholder="Qty" name="P_Id[]" id="qty_' + row_id + '" value="' + data[i].qty + '"  class="form-control totalprice"></td>' +
 
@@ -1316,7 +1357,9 @@ $(document).ready(function() {
                     }
                     getamt();
                     getallproduct();
+                    getallovm();
                     get_all_margin();
+
                 }
 
             }
@@ -1545,6 +1588,7 @@ $(document).ready(function() {
                     }
                     getamt();
                     getallproduct();
+                    getallovm();
                 }
             }
         });

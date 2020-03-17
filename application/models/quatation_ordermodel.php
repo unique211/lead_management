@@ -36,6 +36,7 @@ class Quatation_ordermodel extends CI_Model{
                     'unit_order_value' =>$studentinfo['orderunitvalue'],
                     'order_tax' =>$studentinfo['ordertax'],
                     'version' =>$this->input->post('search_version'),
+                    'ovmnm' =>$studentinfo['ovmnm'],
                    
         
                 );
@@ -63,6 +64,20 @@ class Quatation_ordermodel extends CI_Model{
                    
                 }else{
                     $this->db->insert('product_master',$data2);
+                }
+
+                $data3 = array(
+                    'ovmname'=>$studentinfo['ovmnm']
+                );
+                $this->db->select('*');    
+                $this->db->from('ovm_master');
+                $this->db->where('ovmname',$studentinfo['ovmnm']);
+                $hasil4=$this->db->get(); 
+                 $num = $hasil4->num_rows();
+                if($num >0){
+                   
+                }else{
+                    $this->db->insert('ovm_master',$data3);
                 }
 
 
@@ -101,6 +116,8 @@ class Quatation_ordermodel extends CI_Model{
                     'unit_order_value' =>$studentinfo['orderunitvalue'],
                     'order_tax' =>$studentinfo['ordertax'],
                     'version' => $this->input->post('search_version'),
+                    'ovmnm' =>$this->input->post('ovmnm'),
+
                    
         
                 );
@@ -128,6 +145,20 @@ class Quatation_ordermodel extends CI_Model{
                    
                 }else{
                     $this->db->insert('product_master',$data2);
+                }
+
+                $data3 = array(
+                    'ovmname'=>$studentinfo['ovmnm']
+                );
+                $this->db->select('*');    
+                $this->db->from('ovm_master');
+                $this->db->where('ovmname',$studentinfo['ovmnm']);
+                $hasil4=$this->db->get(); 
+                 $num = $hasil4->num_rows();
+                if($num >0){
+                   
+                }else{
+                    $this->db->insert('ovm_master',$data3);
                 }
             }
     return $result;

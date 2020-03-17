@@ -10,12 +10,52 @@ class User_model extends CI_Model {
 		$row = $this->db->where('event_id',$reg['event_id'])->from("appointment_information")->count_all_results();
 		
 		
-		if($row==0)
-		$this->db->insert('appointment_information',$reg);
-		else{
+		if($row==0){
+			$this->db->insert('appointment_information',$reg);
+
+
+			$appid=	$this->db->insert_id();
+			$email=$this->session->userdata('email');
+			$user_id=$this->user_model->user_id($email);
+			$res=array(
+				'aid'=>$appid,
+				'notes'=>$this->input->post('ap_notes'),
+				'user_id'=>$user_id,
+
+			);
+			$this->db->insert('demo_notes_entry',$res);
+
+		}	else{
+			$appid='';
 			$this->db->where('event_id',$reg['event_id']);
 			$this->db->update('appointment_information', $reg);
+
+			$this->db->where('event_id',$reg['event_id']);
+			$result = $this->db->delete('appointment_information');
+
+
+			$this->db->select('*');
+			$this->db->from('appointment_information');
+			$this->db->where('event_id',$reg['event_id']);
+			 $hasil=$this->db->get();
+				foreach($hasil->result_array() as $appdata){
+					$appid=$appdata['id'];
+				}
+
+			
+			$email=$this->session->userdata('email');
+			$user_id=$this->user_model->user_id($email);
+			$res=array(
+				'aid'=>$appid,
+				'notes'=>$this->input->post('ap_notes'),
+				'user_id'=>$user_id,
+
+			);
+			$this->db->insert('demo_notes_entry',$res);
+
 		}
+
+
 
 	
 	   return true;
@@ -367,6 +407,34 @@ class User_model extends CI_Model {
 	{
 		 $s="UPDATE appointment_information SET calendar_id='$selected_cal_id',event_id='$event_id',start_date='$date',start_time='$time',end_time='$time',demo_dealer='$demo_dealer',ride_along='$ride',set_by='$setby',appointment_address='$addr',appointment_notes='$notes',lead_id='$lead',assistant='$assistant' ,supervisor='$supervisor',appointment_status='$status',demo_notes='$demo_note' where id=$app_id";
 		 $this->db->query($s);
+
+		 $date = $this->input->post('reschedulingdate');
+		 $reschedulingtime = $this->input->post('reschedulingtime');
+
+
+		 $email=$this->session->userdata('email');
+		 $user_id=$this->user_model->user_id($email);
+		 if($date !="" && $reschedulingtime !=""){
+			 $res=array(
+				'appid'=>$app_id,
+				'r_date'=>$date,
+				'r_time'=>$reschedulingtime,
+				'user_id'=>$user_id,
+			 );
+			 $result = $this->db->insert('resechedul_appoiment',$res);
+
+		 }
+		
+		 if($notes !=""){
+			$res1=array(
+				'aid'=>$app_id,
+				'notes'=>$notes,
+				'user_id'=>$user_id,
+ 
+			);
+			$this->db->insert('demo_notes_entry',$res1);
+		 }
+		 
 		
 	}
 		function get_app_local_details($user_id,$start)

@@ -58,7 +58,7 @@ $(document).ready(function() {
 
                 }
                 $(selecter).html(html);
-                getcustomerdata(userid);
+                //getcustomerdata(userid);
             }
         });
 
@@ -88,7 +88,7 @@ $(document).ready(function() {
     $(document).on('change', '#salesrepresentive', function() {
 
         var userid = $(this).val();
-        getcustomerdata(userid);
+        // getcustomerdata(userid);
     });
 
     function getcustomerdata(uid) {
@@ -107,7 +107,8 @@ $(document).ready(function() {
 
         fiscalyear = fiscalyear.split('-');
         var statdate = fiscalyear[0] + "-" + "04" + "-" + "01";
-        $('#btnExport').val(uid + "_" + statdate);
+        // $('#btnExport').val(uid + "_" + statdate);
+
         $.ajax({
             type: 'POST',
             url: base_url + "Wonreport/getinvoicewone",
@@ -287,6 +288,165 @@ $(document).ready(function() {
 
     });
 
+    getallovm();
+
+    function getallovm() {
+        $.ajax({
+            type: 'POST',
+            url: baseurl + "Quotation_Estimate/get_master_ovm",
+            async: false,
+            data: {
+
+            },
+            dataType: 'json',
+            success: function(data) {
+
+                var html = '';
+                html += '<option  disabled value="" >Select</option>';
+                //						}
+                for (i = 0; i < data.length; i++) {
+                    var id = '';
+
+                    name = data[i].ovmname;
+                    id = data[i].ovmname;
+
+                    if (i == 0) {
+                        html += '<option selected value="All" >All</option>';
+                    } else {
+                        html += '<option value="' + id + '" >' + name + '</option>';
+                    }
+
+
+
+                }
+                $('#ovmnm').html(html);
+            }
+
+        });
+    }
+
+    getallproduct();
+
+    function getallproduct() {
+
+        $.ajax({
+            type: 'POST',
+            url: baseurl + "Quotation_Estimate/get_master_product",
+            async: false,
+            data: {
+
+            },
+            dataType: 'json',
+            success: function(data) {
+                var html = '';
+                html += '<option  disabled value="" >Select</option>';
+                //						}
+                for (i = 0; i < data.length; i++) {
+                    var id = '';
+
+                    name = data[i].product_name;
+                    id = data[i].product_name;
+
+                    if (i == 0) {
+                        html += '<option selected value="All" >All</option>';
+                    } else {
+                        html += '<option value="' + id + '" >' + name + '</option>';
+                    }
+
+
+
+                }
+                $('#productnm').html(html);
+
+
+            }
+
+        });
+    }
+
+    $(document).on("submit", "#funnel_form", function(e) {
+        e.preventDefault();
+
+        var userid = $('#salesrepresentive').val();
+        var ovmnm = $('#ovmnm').val();
+        var productnm = $('#productnm').val();
+        var fromdate = $('#fromdate').val();
+        var to_date = $('#to_date').val();
+
+        var today = new Date();
+        var fyear = today.getFullYear().toString();
+        if ((today.getMonth() + 1) <= 3) {
+            fiscalyear = (parseInt(fyear) - parseInt(1)) + "-" + fyear;
+
+        } else {
+            fiscalyear = parseInt(fyear) + "-" + (parseInt(fyear) + parseInt(1));
+
+        }
+        fiscalyear = fiscalyear.split('-');
+        var statdate = fiscalyear[0] + "-" + "04" + "-" + "01";
+
+        if (usertype == "SalesRepresentative" && userrole == "Sales") {
+            userid = useruniqueid;
+        }
+
+        //        $('#btnExport').val(userid + "_" + statdate);
+        $('#btnExport').val(userid + "_" + statdate + "_" + ovmnm + "_" + productnm + "_" + fromdate + "_" + to_date);
+
+
+        $.ajax({
+            type: 'POST',
+            url: base_url + "Wonreport/getinvoicewone1",
+            async: false,
+            data: {
+                uid: userid,
+                ovmnm: ovmnm,
+                productnm: productnm,
+                fromdate: fromdate,
+                to_date: to_date,
+                statdate: statdate,
+            },
+            dataType: 'json',
+            success: function(data) {
+                var summargin = 0;
+                var sumtop = 0;
+                var html = '';
+                $("#wonrep_tbody").html('');
+                var sr = 0;
+                for (i = 0; i < data.length; i++) {
+                    sr = sr + 1;
+
+                    summargin = (parseFloat(summargin) + parseFloat(data[i].magin)).toFixed(2);
+                    sumtop = (parseFloat(sumtop) + parseFloat(data[i].totalordvalue)).toFixed(2);
+
+                    var totalordvalue = parseFloat(data[i].totalordvalue).toFixed(2);
+                    var magin = parseFloat(data[i].magin).toFixed(2);
+
+                    totalordvalue = (parseFloat(totalordvalue) / 100000).toFixed(2);
+                    magin = (parseFloat(magin) / 100000).toFixed(2);
+                    html = '<tr>' +
+                        '<td  style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                        '<td  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].customer_name + '</td>' +
+                        '<td  style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
+                        '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].product + '<button class="productinfo pull-right" name="' + sr + '" style="color:blue" id=' + data[i].oid + '>View More</button></td>' +
+                        '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].orderdate + '</td>' +
+                        '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + totalordvalue + '</td>' +
+                        '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + magin + '</td>' +
+                        '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].poorder_date + '</td>' +
+                        '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].status + '</td>' +
+                        '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].description + '</td>' +
+                        '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].order_no + '</td>' +
+                        '</tr><tr style="display:none;" id="productinfo_' + data[i].qid1 + '">';
+
+                    $("#wonrep_tbody").append(html);
+                }
+                summargin = (parseFloat(summargin) / parseFloat(100000)).toFixed(2);
+                sumtop = (parseFloat(sumtop) / parseFloat(100000)).toFixed(2);
+                $('#totaltop').html(sumtop);
+                $('#totalmargin').html(summargin);
+
+            }
+        });
+    });
 
 
 });

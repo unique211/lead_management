@@ -87,6 +87,8 @@ class Quatationmodel extends CI_Model{
                     'unit_order_value' =>$studentinfo['orderunitvalue'],
                     'order_tax' =>$studentinfo['ordertax'],
                     'version' =>'1',
+                    'ovmnm'=>$studentinfo['ovmname'],
+
                     'quotation_date' =>$this->input->post('o_date'),
                     'salserepresentative' =>$this->input->post('salesrepresentive'),
                    
@@ -117,7 +119,19 @@ class Quatationmodel extends CI_Model{
                 }else{
                     $this->db->insert('product_master',$data2);
                 }
-
+                $data3 = array(
+                    'ovmname'=>$studentinfo['ovmname']
+                );
+                $this->db->select('*');    
+                $this->db->from('ovm_master');
+                $this->db->where('ovmname',$studentinfo['ovmname']);
+                $hasil4=$this->db->get(); 
+                 $num = $hasil4->num_rows();
+                if($num >0){
+                   
+                }else{
+                    $this->db->insert('ovm_master',$data3);
+                }
 
             }
 
@@ -201,6 +215,8 @@ class Quatationmodel extends CI_Model{
                     'unit_order_value' =>$studentinfo['orderunitvalue'],
                     'order_tax' =>$studentinfo['ordertax'],
                     'version' => $version1,
+                    'ovmnm'=>$studentinfo['ovmname'],
+
                     'quotation_date' =>$this->input->post('o_date'),
                     'salserepresentative' =>$this->input->post('salesrepresentive'),
         
@@ -229,6 +245,20 @@ class Quatationmodel extends CI_Model{
                    
                 }else{
                     $this->db->insert('product_master',$data2);
+                }
+
+                $data3 = array(
+                    'ovmname'=>$studentinfo['ovmname']
+                );
+                $this->db->select('*');    
+                $this->db->from('ovm_master');
+                $this->db->where('ovmname',$studentinfo['ovmname']);
+                $hasil4=$this->db->get(); 
+                 $num = $hasil4->num_rows();
+                if($num >0){
+                   
+                }else{
+                    $this->db->insert('ovm_master',$data3);
                 }
             }
     return $result;
@@ -1098,6 +1128,12 @@ public function getqutation_status_information($id){
     $this->db->order_by("quotation_status.id", "desc");
     $hasil=$this->db->get();
    // echo $this->db->last_query();
+    return $hasil->result();
+}
+public function getovm_detalis(){
+    $this->db->select('*');
+    $this->db->from('ovm_master');
+    $hasil=$this->db->get();
     return $hasil->result();
 }
 

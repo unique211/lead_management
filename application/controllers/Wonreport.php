@@ -89,6 +89,17 @@ class Wonreport extends CI_Controller
 
         echo json_encode($data1);
     }
+    public function getinvoicewone1(){
+        $id	= $this->input->post('uid');
+        $statdate	= $this->input->post('statdate');
+        $ovmnm	= $this->input->post('ovmnm');
+        $productnm	= $this->input->post('productnm');
+        $fromdate	= $this->input->post('fromdate');
+        $to_date	= $this->input->post('to_date');
+        $data1 = $this->wonreportmodel->getwondata1($id,$statdate,$ovmnm,$productnm, $fromdate,$to_date);
+
+        echo json_encode($data1);
+    }
     public function getloss(){
         $id	= $this->input->post('uid');
          $statdate	= $this->input->post('statdate');
@@ -96,6 +107,17 @@ class Wonreport extends CI_Controller
     //    $id=19;
         $data1 = $this->wonreportmodel->getlossreport($id,$statdate);
 
+        echo json_encode($data1);
+    }
+    public function getloss1(){
+        $id	= $this->input->post('uid');
+        $statdate	= $this->input->post('statdate');
+        $ovmnm	= $this->input->post('ovmnm');
+        $productnm	= $this->input->post('productnm');
+        $fromdate	= $this->input->post('fromdate');
+        $to_date	= $this->input->post('to_date');
+        $data1 =$this->wonreportmodel->getlossreport1($id,$statdate,$ovmnm,$productnm, $fromdate,$to_date);
+ 
         echo json_encode($data1);
     }
     public function getlossproductinfo(){

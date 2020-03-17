@@ -28,6 +28,7 @@ $(document).ready(function() {
 
             '<td><input type="text" placeholder="Product Name" name="P_Id[]" id="pid_' + row_id + '" class="form-control product_name"></td>' +
 
+            '<td><input type="text" placeholder="OEM" name="P_Id[]" id="ovm_' + row_id + '" class="form-control ovmnm" ></td>' +
 
             '<td><input type="text" placeholder="Qty" name="P_Id[]" id="qty_' + row_id + '" value="1" class="form-control totalprice"></td>' +
 
@@ -74,6 +75,44 @@ $(document).ready(function() {
 
 
         getallproduct();
+        getallovm();
+    }
+
+    getallovm();
+
+    function getallovm() {
+        $.ajax({
+            type: 'POST',
+            url: baseurl + "Quotation_Estimate/get_master_ovm",
+            async: false,
+            data: {
+
+            },
+            dataType: 'json',
+            success: function(data) {
+
+                var product = [];
+                for (var i = 0; i < data.length; i++) {
+                    productnm = data[i].ovmname;
+
+                    product.push(productnm);
+                }
+
+                // $(".product_name").autocomplete({
+                //     source: ["PHP", "JQuery", "JavaScript", "HTML", "ASP", "Perl", "MySQL", "Access", "Excel", "Dot Net"],
+                //     autoFocus: true
+                // });
+
+                console.log(product);
+                $(".ovmnm").autocomplete({
+                    source: product,
+                    autoFocus: true,
+
+
+                });
+            }
+
+        });
     }
 
 
@@ -1322,6 +1361,7 @@ $(document).ready(function() {
 
 
                             '<td><input type="text" placeholder="Product Name" name="P_Id[]" id="pid_' + row_id + '"  value="' + data[i].product_name + '" class="form-control product_name"></td>' +
+                            '<td><input type="text" placeholder="OEM" name="P_Id[]" id="ovm_' + row_id + '" class="form-control ovmnm" value="' + data[i].ovmnm + '"></td>' +
 
 
                             '<td><input type="text" placeholder="Qty" name="P_Id[]" id="qty_' + row_id + '" value="' + data[i].qty + '"  class="form-control totalprice"></td>' +
@@ -1366,6 +1406,7 @@ $(document).ready(function() {
                     getamt();
                     getallproduct();
                     get_all_margin();
+                    getallovm();
                 }
 
             }
@@ -1587,6 +1628,7 @@ $(document).ready(function() {
                     }
                     getamt();
                     getallproduct();
+                    getallovm();
                 }
             }
         });
@@ -2184,14 +2226,14 @@ $(document).ready(function() {
                 console.log("#paymentdata_" + save_update);
 
             }
-        } 
-		// else {
-            // $.notify({
-                // title: '',
-                // message: '<strong>One Payment is Required !!</strong>'
-            // }, {
-                // type: 'success'
-            // });
+        }
+        // else {
+        // $.notify({
+        // title: '',
+        // message: '<strong>One Payment is Required !!</strong>'
+        // }, {
+        // type: 'success'
+        // });
         // }
         getamountmilestone();
 
@@ -2205,7 +2247,7 @@ $(document).ready(function() {
 
     function getamountmilestone() {
         var amt = 0;
-		var cnt = 0;
+        var cnt = 0;
         if ($('#amountinfo').is(":checked")) {
 
             amt = 1;
@@ -2215,7 +2257,7 @@ $(document).ready(function() {
         var finalorder = $('#P_Tax_Val_1').val();
         var perinfo = 0;
         $(".paymentdatadata").each(function() {
-			cnt++;
+            cnt++;
             var id = $(this).attr('id');
             id = id.split("_");
 
@@ -2226,7 +2268,7 @@ $(document).ready(function() {
         });
 
         if (amt == 1) {
-            if (cnt>0 && (perinfo > 100 || perinfo < 100)) {
+            if (cnt > 0 && (perinfo > 100 || perinfo < 100)) {
                 $.notify({
                     title: '',
                     message: '<strong>Milestone Percentage Should be 100% Only!!</strong>'
@@ -2238,7 +2280,7 @@ $(document).ready(function() {
                 $('#btnsave').attr('disabled', false)
             }
         } else if (amt == 0) {
-            if (cnt>0 && (perinfo > finalorder || perinfo > finalorder)) {
+            if (cnt > 0 && (perinfo > finalorder || perinfo > finalorder)) {
                 $.notify({
                     title: '',
                     message: '<strong>Milestone Amount Should Be Equal To Total Amount !!</strong>'

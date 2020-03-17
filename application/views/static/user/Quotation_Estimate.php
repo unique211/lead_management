@@ -166,6 +166,7 @@
                                        <tr>
 
                                           <th>Description</th>
+                                          <th>OEM</th>
                                           <th>Qty</th>
                                           <th>UnitTransfer Price</th>
                                           <th>Total Transfer Price</th>
