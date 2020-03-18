@@ -10,11 +10,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css" />
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" type="text/css" href="assets/src/tagcomplete.css">
-     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-  <link rel="stylesheet" type="text/css" href="assets/css/tagcomplete.css">
-  <link rel="stylesheet" type="text/css" href="assets/css/jquery.tag-editor.css">
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/src/tagcomplete.css">
+     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/css/style.css">
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/css/tagcomplete.css">
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/css/jquery.tag-editor.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
@@ -31,7 +31,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
 
-  <script src="assets/js/dt.js"></script>
+  <script src="<?php echo base_url() ?>assets/js/dt.js"></script>
 
 <!--  <script src="assets/js/jquery.tag-editor.min.js"></script>
   <script src="assets/js/tagcomplete.js"></script> -->
@@ -39,9 +39,9 @@
 	<script type="text/javascript">var weblink = "<?php echo base_url();?>";</script>
   
 
-  <script src="assets/js/jquery.tag-editor.min.js"></script>
-  <script src="assets/js/tagcomplete.js"></script>
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+  <script src="<?php echo base_url() ?>assets/js/jquery.tag-editor.min.js"></script>
+  <script src="<?php echo base_url() ?>assets/js/tagcomplete.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
   
 </head>
 <body>
