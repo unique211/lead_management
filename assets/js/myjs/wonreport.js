@@ -21,7 +21,7 @@ $(document).ready(function() {
                 html = '';
                 var name = '';
                 //					
-                html += '<option selected disabled value="" >Select</option>';
+                html += '<option selected  value="All" >All</option>';
                 //						}
                 for (var i = 0; i < data.length; i++) {
                     var id = '';
@@ -46,7 +46,7 @@ $(document).ready(function() {
                         // }
                     } else {
                         if (i == 0) {
-                            html += '<option selected value="' + id + '" >' + name + '</option>';
+                            html += '<option  value="' + id + '" >' + name + '</option>';
                             // // getfinicialamt(id);
                             userid = id;
                         } else {
@@ -82,7 +82,7 @@ $(document).ready(function() {
                 $('#salesrepresentive1').val(data[0].first_name + "" + data[0].last_name);
             }
         });
-        getcustomerdata(useruniqueid);
+        //getcustomerdata(useruniqueid);
 
     }
     $(document).on('change', '#salesrepresentive', function() {
@@ -435,7 +435,7 @@ $(document).ready(function() {
                         '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].status + '</td>' +
                         '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].description + '</td>' +
                         '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].order_no + '</td>' +
-                        '</tr><tr style="display:none;" id="productinfo_' + data[i].qid1 + '">';
+                        '</tr><tr style="display:none;" id="productinfo_' + data[i].oid + '">';
 
                     $("#wonrep_tbody").append(html);
                 }

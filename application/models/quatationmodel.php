@@ -876,7 +876,7 @@ function getsalesperson(){
     $this->db->select('*');    
     $this->db->from('user_creation');
     $this->db->where('user_type','SalesRepresentative');
-    $this->db->where('user_role','Sales');
+   // $this->db->where('user_role','Sales');
     if(($this->session->userdata('user_type')=="SalesRepresentative") && ($this->session->userdata('userrole')=="Sales") ){
         $this->db->where('id !=',$this->session->userdata('useruniqueid'));
     }

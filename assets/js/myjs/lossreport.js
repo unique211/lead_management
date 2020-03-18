@@ -21,7 +21,7 @@ $(document).ready(function() {
                 html = '';
                 var name = '';
                 //					
-                html += '<option selected disabled value="" >Select</option>';
+                html += '<option selected  value="All" >All</option>';
                 //						}
                 for (var i = 0; i < data.length; i++) {
                     var id = '';
@@ -46,7 +46,7 @@ $(document).ready(function() {
                         // }
                     } else {
                         if (i == 0) {
-                            html += '<option selected value="' + id + '" >' + name + '</option>';
+                            //  html += '<option selected value="' + id + '" >' + name + '</option>';
                             // // getfinicialamt(id);
                             userid = id;
                         } else {

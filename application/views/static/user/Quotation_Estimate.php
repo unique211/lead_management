@@ -1,10 +1,10 @@
 <link href="<?php echo base_url(); ?>assets/js/select2.min.css" rel="stylesheet">
 <div class="container">
-<style>
-    textarea {
-        resize: none;
-    }
-</style>
+   <style>
+      textarea {
+         resize: none;
+      }
+   </style>
 
    <?php if ($user_permission) { ?>
       <?php if (in_array('createQuotation', $user_permission)) { ?>
@@ -26,14 +26,14 @@
                         <fieldset>
 
                            <div class="row">
-                         
+
                               <div class="col-md-6">
 
 
                                  <div class="form-group">
                                     <label class="col-md-4 control-label">Customer Name*</label>
                                     <div class="col-md-8 inputGroupContainer">
-                                       <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input id="cus_name" name="cus_name" placeholder="Customer Name" class="form-control " required="true" maxlength="20" type="text" >
+                                       <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input id="cus_name" name="cus_name" placeholder="Customer Name" class="form-control " required="true" maxlength="20" type="text">
 
                                        </div><span class="lname1"></span>
                                     </div>
@@ -51,7 +51,7 @@
                                  <div class="form-group">
                                     <label class="col-md-4 control-label">Mobile No</label>
                                     <div class="col-md-8 inputGroupContainer">
-                                       <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span><input id="phn" name="phn" placeholder="Phone Number" class="form-control phn small-input" required pattern="[0-9]{10}" type="number" ></div><span class="phn1"></span>
+                                       <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span><input id="phn" name="phn" placeholder="Phone Number" class="form-control phn small-input" required pattern="[0-9]{10}" type="number"></div><span class="phn1"></span>
                                     </div>
                                  </div>
 
@@ -283,7 +283,7 @@
                                              <input type="number" style="text-align:right;" value="" class="form-control" name="totaltrasnforprice" id="totaltrasnforprice" placeholder="Total Transfer Price">
                                           </td>
 
-                                       
+
 
 
 
@@ -328,18 +328,18 @@
 
 
                                     <div class="col-sm-5 col-md-7">
-                                    <div id="wait" style="width:100px;height:100px;position:absolute;top:;left:45%;padding:2px;display:none;"><img src="<?php echo base_url('assets/images/loader.gif'); ?>" width="100" height="100" /><br>
-									<center>
-										<h5>Please Wait...</h5>
-									</center>
-								</div>
+                                       <div id="wait" style="width:100px;height:100px;position:absolute;top:;left:45%;padding:2px;display:none;"><img src="<?php echo base_url('assets/images/loader.gif'); ?>" width="100" height="100" /><br>
+                                          <center>
+                                             <h5>Please Wait...</h5>
+                                          </center>
+                                       </div>
                                     </div>
 
 
 
                                     <div class="col-sm-5 col-sm-offset-2 col-md-5 col-md-offset-0">
 
-                           
+
 
                                        <!-- <div class="form-inline">
 		<label class="col-sm-5"><b>Total Tax : </b></label>
@@ -350,7 +350,7 @@
                                        <div class="form-group">
                                           <label class="col-sm-4"><b>Total Order Value(₹) (without Tax) </b></label>
                                           <div class="col-md-8 inputGroupContainer">
-                                             <input type="number" style="text-align:right;" class="form-control getmargindata"  id="finalordvalue" name="finalordvalue">
+                                             <input type="number" style="text-align:right;" class="form-control getmargindata" id="finalordvalue" name="finalordvalue">
                                           </div>
                                        </div>
 
@@ -371,7 +371,7 @@
                                        <div class="form-group">
                                           <label class="col-sm-4"><b>Less Transporation(₹) </b></label>
                                           <div class="col-md-8 inputGroupContainer">
-                                             <input type="number" style="text-align:right;" class="form-control getmargindata"  value="0"  id="lesstrasporation" name="lesstrasporation">
+                                             <input type="number" style="text-align:right;" class="form-control getmargindata" value="0" id="lesstrasporation" name="lesstrasporation">
                                           </div>
                                        </div>
 
@@ -393,12 +393,12 @@
                                        <div class="form-group">
                                           <label class="col-sm-4"><b>MARGIN(₹) </b></label>
                                           <div class="col-md-8 inputGroupContainer">
-                                             <input type="number" style="text-align:right;"  value="0"  class="form-control " id="finalmargin" name="finalmargin">
+                                             <input type="number" style="text-align:right;" value="0" class="form-control " id="finalmargin" name="finalmargin">
                                           </div>
                                        </div>
 
 
-                                      
+
 
 
 
@@ -419,12 +419,13 @@
                      <input type="hidden" id="customerid" name="customerid" value="">
                      <input type="hidden" id="quatationno" name="quatationno" value="">
                      <input type="reset" id="reset" class="btn btn-danger" name="reset" value="Reset">
-                     <input type="button" id="btnmailsend" name="btnmailsend" class="btn  btn-success pull-left" value="send" style="display:none;">
-                     <?php if ($user_permission){?>
-                     <?php if (in_array('exportQuotation', $user_permission)) { ?>
-                     <button type="button" id="btnExport" name="btnExport" class="btn btn-sm btn-info pull-right" style="display:none;">Excel</button>
-                     <button type="submit" form="pdf" id="btnprint" name="btnprint" value="" class="btn btn-sm btn-info pull-right" style="display:none;">Print</button>
-                     <?php } }?>
+                     <input type="button" id="btnmailsend" style="margin-right:1%" name="btnmailsend" class="btn  btn-success pull-left" value="Send Email" style="display:none;">
+                     <?php if ($user_permission) { ?>
+                        <?php if (in_array('exportQuotation', $user_permission)) { ?>
+                           <button type="button" id="btnExport" name="btnExport" class="btn btn-sm btn-info pull-right" style="display:none;">Excel</button>
+                           <button type="submit" form="pdf" id="btnprint" name="btnprint" value="" class="btn btn-sm btn-info pull-right" style="display:none;">Print</button>
+                     <?php }
+                        } ?>
                   </td>
                   <td>
 
@@ -451,37 +452,37 @@
 
    <input type="hidden" name="alert_msg" id='alert_msg' value="<?php echo $this->session->flashdata('msglp'); ?>">
    <div class="col-md-12">
-   <div id="wait6" style="width:100px;height:100px;position:absolute;top:;left:45%;padding:2px;display:none;"><img src="<?php echo base_url('assets/images/loader.gif'); ?>" width="100" height="100" /><br>
-									<center>
-										<h5>Please Wait...</h5>
-									</center>
-								</div>
+      <div id="wait6" style="width:100px;height:100px;position:absolute;top:;left:45%;padding:2px;display:none;"><img src="<?php echo base_url('assets/images/loader.gif'); ?>" width="100" height="100" /><br>
+         <center>
+            <h5>Please Wait...</h5>
+         </center>
+      </div>
       <div class="row tablehideshow">
-      <div class="col-md-2">
+         <div class="col-md-2">
             <label>Status</label>
             <div class=" inputGroupContainer">
-            <select name="quotation_status_info" id="quotation_status_info" class="form-control" >
-                   <!-- <option value="">Select</option> -->
-                   <option selected value="All">All</option>
-                
-                           <option value="1">Identified</option>
-                           <option value="2" >Order Won</option>
-                           <option value="3">Order Lost</option>
-                           <option value="4">Quoted</option>
-                           <option value="5">Qualified</option>
-                           <option value="6">Negotiation</option>
-                           <option value="7">Opportunity Dropped</option>
-            </select>
+               <select name="quotation_status_info" id="quotation_status_info" class="form-control">
+                  <!-- <option value="">Select</option> -->
+                  <option selected value="All">All</option>
+
+                  <option value="1">Identified</option>
+                  <option value="2">Order Won</option>
+                  <option value="3">Order Lost</option>
+                  <option value="4">Quoted</option>
+                  <option value="5">Qualified</option>
+                  <option value="6">Negotiation</option>
+                  <option value="7">Opportunity Dropped</option>
+               </select>
             </div>
          </div>
          <div class="col-md-1">
-           <br>
+            <br>
             <div class=" inputGroupContainer">
-            <button type="button" class="btn btn-info pull-right" id="searchfilter">Search</button>
+               <button type="button" class="btn btn-info pull-right" id="searchfilter">Search</button>
             </div>
          </div>
       </div>
-    </div>
+   </div>
    <div class="row tablehideshow" id="show_master">
 
    </div>
@@ -542,12 +543,12 @@
 
          <div class="modal-content">
             <div class="modal-header">
-          
-            <div id="wait1" style="width:100px;height:100px;position:absolute;top:;left:45%;padding:2px;display:none;"><img src="<?php echo base_url('assets/images/loader.gif'); ?>" width="100" height="100" /><br>
-									<center>
-										<h5>Please Wait...</h5>
-									</center>
-								</div>
+
+               <div id="wait1" style="width:100px;height:100px;position:absolute;top:;left:45%;padding:2px;display:none;"><img src="<?php echo base_url('assets/images/loader.gif'); ?>" width="100" height="100" /><br>
+                  <center>
+                     <h5>Please Wait...</h5>
+                  </center>
+               </div>
 
                <h4 class="modal-title">Change Status</h4>
                <button type="button" class="close" style="margin-top: -1.5em;" data-dismiss="modal" aria-label="Close">
@@ -558,10 +559,10 @@
             <input type="hidden" name="status_id" id='status_id'>
 
             <div class="modal-body">
-                
+
                <div class="col-md-12 statushidefrom">
 
-               
+
                   <div class="form-group">
                      <label class="col-sm-2"><b>Status </b></label>
                      <div class="col-md-8 inputGroupContainer">
@@ -571,13 +572,13 @@
                            <option value="4">Quoted</option>
                            <option value="5">Qualified</option>
                            <option value="6">Negotiation</option>
-                           <option value="2" >Order Won</option>
+                           <option value="2">Order Won</option>
                            <option value="3">Order Lost</option>
-                            <option value="7">Opportunity Dropped</option>
+                           <option value="7">Opportunity Dropped</option>
                         </select>
                      </div>
                   </div>
-                        <br>
+                  <br>
                   <div class="form-group">
                      <label class="col-sm-2"><b>Remark </b></label>
                      <div class="col-md-8 inputGroupContainer">
@@ -588,18 +589,18 @@
                </div>
                <div class="col-md-12">
                   <table class="table table-striped" id="salesnotes">
-                    <thead>
-                      <tr>
-                        <th>Date</th>
-                        <th>Stutus</th>
-                        <th>Remark</th>
-                        <th>User</th>
-                      </tr>
-                    </thead>
-                    <tbody id="ac_notes_tbody"></tbody>
+                     <thead>
+                        <tr>
+                           <th>Date</th>
+                           <th>Stutus</th>
+                           <th>Remark</th>
+                           <th>User</th>
+                        </tr>
+                     </thead>
+                     <tbody id="ac_notes_tbody"></tbody>
                   </table>
 
-          </div>
+               </div>
 
             </div>
             <div class="modal-footer">
@@ -763,7 +764,7 @@
                <div class="row">
                   <div class="col-md-6">
                      <div class="form-group">
-                     <br>
+                        <br>
                         <label id="lbl1orderduedate" class="col-form-label">Order Due Date:</label>
 
                      </div>
@@ -771,7 +772,6 @@
                   <div class="col-md-6">
                      <div class="form-group">
 
-                     <br>
                         <label id="lbl1totalordvalue" class="col-form-label">Total Order Value :</label>
 
                      </div>
@@ -779,19 +779,15 @@
                </div>
                <div class="row">
 
-               <div class="col-md-6">
-               <button class="btn btn-info btnfilenmshow" id="btnfilenmshow1"> <a  id="getdfieename" href=""><i class="fa fa-paperclip"></i></a></button><label id="filenamepdf1">Qutation.pdf</label>
-               </div>
-
                </div>
             </div>
          </div>
          <div class="row">
-         <div id="wait3" style="width:100px;height:100px;position:absolute;top:;left:45%;padding:2px;display:none;"><img src="<?php echo base_url('assets/images/loader.gif'); ?>" width="100" height="100" /><br>
-									<center>
-										<h5>Please Wait...</h5>
-									</center>
-								</div>
+            <div id="wait3" style="width:100px;height:100px;position:absolute;top:;left:45%;padding:2px;display:none;"><img src="<?php echo base_url('assets/images/loader.gif'); ?>" width="100" height="100" /><br>
+               <center>
+                  <h5>Please Wait...</h5>
+               </center>
+            </div>
             <div class="col-md-6">
 
                <div class="form-group">
@@ -801,7 +797,7 @@
             <div class="col-md-6">
 
                <div class="form-group">
-                  
+
                   <label id="lblcsend" class="col-form-label"></label>
                </div>
             </div>
@@ -819,9 +815,9 @@
                </div>
             </div>
             <div class="col-md-3">
-               
+
                <div class="form-group">
-               <br>
+                  <br>
                   <label id="lblcustfirstname" class="col-form-label">Customer Name:</label>
                </div>
             </div>
@@ -829,9 +825,9 @@
 
 
             <div class="col-md-3">
-           
+
                <div class="form-group">
-               <br>
+                  <br>
                   <label id="lblQuotationno" class="col-form-label">Quotation Number:</label>
                </div>
             </div>
@@ -846,14 +842,14 @@
             </div>
             <div class="col-md-3">
                <div class="form-group">
-               <br>
+                  <br>
                   <label id="lblsalesrepresentative" class="col-form-label">Sales Representative:</label>
                </div>
             </div>
             <div class="col-md-3">
-            <br>
-               <div class="form-group">
                <br>
+               <div class="form-group">
+                  <br>
                   <label id="lblrefnumber" class="col-form-label">Ref Number:</label>
                </div>
             </div>
@@ -862,22 +858,22 @@
             <div class="col-md-6">
 
                <div class="form-group">
-                  
+
                   <label for="recipient-name" class="col-form-label">Sub:</label>
                   <input type="text" class="form-control" id="sSubject" name="sSubject">
                </div>
             </div>
             <div class="col-md-3">
-           
+
                <div class="form-group">
-               <br>
+                  <br>
                   <label id="lblversion" class="col-form-label">Version:</label>
                </div>
             </div>
             <div class="col-md-3">
-          
+
                <div class="form-group">
-               <br>
+                  <br>
                   <label id="lblquotationdate" class="col-form-label">Quotation Date:</label>
                </div>
             </div>
@@ -891,32 +887,41 @@
                </div>
             </div>
             <div class="col-md-3">
-           
+
                <div class="form-group">
-               <br>
+                  <br>
                   <label id="lblorderduedate" class="col-form-label">Order Due Date:</label>
                </div>
             </div>
             <div class="col-md-3">
-          
+
                <div class="form-group">
-               <br>
+                  <br>
                   <label id="lbltotalordervalue" class="col-form-label">Total Order Value:</label>
                </div>
             </div>
          </div>
          <div class="row">
-         <div class="col-md-6"></div>
-               <div class="col-md-6">
-               <button class="btn btn-info btnfilenmshow" id="btnfilenmshow2"> <a  id="getdfieename" href=""><i class="fa fa-paperclip"></i></a></button><label id="filenamepdf2">Qutation.pdf</label>
-               </div>
-               </div>
+            <div class="col-md-6"></div>
+            <div class="col-md-6">
+               <button class="btn btn-info btnfilenmshow" id="btnfilenmshow2"> <a id="getdfieename" href=""><i class="fa fa-paperclip"></i></a></button><label id="filenamepdf2">Qutation.pdf</label>
+            </div>
+         </div>
          <div class="row">
-         <div id="wait4" style="width:100px;height:100px;position:absolute;top:;left:45%;padding:2px;display:none;"><img src="<?php echo base_url('assets/images/loader.gif'); ?>" width="100" height="100" /><br>
-									<center>
-										<h5>Please Wait...</h5>
-									</center>
-								</div>
+            <div class="col-md-6">
+            
+                  <input class="form-control" type="file" name="file[]" class="files" multiple>
+
+               
+            </div>
+
+         </div>
+         <div class="row">
+            <div id="wait4" style="width:100px;height:100px;position:absolute;top:;left:45%;padding:2px;display:none;"><img src="<?php echo base_url('assets/images/loader.gif'); ?>" width="100" height="100" /><br>
+               <center>
+                  <h5>Please Wait...</h5>
+               </center>
+            </div>
             <div class="col-md-6">
 
                <div class="form-group right">
@@ -925,41 +930,41 @@
             </div>
          </div>
       </div>
-      </div>
-      <script>
-function openCity(evt, cityName) {
- 
-   
-  var i, tabcontent, tablinks;
+</div>
+<script>
+   function openCity(evt, cityName) {
 
-  tabcontent = document.getElementsByClassName("tabcontent");
-  
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-  document.getElementById(cityName).style.display = "block";
-  
- 
-  
-  if(cityName=="SalesPerson"){
-  
-  
-   $('#tbsalesperson').addClass("active");
-  }else{
-  
-   $('#tbcustomer').addClass("active");
-  }
-  //evt.currentTarget.className += " active";
 
-}
+      var i, tabcontent, tablinks;
+
+      tabcontent = document.getElementsByClassName("tabcontent");
+
+      for (i = 0; i < tabcontent.length; i++) {
+         tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+         tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(cityName).style.display = "block";
+
+
+
+      if (cityName == "SalesPerson") {
+
+
+         $('#tbsalesperson').addClass("active");
+      } else {
+
+         $('#tbcustomer').addClass("active");
+      }
+      //evt.currentTarget.className += " active";
+
+   }
 </script>
 
 
-      <!-- <script>
+<!-- <script>
         
     function openCity(evt, cityName) {
 
@@ -985,9 +990,9 @@ document.getElementById(cityName).style.display = "block";
 }
       </script> -->
 
-   </body>
+</body>
 
-   </html>
+</html>
 
 </div>
 

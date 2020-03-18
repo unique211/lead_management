@@ -80,8 +80,8 @@ $objPHPExcel->getActiveSheet()->getStyle("A3:K3")->getFont()->setBold(true);
  $objPHPExcel->getActiveSheet()->getStyle($cl)->getFill()->applyFromArray(array('type' => PHPExcel_Style_Fill::FILL_SOLID,'startcolor' => array('rgb' =>'40A756')));
 }
  
-$employee_data = $this->funnelreportmodel->getfunnel_report($uid,$statdate);
- //$employee_data = $this->funnelreportmodel->getfunnel_report1($uid,$statdate,$productnm,$ovmnm,$fromdate,$to_date);
+//$employee_data = $this->funnelreportmodel->getfunnel_report($uid,$statdate);
+ $employee_data = $this->funnelreportmodel->getfunnel_report1($uid,$statdate,$productnm,$ovmnm,$fromdate,$to_date);
 
  $rowCount = 4;
 

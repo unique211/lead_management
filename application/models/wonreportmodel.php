@@ -424,7 +424,10 @@ public function getwondata1($id,$statdate,$ovmnm,$productnm, $fromdate,$to_date)
     $result=array();
     $this->db->select('*');    
     $this->db->from('order_master');
-    $this->db->where('salesrepresentative',$id);
+    if($id >0){
+        $this->db->where('salesrepresentative',$id);
+
+    }
     if($fromdate=="" && $to_date==""){
         $this->db->where('order_date >=',$statdate);
         $this->db->where('order_date <=', date('Y-m-d'));
@@ -539,7 +542,10 @@ public function getlossreport1($id,$statdate,$ovmnm,$productnm, $fromdate,$to_da
     $result=array();
     $this->db->select('*');    
     $this->db->from('quotation_master');
-    $this->db->where('salesrepresentative',$id);
+    if($id >0){
+        $this->db->where('salesrepresentative',$id);
+
+    }
     if($fromdate=="" && $to_date==""){
         $this->db->where('order_date >=',$statdate);
         $this->db->where('order_date <=', date('Y-m-d'));

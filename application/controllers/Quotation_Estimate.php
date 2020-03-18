@@ -926,7 +926,65 @@ class Quotation_Estimate extends CI_Controller {
             echo json_encode($data);  
         }
        
+        public  function fileuploaddata(){
+            $_FILES	= $this->input->post('data');
 
+            if(isset($_FILES)){
+                print_r($_FILES);
+                $i = 1;
+                foreach($_FILES as $key => $data){
+                       
+                    if (move_uploaded_file($data['tmp_name'], __DIR__ . '/uploads/' . $i . '--' . $data['name'])) {
+                        //echo "success";
+                        print_r($data['name']);
+                    } else {
+                        //echo "error";
+                    }
+                   
+                    $i++;
+                }
+        }
+    }
+
+    public function doc_upload()
+	{
+		$this->load->helper("file");	
+		$this->load->library("upload");
+		$id=$this->input->post('id');
+		//echo json_encode($id);
+		$size='';
+		if($id == 'filename'){
+			$size=$_FILES['filename']['size'];	
+		}else if($id == 'docupload'){
+			$size=$_FILES['docupload']['size'];	
+		}
+		
+		if ($size > 0){
+			$this->upload->initialize(array( 
+		       "upload_path" => './assets/uploads/',
+		       "overwrite" => FALSE,
+		       "max_filename" => 300,
+		       "remove_spaces" => TRUE,
+//		       "allowed_types" => 'jpg|jpeg|png|gif',
+		       "allowed_types" => '*',
+		       "max_size" => 1024*10,
+		    ));
+			
+			 // if (!$this->upload->do_upload('attachreg_certy')) {
+		   if (!$this->upload->do_upload($id)) {
+			$error = array('error' => $this->upload->display_errors());
+			echo json_encode($error);
+		}
+
+		    $data = $this->upload->data();
+			$path = $data['file_name'];
+			
+			echo json_encode($path);	
+		}else{
+			//echo json_encode($id);	
+			echo "no file"; 
+		}
+}
 
 }
 	

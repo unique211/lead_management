@@ -74,9 +74,10 @@
 
             </div>
             <br>
-  </div>
+  </div><br>
   </form>
-
+  <div class="col-md-12">
+    <br>
     <table id="wonreport_tb" class="table table-striped table-bordered" style="width:100%">
       <thead>
 
@@ -132,6 +133,7 @@
 
       </tbody>
     </table>
+    </div>
   </div>
 
   <!-- Delete Modal -->
