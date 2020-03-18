@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/multiselect/bootstrap-multiselect.css" type="text/css">
+
   <input type="hidden" name="alert_msg" id='alert_msg' value="<?php echo $this->session->flashdata('app'); ?>">  
 <div id="accessModal" class=" modal fade " role="dialog">
   <form action="">
@@ -290,14 +292,21 @@
          <input type="hidden" name="event_id" id="event_id">
          <input type="hidden" name="empid" id='empid' value="">
          <input type="hidden" name="attendees" id="attendees">
-        <div class="row">
-          <div class="col-md-6">
-                    <div class="form-group">
+         <div class="row">
+         <div class="col-md-6">
+          <div class="form-group">
             <label for="recipient-name" class="col-form-label">Select Calendar:</label>
             <select class="form-control cal_id" id="cal_id" name="cal_id">                    
                             </select>
             
           </div>
+          </div>
+          <div class="col-md-6"></div>
+         </div>
+        <div class="row">
+          
+          <div class="col-md-6">
+                    
            <div class="form-group">
             <label for="recipient-name" class="col-form-label">Appointment Date:</label>
             <input type="date" class="form-control " id="app_date" name="app_date" readonly>
@@ -343,27 +352,7 @@
             <input type="text" class="form-control" id="supervisor" 
             name="supervisor" maxlength="20">
           </div> -->
-           <div class="form-group" id="custom-search-input">
-            <label for="recipient-name" class="col-form-label">Order Status:</label>
-          <select class="form-control status" id="status" name="status">
-                              <!-- <option value="">Select</option>
-                              <option value="Pending">Pending</option>
-                              <option value="Rescheduled">Rescheduled</option>
-                              <option value="Demo">Demo</option>
-                              <option value="Cancelled">Cancelled</option>
-                              <option value="Sale">Sale</option> -->
-                                 <option value="">Select</option>
-                              <option value="Pre-sales">Pre-sales</option>
-                              <option value="Identified">Identified</option>
-                              <option value="Quoted">Quoted</option>
-                              <option value="Qualified">Qualified</option>
-                              <option value="Negotiation">Negotiation</option>
-                              <option value="OrderWon"> Order Won</option>
-                              <option value="OrderLost">Order Lost</option>
-                              <option value="OpportunityDropped">Opportunity Dropped</option>
-                            </select>
-
-          </div>
+          
           
           
           <!-- <div class="form-group" id="">
@@ -401,48 +390,84 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Sales Representative:</label>
-            <input type="text" class="form-control" id="demo_dealer" 
-            name="demo_dealer" maxlength="20">
+          <div class="form-group" id="custom-search-input">
+            <label for="recipient-name" class="col-form-label">Order Status:</label>
+          <select class="form-control status" id="status" name="status">
+                              <!-- <option value="">Select</option>
+                              <option value="Pending">Pending</option>
+                              <option value="Rescheduled">Rescheduled</option>
+                              <option value="Demo">Demo</option>
+                              <option value="Cancelled">Cancelled</option>
+                              <option value="Sale">Sale</option> -->
+                                 <option value="">Select</option>
+                              <option value="Pre-sales">Pre-sales</option>
+                              <option value="Identified">Identified</option>
+                              <option value="Quoted">Quoted</option>
+                              <option value="Qualified">Qualified</option>
+                              <option value="Negotiation">Negotiation</option>
+                              <option value="OrderWon"> Order Won</option>
+                              <option value="OrderLost">Order Lost</option>
+                              <option value="OpportunityDropped">Opportunity Dropped</option>
+                            </select>
+
           </div>
+         
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Ride Along:</label>
-            <input type="text" class="form-control" id="ride" 
-            name="ride" maxlength="20">
+            <!-- <input type="text" class="form-control" id="ride" 
+            name="ride" maxlength="20"> -->
+            <select id="ride" multiple name="ride[]" class="form-control ride">
+                                  <!-- <option value="">Select</option> -->
+                                  <?php  foreach ($leads as $key => $value) {
+                               ?>
+                               <option value="<?php echo $value['first_name']; ?>"><?php echo $value['first_name']; ?></option>
+                               <?php
+                              } ?>
+                                </select>
           </div>
           <!-- <div class="form-group">
             <label for="recipient-name" class="col-form-label">Set By:</label>
             <input type="text" class="form-control" id="set" 
             name="set" maxlength="20">
           </div> -->
+         
+          </div>
+          <div class="col-md-6">
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Sales Representative:</label>
+            <input type="text" class="form-control" id="demo_dealer" 
+            name="demo_dealer" maxlength="20">
+          </div>
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Select Account:</label>
             <input type="text" class="form-control" id="lead" 
             name="lead" maxlength="20">
           </div>
+          
+          
           </div>
-          <div class="col-md-6">
+        </div>
+        <div class="row">
+          <div class="col-md-12">
           <div class="form-group" id="custom-search-input">
             <label for="recipient-name" class="col-form-label"> Address:</label>
           
-            <textarea class="form-control" id="app_addr" 
+            <textarea type="text" class="form-control" style="resize: none;" id="app_addr" 
             name="app_addr"></textarea>
                     <input type="hidden" name="lat">
                     <input type="hidden" name="long">
 
           </div>
-          
           </div>
         </div>
         <div class="row">
           <hr>
-          <div class="col-md-6">
+          <div class="col-md-12">
               <div class="form-group" id="">
             <label for="recipient-name" class="col-form-label">Appointment Notes Detalis:</label>
           
             <textarea class="form-control" id="note" 
-            name="note"></textarea>
+            name="note" style="resize: none;"></textarea>
             <div class="form-group" id="">
             
                   
@@ -725,7 +750,10 @@ $.notify({
                              x+='<option value="Gift">Gift</option>';
                       $("#gift").html(x);        
          $("#gift").val(l[0].gift);
-         $("#ride").val(l[0].ride_along);
+        // $("#ride").val(l[0].ride_along);
+         var ridealong=l[0].ride_along;
+         var dataarray = ridealong.split(",");
+        $("#ride").val(dataarray).multiselect('rebuild').trigger('change');
          $("#set").val(l[0].set_by);
         // $("#note").val(l[0].appointment_notes);
          $("#event_id").val(l[0].event_id);
@@ -877,6 +905,14 @@ window.location.reload();
     }
 
   });
+  $('.ride').multiselect({
+			enableFiltering: true,
+		
+			includeSelectAllOption: false,
+			buttonWidth: '100%'
+		});
 });
 </script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/multiselect/bootstrap-multiselect.js"></script>
+
    <script src="<?php echo base_url(); ?>assets/js/myjs/viewappoiment.js"></script>

@@ -25,7 +25,7 @@ $(document).ready(function() {
                 html = '';
                 var name = '';
                 //					
-                html += '<option selected disabled value="" >Select</option>';
+                html += '<option selected  value="All" >All</option>';
                 //						}
                 for (var i = 0; i < data.length; i++) {
                     var id = '';
@@ -50,7 +50,7 @@ $(document).ready(function() {
                         // }
                     } else {
                         if (i == 0) {
-                            html += '<option selected value="' + id + '" >' + name + '</option>';
+                            html += '<option  value="' + id + '" >' + name + '</option>';
                             // // getfinicialamt(id);
                             userid = id;
                         } else {
@@ -88,7 +88,7 @@ $(document).ready(function() {
             }
         });
 
-        funnelreport(useruniqueid);
+        //funnelreport(useruniqueid);
 
     }
 
@@ -97,7 +97,7 @@ $(document).ready(function() {
 
         var userid = $(this).val();
 
-        funnelreport(userid);
+        // funnelreport(userid);
     });
 
     //for getting all funnel report table ---*/
@@ -117,7 +117,7 @@ $(document).ready(function() {
 
         fiscalyear = fiscalyear.split('-');
         var statdate = fiscalyear[0] + "-" + "04" + "-" + "01";
-        $('#btnExport').val(uid + "_" + statdate);
+        // $('#btnExport').val(uid + "_" + statdate);
 
         $.ajax({
             type: 'POST',
@@ -375,7 +375,7 @@ $(document).ready(function() {
                             '<td  style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
                             '<td  style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].customer_name + '</td>' +
                             '<td  style="white-space:nowrap;text-align:left;padding:10px 10px;"></td>' +
-                            '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].product + '<button class="productinfo pull-right" name="' + sr + '" style="color:blue" id=' + data[i].qid1 + '>View More</button></td>' +
+                            '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].product + '<button class="productinfo pull-right" name="' + sr + '" style="color:blue" id=' + sr + '>View More</button></td>' +
                             '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].orderdate + '</td>' +
                             '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + totalordvalue + '</td>' +
                             '<td   style="white-space:nowrap;text-align:right;padding:10px 10px;">' + magin1 + '</td>' +
@@ -386,7 +386,7 @@ $(document).ready(function() {
                             '<td   style="white-space:nowrap;text-align:left;padding:10px 10px;">' + data[i].description + '</td>' +
                             '</tr>';
 
-                        html += '<tr id="productinfo_' + data[i].qid1 + '" style="display:none;" ><td colspan="11"><div><table class="table table-bordered table-hover" id="productinformation">' +
+                        html += '<tr id="productinfo_' + sr + '" style="display:none;" ><td colspan="11"><div><table class="table table-bordered table-hover" id="productinformation">' +
 
                             '<thead>' +
                             '<tr>' +

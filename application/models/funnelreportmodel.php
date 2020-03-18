@@ -19,10 +19,16 @@ function getfunnel_report1($uid,$statdate,$productnm,$ovmnm,$fromdate,$to_date){
     $sum=0;
     $summargin=0;
     $result=array();
+
+    
     $this->db->select('*');    
     $this->db->from('quotation_master');
-    $this->db->where('salesrepresentative',$uid);
+    if($uid > 0 ){
+        $this->db->where('salesrepresentative',$uid);
+
+    }
     if($fromdate=="" && $to_date==""){
+      
         $this->db->where('order_date >=',$statdate);
         $this->db->where('order_date <=', date('Y-m-d'));
     }

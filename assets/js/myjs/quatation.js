@@ -2488,6 +2488,32 @@ $(document).ready(function() {
     $(document).on('click', '#csend', function(e) {
         e.preventDefault();
 
+        $(".column-title").each(function() {
+            var htmlString = $(this).html();
+            alert(htmlString);
+        });
+
+
+
+        $.ajax({
+            type: "POST",
+            url: baseurl + "Quotation_Estimate/docuploadfile",
+            data: {
+                cto: cto,
+                customercc: customercc,
+                subject: subject,
+                msg: msg,
+                btnprin: btnprin,
+                attachment: attachment,
+                filenamepdf: filenamepdf,
+
+            },
+            // dataType: "JSON",
+            async: false,
+            success: function(data) {}
+        });
+
+
 
 
         var cto = $('#cto').val();
@@ -2507,6 +2533,8 @@ $(document).ready(function() {
         //     studejsonObj.push(cto[i]);
         // }
         // console.log("studejsonObj" + studejsonObj);
+
+
 
 
 
@@ -2789,6 +2817,32 @@ $(document).ready(function() {
 
 
     });
+
+    $(document).on("mousedown", "#file", function() {
+        var id = 'file';
+        var hiddenid = "file_hidden";
+        var msgid = "msg";
+        //	$('#filename').removeAttr('form');
+
+        uploadfile(id);
+    });
+
+    function uploadfile(id) {
+        //console.log(id + '-' + hiddenid + '-' + msgid);
+
+        $('#' + id).ajaxfileupload({
+            //'action' : 'callAction',
+
+            'action': baseurl + 'settings/doc_upload',
+            params: { id: id },
+            'onStart': function() { $('#' + msgid).html("<font color='red'><i class='fa fa-refresh fa-spin fa-3x fa-fw'></i>Please wait file is uploading.....</font>"); },
+            'onComplete': function(response) {
+                //console.log(response);
+
+
+            }
+        });
+    }
 
 
 

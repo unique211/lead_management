@@ -52,6 +52,8 @@ public function data_get_resdata($table,$eid){
     $this->db->select('*');    
     $this->db->from('resechedul_appoiment');
     $this->db->where('appid',$eid);
+    $this->db->order_by("id", "desc");
+
     $hasil4=$this->db->get(); 
     return $hasil4->result();
 

@@ -457,6 +457,8 @@ function logoutcode()
 			            	 
 			            }
 						  $data['users']=$this->user_model->get_users_list($user_id);
+						  $data['leads']=$this->user_model->get_leads($user_id);
+
 
 						    $data['layout']="public/layout";
 				        $data['header']="public/header";

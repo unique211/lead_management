@@ -1,6 +1,6 @@
 <?php if ($user_permission) : ?>
 
-<? echo $this->session->userdata('email');
+<? //echo $this->session->userdata('email');
 
 ?>
 <link rel="apple-touch-icon" sizes="180x180" href="<?php echo base_url() ?>assets/favicon_io/apple-touch-icon.png">
