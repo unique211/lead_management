@@ -497,6 +497,9 @@ class Quotation_Estimate extends CI_Controller {
             $subject = $this->input->post('subject'); 
             $cmsg = $this->input->post('msg'); 
             $filenamepdf = $this->input->post('filenamepdf'); 
+            $attchmentfile = $this->input->post('attchment'); 
+            $bill_no = $this->input->post('bill_no'); 
+
 
             //$filepath=base_url()."/quatationpdf/".$filenamepdf;
 
@@ -720,6 +723,13 @@ class Quotation_Estimate extends CI_Controller {
                 $mail->Body = $cmsg;
                 //$mail->attach($attachment);
                 $mail->addAttachment($root);
+
+                foreach($attchmentfile as $allattchfile){
+                    $mail->addAttachment($allattchfile["file"]);
+
+                }
+
+       
             // Send email
 
            
@@ -733,6 +743,11 @@ class Quotation_Estimate extends CI_Controller {
                 
             }
           // unlink($root);
+          $target_dir="./assets/".$this->session->userdata('useruniqueid').'_'.$bill_no.'/';
+
+          delete_files($target_dir, true); // delete all files/folders
+          rmdir($target_dir);
+
                 echo $res;
                
              }
@@ -984,6 +999,57 @@ class Quotation_Estimate extends CI_Controller {
 			//echo json_encode($id);	
 			echo "no file"; 
 		}
+}
+public function doc_upload1()
+{
+    $this->load->helper("file");	
+    $this->load->library("upload");
+    $id=$this->input->post('id');
+ 
+
+    $F = array();
+    $final_files_data=array();
+
+ 
+    $action = $_POST['biiino'];  
+    
+   $target_dir="./assets/".$this->session->userdata('useruniqueid').'_'.$action.'/';
+    if(!file_exists($target_dir)){
+        mkdir($target_dir,0777);
+    }
+ 
+	$number_of_files_uploaded = count($_FILES['images']['name']);
+	$config = array(
+	    'allowed_types' => '*',
+	 'max_size'      => 100000,
+	    'overwrite'     => FALSE,
+	    'upload_path'   => $target_dir
+	  );
+	 
+	for ($i = 0; $i < $number_of_files_uploaded; $i++) :
+	  	$_FILES['f']['name'] =  $_FILES['images']['name'][$i];
+	    $_FILES['f']['type'] = $_FILES['images']['type'][$i];
+	    $_FILES['f']['tmp_name'] = $_FILES['images']['tmp_name'][$i];
+	    $_FILES['f']['error'] = $_FILES['images']['error'][$i];
+	    $_FILES['f']['size'] = $_FILES['images']['size'][$i];
+	    $config['file_name'] = $_FILES['images']['name'][$i];
+	   
+	  $this->upload->initialize($config);
+	      if($this->upload->do_upload('f')) :
+	      	$data['error_code'] = 0;
+	    	$data['msg'] = "uploaded";
+	   		$final_files_data[] = $this->upload->data();
+	      else :
+	    	$data['error_code'] = 1;
+	   		$data['msg'] = "invalid file type";	
+	   		$data['status'] = $this->upload->display_errors();
+	        $data['status']->success = FALSE;
+	      endif;
+	endfor;
+          //  print_r($final_files_data);
+       echo json_encode($final_files_data);	
+
+
 }
 
 }

@@ -2487,31 +2487,21 @@ $(document).ready(function() {
 
     $(document).on('click', '#csend', function(e) {
         e.preventDefault();
+        $('#wait3').show();
+        var r1 = $('table#fileuploadtb').find('tbody').find('tr');
+        var r = r1.length;
+        var row = 0;
+        var attchment = [];;
+        for (var i = 0; i < r; i++) {
+            row = row + 1;
+            var afiles = $(r1[i]).find('td:eq(1)').html();
+            var newdata = {};
+            newdata["file"] = afiles;
+            attchment.push(newdata);
+        }
 
-        $(".column-title").each(function() {
-            var htmlString = $(this).html();
-            alert(htmlString);
-        });
 
 
-
-        $.ajax({
-            type: "POST",
-            url: baseurl + "Quotation_Estimate/docuploadfile",
-            data: {
-                cto: cto,
-                customercc: customercc,
-                subject: subject,
-                msg: msg,
-                btnprin: btnprin,
-                attachment: attachment,
-                filenamepdf: filenamepdf,
-
-            },
-            // dataType: "JSON",
-            async: false,
-            success: function(data) {}
-        });
 
 
 
@@ -2523,8 +2513,10 @@ $(document).ready(function() {
         var btnprin = $('#btnprint').val();
         var attachment = $('#btnfilenmshow1').val();
         var filenamepdf = $('#filenamepdf1').text();
+        var bill_no = $('#bill_no').val();
 
-        $('#wait3').show();
+
+
 
         // cto = cto.split(",");
         // studejsonObj = [];
@@ -2557,7 +2549,8 @@ $(document).ready(function() {
                 btnprin: btnprin,
                 attachment: attachment,
                 filenamepdf: filenamepdf,
-
+                attchment: attchment,
+                bill_no: bill_no,
             },
             // dataType: "JSON",
             async: false,
@@ -2575,6 +2568,9 @@ $(document).ready(function() {
                     }, {
                         type: 'success'
                     });
+                    $('#fileupload_tbody').html('');
+                    $('#files').val('');
+
                 }
             },
             error: function(error) {
@@ -2600,10 +2596,25 @@ $(document).ready(function() {
         var btnprin = $('#btnprint').val();
         var attachment = $('#btnfilenmshow1').val();
         var filenamepdf = $('#filenamepdf1').text();
+        var bill_no = $('#bill_no').val();
+
+        var r1 = $('table#fileuploadtb1').find('tbody').find('tr');
+        var r = r1.length;
+        var row = 0;
+        var attchment = [];;
+        for (var i = 0; i < r; i++) {
+            row = row + 1;
+            var afiles = $(r1[i]).find('td:eq(1)').html();
+            var newdata = {};
+            newdata["file"] = afiles;
+            attchment.push(newdata);
+        }
+
+        $("#ssend").prop("disabled", true);
 
 
 
-        $('#ssend').attr('disabled', true);
+
 
         $.ajax({
             type: "POST",
@@ -2615,21 +2626,29 @@ $(document).ready(function() {
                 msg: msg,
                 btnprin: btnprin,
                 filenamepdf: filenamepdf,
+                attchment: attchment,
+                bill_no: bill_no,
 
             },
             //dataType: "JSON",
             async: false,
             success: function(data) {
                 console.log('for mail sale test');
-                $('#ssend').attr('disabled', false);
-                $('#wait4').hide();
+
                 if (data != "") {
+                    $('#wait4').hide();
+                    $('#ssend').prop('disabled', false);
+
                     $.notify({
                         title: '',
                         message: '<strong>SuccessFully Send Email</strong>'
+
                     }, {
                         type: 'success'
                     });
+                    $('#fileupload_tbody1').html('');
+                    $('#files1').val('');
+
                 }
             }
         });
@@ -2819,32 +2838,132 @@ $(document).ready(function() {
 
     });
 
-    $(document).on("mousedown", "#file", function() {
-        var id = 'file';
-        var hiddenid = "file_hidden";
-        var msgid = "msg";
-        //	$('#filename').removeAttr('form');
+    // $(document).on("mousedown", "#files", function() {
+    //     var id = 'files';
+    //     var hiddenid = "file_hidden";
+    //     var msgid = "msg";
+    //     //	$('#filename').removeAttr('form');
 
-        uploadfile(id);
+    //     uploadfile(id);
+    // });
+
+    // function uploadfile(id) {
+    //     //console.log(id + '-' + hiddenid + '-' + msgid);
+
+    //     $('#' + id).ajaxfileupload({
+    //         //'action' : 'callAction',
+
+    //         'action': baseurl + 'Quotation_Estimate/doc_upload',
+    //         params: { id: id },
+    //         'onStart': function() { $('#' + msgid).html("<font color='red'><i class='fa fa-refresh fa-spin fa-3x fa-fw'></i>Please wait file is uploading.....</font>"); },
+    //         'onComplete': function(response) {
+    //             //console.log(response);
+
+
+    //         }
+    //     });
+    // }
+    $(document).on("change", "#files", function() {
+
+        var fileInput = $('#files')[0];
+        var bill_no = $('#bill_no').val();
+
+        if (fileInput.files.length > 0) {
+            var formData = new FormData();
+            formData.append('biiino', bill_no);
+            $.each(fileInput.files, function(k, file) {
+                formData.append('images[]', file);
+            });
+            $.ajax({
+                method: 'post',
+                url: baseurl + "Quotation_Estimate/doc_upload1",
+                data: formData,
+
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    console.log(response);
+                    var sr = 0;
+                    var html = '';
+                    for (i = 0; i < response.length; i++) {
+                        var sr = i + 1;
+
+                        html += '<tr id="mdoc_' + sr + '">' +
+                            '<td id="filename_' + sr + '">' + response[i].file_name + '</td>' +
+                            '<td style="display:none;"  id="filepath_' + sr + '">' + response[i].full_path + '</td>' +
+                            '<td ><button name="delete" value="Delete" class="doc_delete_data btn btn-xs btn-danger" id=mdoc_' +
+                            sr + '><i class="fa fa-trash"></i></button></td>' +
+                            '<tr>';
+
+                    }
+                    $('#fileupload_tbody').html(html);
+
+
+                }
+            });
+        } else {
+            console.log('No Files Selected');
+        }
+    });
+    $(document).on("click", ".doc_delete_data", function() {
+        var id = $(this).attr('id');
+        id = id.split("_");
+
+        $('#mdoc_' + id[1]).remove();
+
     });
 
-    function uploadfile(id) {
-        //console.log(id + '-' + hiddenid + '-' + msgid);
+    $(document).on("change", "#files1", function() {
 
-        $('#' + id).ajaxfileupload({
-            //'action' : 'callAction',
+        var fileInput = $('#files1')[0];
+        var bill_no = $('#bill_no').val();
 
-            'action': baseurl + 'settings/doc_upload',
-            params: { id: id },
-            'onStart': function() { $('#' + msgid).html("<font color='red'><i class='fa fa-refresh fa-spin fa-3x fa-fw'></i>Please wait file is uploading.....</font>"); },
-            'onComplete': function(response) {
-                //console.log(response);
+        if (fileInput.files.length > 0) {
+            var formData = new FormData();
+            formData.append('biiino', bill_no);
+            $.each(fileInput.files, function(k, file) {
+                formData.append('images[]', file);
+            });
+            $.ajax({
+                method: 'post',
+                url: baseurl + "Quotation_Estimate/doc_upload1",
+                data: formData,
+
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    console.log(response);
+                    var sr = 0;
+                    var html = '';
+                    for (i = 0; i < response.length; i++) {
+                        var sr = i + 1;
+
+                        html += '<tr id="mdoc1_' + sr + '">' +
+                            '<td id="filename1_' + sr + '">' + response[i].file_name + '</td>' +
+                            '<td style="display:none;"  id="filepath1_' + sr + '">' + response[i].full_path + '</td>' +
+                            '<td ><button name="delete" value="Delete" class="doc_delete_data1 btn btn-xs btn-danger" id=mdoc_' +
+                            sr + '><i class="fa fa-trash"></i></button></td>' +
+                            '<tr>';
+
+                    }
+                    $('#fileupload_tbody1').html(html);
 
 
-            }
-        });
-    }
+                }
+            });
+        } else {
+            console.log('No Files Selected');
+        }
+    });
 
+    $(document).on("click", ".doc_delete_data1", function() {
+        var id = $(this).attr('id');
+        id = id.split("_");
 
+        $('#mdoc1_' + id[1]).remove();
+
+    });
 
 });
