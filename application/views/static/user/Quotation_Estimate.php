@@ -729,6 +729,11 @@
                   </div>
                </div>
                <div class="row">
+               <div id="wait3" style="width:100px;height:100px;position:absolute;top:;left:45%;padding:2px;display:none;"><img src="<?php echo base_url('assets/images/loader.gif'); ?>" width="100" height="100" /><br>
+               <center>
+                  <h5>Please Wait...</h5>
+               </center>
+            </div>
                   <div class="col-md-6">
                      <div class="form-group">
                         <br>
@@ -778,11 +783,27 @@
             </div>
          </div>
          <div class="row">
-            <div id="wait3" style="width:100px;height:100px;position:absolute;top:;left:45%;padding:2px;display:none;"><img src="<?php echo base_url('assets/images/loader.gif'); ?>" width="100" height="100" /><br>
-               <center>
-                  <h5>Please Wait...</h5>
-               </center>
+            <div class="col-md-6">
+               <input type="file" id='files' class="form-control" name="files[]" multiple><br>
             </div>
+            <div class="col-md-6"></div>
+         </div>
+         <div class="row">
+            <div class="col-md-12">
+               <table class="table table-striped" id="fileuploadtb">
+                  <thead>
+                     <tr>
+                        <th>File Name</th>
+                        <th>Action</th>
+
+                     </tr>
+                  </thead>
+                  <tbody id="fileupload_tbody"></tbody>
+               </table>
+            </div>
+         </div>
+         <div class="row">
+           
             <div class="col-md-6">
 
                <div class="form-group">
@@ -865,6 +886,11 @@
                   <label id="lblversion" class="col-form-label">Version:</label>
                </div>
             </div>
+            <div id="wait4" style="width:100px;height:100px;position:absolute;top:;left:45%;padding:2px;display:none;"><img src="<?php echo base_url('assets/images/loader.gif'); ?>" width="100" height="100" /><br>
+               <center>
+                  <h5>Please Wait...</h5>
+               </center>
+            </div>
             <div class="col-md-3">
 
                <div class="form-group">
@@ -904,19 +930,26 @@
          </div>
          <div class="row">
             <div class="col-md-6">
-            
-                  <input class="form-control" type="file" name="file[]" class="files" multiple>
-
-               
+               <input type="file" id='files1' class="form-control" name="files1[]"   multiple><br>
             </div>
-
+            <div class="col-md-6"></div>
          </div>
          <div class="row">
-            <div id="wait4" style="width:100px;height:100px;position:absolute;top:;left:45%;padding:2px;display:none;"><img src="<?php echo base_url('assets/images/loader.gif'); ?>" width="100" height="100" /><br>
-               <center>
-                  <h5>Please Wait...</h5>
-               </center>
+            <div class="col-md-12">
+               <table class="table table-striped" id="fileuploadtb1">
+                  <thead>
+                     <tr>
+                        <th>File Name</th>
+                        <th>Action</th>
+
+                     </tr>
+                  </thead>
+                  <tbody id="fileupload_tbody1"></tbody>
+               </table>
             </div>
+         </div>
+         <div class="row">
+           
             <div class="col-md-6">
 
                <div class="form-group right">
