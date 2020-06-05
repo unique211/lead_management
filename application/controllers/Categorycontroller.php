@@ -81,4 +81,20 @@ class Categorycontroller extends CI_Controller
 
         echo json_encode($data1);
     }
+    public function getreseduledetalis(){
+        $id	= $this->input->post('id');
+      
+       
+        $data1 = $this->categorymodel->getresechudelapp($id);
+
+        echo json_encode($data1);
+    }
+    public function getappnotes(){
+        $id	= $this->input->post('id');
+      
+       
+        $data1 = $this->categorymodel->getappoimentnotes($id);
+
+        echo json_encode($data1);
+    }
 }

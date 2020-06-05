@@ -159,7 +159,7 @@
 
                                        <div class="col-md-8 inputGroupContainer">
                                           <?php if (($this->session->userdata('user_type') == "SalesRepresentative") && ($this->session->userdata('userrole') == "Sales")) { ?>
-                                             <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input id="salesrepresentive1" name="salesrepresentive1" placeholder="Contact Person" class="form-control " maxlength="20" type="text">
+                                             <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input id="salesrepresentive1" name="salesrepresentive1" placeholder="Contact Person" class="form-control " maxlength="20" type="text" readonly>
 
                                              </div><span class="s_lname1"></span>
                                           <?php } else { ?>
@@ -649,6 +649,8 @@
 <!-- jQuery UI library -->
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+
 <!-- <script src="https://rawgit.com/unconditional/jquery-table2excel/master/src/jquery.table2excel.js"></script> -->
 <!-- <script src="assets/js/tabletoexcle.js"></script>
 <script src="assets/js/bootstrap-notify.min.js"></script> -->

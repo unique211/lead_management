@@ -789,6 +789,7 @@ class Quotation_Estimate extends CI_Controller {
            $margin=0;
            $description="";
            $prderdate="";
+           $quoteversion="";
            foreach($customerinfo as $value)
            {
               
@@ -808,6 +809,7 @@ class Quotation_Estimate extends CI_Controller {
                $less_trasportion=$value->less_trasportion;
                $less_bg=$value->less_bg;
                $less_others=$value->less_others;
+               $quoteversion=$value->version;
              
                $margin=$value->margin;
                $old_date = explode('-', $order_date); 
@@ -844,7 +846,7 @@ class Quotation_Estimate extends CI_Controller {
            //Set from
            $invoice->setFrom(array("DCDR Infra Private Limited","23, West Road","West CIT Nagar","Chennai - 600 035",""));
            //Set to
-           $invoice->setTo(array("Customer Name:".$customer,"Contact Person:".$contact_person, "Mobile No:".$mobile_no,"Email Id:".$email_id,""));
+           $invoice->setTo(array("Customer Name:".$customer,"Contact Person:".$contact_person, "Mobile No:".$mobile_no,"Email Id:".$email_id,"Version:".$quoteversion));
            //Add items
            //$invoice->addItem("Premium account",1,1,"21%",100,20,80,80);
            

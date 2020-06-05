@@ -74,6 +74,77 @@ function getdropdwn($table,$where){
 
 return $hasil->result();
 }
+function getoutlookdata(){
+    $result=[];
+    $this->db->select('*');    
+    $this->db->from('appointment_information');
+    $this->db->where('synchronize','local');
+    $this->db->or_where('synchronize','outlook');
+    $hasil=$this->db->get();
+    foreach($hasil->result_array() as $getdata){
+        $id=$getdata['id'];
+        $event_id=$getdata['event_id'];
+        $subname=$getdata['appointment_notes'];
+        $content=$getdata['appointment_address'];
+        $startdate=$getdata['start_date'];
+        $enddate=$getdata['end_date'];
+        $color='';
+        $resudeal_date=$getdata['resudeal_date'];
+        $reschedultime=$getdata['reschedultime'];
+        if($reschedultime !="" && $resudeal_date !=""){
+            $color="#FF0000";
+            $startdate=$getdata['resudeal_date'];
+            $enddate=$getdata['resudeal_date'];
+        }else{
+            $color="#2a9df4";
+        }
+       
+
+        $timestamp = strtotime($startdate);
+        $fromdate = date("Y-m-d", $timestamp);
+
+        $timestamp = strtotime($enddate);
+        $todate = strtotime("+1 day", $timestamp);
+
+        $todate = date("Y-m-d", $todate);
+
+        $result[]=array(
+            'id'=> $id,
+            'title'=>$subname,
+            'start'=>$fromdate,
+            'end'=>$todate,
+            'color'=>$color,
+
+        );
+    }
+
+
+    return $result;
+}
+function getresechudelapp($id){
+    $this->db->select('*');    
+    $this->db->from('resechedul_appoiment');
+    $this->db->where('appid',$id);
+    $hasil=$this->db->get();
+    return $hasil->result();
+
+}
+function getappoimentnotes($id){
+    $this->db->select('*,user_creation.first_name,user_creation.last_name');    
+    $this->db->from('demo_notes_entry');
+    $this->db->join('user_creation', 'user_creation.id = demo_notes_entry.user_id');
+
+    $this->db->where('aid',$id);
+    $hasil=$this->db->get();
+    return $hasil->result();
+}
+function geteventinfo($id){
+    $this->db->select('*');    
+    $this->db->from('appointment_information');
+    $this->db->where('id',$id);
+    $hasil=$this->db->get();
+    return $hasil->result();
+}
 }
 
 ?>

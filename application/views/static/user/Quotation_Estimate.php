@@ -69,7 +69,7 @@
 
                                     <div class="col-md-8 inputGroupContainer">
                                        <?php if (($this->session->userdata('user_type') == "SalesRepresentative") && ($this->session->userdata('userrole') == "Sales")) { ?>
-                                          <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input id="salesrepresentive1" name="salesrepresentive1" placeholder="Contact Person" class="form-control " maxlength="20" type="text">
+                                          <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input id="salesrepresentive1" name="salesrepresentive1" placeholder="Contact Person" class="form-control " maxlength="20" type="text" readonly>
 
                                           </div><span class="s_lname1"></span>
                                        <?php } else { ?>
@@ -776,9 +776,13 @@
 
                      </div>
                   </div>
+                
                </div>
                <div class="row">
-
+               <div class="col-md-6"></div>
+            <div class="col-md-6">
+               <button class="btn btn-info btnfilenmshow" id="btnfilenmshow1"> <a id="getdfieename" href=""><i class="fa fa-paperclip"></i></a></button><label id="filenamepdf1">Qutation.pdf</label>
+            </div>
                </div>
             </div>
          </div>

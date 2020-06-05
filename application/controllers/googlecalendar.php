@@ -14,7 +14,7 @@ if (!defined('BASEPATH'))
 
 class Googlecalendar extends CI_Controller
 {
-
+     public  $tokendata="";
     public function __construct()
     {
         parent::__construct();
@@ -26,6 +26,29 @@ class Googlecalendar extends CI_Controller
         //$this->client->setLoginHint('indutestmail123@gmail.com');
         $this->googleapi->sethint($cal_id);
         $this->calendarapi = new Google_Service_Calendar($this->googleapi->client());
+       
+        // mocrosoft outlook client id and secret key
+        define('CLIEND_ID', 'a1252244-099c-4899-b5a7-1a663b23b164');
+        define('CLIEND_SECRET', '_SFr7/H?G]hgWatk1gZ6eJCSReqk4?0g');
+       
+       // load required outlook class
+       require FCPATH . 'vendor/autoload.php';
+       require APPPATH."third_party/src/Outlook/Authorizer/Contracts/SessionContract.php";
+
+       require APPPATH.'third_party/src/Outlook/Authorizer/Authenticator.php';
+        
+       require_once APPPATH."third_party/src/Outlook/Exceptions/OutlookException.php";
+       require_once APPPATH."third_party/src/Outlook/Exceptions/Authorizer/TokenException.php";
+       require_once APPPATH."third_party/src/Outlook/Authorizer/Token.php";
+       require_once APPPATH."third_party/src/Outlook/Authorizer/Session.php";
+       require_once APPPATH."third_party/src/Outlook/Calendars/Calendar.php";
+       require_once APPPATH."third_party/src/Outlook/Calendars/CalendarAuthorizer.php";
+
+       require_once APPPATH."third_party/src/Outlook/Exceptions/Events/RestApiException.php";
+       require_once APPPATH."third_party/src/Outlook/ApiRequester/Client.php";
+       require_once APPPATH."third_party/src/Outlook/Calendars/CalendarManager.php";
+      
+ 
     }
     public function demo()
     {
@@ -152,6 +175,7 @@ class Googlecalendar extends CI_Controller
             $curentDate = date('Y-m-d', time());
             //echo $this->input->post('page').'-';
             if ($this->input->post('page') != '') {
+                
                 $malestr = str_replace("?", "", $this->input->post('page'));
                 $navigation = explode('/', $malestr);
                 $getYear = $navigation[1];
@@ -214,8 +238,14 @@ class Googlecalendar extends CI_Controller
 
 
             foreach ($eventData as $element) {
+             
+                if($element['resudeal_date'] !="" && $element['reschedultime'] !=""){
+                    $googleEventArr[ltrim(date('d', strtotime($element['resudeal_date'])), 0)] = '<a data-google_event="' . ltrim(date('Y-m-d', strtotime($element['start_date'])), 0) . '" href="#" data-caltoggle="tooltip" data-placement="bottom" title="Google Events" class="small google-event" data-toggle="modal" data-target="#google-cal-data" rel="noopener noreferrer"><i class="fa fa-fw fa-circle text-primary"></i></a>';
 
-                $googleEventArr[ltrim(date('d', strtotime($element['start_date'])), 0)] = '<a data-google_event="' . ltrim(date('Y-m-d', strtotime($element['start_date'])), 0) . '" href="#" data-caltoggle="tooltip" data-placement="bottom" title="Google Events" class="small google-event" data-toggle="modal" data-target="#google-cal-data" rel="noopener noreferrer"><i class="fa fa-fw fa-circle text-primary"></i></a>';
+                }else{
+                    $googleEventArr[ltrim(date('d', strtotime($element['start_date'])), 0)] = '<a data-google_event="' . ltrim(date('Y-m-d', strtotime($element['start_date'])), 0) . '" href="#" data-caltoggle="tooltip" data-placement="bottom" title="Google Events" class="small google-event" data-toggle="modal" data-target="#google-cal-data" rel="noopener noreferrer"><i class="fa fa-fw fa-circle text-primary"></i></a>';
+
+                }
             }
 
             //print_r($googleEventArr);
@@ -513,7 +543,16 @@ class Googlecalendar extends CI_Controller
         print_r(json_encode($data['items']));
     }
     public function login1()
-    {
+    { 
+        $email = $this->session->userdata('email');
+        $u_type = $this->user_model->get_usertype($email);
+        $u = $u_type[0]['user_type'];
+        $get = $this->user_model->get_permissions($u);
+        $user_permission = unserialize($get[0]['permissions']);
+        if (in_array('createViewOutLookAppointment', $user_permission)){
+               $this->check_session_outllok();
+        }else{
+       
         if ($this->session->userdata('is_authenticate_user') == TRUE) {
 
             redirect('googlecalendar/index');
@@ -532,6 +571,7 @@ class Googlecalendar extends CI_Controller
             $data['body'] = "google-calendar/login";
             $this->load->view('welcome_message', $data);
         }
+    }
     }
     // login method
     public function login()
@@ -924,6 +964,188 @@ class Googlecalendar extends CI_Controller
             $calendar_id = $this->input->post('ap_cal_id');
             $calendar_id1 = $this->input->post('show_cal');
             $ride[]=array();
+
+            $email = $this->session->userdata('email');
+            $u_type = $this->user_model->get_usertype($email);
+            $u = $u_type[0]['user_type'];
+            $get = $this->user_model->get_permissions($u);
+            $user_permission = unserialize($get[0]['permissions']);
+            if (in_array('createViewOutLookAppointment', $user_permission)){
+                    $authenticator = new Outlook\Authorizer\Authenticator(
+                    CLIEND_ID,
+                    CLIEND_SECRET,
+                    // $redirectUri = "http://localhost/playground/outlook-api/examples/calendar.php"
+                    $redirectUri = "https://localhost/lead_management/appointment"
+                    //$redirectUri="https://acmesoftware.net/lead_management/googlecalendar/calender_event"
+                    );
+                    
+                    $sessionManager = new Outlook\Authorizer\Session();
+                    
+                    //$sessionManager->remove(); // if ne
+                    
+                    
+                    
+                    $eventAuthorizer = new Outlook\Calendars\CalendarAuthorizer($authenticator, $sessionManager);
+                    
+                    
+                    $token= $eventAuthorizer->isAuthenticated();
+                    //  $eventAuthorizer->renewToken();
+                    
+                    
+                    if (!$token) {
+                       // $this->outlook_login();
+                       $lead = $this->input->post('lead');// change by sagar
+                       $date = $this->input->post('ap_date');
+                       $start_time = $this->input->post('ap_stime');
+                       $end_time = $this->input->post('ap_stime');
+                      // $gift = $this->input->post('gift');//change by sagar
+                       $demo_dealer = $this->input->post('demo_dealer');
+                       $ride = $this->input->post('ride');
+                    //   $setby = $this->input->post('setby');
+                       $addr = $this->input->post('ap_addr');
+                       $notes = $this->input->post('ap_notes');
+                       $add_url = $this->input->post('add_url');
+                       $status = $this->input->post('status');
+                       //$assistant = $this->input->post('assistant');
+                      // $supervisor = $this->input->post('supervisor');
+                       $demo_notes = $this->input->post('demo_notes');
+                       //   $summary=$this->input->post('ap_summary');
+                       $summary = 'appointment';
+                       $email = $this->session->userdata('email');
+                       $user_id = $this->user_model->user_id($email);
+                       if($ride !=""){
+                           $ride = implode(",", $ride);
+                       }else{
+                           $ride="";
+                       }
+                       
+                    
+       
+                      
+                       // $rideinfo=array();
+                       // foreach($ride as $ridedata){
+                       //     array_push($rideinfo,$ridedata);
+                       // }
+                    
+       
+                           
+                     
+       
+                       $reg = array(
+                           'user_id'       => $user_id,
+                           'calendar_id' => '--',
+                           'lead_id' => $lead,
+                           'start_date'     => $date,
+                           'start_time' => $start_time,
+                           'end_time' => $end_time,
+                          // 'gift'      => '',////change by sagar
+                           'demo_dealer' => $demo_dealer,
+                           'ride_along' => $ride,
+                           'set_by'        => '',
+                           'appointment_address'       => $addr,
+                           'appointment_notes' => $notes,
+                           'event_id' => '-----',//change by sagar
+                           'synchronize' => 'local',
+                           'add_url' => $add_url,
+                           'appointment_status' => $status,
+                           'demo_notes' => $demo_notes,
+                           'assistant' => '',
+                           'supervisor' => '',
+       
+                       );
+                       $result = $this->user_model->app_info_insert($reg);
+                       //set lead appointment status
+       
+                       $this->session->set_flashdata('app1', 'data saved');
+                       
+                       redirect('appointment');
+                        
+                    } else {   
+                        
+                        // $ap_date	= $this->input->post('ap_date');
+                        // $subject	= $this->input->post('subject');
+                        // $content	= $this->input->post('content');
+                        // $ap_stime	= $this->input->post('ap_stime');
+                        // $ed_date	= $this->input->post('ed_date');
+                        // $ed_stime	= $this->input->post('ed_stime');
+                        // $calenderid	= $this->input->post('calenderid');
+
+                        $lead = $this->input->post('lead');// change by sagar
+                        $date = $this->input->post('ap_date');
+                        $start_time = $this->input->post('ap_stime');
+                        $end_time = $this->input->post('ap_stime');
+                       // $gift = $this->input->post('gift');//change by sagar
+                        $demo_dealer = $this->input->post('demo_dealer');
+                        $ride = $this->input->post('ride');
+                     //   $setby = $this->input->post('setby');
+                        $addr = $this->input->post('ap_addr');
+                        $notes = $this->input->post('ap_notes');
+                        $add_url = $this->input->post('add_url');
+                        $status = $this->input->post('status');
+                        //$assistant = $this->input->post('assistant');
+                       // $supervisor = $this->input->post('supervisor');
+                        $demo_notes = $this->input->post('demo_notes');
+                        //   $summary=$this->input->post('ap_summary');
+                        $summary = 'appointment';
+                        $email = $this->session->userdata('email');
+                        $user_id = $this->user_model->user_id($email);
+                        if($ride !=""){
+                            $ride = implode(",", $ride);
+                        }else{
+                            $ride="";
+                        }
+                    
+                       // echo  $calenderid;
+                    
+                           $eventManager = new Outlook\Calendars\CalendarManager($token);
+                          
+                                  $event = new Outlook\Calendars\Calendar(['subject' => 'Appointment']);
+                                  
+                                 $event->body = ['ContentType' => 'HTML', 'Content' => 'Appointment with ' . ucfirst($demo_dealer) . ' and ' . ucfirst($ride),];
+                                 $event->start = ["DateTime" => $date.'T'.$start_time.":00", "TimeZone" => "India Standard Time"];
+                                 $event->end = ["DateTime" => $date.'T'.$start_time.":00", "TimeZone" => "India Standard Time"];
+                             
+                                 if (($calendar_id == '--' && $calendar_id1 == '') || ($calendar_id == '' && $calendar_id1 == '--')) {
+                                    $event = $eventManager->create1($event);
+                                }else{
+                                    $event = $eventManager->create($event,$calendar_id);
+                                  } 
+                    
+                               
+                              if($event->id !=""){
+                                $reg = array(
+                                    'user_id'       => $user_id,
+                                    'calendar_id' => '--',
+                                    'lead_id' => $lead,
+                                    'start_date'     => $date,
+                                    'start_time' => $start_time,
+                                    'end_time' => $end_time,
+                                   // 'gift'      => '',////change by sagar
+                                    'demo_dealer' => $demo_dealer,
+                                    'ride_along' => $ride,
+                                    'set_by'        => '',
+                                    'appointment_address'       => $addr,
+                                    'appointment_notes' => $notes,
+                                    'event_id' => $event->id,//change by sagar
+                                    'synchronize' => 'local',
+                                    'add_url' => $add_url,
+                                    'appointment_status' => $status,
+                                    'demo_notes' => $demo_notes,
+                                    'assistant' => '',
+                                    'supervisor' => '',
+                
+                                );
+                                $result = $this->user_model->app_info_insert($reg);
+                                //set lead appointment status
+                
+                                $this->session->set_flashdata('app1', 'data saved');
+                                
+                                redirect('appointment');
+                            }
+                        }
+
+
+            }else{
          
             if (($calendar_id == '--' && $calendar_id1 == '') || ($calendar_id == '' && $calendar_id1 == '--')) {
               //  $lead = $this->input->post('lead');
@@ -946,7 +1168,13 @@ class Googlecalendar extends CI_Controller
                 $summary = 'appointment';
                 $email = $this->session->userdata('email');
                 $user_id = $this->user_model->user_id($email);
-                $ride = implode(",", $ride);
+                if($ride !=""){
+                    $ride = implode(",", $ride);
+                }else{
+                    $ride="";
+                }
+                
+             
 
                
                 // $rideinfo=array();
@@ -1196,6 +1424,7 @@ class Googlecalendar extends CI_Controller
                 redirect('manage_appointment');
             }
         }
+    }
     }
     // delete event
     public function DeleteCalendarEvent($event_id, $calendar_id, $access_token)
@@ -1644,4 +1873,840 @@ class Googlecalendar extends CI_Controller
         $this->user_model->addNextSyncToken($details);
         }
     }
+
+    public function outlook_login()
+    {
+    
+       $authenticator = new Outlook\Authorizer\Authenticator(CLIEND_ID, CLIEND_SECRET);
+
+        $token = $authenticator->getToken();
+       
+        if (!$token) {
+           // echo $authenticator->getLoginUrl();
+           // $scope=array("https://outlook.office.com/Calendars.ReadWrite");
+        //    $Scopes=([
+        //     'Calendars.Read',
+        //     'Calendars.Read.Shared',
+        //     'Calendars.ReadWrite',
+        //     'User.Read',
+        //     'offline_access',
+        // ]);
+        
+           $url =  $authenticator->getLoginUrl($scopes = [], $redirectUri = null);;
+         
+            //echo $url;
+           
+           
+            header('Location: '.$url);
+        } else {
+          //  var_dump($token);
+            $sessionManager = new Outlook\Authorizer\Session();
+
+//$sessionManager->remove(); // if ne
+
+    
+ 
+$eventAuthorizer = new Outlook\Calendars\CalendarAuthorizer($authenticator, $sessionManager);
+$token = $eventAuthorizer->isAuthenticated();
+
+        
+           $eventManager = new Outlook\Calendars\CalendarManager($token);
+           
+
+           
+            //             // get all Calendars returns each item as Event object
+                      //$calendars = $eventManager->all();
+                    
+                 $allCalendars = $eventManager->getAllCalendars();
+            
+                
+            
+               // print_r($allCalendars);
+                //  $event = new Outlook\Calendars\Calendar(['subject' => 'Create By Sagar Morvadiya']);
+                //          $event->body = ['ContentType' => 'HTML', 'Content' => 'Hello this is test Event'];
+                //          $event->start = ["DateTime" => "2020-05-18T7:00:00", "TimeZone" => "India Standard Time"];
+                //          $event->end = ["DateTime" => "2020-05-18T8:00:00", "TimeZone" => "India Standard Time"];
+                     
+                        
+                //          $event = $eventManager->create($event);
+                       //  print_r($event);
+        }
+    }
+    public function calender_event(){
+        
+       
+       
+
+        define('APP_ID','a1252244-099c-4899-b5a7-1a663b23b164');
+        define('APP_PASSWORD','_SFr7/H?G]hgWatk1gZ6eJCSReqk4?0g');
+
+$authenticator = new Outlook\Authorizer\Authenticator(
+    APP_ID,
+    APP_PASSWORD,
+   // $redirectUri = "http://localhost/playground/outlook-api/examples/calendar.php"
+    $redirectUri = "https://localhost/lead_management/googlecalendar/calender_event"
+    //$redirectUri = "https://acmesoftware.net/lead_management/googlecalendar/calender_event"
+);
+
+$sessionManager = new Outlook\Authorizer\Session();
+
+//$sessionManager->remove(); // if ne
+
+    
+ 
+$eventAuthorizer = new Outlook\Calendars\CalendarAuthorizer($authenticator, $sessionManager);
+
+
+$token= $eventAuthorizer->isAuthenticated();
+ //  $eventAuthorizer->renewToken();
+
+
+ if (!$token) {
+    echo '<a href=' . $eventAuthorizer->getLoginUrl($redirectUri,$authenticator) . '>Login</a>'; 
+} else {   
+   
+           $eventManager = new Outlook\Calendars\CalendarManager($token);
+
+
+    $allCalendars = $eventManager->getAllCalendars();
+//print_r($allCalendars);
+           
+//              get all Calendars returns each item as Event object
+         // $calendars = $eventManager->all();
+         $calendars=array();
+         foreach($allCalendars as $getdata){
+            
+            if(($getdata->name =="Birthdays") || ($getdata->name =="India holidays") || ($getdata->name =="United holidays") ){
+               
+            }else{
+                
+          $calendardata = $eventManager->all($getdata->id);
+        // print_r($calendardata);
+          foreach($calendardata as $caldata){
+            //   $id=  $caldata->id;
+            //   $subject=  $caldata->subject;
+               $fromdate=  $caldata->start->DateTime;;
+               $todate=  $caldata->end->DateTime;
+
+            $timestamp = strtotime($fromdate);
+            $fromdate = date("Y-m-d", $timestamp);
+
+            $timestamp = strtotime($todate);
+            $todate = strtotime("+1 day",$timestamp);
+            $todate = date("Y-m-d", $todate);
+            $color="#2a9df4";
+
+              $calendars[]=array(
+                  'id'=> $caldata->id,
+                  'title'=>$caldata->subject,
+                  'start'=>$fromdate,
+                  'end'=>$todate,
+                  'color'=>$color,
+
+                //  'content'=>$caldata->body->Content,
+              );
+          }
+        }
+            }
+            json_encode($calendars);
+       // $calendars = $eventManager->all();
+      //  print_r($calendars);
+
+          $email=$this->session->userdata('email');
+          if($email){
+          if($this->input->post('submit'))
+          {
+          $email=$this->session->userdata('email');     
+          $l_type=$this->input->post('lead_type');
+          $l_source=$this->input->post('source');
+          $l_dealer=$this->input->post('l_dealer');
+          $sublead=$this->input->post('sublead');
+          $user_id=$this->user_model->user_id($email);
+          $rec=$this->user_model->add_new_lead($user_id,$l_type,$l_source,$l_dealer,$sublead);
+          $this->session->set_flashdata('msglp', 'data saved');
+          }
+          $email=$this->session->userdata('email');     
+          $u_type=$this->user_model->get_usertype($email);
+          $u=$u_type[0]['user_type'];
+          $get=$this->user_model->get_permissions($u);
+          $user_id=$this->user_model->user_id($email);
+          $data['user_permission']=unserialize($get[0]['permissions']);
+          $user_id=$this->user_model->user_id($email);
+          // $data['lead_source']=$this->user_model->get_lead_users();
+          //$data['records']=$this->user_model->get_appointment_data($user_id);
+          $data['flag']=0;
+          $data['calendardata']=$calendars;
+          $data['allCalendars']=$allCalendars;
+          $data['layout']="public/layout";
+          $data['header']="public/header";
+          $data['footer']="public/footer";
+          // $data['body']="static/user/new_lead_type";
+          $data['body']="static/user/addoutlookdemo";
+          $this->load->view('welcome_message',$data);
+        }
+         // print_r($calendars);
+         
+        //  echo "<table border='1'><thead><tr>
+        //     <td>Event ID</td>
+        //     <td>Event Name</td>
+        //     <td>Event Start Time</td>
+        //     <td>Event End Time</td>
+           
+        //  </tr></thead><tbody>";
+        //     foreach ($calendars as $event) {
+        //           //  echo $event->id . " -> " . $event->subject;
+        //            echo    "<tr>";
+        //            echo  "<td> $event->id</td>
+        //            <td>$event->subject</td>";
+        //            echo  "<td>";
+        //            print_r($event->start);
+        //           echo "</td>";
+        //           echo "<td>";
+        //            print_r($event->end);
+        //            echo "</td>";
+        //             echo "</tr>";
+              
+                  
+        //         } 
+        //         echo "</tbody><table>";
+         // print_r($calendars);
+    //  $allCalendars = $eventManager->getAllCalendars();
+        
+    // print_r($allCalendars);
+
+    //print_r($allCalendars);
+        //   $event = new Outlook\Calendars\Calendar(['subject' => 'Brith day of file']);
+        //      $event->body = ['ContentType' => 'HTML', 'Content' => 'Brith day party'];
+        //      $event->start = ["DateTime" => "2020-05-30T19:00:00", "TimeZone" => "India Standard Time"];
+        //      $event->end = ["DateTime" => "2020-05-30T20:00:00", "TimeZone" => "India Standard Time"];
+         
+            
+        //      $event = $eventManager->create($event);
+        //      print_r($event);
+    //         echo '<a href="?refresh_token=true">Renew Token</a>';
+}
+    }
+//     public function add_event1(){
+//         require APPPATH."/third_party/src/Outlook/Authorizer/Session.php";
+
+       
+//         $authenticator = new Outlook\Authorizer\Authenticator(
+//             CLIEND_ID, CLIEND_SECRET,
+//             $redirectUri = "http://localhost/lead_management/googlecalendar/add_event"
+//         );
+
+        
+        
+//          $sessionManager = new \Outlook\Authorizer\Session();
+     
+
+//     //     print_r($sessionManager);
+//     //     //$sessionManager->remove(); // if need to remove token manually from session
+        
+//       $eventAuthorizer = new \Outlook\Events\EventAuthorizer($authenticator, $sessionManager);
+        
+//         $token = $eventAuthorizer->isAuthenticated();
+//         if (!$token) {
+//             echo '<a href='.$authenticator->getLoginUrl().'>Login</a>';
+//         } else {
+//             if (isset($_GET['refresh_token']) && $_GET['refresh_token']) {
+//                 $newToken = $eventAuthorizer->renewToken();
+//                 echo 'Refresh Token: <br />';
+//                 var_dump($newToken);
+//                 die();
+//             }
+
+
+       
+//         $eventManager = new \Outlook\Events\EventManager($token);
+
+      
+        
+    
+       
+    
+//         //create event
+//         // nested key name must be case sensitive correctly according to their docs.
+//         // only outer properties will be converted to Study case automatically
+//         $event = new \Outlook\Events\Event(['subject' => 'Discuss the Calendar REST API']);
+//         $event->body = ['ContentType' => 'HTML', 'Content' => 'Hello this is test Event'];
+//         $event->start = ["DateTime" => "2020-05-15T18:00:00", "TimeZone" => "Pacific Standard Time"];
+//         $event->end = ["DateTime" => "2020-06-16T19:00:00", "TimeZone" => "Pacific Standard Time"];
+//         $event = $eventManager->create($event);
+//     }
+// }
+
+public function calender_create(){
+        
+       
+       
+
+   
+
+$authenticator = new Outlook\Authorizer\Authenticator(
+CLIEND_ID,
+CLIEND_SECRET,
+// $redirectUri = "http://localhost/playground/outlook-api/examples/calendar.php"
+$redirectUri = "https://localhost/lead_management/googlecalendar/calender_event"
+//$redirectUri="https://acmesoftware.net/lead_management/googlecalendar/calender_event"
+);
+
+$sessionManager = new Outlook\Authorizer\Session();
+
+//$sessionManager->remove(); // if ne
+
+
+
+$eventAuthorizer = new Outlook\Calendars\CalendarAuthorizer($authenticator, $sessionManager);
+
+
+$token= $eventAuthorizer->isAuthenticated();
+//  $eventAuthorizer->renewToken();
+
+
+if (!$token) {
+echo '<a href=' . $eventAuthorizer->getLoginUrl($redirectUri,$authenticator) . '>Login</a>'; 
+} else {   
+    $ap_date	= $this->input->post('ap_date');
+    $subject	= $this->input->post('subject');
+    $content	= $this->input->post('content');
+    $ap_stime	= $this->input->post('ap_stime');
+    $ed_date	= $this->input->post('ed_date');
+    $ed_stime	= $this->input->post('ed_stime');
+    $calenderid	= $this->input->post('calenderid');
+
+   // echo  $calenderid;
+
+       $eventManager = new Outlook\Calendars\CalendarManager($token);
+      
+              $event = new Outlook\Calendars\Calendar(['subject' => $subject]);
+              
+             $event->body = ['ContentType' => 'HTML', 'Content' => $content];
+             $event->start = ["DateTime" => $ap_date.'T'.$ap_stime.":00", "TimeZone" => "India Standard Time"];
+             $event->end = ["DateTime" => $ed_date.'T'.$ed_stime.":00", "TimeZone" => "India Standard Time"];
+         
+            
+             $event = $eventManager->create($event,$calenderid);
+
+           // print_r($event);
+          if($event->id !=""){
+            $res = array(
+                'calendar_id'=>$calenderid,
+                'event_id' => $event->id,
+                'appointment_notes' =>  $subject,
+                'appointment_address' =>  $content,
+                'start_date' =>  $ap_date,
+                'start_time' =>$ap_stime,
+                'end_date' => $ed_date,
+                'end_time' => $ed_stime,
+                'synchronize'=>'outlook',
+              
+           
+            );
+            $this->db->insert('appointment_information',$res);
+        }
+            
+            $allCalendars = $eventManager->getAllCalendars();
+           // print_r($allCalendars);
+           $calendars=array();
+           foreach($allCalendars as $getdata){
+            if(($getdata->name =="Birthdays") || ($getdata->name =="India holidays") || ($getdata->name =="United holidays") ){
+               
+            }else{
+            $calendardata = $eventManager->all($getdata->id);
+            foreach($calendardata as $caldata){
+              
+
+              
+                    //   $calendars[]=array(
+                    //       'id'=> $caldata->id,
+                    //       'subject'=>$caldata->subject,
+                    //       'starttime'=>$caldata->start->DateTime,
+                    //       'endtime'=>$caldata->end->DateTime,
+                    //       'content'=>$caldata->body->Content,
+                    //     );
+
+                    $fromdate=  $caldata->start->DateTime;;
+                    $todate=  $caldata->end->DateTime;
+     
+                 $timestamp = strtotime($fromdate);
+                 $fromdate = date("Y-m-d", $timestamp);
+     
+                 $timestamp = strtotime($todate);
+                 $todate = strtotime("+1 day",$timestamp);
+                 $todate = date("Y-m-d", $todate);
+                 $color="#2a9df4";
+     
+                   $calendars[]=array(
+                       'id'=> $caldata->id,
+                       'title'=>$caldata->subject,
+                       'start'=>$fromdate,
+                       'end'=>$todate,
+                       'color'=>$color,
+     
+                     //  'content'=>$caldata->body->Content,
+                   );
+                  
+            }
+        }
+           }
+          // print_r($calendardata);
+
+         // $calendars = $eventManager->all();
+        //  print_r($calendars);
+        json_encode($calendars);
+
+         
+          $email=$this->session->userdata('email');
+          if($email){
+          if($this->input->post('submit'))
+          {
+          $email=$this->session->userdata('email');     
+          $l_type=$this->input->post('lead_type');
+          $l_source=$this->input->post('source');
+          $l_dealer=$this->input->post('l_dealer');
+          $sublead=$this->input->post('sublead');
+          $user_id=$this->user_model->user_id($email);
+          $rec=$this->user_model->add_new_lead($user_id,$l_type,$l_source,$l_dealer,$sublead);
+          $this->session->set_flashdata('msglp', 'data saved');
+          }
+          $email=$this->session->userdata('email');     
+          $u_type=$this->user_model->get_usertype($email);
+          $u=$u_type[0]['user_type'];
+          $get=$this->user_model->get_permissions($u);
+          $user_id=$this->user_model->user_id($email);
+          $data['user_permission']=unserialize($get[0]['permissions']);
+          $user_id=$this->user_model->user_id($email);
+          $data['flag']=0;
+          // $data['lead_source']=$this->user_model->get_lead_users();
+          //$data['records']=$this->user_model->get_appointment_data($user_id);
+          $data['allCalendars']=$allCalendars;
+          $data['calendardata']=$calendars;
+          $data['layout']="public/layout";
+          $data['header']="public/header";
+          $data['footer']="public/footer";
+          // $data['body']="static/user/new_lead_type";
+          $data['body']="static/user/addoutlookdemo";
+          $this->load->view('welcome_message',$data);
+        }
+
+}
+}
+public function check_session_outllok(){
+    $logindata=0;
+    $authenticator = new Outlook\Authorizer\Authenticator(
+    CLIEND_ID,
+    CLIEND_SECRET,
+    // $redirectUri = "http://localhost/playground/outlook-api/examples/calendar.php"
+    $redirectUri = "https://localhost/lead_management/googlecalendar/calender_event"
+ // $redirectUri="https://acmesoftware.net/lead_management/googlecalendar/calender_event"
+
+    );
+    
+    $sessionManager = new Outlook\Authorizer\Session();
+    
+    //$sessionManager->remove(); // if ne
+    
+    
+    
+    $eventAuthorizer = new Outlook\Calendars\CalendarAuthorizer($authenticator, $sessionManager);
+    
+    
+    $token= $eventAuthorizer->isAuthenticated();
+    //  $eventAuthorizer->renewToken();
+    
+    
+    if (!$token) {
+   // echo '<a href=' . $eventAuthorizer->getLoginUrl($redirectUri,$authenticator) . '>Login</a>'; 
+   //$logindata= 0;
+   $email=$this->session->userdata('email');
+   if($email){
+   if($this->input->post('submit'))
+   {
+   $email=$this->session->userdata('email');     
+   $l_type=$this->input->post('lead_type');
+   $l_source=$this->input->post('source');
+   $l_dealer=$this->input->post('l_dealer');
+   $sublead=$this->input->post('sublead');
+   $user_id=$this->user_model->user_id($email);
+   $rec=$this->user_model->add_new_lead($user_id,$l_type,$l_source,$l_dealer,$sublead);
+   $this->session->set_flashdata('msglp', 'data saved');
+   }
+   $email=$this->session->userdata('email');     
+   $u_type=$this->user_model->get_usertype($email);
+   $u=$u_type[0]['user_type'];
+   $get=$this->user_model->get_permissions($u);
+   $user_id=$this->user_model->user_id($email);
+   $data['user_permission']=unserialize($get[0]['permissions']);
+   $user_id=$this->user_model->user_id($email);
+   $data['flag']=1;
+   $data['calendardata']="";
+   
+   // $data['lead_source']=$this->user_model->get_lead_users();
+   //$data['records']=$this->user_model->get_appointment_data($user_id);
+   $data['records1']=$this->lead_management->dealer_display_data($user_id);
+   $data['layout']="public/layout";
+   $data['header']="public/header";
+   $data['footer']="public/footer";
+  
+   // $data['body']="static/user/new_lead_type";
+   $data['body']="static/user/addoutlookdemo";
+
+
+   
+$this->load->view('welcome_message',$data);
+}else{
+redirect('login');
+}
+    } else { 
+
+        define('APP_ID','a1252244-099c-4899-b5a7-1a663b23b164');
+        define('APP_PASSWORD','_SFr7/H?G]hgWatk1gZ6eJCSReqk4?0g');
+
+$authenticator = new Outlook\Authorizer\Authenticator(
+    APP_ID,
+    APP_PASSWORD,
+   // $redirectUri = "http://localhost/playground/outlook-api/examples/calendar.php"
+    $redirectUri = "https://localhost/lead_management/googlecalendar/calender_event"
+  // $redirectUri="https://acmesoftware.net/lead_management/googlecalendar/calender_event"
+
+);
+
+$sessionManager = new Outlook\Authorizer\Session();
+
+//$sessionManager->remove(); // if ne
+
+    
+ 
+$eventAuthorizer = new Outlook\Calendars\CalendarAuthorizer($authenticator, $sessionManager);
+
+
+$token= $eventAuthorizer->isAuthenticated();
+ //  $eventAuthorizer->renewToken();
+
+
+ if (!$token) {
+    echo '<a href=' . $eventAuthorizer->getLoginUrl($redirectUri,$authenticator) . '>Login</a>'; 
+} else {   
+   
+           $eventManager = new Outlook\Calendars\CalendarManager($token);
+
+
+    $allCalendars = $eventManager->getAllCalendars();
+//print_r($allCalendars);
+           
+//              get all Calendars returns each item as Event object
+         // $calendars = $eventManager->all();
+         $calendars=array();
+         foreach($allCalendars as $getdata){
+            
+            if(($getdata->name =="Birthdays") || ($getdata->name =="India holidays") || ($getdata->name =="United holidays") ){
+               
+            }else{
+                
+          $calendardata = $eventManager->all($getdata->id);
+        // print_r($calendardata);
+          foreach($calendardata as $caldata){
+            //   $id=  $caldata->id;
+            //   $subject=  $caldata->subject;
+               $fromdate=  $caldata->start->DateTime;;
+               $todate=  $caldata->end->DateTime;
+
+            $timestamp = strtotime($fromdate);
+            $fromdate = date("Y-m-d", $timestamp);
+
+            $timestamp = strtotime($todate);
+            $todate = strtotime("+1 day",$timestamp);
+            $todate = date("Y-m-d", $todate);
+            $color="#2a9df4";
+
+              $calendars[]=array(
+                  'id'=> $caldata->id,
+                  'title'=>$caldata->subject,
+                  'start'=>$fromdate,
+                  'end'=>$todate,
+                  'color'=>$color,
+
+                //  'content'=>$caldata->body->Content,
+              );
+          }
+        }
+            }
+            json_encode($calendars);
+       // $calendars = $eventManager->all();
+      //  print_r($calendars);
+
+          $email=$this->session->userdata('email');
+          if($email){
+          if($this->input->post('submit'))
+          {
+          $email=$this->session->userdata('email');     
+          $l_type=$this->input->post('lead_type');
+          $l_source=$this->input->post('source');
+          $l_dealer=$this->input->post('l_dealer');
+          $sublead=$this->input->post('sublead');
+          $user_id=$this->user_model->user_id($email);
+          $rec=$this->user_model->add_new_lead($user_id,$l_type,$l_source,$l_dealer,$sublead);
+          $this->session->set_flashdata('msglp', 'data saved');
+          }
+          $email=$this->session->userdata('email');     
+          $u_type=$this->user_model->get_usertype($email);
+          $u=$u_type[0]['user_type'];
+          $get=$this->user_model->get_permissions($u);
+          $user_id=$this->user_model->user_id($email);
+          $data['user_permission']=unserialize($get[0]['permissions']);
+          $user_id=$this->user_model->user_id($email);
+          // $data['lead_source']=$this->user_model->get_lead_users();
+          //$data['records']=$this->user_model->get_appointment_data($user_id);
+          $data['flag']=0;
+          $data['calendardata']=$calendars;
+          $data['allCalendars']=$allCalendars;
+          $data['layout']="public/layout";
+          $data['header']="public/header";
+          $data['footer']="public/footer";
+          // $data['body']="static/user/new_lead_type";
+          $data['body']="static/user/addoutlookdemo";
+          $this->load->view('welcome_message',$data);
+        }
+
+ 
+    }
+	
+}
+
+}
+public function check_get_eventinfo(){
+    $eventid=$this->input->post('eventid');
+
+    $logindata=0;
+    $authenticator = new Outlook\Authorizer\Authenticator(
+    CLIEND_ID,
+    CLIEND_SECRET,
+    // $redirectUri = "http://localhost/playground/outlook-api/examples/calendar.php"
+    $redirectUri = "https://localhost/lead_management/googlecalendar/calender_event"
+   //$redirectUri="https://acmesoftware.net/lead_management/googlecalendar/calender_event"
+
+    );
+    
+    $sessionManager = new Outlook\Authorizer\Session();
+    
+    //$sessionManager->remove(); // if ne
+    
+       
+    $eventAuthorizer = new Outlook\Calendars\CalendarAuthorizer($authenticator, $sessionManager);
+    
+    
+    $token= $eventAuthorizer->isAuthenticated();
+    //  $eventAuthorizer->renewToken();
+    
+    
+    if (!$token) {
+       
+    }else{
+        $eventManager = new Outlook\Calendars\CalendarManager($token);
+        $event = $eventManager->get($eventid);
+     // print_r($event);
+        $fromdate=  $event->start->DateTime;;
+               $todate=  $event->end->DateTime;
+
+   
+       $calendars1[]=array(
+                  'id'=> $event->id,
+                  'title'=>$event->subject,
+                  'start'=>$fromdate,
+                  'end'=>$todate,
+                   'content'=>$event->bodypreview,
+
+                //  'content'=>$caldata->body->Content,
+              );
+              echo json_encode($calendars1);
+ 
+    //       $subject=  $caldata->Subject;
+
+        //  echo $subject;
+
+        //        $fromdate=  $caldata->start->DateTime;;
+        //        $todate=  $caldata->end->DateTime;
+
+        //     $timestamp = strtotime($fromdate);
+        //     $fromdate = date("Y-m-d", $timestamp);
+
+        //     $timestamp = strtotime($todate);
+        //     $todate = strtotime("+1 day",$timestamp);
+        //     $todate = date("Y-m-d", $todate);
+        //     $color="#2a9df4";
+
+        //       $calendars[]=array(
+        //           'id'=> $caldata->id,
+        //           'title'=>$caldata->subject,
+        //           'start'=>$fromdate,
+        //           'end'=>$todate,
+        //            'content'=>$caldata->body->Content,
+
+        //         //  'content'=>$caldata->body->Content,
+        //       );
+        //       echo json_encode($calendars);
+        //   }
+    // }
+       
+    }
+
+}
+public function getoutcalender(){
+          $authenticator = new Outlook\Authorizer\Authenticator(
+        CLIEND_ID,
+        CLIEND_SECRET,
+        // $redirectUri = "http://localhost/playground/outlook-api/examples/calendar.php"
+        $redirectUri = "https://localhost/lead_management/appointment"
+       // $redirectUri="https://acmesoftware.net/lead_management/appointment"
+
+        );
+       
+        $sessionManager = new Outlook\Authorizer\Session();
+        
+        //$sessionManager->remove(); // if ne
+        
+        
+        
+        $eventAuthorizer = new Outlook\Calendars\CalendarAuthorizer($authenticator, $sessionManager);
+        
+        
+        $token= $eventAuthorizer->isAuthenticated();
+
+    
+        if (!$token) {
+           $this->outlook_login1();
+        }else{
+            $eventManager = new Outlook\Calendars\CalendarManager($token);
+            $allCalendars = $eventManager->getAllCalendars();
+            $calendardata=array();
+
+            foreach ($allCalendars as $cladata) {
+                $calid=$cladata->id;
+                $name=$cladata->name;
+                $calendardata[]=array(
+                    'id'=>$calid,
+                    'name'=>$name,
+                );
+                
+            }
+            echo json_encode($calendardata);
+           // $this->session->userdata('allcaldata',$calendardata);
+
+           // print_r($this->session->userdata('allcaldata'));
+        }
+}
+public function getoutcalenderallcalender(){
+    
+    $authenticator = new Outlook\Authorizer\Authenticator(
+  CLIEND_ID,
+   CLIEND_SECRET,
+//   // $redirectUri = "http://localhost/playground/outlook-api/examples/calendar.php"
+     $redirectUri = "https://localhost/lead_management/appointment"
+//   //$redirectUri="https://acmesoftware.net/lead_management/appointment"
+  );
+ 
+  $sessionManager = new Outlook\Authorizer\Session();
+  
+//   //$sessionManager->remove(); // if ne
+  
+  
+  
+   $eventAuthorizer = new Outlook\Calendars\CalendarAuthorizer($authenticator, $sessionManager);
+  
+  
+   $token= $eventAuthorizer->isAuthenticated();
+  
+
+//   $calendardata=array();
+   if (!$token) {
+      //$this->outlook_login1();
+      $eventAuthorizer->getLoginUrl($redirectUri,$authenticator);
+  }else{
+     
+      $eventManager = new Outlook\Calendars\CalendarManager($token);
+      $allCalendars = $eventManager->getAllCalendars();
+   
+
+      foreach ($allCalendars as $cladata) {
+          $calid=$cladata->id;
+          $name=$cladata->name;
+          $calendardata[]=array(
+              'id'=>$calid,
+              'name'=>$name,
+          );
+          
+      }
+     
+     // $this->session->userdata('allcaldata',$calendardata);
+
+     // print_r($this->session->userdata('allcaldata'));
+    
+  }
+  echo json_encode($calendardata);
+
+}
+public function outlook_login1()
+{
+
+   $authenticator = new Outlook\Authorizer\Authenticator(CLIEND_ID, CLIEND_SECRET);
+
+    $token = $authenticator->getToken();
+      $redirectUri = "https://localhost/lead_management/appointment";
+    //$redirectUri="https://acmesoftware.net/lead_management/appointment";
+
+    if (!$token) {
+       // echo $authenticator->getLoginUrl();
+       // $scope=array("https://outlook.office.com/Calendars.ReadWrite");
+    //    $Scopes=([
+    //     'Calendars.Read',
+    //     'Calendars.Read.Shared',
+    //     'Calendars.ReadWrite',
+    //     'User.Read',
+    //     'offline_access',
+    // ]);
+    
+       $url =  $authenticator->getLoginUrl($scopes = [], $redirectUri);;
+     
+        //echo $url;
+       
+       
+        header('Location: '.$url);
+    } else {
+
+    }
+}
+public function check_session_eventinfo(){
+    $eventid=$this->input->post('eventid');
+
+    $logindata=0;
+    $authenticator = new Outlook\Authorizer\Authenticator(
+    CLIEND_ID,
+    CLIEND_SECRET,
+    // $redirectUri = "http://localhost/playground/outlook-api/examples/calendar.php"
+    $redirectUri = "https://localhost/lead_management/googlecalendar/calender_event"
+  // $redirectUri="https://acmesoftware.net/lead_management/googlecalendar/calender_event"
+
+    );
+    
+    $sessionManager = new Outlook\Authorizer\Session();
+    
+    //$sessionManager->remove(); // if ne
+    
+       
+    $eventAuthorizer = new Outlook\Calendars\CalendarAuthorizer($authenticator, $sessionManager);
+    
+    
+    $token= $eventAuthorizer->isAuthenticated();
+    //  $eventAuthorizer->renewToken();
+    
+  
+    if (!$token) {
+        echo json_encode(0);
+
+    }else{
+        echo json_encode(1);
+}
+}
+
 }

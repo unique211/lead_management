@@ -7,7 +7,7 @@
 	<head>
 
 		<script src="<?php echo base_url() ?>assets/js/chart.funnel.bundled.js"></script>
-		<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> -->
 		<style>
 			canvas {
 				align: center;
@@ -45,7 +45,7 @@
 
 							<div class="col-md-8 inputGroupContainer">
 								<?php if (($this->session->userdata('user_type') == "SalesRepresentative") && ($this->session->userdata('userrole') == "Sales")) { ?>
-									<div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input id="salesrepresentive1" name="salesrepresentive1" placeholder="Contact Person" class="form-control " maxlength="20" type="text">
+									<div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input id="salesrepresentive1" name="salesrepresentive1" placeholder="Contact Person" class="form-control " maxlength="20" type="text" disabled>
 
 									</div><span class="s_lname1"></span>
 								<?php } else { ?>

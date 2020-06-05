@@ -8,14 +8,23 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">To Synchronize You Need To Login With Google.</h4>
+        <?php if(in_array('createViewOutLookAppointment', $user_permission)){?>
+          <h4 class="modal-title">To Synchronize You Need To Login With Outlook.</h4>
+        <?php } else{ ?>
+        
+          <h4 class="modal-title">To Synchronize You Need To Login With Google.</h4>
+        <?php }?>
       </div>
 
       <div class="modal-footer">
         <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
      <!--     <input type="submit" class="btn btn-primary" name="submit"
          value="YES"> -->
+         <?php if(in_array('createViewOutLookAppointment', $user_permission)){?>
+         <a href="<?php echo base_url(); ?>googlecalendar/outlook_login" id="contact-send-a" class="btn btn-primary"> YES</a>
+         <?php } else{ ?>
          <a href="appointment_login" id="contact-send-a" class="btn btn-primary"> YES</a>
+         <?php }?>
          <button type="button" class="btn btn-danger" data-dismiss="modal">NO</button>
       </div>
     </div>
@@ -520,6 +529,8 @@
   <script src="assets/js/bootstrap-notify.min.js"></script>
  
 <script type="text/javascript">
+ var arrayFromPHP = <?php echo json_encode($user_permission); ?>;
+      console.log(arrayFromPHP);
 
  var x=document.getElementById('alert_msg').value;
 
@@ -550,6 +561,7 @@ $.notify({
   }
 </script>
 <script>
+var base_url = "<?php echo base_url(); ?>";
 
   var editid='';
   function check_users()
@@ -714,7 +726,37 @@ $.notify({
 
  }
  else {
+ 
+  var perflag=0;
+  for (var j = 0; j < arrayFromPHP.length; j++) {
+
+if (arrayFromPHP[j] == "createViewOutLookAppointment") {
+    perflag = 1;
+}
+
+}
+if(perflag==1){
+  $.ajax({
+                type: "POST",
+                url: base_url + "googlecalendar/check_session_eventinfo",
+                dataType: "JSON",
+                async: false,
+                data: {
+                    
+                },
+                success: function(data) {
+                    if(data==1){
+                      $('#accessModal').modal('hide');
+                      window.location =base_url+"outlooklogin";
+                    }else{
+                      $('#accessModal').modal('show');
+                    }
+                }
+  });
+}else{
   $('#accessModal').modal('show');
+}
+ 
       /*$(window).load(function(){        
        
        $('#cal_id').hide();
@@ -783,6 +825,62 @@ $.notify({
                }
                
             $("#app_id").val(l[0].id);
+
+       
+        $.ajax({
+            type: 'POST',
+            url: baseurl + "Categorycontroller/getreseduledetalis",
+            async: false,
+            data: {
+              id: editid,
+            },
+            dataType: 'json',
+            success: function(data1) {
+        var html1="";
+        console.log(data1);
+
+        for(var i=0;i<data1.length;i++){
+        
+          html1 += '<tr>' +
+                        
+                        '<td id="name_' + data1[i].id + '">' + data1[i].r_date + '</td>' +
+                        '<td id="name_' + data1[i].id + '">' + data1[i].r_time + '</td>' +
+                       
+                        '</tr>';
+        }
+        $('#rescheduletb_tbody').html(html1);
+       
+
+      }
+    });
+
+    $.ajax({
+            type: 'POST',
+            url: baseurl + "Categorycontroller/getappnotes",
+            async: false,
+            data: {
+              id: editid,
+            },
+            dataType: 'json',
+            success: function(data1) {
+        var html1="";
+        console.log(data1);
+
+        for(var i=0;i<data1.length;i++){
+        
+          html1 += '<tr>' +
+                        
+                        '<td id="name_' + data1[i].id + '">' + data1[i].created_at + '</td>' +
+                        '<td id="name_' + data1[i].id + '">' + data1[i].notes + '</td>' +
+                        '<td id="name_' + data1[i].id + '">' + data1[i].first_name +" "+data1[i].last_name+ '</td>' +
+                       
+                        '</tr>';
+        }
+        $('#ac_notes_tbody').html(html1);
+       
+
+      }
+    });
            // console.log($("#app_id").val());
       
 /*         var inputElems = document.getElementsByTagName("select");
@@ -865,8 +963,18 @@ window.location.reload();
 </script>
 
 <script type="text/javascript">
+var arrayFromPHP = <?php echo json_encode($user_permission); ?>;
+  console.log(arrayFromPHP);
   
   $(document).ready(function() {
+    var exportflag=0;
+    for (var j = 0; j < arrayFromPHP.length; j++) {
+
+if (arrayFromPHP[j] == "exportAppointment") {
+    exportflag = 1;
+}
+}
+    if(exportflag==1){
     $('#appointments_data').DataTable( {
         dom: 'Bfrtip',
         buttons: [
@@ -874,6 +982,9 @@ window.location.reload();
         ],
         order:[[1, 'asc']]
     } );
+  }else{
+    $('#appointments_data').DataTable( {});
+  }
     $("#users_list").click(function() {
     $('.single-checkbox1').not(this).prop('checked', this.checked);
      $("#user_error").text("");

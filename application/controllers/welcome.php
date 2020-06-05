@@ -1051,10 +1051,20 @@ function logoutcode()
 		  $addr=$this->input->post('d_address');
 		  $currentfcyearamt=$this->input->post('currentfcyearamt');
 		  $dob=$this->input->post('dob');
-		 // print_r(expression)
-		  $this->lead_management->insert_user_data($user_id,$emp_id,$user_name,$fisrt_name,$last_name,$email,$p,$phone_number,$user_type,$gender,$google_id,$title,$department,$comments,$user_role,$region,$region_type,$company,$addr,$currentfcyearamt,$dob);
+		  $finicialdata=$this->input->post('finicialdata');
+		 
+		  $finicialdata = json_decode($finicialdata, true);
+		
+		 	 // print_r(expression)
+		$data= $this->lead_management->insert_user_data($user_id,$emp_id,$user_name,$fisrt_name,$last_name,$email,$p,$phone_number,$user_type,$gender,$google_id,$title,$department,$comments,$user_role,$region,$region_type,$company,$addr,$currentfcyearamt,$dob,$finicialdata);
 		  $this->session->set_flashdata('msg', 'User data saved');
-		  
+		 
+		
+			
+			
+			
+		
+		  //  print_r($data);
 		 redirect('user_creation');
 		 
 		}else{
@@ -1172,7 +1182,11 @@ function edit_sales_rep_data()
 		$address=$this->input->post('address');
 		$currentfcyearamt=$this->input->post('currentfcyearamt');
 		$dob=$this->input->post('dob');
-		$this->lead_management->edit_sales_rep_data_code($id,$f_name,$l_name,$u_name,$email,$gender,$phone,$user_role,$c_name,$region,$region_type,$u_type,$cal_id,$u_title,$department,$comments,$address,$currentfcyearamt,$dob);
+		$finicialdata=$this->input->post('finicialdata');
+
+		$finicialdata = json_decode($finicialdata, true);
+		
+		$this->lead_management->edit_sales_rep_data_code($id,$f_name,$l_name,$u_name,$email,$gender,$phone,$user_role,$c_name,$region,$region_type,$u_type,$cal_id,$u_title,$department,$comments,$address,$currentfcyearamt,$dob,$finicialdata);
 		 $this->session->set_flashdata('edit_userdata', 'data updated ');
 		redirect('user_dtl');
 	}
@@ -1327,7 +1341,14 @@ function getAccessTokenEmail($email)
         //     throw new Exception('Error : Failed to create event');
         // else
         //     ret;
-    }
+	}
+	public function editfiniciadetalis(){
+		$id=$this->input->post('emp_id');
+		
+		$data1 = $this->lead_management->getallfinicialdata($id);
+
+        echo json_encode($data1);
+	}
 
 /*public function set_user_permissions()
 	{

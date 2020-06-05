@@ -211,7 +211,7 @@ $(document).ready(function() {
     show_master(fromdate, todate); //call function show data table
     var delflag = 0;
     var editflag = 0;
-
+    var exportflag = 0;
     //	function show data table
     function show_master(fromdate, todate) {
 
@@ -222,6 +222,9 @@ $(document).ready(function() {
             }
             if (arrayFromPHP[j] == "deleteAccount") {
                 delflag = 1;
+            }
+            if (arrayFromPHP[j] == "exportAccount") {
+                exportflag = 1;
             }
         }
 
@@ -292,28 +295,33 @@ $(document).ready(function() {
 
                 html += '</tbody></table>';
                 $('#show_master').html(html);
-                $('#myTable').DataTable({
+                if (exportflag == 1) {
+                    $('#myTable').DataTable({
 
-                    dom: 'Bfrtip',
-                    //"dom": '<"top"iflp<"clear">>rt<"bottom"iflp<"clear">>',
-                    buttons: [{
-                            extend: 'pdfHtml5',
-                            title: 'Account',
-                            orientation: 'landscape',
-                            pageSize: 'A4',
-                            exportOptions: {
-                                columns: [0, 2, 4, 5, 6]
+                        dom: 'Bfrtip',
+                        //"dom": '<"top"iflp<"clear">>rt<"bottom"iflp<"clear">>',
+                        buttons: [{
+                                extend: 'pdfHtml5',
+                                title: 'Account',
+                                orientation: 'landscape',
+                                pageSize: 'A4',
+                                exportOptions: {
+                                    columns: [0, 2, 4, 5, 6]
+                                },
                             },
-                        },
-                        {
-                            title: 'Account',
-                            extend: 'excelHtml5',
-                            exportOptions: {
-                                columns: [0, 2, 4, 5, 6]
+                            {
+                                title: 'Account',
+                                extend: 'excelHtml5',
+                                exportOptions: {
+                                    columns: [0, 2, 4, 5, 6]
+                                }
                             }
-                        }
-                    ]
-                });
+                        ]
+                    });
+                } else {
+                    $('#myTable').DataTable({});
+
+                }
             }
 
         });

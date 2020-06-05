@@ -17,14 +17,20 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
+       
         <h4 class="modal-title">Are you want to view appoinments in google calendar.</h4>
+       
       </div>
 
       <div class="modal-footer">
         <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
      <!--     <input type="submit" class="btn btn-primary" name="submit"
          value="YES"> -->
-         <a href="api_login" id="contact-send-a" class="btn btn-primary"> YES</a>
+       
+        
+        
+          <a href="api_login" id="contact-send-a" class="btn btn-primary"> YES</a>
+         
          <button type="button" class="btn btn-danger" data-dismiss="modal">NO</button>
       </div>
     </div>
@@ -38,14 +44,22 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <?php if(in_array('createViewOutLookAppointment', $user_permission)){?>
+          <h4 class="modal-title">To Use Calendar You Need To Login With Outlook.</h4>
+        <?php } else{ ?>
         <h4 class="modal-title">To Use Calendar You Need To Login With Google.</h4>
+        <?php } ?>
       </div>
 
       <div class="modal-footer">
         <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
      <!--     <input type="submit" class="btn btn-primary" name="submit"
          value="YES"> -->
-         <a href="appointment_bkng_login" id="contact-send-a" class="btn btn-primary"> YES</a>
+         <?php if(in_array('createViewOutLookAppointment', $user_permission)){?>
+         <a  href="<?php echo base_url(); ?>googlecalendar/outlook_login1"  class="btn btn-primary"> YES</a>
+         <?php } else{ ?>
+          <a href="appointment_bkng_login" id="contact-send-a" class="btn btn-primary"> YES</a>
+          <?php } ?>
          <button type="button" class="btn btn-danger" data-dismiss="modal">NO</button>
       </div>
     </div>
@@ -56,9 +70,11 @@
            
    <div class="container">
    <h3>Appointment Booking</h3><div class="" align="right"></div>
-
+   <?php  if($this->session->userdata('allcaldata')!=""){
+     echo "hii";
+   } ?>
       <div class="col-md-9">
-      <form class=" form-horizontal" method="post" action="apptmnt_booking">
+      <form class=" form-horizontal" method="post" action="<?php echo base_url(); ?>apptmnt_booking">
       <table class="table table-striped">
           <tbody>
              <tr>
@@ -73,6 +89,7 @@
                             <div class="col-md-4 inputGroupContainer">
                                <div class="input-group sec_cal"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>   <select class="form-control ap_cal_id" id="ap_cal_id" name="ap_cal_id">
                               <option value="--">Select</option>
+                             
                               
                             </select></div>
                                <span class="ap_cal_id1"></span>
@@ -127,8 +144,8 @@
                             <label class="col-md-4 control-label">Sales Representative</label>
                             <div class="col-md-4 inputGroupContainer">
                                <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                <input id="demo_dealer" name="demo_dealer" class="form-control demo_dealer" autocomplete="off" list="salesreprentative">
-								<datalist id="salesreprentative">
+                                <input id="demo_dealer" name="demo_dealer" class="form-control demo_dealer" autocomplete="off" list="salesreprentative" <?php  if($this->session->userdata('user_type')=="SalesRepresentative"){ ?> readonly <?php } ?>>
+                            <datalist id="salesreprentative" >
 								<?php
                                 foreach($salesreprentative as $key => $value)
                                 {
@@ -137,7 +154,7 @@
                                 <?php  if($this->session->userdata('user_type')=="SalesRepresentative"){ ?>
                                   
                               <option value="<?php echo 
-                                $value['first_name']; ?>" <?php echo "selected";  ?> ><?php echo $value['first_name']; ?></option>
+                                $value['first_name']; ?>" <?php echo "selected";  ?> ><?php echo $value['first_name'];  ?></option>
                                 <?php }else{ ?>
                                   <option value="<?php echo 
                                 $value['first_name']; ?>"><?php echo $value['first_name']; ?></option>
@@ -266,7 +283,7 @@
                    
                   </div></td>
                   <td>
-                    <div class="set_btn"><input type="reset" class="btn btn-danger" 
+                    <div class="set_btn"><input style="margin-left:13%" type="reset" class="btn btn-danger" 
                       value="Reset" name="" ></div>
                      
                   </td>
@@ -557,9 +574,39 @@ var access="<?php echo $this->session->userdata('is_authenticate_user'); ?>";
  else
  {
   //alert('fa');
+  var perflag=0;
+  for (var j = 0; j < arrayFromPHP.length; j++) {
+
+if (arrayFromPHP[j] == "createViewOutLookAppointment") {
+    perflag = 1;
+}
+
+}
+if(perflag==1){
+  $.ajax({
+                type: "POST",
+                url: base_url + "googlecalendar/check_session_eventinfo",
+                dataType: "JSON",
+                async: false,
+                data: {
+                    
+                },
+                success: function(data) {
+                    if(data==1){
+                      $('#accessModal1').modal('hide');
+                      window.location =base_url+"outlooklogin1";
+                    }else{
+                      $('#accessModal1').modal('show');
+                    }
+                }
+  });
+}else{
   $('#accessModal1').modal('show');
+
+}
  }
  }
+ 
 //getcal_list();
 
 var today = new Date();
@@ -587,6 +634,9 @@ $('#ap_stime').val(time);
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/multiselect/bootstrap-multiselect.js"></script>
 <script>
+   var base_url = "<?php echo base_url(); ?>";
+   var arrayFromPHP = <?php echo json_encode($user_permission); ?>;
+      console.log(arrayFromPHP);
   	$('.ride').multiselect({
 			enableFiltering: true,
 		
@@ -625,6 +675,36 @@ c_id= $('#customer').find('option[value="' +val + '"]').attr('id');
               });
     
     });
+
+    $.ajax({
+                type: "POST",
+                url: base_url + "googlecalendar/getoutcalenderallcalender",
+                dataType: "JSON",
+                async: false,
+                data: {
+                    
+                },
+                success: function(data) {
+                 
+                 if(data.length >0){
+                   var op="";
+                  for(var i=0;i<data.length;i++)
+                 {
+                if ((data[i].name == "Birthdays") || (data[i].name == "India holidays") || (data[i].name== "United holidays")) {
+
+                 } else {
+                 
+                 op+='<option value="'+data[i].id+'">'+data[i].name+'</option>';
+                   }
+                }
+                $("#ap_cal_id").html(op);
+               }
+                  
+                 }
+                   
+                  
+                
+              });
 
     var userid="<?php echo $this->session->userdata('useruniqueid') ?>"; 
     var userrole="<?php echo $this->session->userdata('user_type') ?>";  

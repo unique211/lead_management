@@ -133,6 +133,8 @@ $route['funnelreport']="Funnelreport/index";
 $route['wonreport']="Wonreport/index";
 $route['lostreport']="Lostreport/index";
 $route['customerreport']="Customerreport/index";
+$route['outlooklogin']="googlecalendar/check_session_outllok";
+$route['googlemaps']="Googlemapcontroller/index";
 
 
 /* End of file routes.php */

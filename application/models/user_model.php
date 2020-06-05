@@ -30,8 +30,8 @@ class User_model extends CI_Model {
 			$this->db->where('event_id',$reg['event_id']);
 			$this->db->update('appointment_information', $reg);
 
-			$this->db->where('event_id',$reg['event_id']);
-			$result = $this->db->delete('appointment_information');
+			// $this->db->where('event_id',$reg['event_id']);
+			// $result = $this->db->delete('appointment_information');//change by sagar-25-05-2020
 
 
 			$this->db->select('*');
@@ -292,7 +292,8 @@ class User_model extends CI_Model {
    		{
    			$q="SELECT * from lead_info";
    		}else{
-   			$q="SELECT * from lead_info where user_id='$user_id'";
+				$q="SELECT * from lead_info";
+   			//$q="SELECT * from lead_info where user_id='$user_id'";
    		}
 		
 		$ex=$this->db->query($q);
@@ -405,12 +406,21 @@ class User_model extends CI_Model {
 	}
 	 function update_appointment($app_id,$selected_cal_id,$event_id,$date,$time,$gift,$demo_dealer,$ride,$setby,$addr,$notes,$lead,$assistant,$supervisor,$status,$demo_note)
 	{
-		 $s="UPDATE appointment_information SET calendar_id='$selected_cal_id',event_id='$event_id',start_date='$date',start_time='$time',end_time='$time',demo_dealer='$demo_dealer',ride_along='$ride',set_by='$setby',appointment_address='$addr',appointment_notes='$notes',lead_id='$lead',assistant='$assistant' ,supervisor='$supervisor',appointment_status='$status',demo_notes='$demo_note' where id=$app_id";
-		 $this->db->query($s);
+		$redate = $this->input->post('reschedulingdate');
+		$reschedulingtime = $this->input->post('reschedulingtime');
+		if($date !="" && $reschedulingtime !=""){
+			$s="UPDATE appointment_information SET calendar_id='$selected_cal_id',event_id='$event_id',start_date='$date',start_time='$time',end_time='$time',demo_dealer='$demo_dealer',ride_along='$ride',set_by='$setby',appointment_address='$addr',appointment_notes='$notes',lead_id='$lead',assistant='$assistant' ,supervisor='$supervisor',appointment_status='$status',demo_notes='$demo_note',resudeal_date='$redate',reschedultime='$reschedulingtime' where id=$app_id";
+			$this->db->query($s);
+		}else{
+			$s="UPDATE appointment_information SET calendar_id='$selected_cal_id',event_id='$event_id',start_date='$date',start_time='$time',end_time='$time',demo_dealer='$demo_dealer',ride_along='$ride',set_by='$setby',appointment_address='$addr',appointment_notes='$notes',lead_id='$lead',assistant='$assistant' ,supervisor='$supervisor',appointment_status='$status',demo_notes='$demo_note' where id=$app_id";
+			$this->db->query($s);
+		}
+		
+	
 
-		 $date = $this->input->post('reschedulingdate');
-		 $reschedulingtime = $this->input->post('reschedulingtime');
-
+		
+		$date = $this->input->post('reschedulingdate');
+		$reschedulingtime = $this->input->post('reschedulingtime');
 
 		 $email=$this->session->userdata('email');
 		 $user_id=$this->user_model->user_id($email);
@@ -506,8 +516,8 @@ class User_model extends CI_Model {
 			$this->db->select('*');    
 			$this->db->from('new_account');
 			$this->db->where('user_id',$id);
-			$this->db->or_where('`id` IN (SELECT `customer_id` FROM `quotation_master` where salesrepresentative='.$id.')', NULL, FALSE);
-			$this->db->or_where('`id` IN (SELECT `customer_id` FROM `order_master` where salesrepresentative='.$id.')', NULL, FALSE);
+			//$this->db->or_where('`id` IN (SELECT `customer_id` FROM `quotation_master` where salesrepresentative='.$id.')', NULL, FALSE);
+			//$this->db->or_where('`id` IN (SELECT `customer_id` FROM `order_master` where salesrepresentative='.$id.')', NULL, FALSE);
 			 $hasil=$this->db->get();
 		}
 		return $hasil->result_array();

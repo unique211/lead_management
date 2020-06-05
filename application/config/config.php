@@ -25,8 +25,9 @@
 // $config['base_url'] = 'https://acmesoftware.net/lm/UAT1/';
 
 
-$config['base_url'] = 'https://erp-leadmanagement.herokuapp.com/';
-//$config['base_url'] = 'http://localhost/lead_management/';
+//$config['base_url'] = 'https://erp-leadmanagement.herokuapp.com/';
+$config['base_url'] = 'https://localhost/lead_management/';
+//$config['base_url'] = 'https://acmesoftware.net/lead_management/';
 
 
 
@@ -42,7 +43,7 @@ $config['base_url'] = 'https://erp-leadmanagement.herokuapp.com/';
 |
 */
 $config['index_page'] = '';
-
+//$config['composer_autoload'] =  FCPATH . 'vendor/autoload.php';   // vishal change
 /*
 |--------------------------------------------------------------------------
 | URI PROTOCOL
@@ -378,7 +379,6 @@ $config['rewrite_short_tags'] = FALSE;
 |
 */
 $config['proxy_ips'] = '';
-
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */

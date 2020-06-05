@@ -1,4 +1,5 @@
 <!-- google access model -->
+
 <div id="myModal" class=" modal fade " role="dialog">
   <form action="">
   <div class="modal-dialog ">
@@ -69,12 +70,13 @@
     
     </div>
   </section>
+
 <?php $this->load->view('google-calendar/popup/event');?>   
-<?php $this->load->view('google-calendar/popup/create');?>      
+<?php $this->load->view('google-calendar/popup/create');?>   
 <!--  <?php $this->load->view('templates/footer');?>  -->  
  <script type="text/javascript">
  var access="<?php echo $this->session->userdata('is_authenticate_user'); ?>";
-// alert(access);
+ //alert(access);
  if(access)
  {
  getcal_list();
@@ -103,6 +105,7 @@ str=xmlhttp.responseText;
 str=str.replace(/^\s*([\S\s]*)\b\s*$/, '$1');
 //alert(str);
 var x=JSON.parse(str);
+
 /*console.log(x);*/
 var b = str.search("success");
 if(b != -1)
@@ -123,6 +126,7 @@ window.location.reload();
 <script type="text/javascript">
   function getcalendar(cal_id)
   {
+   
      jQuery.ajax({
           url: baseurl + 'googlecalendar/getCalendar/'+cal_id,
           dataType: 'html',
@@ -133,6 +137,7 @@ window.location.reload();
               jQuery('[data-caltoggle="tooltip"]').tooltip();
           },
           success: function (html) {
+            console.log(html);
               jQuery('#event-calendar').html(html);
               
           },
@@ -145,5 +150,6 @@ window.location.reload();
  
 
 </script>
+
 
 

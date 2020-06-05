@@ -48,7 +48,7 @@
 <?php $this->load->view('google-calendar/popup/create');?>      
 <!--  <?php $this->load->view('templates/footer');?>  -->  
  <script type="text/javascript">
- 
+
        $(window).load(function(){        
    $('#myModal').modal('show');
     }); 

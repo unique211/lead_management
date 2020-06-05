@@ -58,6 +58,7 @@
         bsCustomFileInput.init()
     })
   </script> -->
+  <!-- <script src="https://code.jquery.com/jquery-1.11.2.min.js" type="text/javascript"></script> -->
   <script src="<?php echo base_url() ?>assets/js/custom.js"></script>
 </body>
 </html>

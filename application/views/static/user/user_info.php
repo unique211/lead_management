@@ -46,6 +46,21 @@
                 <?php 
                 foreach ($pagename as $key) {
                 ?>
+                <?php if(($key['page_name']=="ViewAppointments") || ($key['page_name']=="ViewOutLookAppointment") ){ ?>
+                  <tr>
+                    <td><label><?php echo  $key['page_name']; ?></label></td>
+                    <td><?php  if(in_array('createPermissions', $user_permission)){?>
+                      <input type="checkbox" class="createpermisson" style="" name="permission[]" id="permission" value="create<?php echo  $key['page_name']; ?>" >
+                       <?php } ?>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                <?php } else{?>
                   <tr>
                     <td><label><?php echo  $key['page_name']; ?></label></td>
                     <td><?php  if(in_array('createPermissions', $user_permission)){?>
@@ -66,7 +81,7 @@
                     </td>
                   </tr>
                 <?php 
-                 }
+                 }}
                 ?>
                
               </tbody>

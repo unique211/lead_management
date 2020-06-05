@@ -2468,6 +2468,7 @@ $(document).ready(function() {
 
                 var filenm = data.split("EOF");
                 var trimStr = $.trim(filenm[1]);
+
                 $('#btnfilenmshow1').val(base_url + "quatationpdf/quotation_" + trimStr + ".pdf");
                 $('#btnfilenmshow2').val(base_url + "quatationpdf/quotation_" + trimStr + ".pdf");
                 $('#filenamepdf1').text('quotation_' + trimStr + ".pdf");
@@ -2514,6 +2515,7 @@ $(document).ready(function() {
         var attachment = $('#btnfilenmshow1').val();
         var filenamepdf = $('#filenamepdf1').text();
         var bill_no = $('#bill_no').val();
+        alert(filenamepdf);
 
 
 

@@ -63,29 +63,14 @@
                 <li class=""><a href="home_page"> Dashboard</a></li>
                
 
-                  <!--  <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Account <span class="caret"></span></a>
+                <?php if (in_array('createAccount', $user_permission) || in_array('editAccount', $user_permission) || in_array('deleteAccount', $user_permission)) : ?>
 
-            <ul class="dropdown-menu">
-              <?php if (in_array('createLead', $user_permission)) : ?>
-          <li><a href="lead_create">New Lead</a></li>
-          <?php endif; ?>
-           <?php if (in_array('editLead', $user_permission) || in_array('deleteLead', $user_permission)) : ?>
-            <li><a href="managelead">Manage Lead</a></li> <?php endif; ?>
-        </ul>
-
-        </li> -->
                   <li ><a  href="<?php echo base_url() ?>account_create"  >All Account <span ></span></a>
 
-                    <!-- <ul class="dropdown-menu">
-                      <?php if (in_array('createLead', $user_permission)) : ?>
-                        <li><a href="<?php echo base_url() ?>account_create">New Account</a></li>
-                      <?php endif; ?>
-                      <?php if (in_array('editLead', $user_permission) || in_array('deleteLead', $user_permission)) : ?> -->
-                        <!-- <li><a href="<?php echo base_url() ?>managelead">Manage Account</a></li> <?php endif; ?> -->
-                    <!-- </ul> --> 
+                     
 
                   </li>
-               
+                  <?php endif; ?>
                 <?php if (in_array('createAppointment', $user_permission) || in_array('editAppointment', $user_permission) || in_array('deleteAppointment', $user_permission)) : ?>
                   <li><a class="dropdown-toggle" data-toggle="dropdown" href="#">Appointments <span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -94,9 +79,13 @@
                       <?php endif; ?>
                       <?php if (in_array('editAppointment', $user_permission) || in_array('deleteAppointment', $user_permission)) : ?>
                         <li><a href="<?php echo base_url() ?>manage_appointment">Manage Appointment</a></li> <?php endif; ?>
-                       <?php if (in_array('editAppointment', $user_permission) || in_array('deleteAppointment', $user_permission) || in_array('createAppointment', $user_permission)) : ?> 
+                       <?php if (in_array('createViewAppointments', $user_permission)) : ?> 
                         <!--  <li class=""><a href="view_appointments">view appointments</a></li> -->
                         <li class=""><a href="<?php echo base_url() ?>google_appointments"> View Appointments</a></li>
+                        <?php endif; ?>
+                        <?php if (in_array('createViewOutLookAppointment', $user_permission)) : ?> 
+
+                        <li><a href="<?php echo base_url() ?>outlooklogin">View OutLook Appointment</a></li> 
                         <?php endif; ?>
                       </ul>
                   </li>
@@ -139,15 +128,18 @@
                 <?php endif; ?>
 
                 <!-- manage -->
-                <?php if (in_array('createLeadType', $user_permission) || in_array('editLeadType', $user_permission) || in_array('deleteLeadType', $user_permission) || in_array('createUser', $user_permission) || in_array('editUser', $user_permission) || in_array('deleteUser', $user_permission) || in_array('createDealer', $user_permission) || in_array(
-                    'editDealer',
+                <?php if (in_array('createCategoryType', $user_permission) || in_array('editCategoryType', $user_permission) || in_array('deleteCategoryType', $user_permission) || in_array('createUser', $user_permission) || in_array('editUser', $user_permission) || in_array('deleteUser', $user_permission) || in_array('createCustomerType', $user_permission) || in_array(
+                    'editCustomerType',
                     $user_permission
-                  ) || in_array('deleteDealer', $user_permission) || in_array('createPermissions', $user_permission) || in_array('editPermissions', $user_permission) || in_array('deletePermissions', $user_permission)) : ?>
+                  ) || in_array('deleteCustomerType', $user_permission) || in_array('createPermissions', $user_permission) || in_array('editPermissions', $user_permission) || in_array('deletePermissions', $user_permission)) : ?>
                   <li class="dropdown">
 
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage Application <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                      <?php if (in_array('createUser', $user_permission) || in_array('editUser', $user_permission) || in_array('deleteUser', $user_permission)) : ?>
+                      <?php if (in_array('createUser', $user_permission) || in_array('editUser', $user_permission) || in_array('deleteUser', $user_permission) || in_array('createPermissions', $user_permission) || in_array('editPermissions', $user_permission) || in_array(
+                                    'deletePermissions',
+                                    $user_permission
+                                  )) : ?>
                         <li><a href="#" class="dropdown-toggle" data-toggle="dropdown"> User Creation<span class="caret"></span></a>
                           <ul class="dropdown-menu">
                             <?php if (in_array('createUser', $user_permission)) : ?>
@@ -213,13 +205,20 @@
                       <?php endif; ?>
                     </ul>
                   </li>
-                  <li><a href="<?php echo base_url(); ?>logout" class="nav-link"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                  
 
               
                 
                 <?php endif; ?>
+                <li><a href="<?php echo base_url(); ?>logout" class="nav-link"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                <li><a href="<?php echo base_url(); ?>googlemaps" class="nav-link"><span class="glyphicon glyphicon-log-out"></span>Google Maps</a></li>
               
+                <!-- <li><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span>Out Look</a>
+                                           <ul class="dropdown-menu">
+                                           <li><a href="<?php echo base_url() ?>outlooklogin">Out Look Login</a></li> 
+                                           </ul> 
+
+              </li> -->
 
               </ul>
            
